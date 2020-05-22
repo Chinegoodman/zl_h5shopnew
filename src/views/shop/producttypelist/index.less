@@ -1,0 +1,192 @@
+.productsearchwrap {
+    .header {
+        position: relative;
+        height: 2.45rem;
+        background-image: url("./../../../assets/imgs/search/findbg.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+        .header-icon{
+            width:0.42rem;
+            height:0.42rem;
+            position:absolute;
+            right:0.35rem;
+            top:0.33rem;
+            img{
+                width:100%;
+                height:100%;
+            }
+        }
+
+        .header-tit {
+            width: 5.19rem;
+            height: 0.97rem;
+            margin: 0 auto;
+            padding-top: 0.4rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .search {
+            position: absolute;
+            font-size: 0.32rem;
+            left: 1.35rem;
+            top: 1.61rem;
+            z-index: 10;
+            color: #BFBFBF;
+        }
+
+        .header_back {
+            width: 5.2rem;
+            height: 0.6rem;
+            background-color: #F7F7F7;
+            border-radius: 1rem;
+            margin: 0 auto;
+            margin-top: 0.08rem;
+
+            .header_inp {
+                color: #BFBFBF;
+                padding-left: 0.6rem;
+                line-height: 0.65rem;
+            }
+        }
+
+        .wechat_icon {
+            padding-left: 0.6rem;
+            font-size: 0.55rem;
+            position: relative;
+            top: 0.05rem;
+        }
+    }
+
+    .body {
+        width: 100%;
+        overflow: hidden;
+        // border-top: 1px solid #DEDEDE;
+        padding-top: 0.2rem;
+        background-color: #F6F6F6;
+        display: flex;
+
+        .body_left {
+            width: 1.55rem;
+            min-height: 12.4rem;
+            background: white;
+
+            .left-one .left-one-tit:first-of-type {
+                background: #F6F6F6;
+                color: #FFBD04;
+
+                .left-one-mass {
+                    border-left: 0.06rem solid #FFBD04;
+                }
+            }
+
+            .left-one {
+                .left-one-tit {
+                    padding: 0.32rem 0;
+                    color: #2A2A2A;
+
+                    .left-one-mass {
+                        width: 90%;
+                        text-align: center;
+                        border-left: 0.06rem solid transparent;
+                    }
+                }
+            }
+        }
+
+        .body_right {
+            display: inline-block;
+            width: 5.56rem;
+            margin-left: 0.39rem;
+
+            .body_right_content {
+                .body_right_list {
+                    width: 100%;
+
+                    .right-two {
+
+                        display: block;
+                        margin-right:0.1rem;
+                        .right-two-mass {
+                            display: inline-block;
+                            margin-top: 0.25rem;
+                            width:1.2rem;
+                            height:1.2rem;
+                            //   padding: 0 0.3rem;
+                            margin-right:0.92rem;
+                            .right-two-tit{
+                                padding-top: 0.12rem;
+                                font-size: 0.2rem;
+                                text-align: center;
+                            }
+
+                            .right-two-img {
+                                width: auto;
+                                height: 100%;
+                            }
+                        }
+                        .right-two-mass:nth-child(3n){
+                            margin-right:0;
+                        }
+                    }
+
+                    .body_right_header {
+                        overflow: hidden;
+                        padding-top: 0.28rem;
+                        padding-bottom: 0.2rem;
+                        border-bottom: 1px solid #D7D7D7;
+
+                        .title {
+                            font-weight: 500;
+                            font-size: 0.26rem;
+                        }
+
+                        .title_btn {
+                            float: right;
+                            color: #BFBFBF;
+                            font-size: 0.24rem;
+                            padding-right: 0.2rem;
+                        }
+                    }
+                }
+
+                .banner_sw {
+                    width: 94%;
+                    margin-left: 0.4rem;
+                    margin-top: 0.3rem;
+
+                    img {
+                        width: 5.25rem;
+                        height: 2.4rem;
+                        background-size: contain;
+                    }
+                }
+            }
+
+            .bottom {
+                display: none;
+                width: 2.4rem;
+                height: 0.53rem;
+                background: rgb(256, 245, 243);
+                border-radius: 0.3rem;
+                position: fixed;
+                bottom: 0.6rem;
+                left: 50%;
+                margin-left: -0.7rem;
+                text-align: center;
+                line-height: 0.53rem;
+                font-size: 0.22rem;
+                color: #FFBD04;
+
+                img {
+                    width: 0.21rem;
+                    height: 0.24rem;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

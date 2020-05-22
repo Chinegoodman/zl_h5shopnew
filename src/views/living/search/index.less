@@ -1,0 +1,846 @@
+.search{
+    font-family:"font-family:PingFang SC;";
+    position: absolute;
+    top: 0;
+    // left: 0;
+    // min-height: calc(100%);
+    width: 7.5rem;
+    min-height: 100vh;
+    background-color:#F7F7F7;
+    .searchtop{
+        background-color:#fff;
+        z-index:999;
+    }
+    .search_inp{
+        padding-top: 0.22rem;
+        .back{
+            float:left;
+            width:0.18rem;
+            height:0.32rem;
+            margin-left:0.2rem;
+            margin-top:0.36rem;
+            img{
+                width:100%;
+            }
+        }
+        .van-search{
+            padding:0.22rem 0.14rem;;
+        }
+        .mass{
+            float:left;
+            width:0.42rem;
+            height:0.42rem;
+            margin-top:0.33rem;
+            margin-left:0.45rem;
+            img{
+                width:100%;
+            }
+        }
+    }
+    .van-search--show-action{
+        padding:0rem 0.2rem;
+    }
+    .van-search .van-cell{
+        width:5.97rem;
+        height:0.6rem;
+        background-color:#F7F7F7;
+        color:#BFBFBF;
+        border-radius:0.5rem;
+    }
+    .van-search__action{
+        color:#1F1F1F;
+        font-size:0.26rem;
+    }
+    .van-field__control{
+        color:#BFBFBF;
+    }
+    .search_body{
+        padding-bottom: 0.4rem;
+        .search_history{
+            padding:0rem 0.2rem;
+            margin-top:0.44rem;
+            .searchdel{
+                width:0.22rem;
+                height:0.24rem;
+                float:right;
+                margin-right:0.3rem;
+                margin-top:0.08rem;
+                img{
+                    width:100%;
+                    height:100%;
+                }
+            }
+            span{
+                font-size:0.34rem;
+                font-weight:bold;
+                color:#1F1F1F;
+            }
+            .history_table{
+                margin-bottom:0.1rem;
+                .history_list{
+                    display: inline-block;
+                    border-radius: 0.3rem; 
+                    background: #EBEBE9;
+                    padding: 0.13rem 0.27rem;
+                    margin-right: 0.2rem;
+                    margin-top: 0.2rem;
+                    color:#757575;
+                    font-size:0.24rem;
+                }
+            }
+        }
+    }
+    .search_recommend{
+        .title_img{
+            display: inline-block;
+            height: 0.34rem;
+            width: 0.34rem;
+        }
+        .search_recommend_title{
+            width: 2.9rem;
+            margin: 0 auto;
+            margin-top: 0.4rem;
+        }
+        .search_table_list{
+            margin-top: 0.2rem;
+            li{
+                width: 45%;
+                height: 4.04rem;
+                margin-left: 0.25rem;
+                display: inline-block;
+                background: url("../../../assets/imgs/living/tu1sousuo.png") no-repeat;
+                background-size: contain;
+                .titleimg_top{
+                    width: 1.3rem;
+                }
+                .title_bottom{
+                    margin-top: 2.8rem;
+                    .touxiang{
+                        width: 0.6rem;
+                        margin-left: 0.15rem;
+                        display: inline-block;
+                    }
+                    .tname{
+                        color: white;
+                        font-size: 0.18rem;
+                        position: relative;
+                        top: -0.3rem;
+                        left: 0.2rem;
+                    }
+                    .img_xin{
+                        position: relative;
+                        top: -0.8rem;
+                        left: 2.6rem;
+                        width: 0.5rem;
+                        height: 0.44rem;
+                    }
+                    .renshu{
+                            position: relative;
+                            left: 0.9rem;
+                            top: -0.3rem;
+                            display: inline-block;
+                            color: white;
+                            font-size: 0.15rem;
+                        img{
+                            display: inline-block;
+                            width: 0.28rem;
+                            height: 0.19rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .searchtop{
+        position:fixed;
+        top:0;
+        // left:0;
+        // width:100%;
+        width: 7.5rem;
+    }
+    .searchinp{
+        width:5.97rem;
+        float:left;
+    }
+    .tabmenu{
+        div{
+            float:left;
+        }
+    }
+    .srarch_list{
+        background-color:#F7F7F7;
+        margin-top:2.2rem;
+    }
+    .search-list-box{
+        padding: 1.4rem 0.2rem 0.2rem;
+        background: #f7f7f7;
+        margin-top: 0.56rem;
+        border-radius: 0.3rem 0.3rem 0 0;
+    }
+    .search-list {
+        .goodslist {
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .show-flag-living {
+                width: 3.45rem;
+                min-height: 5.6rem;
+                overflow: hidden;
+                margin-top: 0.25rem;
+                border-radius: .12rem;
+                background:rgba(255,255,255,1);
+                position: relative;
+                .im{
+                    width: 3.45rem;
+                    height: 5.16rem;
+                    border-radius: .12rem;
+                    &>img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: .12rem;
+                    }
+                }
+                .goodsli_title {
+                    position: absolute;
+                    left: .2rem;
+                    top:.2rem;
+                    .img_w{
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        display: block;
+                        height: 0.6rem;
+                        width: 0.6rem;
+                        border-radius:50%;
+                        img {
+                            width: 100%;
+                            height: 100%; 
+                            border-radius:50%;
+                        }
+                    }
+                    
+                    h2 {
+                        display: block;
+                        width: 3.05rem;
+                        height: 0.6rem;
+                        line-height:  0.6rem;
+                        font-size: 0.28rem;
+                        color: rgba(21, 21, 21, 1);
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        &.indent {
+                            text-indent: 0.7rem;
+                        }
+                    }
+                }
+
+                .tit{
+                    display: block;
+                    font-size: .26rem;
+                    font-family:PingFang SC;
+                    font-weight:bold;
+                    color:rgba(31,31,31,1);
+                    margin-top: .22rem;
+                    position: absolute;
+                    left: .2rem;
+                    bottom: .8rem;
+                }
+
+                .gd_btm{
+                    position: absolute;
+                    left: .2rem;
+                    bottom: .2rem;
+                    span{
+                        display: inline-block;
+                    }
+                    .huifang,
+                    .zb{
+                        width: .96rem;
+                        height: .3rem;
+                        vertical-align: middle;
+                    }
+                    .zb{
+                        background: url("../../../assets/imgs/shop/zhibo.png") no-repeat 0 0;
+                        background-size: .96rem .3rem;
+                    }
+                    .huifang{
+                        background: url("../../../assets/imgs/shop/huifang.png") no-repeat 0 0;
+                        background-size: .96rem .3rem;
+                    }
+                    .num{
+                        font-size: .2rem;
+                        font-family:PingFang SC;
+                        font-weight:400;
+                        color:rgba(117,117,117,1);
+                        line-height: .4rem;
+                         margin-left: .15rem;
+                    }
+                }
+
+                .zan{
+                    width: .6rem;
+                    height: .6rem;
+                    background: url("../../../assets/imgs/shop/zan.png") no-repeat 0 0;
+                    background-size: .6rem .6rem;
+                    position: absolute;
+                    right: .13rem;
+                    bottom: .13rem;
+                }
+
+                .goodsli_pricebox {
+                    // margin-top: 0.06rem;
+
+                    &>* {
+                        float: left;
+                    }
+
+                    p {
+                        font-size: 0.28rem;
+                        color: rgba(219, 49, 42, 1);
+                        // line-height: 0.61rem;
+                        line-height: 0.51rem;
+                        font-weight: bold;
+                        height: 0.51rem;
+                        margin-right: 0.14rem;
+                    }
+
+                    .bytips {
+                        background-color: rgba(254, 216, 180, 1);
+                        color: rgba(226, 99, 33, 1);
+                        margin-top: 0.085rem;
+                        margin-right: 0.13rem;
+                        border-radius: 0.06rem;
+                        font-size: 0.22rem;
+                    }
+
+                    .zstips {
+                        border: 1px solid rgba(147, 90, 144, 1);
+                        text-align: center;
+                        line-height: 0.34rem;
+                        color: rgba(147, 90, 144, 1);
+                        border-radius: 50%;
+                        width: 0.34rem;
+                        height: 0.34rem;
+                        margin-top: 0.085rem;
+                        font-size: 0.12rem;
+                    }
+                }
+
+                .goodsli_numberbox {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 2.8rem;
+                    min-width: 140px;
+                    flex-wrap: nowrap;
+                    padding: 0.1rem 0rem;
+
+                    span {
+                        font-size: 0.22rem;
+                        color: rgba(145, 145, 145, 1);
+                        line-height: 0.29rem;
+                        height: 0.29rem;
+                    }
+                }
+
+                .goodsli_linksbox {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    height: 0.3rem;
+                    box-sizing: border-box;
+                    padding-right: 0.08rem;
+
+                    .shop {
+                        font-size: 0.22rem;
+                        color: rgba(194, 107, 68, 1);
+                        line-height: 0.3rem;
+                        cursor: pointer;
+                    }
+
+                    .details {
+                        font-size: 0.22rem;
+                        color: rgba(147, 147, 147, 1);
+                        line-height: 0.3rem;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    /*切换到大图*/
+    .changebigsize,  
+    .changesmallsize{
+        width: .8rem;
+        height: .8rem;
+        border-radius:50%;
+        position: fixed;
+        right: .24rem;
+        bottom: 2.47rem;
+    }
+    .changebigsize{ 
+        background: url("../../../assets/imgs/shop/changebigsize.png") no-repeat 0 0;
+        background-size: .8rem .8rem;
+    }
+    .changesmallsize{ 
+        background: url("../../../assets/imgs/shop/changesmallsize.png") no-repeat 0 0;
+        background-size: .8rem .8rem;
+    }
+
+    .big_list{
+        .goodslist {
+            padding: 0 0 1.58rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .show-flag-living {
+                width: 7.1rem;
+                height: 4rem;
+                overflow: hidden;
+                margin-top: 0.25rem;
+                border-radius: .12rem;
+                background:rgba(255,255,255,1);
+                position: relative;
+                .im{
+                    width: 7.1rem;
+                    height: 4rem;
+                    overflow: hidden;
+                    border-radius: .12rem;
+                    &>img {
+                        width: 100%;
+                        border-radius: .12rem;
+                    }
+                }
+                .goodsli_title {
+                    position: absolute;
+                    left: .2rem;
+                    top:.2rem;
+                    .img_w{
+                        display: block;
+                        height: 0.6rem;
+                        width: 0.6rem;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        border-radius:50%;
+                        img {
+                            width: 100%;
+                            height: 100%; 
+                            border-radius:50%;
+                        }
+                    }
+                    
+                    h2 {
+                        height: 0.6rem;
+                        line-height:  0.6rem;
+                        font-size: 0.28rem;
+                        color: rgba(21, 21, 21, 1);
+                        &.indent {
+                            text-indent: 0.7rem;
+                        }
+                    }
+                }
+
+                .tit{
+                    display: block;
+                    font-size: .26rem;
+                    font-family:PingFang SC;
+                    font-weight:bold;
+                    color:rgba(31,31,31,1);
+                    margin-top: .22rem;
+                    position: absolute;
+                    left: .2rem;
+                    bottom: 0.81rem;
+                }
+
+                .gd_btm{
+                    position: absolute;
+                    left: .2rem;
+                    bottom: 0.21rem;
+                    margin-top: .36rem;
+                    span{
+                        display: inline-block;
+                    }
+                    .huifang,
+                    .zb{
+                        width: .96rem;
+                        height: .3rem;
+                        vertical-align: middle;
+                    }
+                    .zb{
+                        background: url("../../../assets/imgs/shop/zhibo.png") no-repeat 0 0;
+                        background-size: .96rem .3rem;
+                    }
+                    .huifang{
+                        background: url("../../../assets/imgs/shop/huifang.png") no-repeat 0 0;
+                        background-size: .96rem .3rem;
+                    }
+                    .num{
+                        font-size: .2rem;
+                        font-family:PingFang SC;
+                        font-weight:400;
+                        color:rgba(117,117,117,1);
+                        line-height: .4rem;
+                         margin-left: .15rem;
+                    }
+                }
+
+                .zan{
+                    width: .6rem;
+                    height: .6rem;
+                    background: url("../../../assets/imgs/shop/zan.png") no-repeat 0 0;
+                    background-size: .6rem .6rem;
+                    position: absolute;
+                    right: .13rem;
+                    bottom: .13rem;
+                }
+
+                .goodsli_pricebox {
+                    // margin-top: 0.06rem;
+
+                    &>* {
+                        float: left;
+                    }
+
+                    p {
+                        font-size: 0.28rem;
+                        color: rgba(219, 49, 42, 1);
+                        // line-height: 0.61rem;
+                        line-height: 0.51rem;
+                        font-weight: bold;
+                        height: 0.51rem;
+                        margin-right: 0.14rem;
+                    }
+
+                    .bytips {
+                        background-color: rgba(254, 216, 180, 1);
+                        color: rgba(226, 99, 33, 1);
+                        margin-top: 0.085rem;
+                        margin-right: 0.13rem;
+                        border-radius: 0.06rem;
+                        font-size: 0.22rem;
+                    }
+
+                    .zstips {
+                        border: 1px solid rgba(147, 90, 144, 1);
+                        text-align: center;
+                        line-height: 0.34rem;
+                        color: rgba(147, 90, 144, 1);
+                        border-radius: 50%;
+                        width: 0.34rem;
+                        height: 0.34rem;
+                        margin-top: 0.085rem;
+                        font-size: 0.12rem;
+                    }
+                }
+
+                .goodsli_numberbox {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 2.8rem;
+                    min-width: 140px;
+                    flex-wrap: nowrap;
+                    padding: 0.1rem 0rem;
+
+                    span {
+                        font-size: 0.22rem;
+                        color: rgba(145, 145, 145, 1);
+                        line-height: 0.29rem;
+                        height: 0.29rem;
+                    }
+                }
+
+                .goodsli_linksbox {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    height: 0.3rem;
+                    box-sizing: border-box;
+                    padding-right: 0.08rem;
+
+                    .shop {
+                        font-size: 0.22rem;
+                        color: rgba(194, 107, 68, 1);
+                        line-height: 0.3rem;
+                        cursor: pointer;
+                    }
+
+                    .details {
+                        font-size: 0.22rem;
+                        color: rgba(147, 147, 147, 1);
+                        line-height: 0.3rem;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    .nav_type li{
+        display: inline-block;
+        min-width: 1.32rem;
+        padding: 0 .1rem;
+        height: .52rem;
+        line-height: .52rem;
+        text-align: center;
+        border-radius:.3rem;
+        font-size: .24rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(117,117,117,1);
+        background:rgba(235,235,233,1);
+        margin-right: .2rem;
+        margin: 0 .2rem .2rem 0;
+    }
+
+    .nav_type li.active{
+        color:rgba(255,255,255,1);
+        background:rgba(255,189,4,1);
+    }
+    .nav_type li:last-child{
+        margin-right: 0;
+    }
+
+    // .goodslist_xp {
+    //     padding-top: .2rem;
+    //     display: flex;
+    //     justify-content: space-between;
+    //     flex-wrap: wrap; 
+    //     background: rgba(247, 247, 247, 1);
+    //     overflow: hidden;
+    //     cursor: pointer;
+    //     border-radius: .3rem .3rem 0 0;
+    // }
+    
+    .show-flag-goods {
+        width: 3.45rem;
+        height: 5.6rem;
+        overflow: hidden;
+        margin-top: 0.25rem;
+        border-radius: .12rem;
+        // background: rgba(255, 255, 255, 1) url("./img/dafult_zhuazhou.png") no-repeat 0 0;
+        background: rgba(255, 255, 255, 1);
+        background-size: 100% 100%;
+        position: relative;
+        float: left;
+        cursor: pointer;
+        .im {
+            width: 3.45rem;
+            height: 3.44rem;
+            border-radius: .12rem .12rem 0 0;
+            display: block;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: .12rem .12rem 0 0;
+            }
+        }
+        .tit {
+            display: block;
+            font-size: .26rem;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(31, 31, 31, 1);
+            margin-top: .22rem;
+            padding-left: .2rem;
+            height: .7rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .price,
+        .price_btm {
+            font-size: .02rem;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: rgba(255, 91, 79, 1);
+            margin-top: .2rem;
+            padding-left: .2rem;
+        }
+
+        .price_btm {
+            color: rgba(117, 117, 117, 1);
+        }
+
+        .gd_btm {
+            margin-top: .36rem;
+            span {
+                display: inline-block;
+            }
+            .num {
+                font-size: .2rem;
+                font-family: PingFang SC;
+                font-weight: 400;
+                color: rgba(117, 117, 117, 1);
+                line-height: .4rem;
+                margin-left: .15rem;
+            }
+        }
+
+        .cang,
+        .canged {
+            width: .4rem;
+            height: .4rem;
+            border-radius: 50%;
+            position: absolute;
+            right: .13rem;
+            bottom: .13rem;
+        }
+        .cang{
+            background: url("../../../assets/imgs/shop/cang.png") no-repeat 0 0;
+            background-size: .4rem .4rem;
+        }
+        .canged{
+            background: url("../../../assets/imgs/shop/canged.png") no-repeat 0 0;
+            background-size: .4rem .4rem;
+        }
+    }
+
+    .show-flag-goods:nth-of-type(even) {
+        margin-left: .2rem;
+    }
+    
+    /*新品切换大图*/
+    .big_list{
+        // .goodslist_xp {
+        //     padding-top: .2rem;
+        //     display: flex;
+        //     justify-content: space-between;
+        //     flex-wrap: wrap; 
+        //     background: rgba(247, 247, 247, 1);
+        //     overflow: hidden;
+        //     cursor: pointer;
+        //     border-radius: .3rem .3rem 0 0;
+        // }
+        
+        .show-flag-goods {
+            width: 6.7rem;
+            height: auto;
+            padding: .2rem;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+            border-radius: .12rem;
+            // background: rgba(255, 255, 255, 1) url("./img/dafult_zhuazhou.png") no-repeat 0 0;
+            background: rgba(255, 255, 255, 1);
+            background-size: 100% 100%;
+            position: relative;
+            float: left;
+            cursor: pointer;
+            .cang,
+            .canged {
+                right: .35rem;
+                bottom: .35rem;
+            }
+        }
+        
+        .show-flag-goods:nth-of-type(even) {
+            margin-left: 0;
+        }
+        
+        .show-flag-goods .im {
+            width: 2.09rem;
+            height: 2.09rem;
+            border-radius: .12rem;
+        }
+        
+        .show-flag-goods .im img {
+            border-radius: .12rem .12rem 0 0;
+        }
+        
+        .show-flag-goods .tit {
+            position: absolute;
+            top: 0rem;
+            left: 2.3rem;
+            right: .2rem;
+        }
+        
+        .show-flag-goods .price,
+        .price_btm {
+            position: absolute;
+            bottom: .26rem;
+            left: 2.3rem;
+        }
+
+        .show-flag-goods .price{
+            bottom: .65rem;
+        }
+    }
+    .xinpin-sort-filter{
+        margin-top: .2rem;
+        position: relative;
+        .sort ul{
+            overflow: hidden;
+            li{ 
+                display: inline-block;
+                margin-right: .7rem;
+                .t{
+                    font-size: .24rem;
+                    font-family:PingFang SC;
+                    font-weight:500;
+                    color:rgba(31,31,31,1);
+                    .pricearrow_w{
+                        display: inline-block;
+                        width: .24rem;
+                        height: .24rem;
+                        vertical-align: middle;
+                        margin : -0.03rem .05rem 0;
+                        position: relative;
+                        span{
+                            display: inline-block;
+                            width: .24rem;
+                            height: .24rem;
+                            background: url("../../../assets/imgs/shop/pricearrow.png") no-repeat 0 0;
+                            background-size: .24rem .24rem;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                        }
+                        span.pricearrowupactive{
+                            background: url("../../../assets/imgs/shop/pricearrowupactive.png") no-repeat 0 0;
+                            background-size: .24rem .24rem;
+                            top: 0;
+                        }
+                        span.pricearrowdownactive{
+                            background: url("../../../assets/imgs/shop/pricearrowdownactive.png") no-repeat 0 0;
+                            background-size: .24rem .24rem;
+                            position: absolute;
+                            bottom: 0;
+                        }
+                    }
+                }
+            }    
+            li.active .t{
+                color: rgba(255,189,4,1);
+            }
+        }
+
+        .filter{
+            position: absolute;
+            right: .2rem;
+            top: 0;
+            .t{
+                font-size: .24rem;
+                font-family:PingFang SC;
+                font-weight:500;
+                color:rgba(31,31,31,1);
+            }
+            .ic{
+                display: inline-block;
+                width: .22rem;
+                height: .24rem;
+                overflow: hidden;
+                vertical-align: middle;
+                margin: -0.03rem 0 0 .1rem;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

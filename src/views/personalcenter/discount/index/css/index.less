@@ -1,0 +1,234 @@
+.mydiscount{
+    max-width: 7.5rem;
+    .header {
+        width: 7.5rem;
+        border-bottom: 1px solid #DEDEDE;
+        background: white;
+        text-align: center;
+        position: fixed;
+        z-index: 100;
+
+        img {
+            transform: rotate(180deg);
+            width: 0.2rem;
+            height: 0.35rem;
+            display: block;
+            padding: 0.4rem 0;
+            margin-left: 0.46rem;
+        }
+
+        span {
+            position: absolute;
+            top: 0.4rem;
+            left: 50%;
+            margin-left: -0.55rem;
+            font-size: 0.34rem;
+            color: #333333;
+        }
+
+        .mydiscount-path{
+            font-size: .26rem;
+            font-family:PingFang SC;
+            font-weight:500;
+            color:rgba(31,31,31,1);
+            position: absolute;
+            right: .2rem;
+            top: .46rem;
+        }
+    }
+    .discount_list{
+        
+        padding: 1.42rem .2rem .2rem;
+        .t_w{padding: .2rem .2rem 0}
+        ul{
+            padding-top: .2rem; 
+            li{
+                margin-bottom: .2rem;
+                position: relative;
+                .box{
+                    width: 7.1rem;
+                    min-height: .2rem;
+                    .lt{ 
+                        width: 2rem;
+                        height: 2rem;
+                        span.bt{
+                            display: block;
+                            padding: .59rem 0 0 .5rem;
+                            font-size: .3rem;
+                            font-family:PingFang SC;
+                            font-weight:bold;
+                            color:rgba(255,255,255,1);
+                            span{
+                                font-size: .62rem;
+                                font-family:DIN;
+                                font-weight:bold;
+                                margin-left: .05rem;
+                            }
+                        }
+                        .man{
+                            font-size: .24rem;
+                            font-family:PingFang SC;
+                            font-weight:500;
+                            color:rgba(255,255,255,1);
+                            text-align: center;
+                        }
+                    }
+                    .rt{
+                        width: 4.9rem;
+                        height: 1.7rem;
+                        position: absolute;
+                        left: 2.2rem;
+                        top: 0;
+                        padding-top: .3rem;
+                        .tit{
+                            display: block;
+                            font-size: .24rem;
+                            font-family:PingFang SC;
+                            font-weight:bold;
+                            color:rgba(255,255,255,1);
+                        }
+                        .fanwei{
+                            display: inline-block;
+                            width: 1.1rem;
+                            height: 0.3rem;
+                            line-height: .28rem;
+                            background:rgba(255,189,4,0);
+                            border: 1px solid rgba(255, 255, 255, 1);
+                            border-radius: .15rem;
+                            font-size: 0.2rem;
+                            font-family:PingFang SC;
+                            font-weight:bold;
+                            color:rgba(255,255,255,1);
+                            text-align: center;
+                            margin-top: .1rem;
+                            box-sizing: border-box;
+                        }
+                        .date{
+                            display: block;
+                            font-size: .24rem;
+                            font-family:PingFang SC;
+                            font-weight:500;
+                            color:rgba(255,255,255,1);
+                            margin-top: .12rem;
+                        }
+                        .rule{
+                            display: block;  
+                            font-size: .22rem;
+                            font-family:PingFang SC;
+                            font-weight:500;
+                            color:rgba(255,255,255,1);
+                            margin-top: .1rem;
+                        }
+                        .btn{
+                            width: 1.32rem;
+                            height: .54rem;
+                            line-height: .54rem;
+                            background:rgba(255,255,255,1);
+                            border-radius: .27rem;
+                            font-size: .24rem;
+                            font-family:PingFang SC;
+                            font-weight:500;
+                            text-align: center;
+                            color:rgba(255,189,4,1);
+                            position: absolute;
+                            right: .35rem;
+                            top: .73rem;
+                        }
+                        .btn_used{
+                            width: 1.18rem;
+                            height: 1.13rem;
+                            position: absolute;
+                            right: 0rem;
+                            top: .45rem;
+                            background: url("./../../../../../assets/imgs/personal/btn_used.png") no-repeat;
+                            background-size:  1.18rem 1.13rem;
+                        }
+                        .btn_date{
+                            width: 1.18rem;
+                            height: 1.13rem;
+                            position: absolute;
+                            right: 0rem;
+                            top: .45rem;
+                            background: url("./../../../../../assets/imgs/personal/btn_date.png") no-repeat;
+                            background-size:  1.18rem 1.13rem;
+                        }
+                        .geted{
+                            width : .84rem;
+                            height : .73rem;
+                            background: url("./../../../../../assets/imgs/personal/geted.png") no-repeat;
+                            background-size:  .84rem .73rem;
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                        }
+                    }
+                    .tips{
+                        padding:.2rem;
+                        font-size: .24rem;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(191,191,191,1);
+                        line-height: .36rem;
+                        background:rgba(255,255,255,1);
+                        border-radius: 0 0 .25rem .25rem;
+                    }
+                }
+            }
+            li .box{
+                background: url("./../../../../../assets/imgs/personal/jian.png") no-repeat;
+                background-size: 7.1rem 2rem;
+            }
+            li.zeng .box{
+                background: url("./../../../../../assets/imgs/personal/zeng.png") no-repeat;
+                background-size: 7.1rem 2rem;
+            }
+            li.daijin .box{
+                background: url("./../../../../../assets/imgs/personal/daijin.png") no-repeat;
+                background-size: 7.1rem 2rem;
+            }
+            li.yonged .box{
+                background: url("./../../../../../assets/imgs/personal/yonged.png") no-repeat;
+                background-size: 7.1rem 2rem;
+            }
+        }    
+       
+    }
+}    
+
+.discount_body_null{
+    text-align: center;
+    .im{
+        display: block;
+        width: 4.44rem;
+        height: 2.72rem;
+        margin: 0 auto;
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
+    .null_tip{
+ 
+        font-size: .26rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(117,117,117,1);
+        line-height: .38rem;
+        
+    }
+    .look_btn{
+        display: block;
+        width: 2.3rem;
+        height: .7rem;
+        background:rgba(255,189,4,1);
+        font-size: .32rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        line-height: .7rem;
+        text-align: center;
+        border-radius: .35rem;
+        margin: .97rem auto 0;
+    }
+}
+

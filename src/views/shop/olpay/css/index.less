@@ -1,0 +1,193 @@
+@import url('./../../../../assets/css/common.less');
+.confirmorderwrap{
+    background-color:  @bgcolor;
+    .header{
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        z-index: 100;
+        width: 7.5rem;
+        height: 0.9rem;
+        background-color: #fff;
+        box-sizing: border-box;
+        box-shadow: 0 0 1px 0 rgba(222,222,222,1);
+        img{
+            position: absolute;
+            left: 0.185rem;
+            top: 0;
+            padding: 0.275rem;
+            width: 0.2rem;
+            height: 0.35rem;
+            z-index: 50;
+        }
+        p{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 0.9rem;
+            line-height: 0.9rem;
+            font-size: 0.34rem;
+            font-weight: bold;
+            color: rgba(51,51,51,1);
+            text-align: center;
+        }
+    }
+    .containerwrap{
+        padding-top: 0.9rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        .top{
+            .top1{
+                background-color: #fff;
+                margin-bottom: 1px;
+                padding-top: .5rem;
+                img{
+                    width: 0.98rem;
+                    height: 0.98rem;
+                    padding: 0.38rem 0 0.2rem;
+                    margin: 0 auto;
+                }
+                p{
+                    text-align: center;
+                    font-size: 0.3rem;
+                    line-height: 0.4rem;
+                    color: rgba(51,51,51,1);
+                    padding-bottom: 0.34rem;
+                }
+                &.top11{
+                    p{
+                        padding-bottom: 0.08rem;
+                    }
+                    span{
+                        display: block;
+                        font-size: 0.26rem;
+                        line-height: 0.35rem;
+                        color: rgba(153,153,153,1);
+                        padding-bottom: 0.34rem;
+                        text-align: center;
+                    }
+                }
+            }
+            .top2{
+                background-color: #fff;
+                // margin-bottom: 1px;
+                padding: 0.3rem 0;
+                .li{
+                    padding-left: 0.5rem;
+                    .title{
+                        float: left;
+                        color: rgba(153,153,153,1);
+                        font-size: 0.28rem;
+                        line-height: 0.46rem;
+                    }
+                    .titleh{
+                        min-height: 1.38rem;
+                    }
+                    p{
+                        float: left;
+                        color: rgba(51,51,51,1);
+                        font-size: 0.26rem;
+                        line-height: 0.46rem;
+                        max-width: 5.04rem;
+                        margin-right: 0.2rem;
+                    }
+                }
+            }
+            .top3{
+                display: flex;
+                justify-content: space-around;
+                background-color: #fff;
+                padding: 0.82rem;
+                p{
+                    width: 2.48rem;
+                    height: 0.68rem;
+                    line-height: 0.68rem;
+                    border-radius: 0.38rem;
+                    background-color: rgba(245,245,245,1);
+                    text-align: center;
+
+                    color: rgba(102,102,102,1);
+                    font-size: 0.26rem;
+                    &.red{
+                        box-sizing: border-box;
+                        border: 1px solid rgba(219,49,42,1);
+                        color: rgba(219,49,42,1);
+                        background-color: #fff;
+                    }
+                }
+            }
+        }
+        .product_paytype_transptype{
+            background-color: transparent;
+            margin: 0.2rem auto;
+            .paytypebox{
+                .paytype{
+                    padding: 0.25rem 0.57rem;
+                    margin-bottom: 1px;
+                    .left{
+                        float: left;
+                        height: 0.94rem;
+                        img{
+                            padding-top: 0.18rem;
+                            width: 0.52rem;
+                            height: 0.52rem;
+                            margin-right: 0.3rem;
+                            float: left;
+                        }
+                        .content{
+                            float: left;
+                            p{
+                                font-size: 0.28rem;
+                                color: rgba(51, 51, 51, 1);
+                                // line-height: 1.0em;
+                                margin-bottom: 0.18rem;
+                            }
+                            span{
+                                color: rgba(153, 153, 153, 1);
+                                font-size: 0.22rem;
+                            }
+                        }
+                    }
+                    .right{
+                        float: right;
+                        padding-top: 0.24rem;
+                        // .raido{
+    
+                        // }
+                        span.raido{
+                            display: inline-block;
+                            margin-bottom: -0.05rem;
+                            width: 0.3rem;
+                            height: 0.3rem;
+                            box-sizing: border-box;
+                            border-radius: 50%;
+                            border: 1px solid rgba(153, 153, 153, 1);
+                            position: relative;
+                            &::after{
+                                content: '';
+                                position: absolute;
+                                left: 50%;
+                                top: 50%;
+                                transform: translate(-50%,-50%);
+                                width: 0.2rem;
+                                height: 0.2rem;
+                                border-radius: 50%;
+                                background-color:rgba(153, 153, 153, 1);
+                            }
+    
+                            
+                            &.active{
+                                border-color: rgba(255, 65, 30, 1);
+                                &::after{
+                                    background-color: rgba(255, 65, 30, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

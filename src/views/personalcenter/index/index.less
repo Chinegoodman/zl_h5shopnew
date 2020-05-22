@@ -1,0 +1,470 @@
+* {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.box {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: #F3F3F3;
+    padding-bottom: 1.6rem;
+}
+
+.backgd {
+    width: 100%;
+    height: 3.62rem;
+    background: url("./../../../assets/imgs/personal/bg_yuan.png") no-repeat;
+    background-size: contain;
+    position: relative;
+}
+
+.header_tou {
+    width: 6rem;
+    height: 1.16rem;
+    position: absolute;
+    top: .96rem;
+    left: .3rem;
+    z-index: 10;
+    text-align: center;
+    border-radius: 50%;
+    .logined-box{
+        width: 6rem;
+        height: 1.16rem;
+        position: relative;
+        font-size: .3rem;
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(31,31,31,1);
+    }
+}
+
+.header_tou .hd-face {
+    width: 1.16rem;
+    height: 1.16rem;
+    border-radius: 50%;
+}
+.log_guild{
+    font-size: 0.3rem;
+    color:rgba(31,31,31,1);
+    position: absolute;
+    top: 50%;
+    left: 1.56rem;
+    transform: translateY(-50%);
+}
+
+.use_top{
+    min-height: .32rem;
+    position: absolute;
+    bottom: .73rem;
+    left: 1.56rem;
+    overflow: hidden;
+    .logined{
+        display: inline-block;
+        float: left;   
+    }
+}
+
+.mypro{
+    display: block;
+    width: 4.26rem;
+    height: .08rem;
+    overflow: hidden;
+    border-radius: .04rem;
+    position: absolute;
+    bottom: 0.48rem;
+    left: 1.56rem;
+}
+
+.mypro::-webkit-progress-bar{
+    background:rgba(31,31,31,0.1);
+ }
+ .mypro::-webkit-progress-value {
+    background:rgba(31,31,31,1); 
+ }
+.edit_info{
+    margin-left: .21rem;
+    cursor: pointer;
+    .edit{
+        display: inline-block;
+        width: .22rem;
+        height: .22rem;
+        background: url("./../../../assets/imgs/personal/use_edit.png") no-repeat 0 0;
+        background-size: .22rem .22rem;
+        margin-right: .1rem;
+    }
+}
+
+
+.info_use{
+    position: absolute;
+    bottom: 0.12rem;
+    left: 1.56rem;
+    color:rgba(31,31,17,1);
+    font-size: .24rem;
+    font-weight:500;
+    font-family:PingFang SC;
+}
+
+.level_use{
+    display: inline-block;
+    width: .94rem;
+    height: .34rem;
+    margin-left: .1rem;
+    float: left;
+    img{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.header_box {
+    width: 90%;
+    background: white;
+    // height: 2.73rem;
+    height: 2.5rem;
+    margin: 0 auto;
+    border-radius: 0.08rem;
+    position: relative;
+    top: 1.5rem;
+    z-index: 5;
+}
+
+.box .banner {
+    display: block;
+    width: 90%;
+    height: 0.72rem;
+    margin: 0 auto;
+    margin-top: 0.4rem;
+    background: url("./../../../assets/imgs/personal/gr-jinjbeij@3x.png") no-repeat;
+    background-size: cover;
+    line-height: 0.84rem;
+}
+
+
+.translate {
+    background: white;
+    margin: 0.2rem;
+}
+
+.service{
+    width: 90%;
+    height: 1.78rem;
+    background: white;
+    margin: 0.2rem auto;
+    ul{
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+.option {
+    width: 90%;
+    /* height: 2rem; */
+    background: white;
+    margin: 0 auto;
+    /* padding-bottom: 5em; */
+}
+
+.header_center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 0.8rem;
+}
+
+.header_center p {
+    margin-bottom: 0.12rem;
+}
+
+.username {
+    font-size: 0.36rem;
+    color: #333333;
+    height: 0.4rem;
+}
+
+.title {
+    font-size: 0.22rem;
+    color: #999999;
+    font-family: MicrosoftYaHeiSemibold;
+    height: 0.4rem;
+}
+
+.btn {
+    width: 1.6rem;
+    height: 0.6rem;
+    border-radius: 0.6rem;
+    border: 0;
+    background-image: linear-gradient(to right, #FF2013, #FF5223);
+    box-shadow: 0px 0.02rem 0.16rem 0px rgba(255, 55, 27, 0.36);
+    color: white;
+    font-size: 0.26rem;
+}
+
+.banner>span {
+    display: block;
+    position: relative;
+    left: 1.7rem;
+    width: 5rem;
+    color: #FFFFFF;
+    overflow: hidden;
+    z-index: 10;
+    color: #fff;
+    font-size: 0.24rem;
+    line-height: 0.86rem;
+    overflow: hidden;
+    height: 0.76rem;
+}
+
+.goldmassbox {
+    position: relative;
+}
+
+.goldmassbox .list-item {
+    position: absolute;
+    // left: 0;
+    left: 1.7rem;
+    color: #fff;
+}
+
+.goldmassbox>div>span {
+    float: left;
+}
+
+.goldmassbox>div>.szicon {
+    display: block;
+    float: left;
+    width: 0.17rem;
+    height: 0.2rem;
+    margin-top: 0.3rem;
+    margin-left: 0.2rem;
+}
+
+.goldmassbox>div>.szicon img {
+    width: 100%;
+    height: 100%;
+}
+
+.pub-top-tile {
+    width: 100%;
+    padding: 0.3rem 0 0;
+    overflow: hidden;
+    .top_in{ 
+        height: .36rem;
+        position: relative;
+    }
+    .lt{
+        display: block;
+        height: .35rem;
+        line-height: .35rem;
+        font-size: .34rem;
+        font-family:PingFang SC;
+        font-weight:800;
+        color:rgba(31,31,31,1);
+        margin-left: 0.45rem;
+       
+    }
+    .lt:before{
+        content: "";   
+        display: block;   
+        width: .05rem;
+        height: .3rem;
+        background:rgba(255,219,61,1);
+        border-radius: 0.03rem;
+        margin-right: .1rem;
+        position: absolute;
+        top: 50%;
+        left: .3rem;
+        margin-top: -.15rem;
+    }
+    .rt{
+        position: absolute;
+        top: 0;
+        right: .3rem;
+        color:rgba(191,191,191,1);
+        img {
+            display: inline-block;
+            width: 0.12rem;
+            height: 0.22rem;
+            margin-left: 0.11rem;;
+            vertical-align: middle;
+        }
+    }
+}
+
+.translate { 
+    padding: .3rem 0 0.03rem;
+    border-radius: .12rem;
+}
+.translate li {
+    width: 20%;
+    padding: 0.3rem 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    span.im{
+        width: 0.49rem;
+        height: 0.42rem;
+    }
+}
+
+.translate{
+    .state-list{
+        li{
+            span.im{
+                width: 0.48rem;
+                height: 0.48rem;
+            }
+        }
+    }
+}
+
+.translate li img {
+    width: 100%;
+    height: 100%;
+}
+
+.translate li span {
+    font-size: 0.24rem;
+    margin-top: .20rem;
+    font-family:PingFang SC;
+    font-weight:500;
+    color:rgba(31,31,31,1);
+}
+
+.service li {
+    // width: 33.33%;
+    padding: 0.3rem 0;
+}
+
+.service li img {
+    width: 0.6rem;
+    margin: 0 auto;
+}
+
+.service li span {
+    font-size: 0.24rem;
+    color: #999999;
+    position: relative;
+    top: 0.11rem;
+}
+
+.option div {
+    width: 100%;
+    padding: 0.28rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid #DEDEDE;
+}
+
+.option div img {
+    width: 0.38rem;
+    float: left;
+    margin-left: 0.24rem;
+    margin-right: 0.2rem;
+}
+
+// .option div:nth-child(3),
+// .option div:nth-child(4) {
+//     padding-left: 0.82rem;
+//     box-sizing: border-box;
+// }
+
+.option div:last-of-type {
+    border-bottom: none;
+}
+
+.back {
+    cursor: pointer;
+}
+
+.translate {
+    .my-serve,
+    .about-zhua-zhou{
+        padding-top: 10px;
+        overflow: hidden;
+        li{
+            display: block;
+            width: 33.3333%;
+            float: left;
+            text-align: center;
+            font-size: 0.24rem;
+            font-weight:500;
+            color:rgba(31,31,31,1);
+            span{
+                display: block;
+            }
+            span.im{
+                width: .97rem;
+                height: .98rem;
+                margin: 0 auto;
+            }
+            span.t{
+                margin-top: 0.02rem;
+            }
+        }
+
+    }
+}
+
+.login-banner{
+    width: 6.7rem;
+    height: .87rem;
+    padding: .27rem .2rem 0;
+    position: absolute;
+    top: 2.5rem;
+    left: .2rem;
+    background: url("./../../../assets/imgs/personal/login-banner.png") no-repeat;
+    background-size: cover;
+    color:rgba(191,191,191,1);
+    font-size: .22rem;
+    font-family:PingFang SC;
+    font-weight:500;
+    .huang-guan{
+        display: inline-block;
+        width: .32rem;
+        height: .32rem;
+        margin-right: .11rem;
+        vertical-align: middle;
+        margin-top: -0.09rem;
+    }
+    .zhua_vip{
+        font-size: .26rem;
+        font-weight:800;
+        color: #fff;
+        padding-right: .05rem;
+    }
+
+    .txt{
+        font-weight:500;
+    }
+
+    .txt::before{
+        content:'';
+        display: inline-block;
+        width: 0.03rem;
+        height: 0.23rem;
+        background: rgba(191,191,191,1);
+        margin: -0.044rem .1rem 0;
+        vertical-align: middle;
+    }
+
+    
+    .look_guild{
+        display: inline-block;
+        width: 1.08rem;
+        height: .32rem;
+        background: url("./../../../assets/imgs/personal/look_guild.png") no-repeat 0 0;
+        background-size: 100% 100%;
+        vertical-align: middle;
+        position: absolute;
+        right: .2rem;
+        top: .29rem;
+    }
+}
