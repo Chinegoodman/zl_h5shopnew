@@ -1142,7 +1142,7 @@
                     forbidClick: true
                 });
                 that.api.productdetails.getShopType({
-                    shopId:Number(that.pagebaseInfo.brand_id)
+                    shopId:Number(that.shopdata.id)
                 }).then(res=>{
                     that.$toast.clear();
                     if(res.data.code==1){
@@ -1151,7 +1151,7 @@
                         let shopUserId = res.data.data.user_id;
                         let servicedata ={
                             type:shoptype,
-                            shopId:Number(that.pagebaseInfo.brand_id),
+                            shopId:Number(that.shopdata.id),
                             shopUserId:Number(shopUserId),
                         }
                         if(that.$route.params.webtype==0){
