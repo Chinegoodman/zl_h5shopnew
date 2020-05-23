@@ -51,6 +51,17 @@ Vue.use(SwipeItem); //下拉刷新 轻提示 图片懒加载 瀑布流滚动加�
 
 // Vue.use(vueSwiper); //swiper官方插件
 
+import eruda from 'eruda';
+if (process.env.NODE_ENV == 'development') {
+    eruda.init();
+} else if (process.env.NODE_ENV == 'production') {
+
+} else if (process.env.NODE_ENV == 'uat') {
+    eruda.init();
+} else if (process.env.NODE_ENV == 'gray') {
+    eruda.init();
+}
+
 import api from './api'
 Vue.prototype.api = api;
 
