@@ -4,7 +4,7 @@
     <div class="header">
       <div @click="gotosertchpage" class="searchbtn">
         <img src="@/assets/imgs/video/fangdj@2x.png" alt="抓周" />
-        <p class="_txtov1">大家都在搜“大美新疆”</p>
+        <p class="_txtov1">大家都在搜</p>
       </div>
       <div class="hd_rt">
         <div class="xunbao">
@@ -62,7 +62,7 @@
         <span>创意者秀</span>
       </p>
     </div>
-    <div class="guild-area" v-if="guildarea.length > 0">
+    <div class="guild-area" v-if="guildarea.length > 0 && list_content_show_type==1">
       <ul>
         <li v-for="(item,index) in guildarea" :key="index" id="item.id" :to="item.toUrl"  @click="gotodiamondlist(item)">
           <span class="m">
@@ -257,16 +257,16 @@
           <!-- role-type-dow为降序 role-type-up升 且后面图标跟上 -->
           <span>投资金价：</span>
           <div class="slide-box">
-            <div :class="{'role-type-level' : true,'jin-annimation-down':goldpricedata.trend==1,'jin-annimation-up':goldpricedata.trend==2}">
+            <div :class="{'role-type-level' : true,'jin-annimation-down':goldpricedata.trend==2,'jin-annimation-up':goldpricedata.trend==1}">
               <div class="jin-annimation">
-                <span :class="{'role-type-level' : true,'role-type-down':goldpricedata.trend==1,'role-type-up':goldpricedata.trend==2}">{{goldpricedata.goldPrice?goldpricedata.goldPrice:'获取中...'}}<span v-if="goldpricedata.goldPrice">/克</span></span>
-                <span class="ic"><img src="@/assets/imgs/shop/jin-jiang.png" alt="" v-if="goldpricedata.trend==1"></span>
-                <span class="ic"><img src="@/assets/imgs/shop/jin-zhang.png" alt="" v-if="goldpricedata.trend==2"></span>
+                <span :class="{'role-type-level' : true,'role-type-down':goldpricedata.trend==2,'role-type-up':goldpricedata.trend==1}">{{goldpricedata.goldPrice?goldpricedata.goldPrice:'获取中...'}}<span v-if="goldpricedata.goldPrice">/克</span></span>
+                <span class="ic" v-if="goldpricedata.trend==2"><img src="@/assets/imgs/shop/jin-jiang.png" alt=""></span>
+                <span class="ic" v-if="goldpricedata.trend==1"><img src="@/assets/imgs/shop/jin-zhang.png" alt="" ></span>
               </div>
               <div class="jin-annimation">
-                <span :class="{'role-type-level' : true,'role-type-down':goldpricedata.trend==1,'role-type-up':goldpricedata.trend==2}">{{goldpricedata.goldPrice?goldpricedata.goldPrice:'获取中...'}}<span v-if="goldpricedata.goldPrice">/克</span></span>
-                <span class="ic"><img src="@/assets/imgs/shop/jin-jiang.png" alt="" v-if="goldpricedata.trend==1"></span>
-                <span class="ic"><img src="@/assets/imgs/shop/jin-zhang.png" alt="" v-if="goldpricedata.trend==2"></span>
+                <span :class="{'role-type-level' : true,'role-type-down':goldpricedata.trend==2,'role-type-up':goldpricedata.trend==1}">{{goldpricedata.goldPrice?goldpricedata.goldPrice:'获取中...'}}<span v-if="goldpricedata.goldPrice">/克</span></span>
+                <span class="ic" v-if="goldpricedata.trend==2"><img src="@/assets/imgs/shop/jin-jiang.png" alt="" ></span>
+                <span class="ic" v-if="goldpricedata.trend==1"><img src="@/assets/imgs/shop/jin-zhang.png" alt="" ></span>
               </div>
             </div>
           </div>
@@ -476,11 +476,11 @@ export default {
       price_area_step : [
         {
           name : '1000以下',
-          area_input : [0,999] 
+          area_input : [0,1000] 
         },
         {
           name : '1000-5000',
-          area_input : [1000,4999] 
+          area_input : [1000,5000] 
         },
         {
           name : '5000-1万',
@@ -1195,7 +1195,10 @@ export default {
   line-height : .75rem;
 }
 #shopwrap .van-ellipsis{
-  overflow: auto;
+  // overflow: auto;
+}
+#shopwrap .van-tab__text--ellipsis{
+  // overflow: auto;
 }
 #shopwrap .van-tab--active.van-tab {
   color: rgba(51, 51, 51, 1);
