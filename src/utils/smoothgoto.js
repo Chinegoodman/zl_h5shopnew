@@ -1,5 +1,5 @@
 export function smoothgoto(target) {
-    var scrollT = document.body.scrollTop || document.documentElement.scrollTop;
+    var scrollT = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
     // console.log(scrollT);
     // console.log(target);
     var timer;
@@ -10,7 +10,7 @@ export function smoothgoto(target) {
     clearTimeout(timer2);
     if (scrollT > target) {
         timer = setInterval(function() {
-            var scrollT_new = document.body.scrollTop || document.documentElement.scrollTop
+            var scrollT_new = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop
             var step = Math.floor(-scrollT_new / 30);
             document.documentElement.scrollTop = document.body.scrollTop = step + scrollT_new;
             if (scrollT_new <= target) {
@@ -22,7 +22,7 @@ export function smoothgoto(target) {
         }, 1)
     } else if (scrollT == 0) {
         timer1 = setInterval(function() {
-            var scrollT_new = document.body.scrollTop || document.documentElement.scrollTop
+            var scrollT_new = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop
             var step = Math.floor(300 / 3 * 0.7);
             document.documentElement.scrollTop = document.body.scrollTop = step + scrollT_new;
             // console.log(scrollT)
@@ -35,7 +35,7 @@ export function smoothgoto(target) {
         }, 1)
     } else if (scrollT < target) {
         timer2 = setInterval(function() {
-            var scrollT_new = document.body.scrollTop || document.documentElement.scrollTop
+            var scrollT_new = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop
             var step = Math.floor(scrollT_new / 30);
             document.documentElement.scrollTop = document.body.scrollTop = step + scrollT_new;
             if (scrollT_new >= target) {
