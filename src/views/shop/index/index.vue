@@ -26,7 +26,8 @@
       </div> -->
     </div>
     <div class="navbar">
-      <van-tabs>
+      <div>{{indextabactive}}</div>
+      <van-tabs v-model="indextabactive">
         <van-tab
           v-for="(tit, index) in titlistmassage"
           :title="tit.category_name"
@@ -96,6 +97,7 @@
             class="goodsli"
             v-for="(item,index) in homelistmassage"
             :key="index"
+            :id="item.id"
           >
             <div class="im"> 
               <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="" v-if="change_big_small_flag_tj===1" />
@@ -144,6 +146,7 @@
               class="goodsli"
               v-for="(item,index) in homelistzbmsg"
               :key="index"
+              :id="item.id"
             >
               <div class="im">
                 <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="珠宝商品" v-if="change_big_small_flag_zb===1" />
@@ -233,6 +236,7 @@
             <div class="goodsli_xp" @click="gotogoodsdetails(item)"
               v-for="(item,index) in homelistxpmsg"
               :key="index"
+              :id="item.goods_id"
             >
               <div class="im">
                 <img :src="item.goods_image?item.goods_image:default_img_small" alt="珠宝商品" />
@@ -294,6 +298,7 @@
             class="goodsli"
             v-for="(item,index) in homelisttzjmsg"
             :key="index"
+            :id="item.goods_id"
           >
             <div class="show-flag-goods" v-if="item.sku_id">
               <div class="im">
@@ -387,6 +392,7 @@ export default {
     return {
       nodatashow:false,
       pagetypedata:"discountshop",
+      indextabactive : 1,
       active: 1,
       activeName: "",
       images: [], //banner图
@@ -526,6 +532,18 @@ export default {
     if(getsessionStorage('newcommershellflag') != 'yethas'){
       that.newcomershellshowstate = true;
     }
+
+    if(this.$route.query.tab){
+      that.indextabactive = this.$route.query.tab;
+    }
+    
+    this.$router.push({
+      path:'/shop',
+      query : {
+          tab : that.indextabactive
+      }
+    });
+    that.titleclick(that.indextabactive);
   },
   methods: {
     //跳转新人专区
@@ -589,21 +607,21 @@ export default {
       if(paramsdata.state==0){
         this.$router.push({
           path: "/living/livingdetails",
-          // query: {
-          //   livingurl: paramsdata.streamAddr
-          // }
+          query : {
+            tab : that.list_content_show_type
+          }
         });
       }else if(paramsdata.state==1){
         this.$router.push({
           path: "/living/livingreplay",
-          // query: {
-          //   livingurl: paramsdata.streamAddr
-          // }
+          query : {
+            tab : that.list_content_show_type
+          }
         });
       }
     },
     // 跳转商品详情
-    gotogoodsdetails(goodsid) {
+    gotogoodsdetails(goodsid,index) {
       let that = this;
        //存一个到时返回首页用的flag
       let returnflag = 1;
@@ -614,6 +632,9 @@ export default {
         params: {
           product_id: goodsid.sku_id,
           webtype: 1
+        },
+        query : {
+          tab : that.list_content_show_type
         }
       });
     },
@@ -740,34 +761,51 @@ export default {
       that.hasmorepage = 1;
       that.nodatashow = false;
       // ljx
+      console.log(type_index);
+      that.indextabactive = type_index;
       that.list_content_show_type = type_index;
+      this.$router.push({
+        path:'/shop',query : {
+        tab : that.list_content_show_type
+      }});
       //关掉投资金金价定时器
       clearInterval(that.goldpricetimer);
       switch(type_index){
         case 1 :
           //推荐列表
-          that.homelisttj();
+          if(getsessionStorage('homelisttjstorerange')){
+            that.homelistmassage = getsessionStorage('homelisttjstorerange');
+          }else{
+            that.homelisttj();
+          }
           break
         case 2 :
-        //直播列表
-        that.api.homedetails
-        .homelistfenleizb({})
-        .then(res => {
-          if(!res.data.code)return;
-          if(res.data.code == 1){
-            if(res.data.data.length > 0){
-              that.zhibotitletype = res.data.data;
-              that.obj_option.id = that.zhibotitletype[0].id;
-              that.obj_option.categoryName = that.zhibotitletype[0].name;
-              that.homelistzb();
-            }else{
-              this.$toast("直播分类暂无数据");
-            }   
-          }
-        })
+        //直播列表 
+        if(getsessionStorage('homelistzbstorerange')){
+            that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
+        }else{
+          that.api.homedetails
+          .homelistfenleizb({})
+          .then(res => {
+            if(!res.data.code)return;
+            if(res.data.code == 1){
+              if(res.data.data.length > 0){
+                that.zhibotitletype = res.data.data;
+                that.obj_option.id = that.zhibotitletype[0].id;
+                that.obj_option.categoryName = that.zhibotitletype[0].name;
+                that.homelistzb();
+              }else{
+                this.$toast("直播分类暂无数据");
+              }   
+            }
+          })
+        }
         break  
         case 3 :  
           //新品列表 
+        if(getsessionStorage('homelistxpstorerange')){
+          that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
+        }else{
           that.api.homedetails
           .homelistfenleixp({})
           .then(res => {
@@ -784,13 +822,19 @@ export default {
               }   
             }
           })
+        }
           break
         case 4 :
-          //投资金列表 
           clearInterval(that.goldpricetimer);  
           that.goldpricetimer = setInterval(that.goldmass,5000);
-          that.homelisttzj();
+          //投资金列表 
+          if(getsessionStorage('homelisttzjstorerange')){
+            that.homelisttzjmsg = getsessionStorage('homelisttzjstorerange');
+          }else{
+            that.homelisttzj();
+          }
           break
+          
       }
     },
     //直播的分类筛选 直播中 每日必看...
@@ -842,6 +886,9 @@ export default {
               that.homelistmassage.map( item => {
                 return item.change_size = 1;
               });
+              //缓存数据处理
+              let homelisttjstorerange = that.homelistmassage;
+              setsessionStorage('homelisttjstorerange',homelisttjstorerange);
             } 
 
             that.nextpage = res.data.data.nextpage;
@@ -894,6 +941,9 @@ export default {
             res.data.data.list.forEach(e => {
               that.homelistzbmsg.push(e);
             });
+            //缓存数据处理
+            let homelistzbstorerange = that.homelistzbmsg;
+            setsessionStorage('homelistzbstorerange',homelistzbstorerange);
           } 
 
           that.nextPage_zb = res.data.data.nextpage;
@@ -943,6 +993,9 @@ export default {
             res.data.data.list.forEach(e => {
               that.homelistxpmsg.push(e);
             });
+            //缓存数据处理
+            let homelistxpstorerange = that.homelistxpmsg;
+            setsessionStorage('homelistxpstorerange',homelistxpstorerange);
           }
           that.nextPage_xp = res.data.data.nextPage;
           if(that.nextPage_xp != "") {
@@ -1001,6 +1054,10 @@ export default {
                 that.homelisttzjmsg.push(e);
               });
             } 
+
+             //缓存数据处理
+            let homelisttzjstorerange = that.homelisttzjmsg;
+            setsessionStorage('homelisttzjstorerange',homelisttzjstorerange);
             
             that.nextpage_tzj = res.data.data.nextpage;
             console.log(that.nextpage_tzj);
@@ -1190,7 +1247,7 @@ export default {
   font-weight:500;
   color:rgba(31,31,31,1);
   display: inline-block;
-  padding : 0 .35rem;
+  padding : 0 .32rem;
   flex-basis : auto !important;
   line-height : .75rem;
 }

@@ -682,7 +682,11 @@
                 var returnflag = getsessionStorage('returnflag');
                 console.log();
                 if(returnflag){
-                    this.$router.push({path:'/shop'});
+                    this.$router.push({
+                        path:'/shop',
+                        query : {
+                            tab : this.$route.query.tab
+                        }});
                 }else{
                     this.$router.go(-1);
                 }
