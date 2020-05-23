@@ -26,7 +26,6 @@
       </div> -->
     </div>
     <div class="navbar">
-      <div>{{indextabactive}}</div>
       <van-tabs v-model="indextabactive">
         <van-tab
           v-for="(tit, index) in titlistmassage"
