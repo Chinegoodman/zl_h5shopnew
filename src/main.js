@@ -52,13 +52,17 @@ Vue.use(SwipeItem); //下拉刷新 轻提示 图片懒加载 瀑布流滚动加�
 // Vue.use(vueSwiper); //swiper官方插件
 
 import eruda from 'eruda';
-if (process.env.NODE_ENV == 'development') {
+if (process.env.VUE_APP_ENV == 'uat') {
+    // 测试环境
     eruda.init();
-} else if (process.env.NODE_ENV == 'production') {
-
-} else if (process.env.NODE_ENV == 'uat') {
+} else if (process.env.VUE_APP_ENV == 'production') {
+    // 生产环境
+    // eruda.init();
+} else if (process.env.VUE_APP_ENV == 'gray') {
+    // 灰度环境
     eruda.init();
-} else if (process.env.NODE_ENV == 'gray') {
+} else if (process.env.VUE_APP_ENV == 'development') {
+    // 开发环境
     eruda.init();
 }
 
