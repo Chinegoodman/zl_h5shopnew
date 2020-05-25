@@ -26,13 +26,14 @@
       </div> -->
     </div>
     <div class="navbar">
-      <van-tabs v-model="active">
+      <van-tabs v-model="indextabactive">
         <van-tab
-          :title="tit.category_name"
           v-for="(tit, index) in titlistmassage"
+          :title="tit.category_name"
+          :name="tit.category_id"
           :key="index"
         >
-          <div class="tab-title" slot="title" @click="titleclick(tit.tabindex)" >{{tit.category_name}}</div>
+          <div class="tab-title" slot="title" @click="titleclick(tit.type_index)" >{{tit.category_name}}</div>
         </van-tab>
       </van-tabs>
     </div>
@@ -61,7 +62,7 @@
         <span>创意者秀</span>
       </p>
     </div>
-    <div class="guild-area" v-if="guildarea.length > 0 && list_content_show_type===0">
+    <div class="guild-area" v-if="guildarea.length > 0 && list_content_show_type==1">
       <ul>
         <li v-for="(item,index) in guildarea" :key="index" id="item.id" :to="item.toUrl"  @click="gotodiamondlist(item)">
           <span class="m">
@@ -76,7 +77,7 @@
     </div>
 
     <!-- 推荐列表数据展示 -->
-    <div class="index_list_recommend sun" v-show="list_content_show_type===0">
+    <div class="index_list_recommend sun" v-show="list_content_show_type==1">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'list' : true,'big_list' : change_big_small_flag_tj===0}">
@@ -121,7 +122,7 @@
       </div>
     </div> 
     <!-- 直播列表数据展示 --> 
-    <div class="index_list_recommend lili" v-show="list_content_show_type===1">
+    <div class="index_list_recommend lili" v-show="list_content_show_type==2">
         <div class="nav_type">
           <ul>
             <li v-for="(tit, index) in zhibotitletype" :class="{'active':tab_active==index}" :key="index" @click="tabtittypezhibo(tit,index)">{{tit.name}}</li>
@@ -171,7 +172,7 @@
       <div class="changesize"></div>
     </div>  
     <!-- 新品列表数据展示 --> 
-     <div class="index_list_recommend wang" v-show="list_content_show_type===2">
+     <div class="index_list_recommend wang" v-show="list_content_show_type==3">
         <div class="nav_type">
           <!-- 分类tab -->
           <ul>
@@ -251,7 +252,7 @@
     </div>  
 
     <!-- 投资金列表start -->
-    <div class="rongtongjin-ad" v-if="list_content_show_type===3">
+    <div class="rongtongjin-ad" v-if="list_content_show_type==4">
         <span class="ad-tit">
           <img src="@/assets/imgs/shop/rongtongjin-tit.png" alt="">
         </span>
@@ -277,7 +278,7 @@
           <img src="@/assets/imgs/shop/rongtongjin-jin.png" alt="">
         </span>
     </div>
-    <div class="index_list_recommend tzj" v-show="list_content_show_type===3">
+    <div class="index_list_recommend tzj" v-show="list_content_show_type==4">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'tzj-list' : true,'tzj-big-list' : change_big_small_flag_tzj===0}">
@@ -390,7 +391,8 @@ export default {
     return {
       nodatashow:false,
       pagetypedata:"discountshop",
-      active: 0,
+      indextabactive : 1,
+      active: 1,
       activeName: "",
       images: [], //banner图
       explosive: [], //人气爆款
@@ -404,19 +406,23 @@ export default {
       titlistmassage: [
         {
           category_name:"推荐",
-          tabindex: 0  //推荐
+          category_id : 1,
+          type_index: 1  //推荐
         },
         {
           category_name:"直播",
-          tabindex: 1  //直播
+          category_id : 2,
+          type_index: 2  //直播
         },
         {
           category_name:"商城",
-          tabindex: 2  //推荐
+          category_id : 3,
+          type_index: 3  //推荐
         },
         {
           category_name:"投资金",
-          tabindex: 3  //推荐
+          category_id : 4,
+          type_index: 4  //推荐
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
@@ -467,7 +473,7 @@ export default {
       twoID:"",
       threeID:"",
       post_tab_type : 1,  //推荐  接口文档没更新  2为新品 已改其他接口实现
-      list_content_show_type : 0,  // 1为推荐列表显示 2为直播列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
+      list_content_show_type : 1,  // 1为推荐列表显示 2为直播列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
       obj_option : {},   //点击导航“直播” 传入请求直播列表的类型参数
       tab_active : 0, //直播列表下的分类查询选种项  热播中 每日必看...
       tab_active_xp : 0, //新品下的分类查询选种项
@@ -521,21 +527,22 @@ export default {
     that.bannerimages();
     that.getadvertisingarea(); //广告区
 
-    if (that.$route.query.tab != undefined) {
-      let tab = Number(this.$route.query.tab);
-      that.active = tab;
-      this.$router.push({
-        path:'/shop',
-        query : {
-            tab : that.active
-        }
-      });
-      that.titleclick(that.active);
-    }
     //新人专区推广弹层只弹一次
     if(getsessionStorage('newcommershellflag') != 'yethas'){
       that.newcomershellshowstate = true;
     }
+
+    if(this.$route.query.tab){
+      that.indextabactive = this.$route.query.tab;
+    }
+    
+    this.$router.push({
+      path:'/shop',
+      query : {
+          tab : that.indextabactive
+      }
+    });
+    that.titleclick(that.indextabactive);
   },
   methods: {
     //跳转新人专区
@@ -634,6 +641,7 @@ export default {
     goldmass() {
       let that = this;
       that.api.homedetails.goldmassage({}).then(res => {
+        console.log('金价定时器');
         if(res.data.code===1){
           that.goldpricedata = res.data.data[0];
           that.$forceUpdate();
@@ -715,6 +723,7 @@ export default {
       that.api.homedetails.homeadvertisingarea({
 
       }).then(res => {
+        console.log(res);
         that.guildarea = res.data.data;
       });
     },
@@ -732,7 +741,8 @@ export default {
         });
     },
     // 头部导航点击事件
-    titleclick(tabindex) {
+    titleclick(type_index) {
+      console.log(type_index);
       let that = this;
       this.removesession();
       
@@ -750,22 +760,17 @@ export default {
       that.hasmorepage = 1;
       that.nodatashow = false;
       // ljx
-     
-      that.active = tabindex;
-      that.list_content_show_type = tabindex;
-      that.$router.push(
-        {
-          path:'/shop',
-          query : {
-            tab : that.active
-          }
-      });
-
-     
+      console.log(type_index);
+      that.indextabactive = type_index;
+      that.list_content_show_type = type_index;
+      this.$router.push({
+        path:'/shop',query : {
+        tab : that.list_content_show_type
+      }});
       //关掉投资金金价定时器
       clearInterval(that.goldpricetimer);
-      switch(tabindex){
-        case 0 :
+      switch(type_index){
+        case 1 :
           //推荐列表
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
@@ -773,7 +778,7 @@ export default {
             that.homelisttj();
           }
           break
-        case 1 :
+        case 2 :
         //直播列表 
         if(getsessionStorage('homelistzbstorerange')){
             that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
@@ -795,7 +800,7 @@ export default {
           })
         }
         break  
-        case 2 :  
+        case 3 :  
           //新品列表 
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
@@ -818,7 +823,7 @@ export default {
           })
         }
           break
-        case 3 :
+        case 4 :
           clearInterval(that.goldpricetimer);  
           that.goldpricetimer = setInterval(that.goldmass,5000);
           //投资金列表 
@@ -834,6 +839,7 @@ export default {
     //直播的分类筛选 直播中 每日必看...
     tabtittypezhibo(obj,index){
       let that = this;
+      console.log(name);
       that.tab_active = index;
       that.obj_option.id = obj.id;
       that.obj_option.categoryName = obj.name;

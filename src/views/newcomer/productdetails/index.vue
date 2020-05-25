@@ -67,7 +67,7 @@
                 </div>
                 <h1 class="title _txtov2">{{pagebaseInfo.goodsTitle}}</h1>
                 <div class="pricebox" v-if="$route.query.appname != 'wukong'">
-                    <div class="vipprice clearfix" v-if="pagebaseInfo.isNewUser==1">
+                    <div class="vipprice clearfix" v-if="$route.query.isnewuser==1">
                         <p><span>￥</span>{{pagebaseInfo.price}}</p>
                         <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
                         <p class="originalprice"><span>￥</span>{{pagebaseInfo.marketPrice}}</p>
