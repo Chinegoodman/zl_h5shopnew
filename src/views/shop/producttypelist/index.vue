@@ -109,6 +109,8 @@
         });
       },
       titlechange(id, index) {
+        console.log('id');
+        console.log(id);
         let json = JSON.parse(sessionStorage.getItem("searchtitle"));
         this.titlelist = json;
         for (let i = 0; i < this.titlelist.length; i++) {
@@ -125,13 +127,19 @@
             oneCategoryId: id
           })
           .then(function (res) {
-            that.list = res.data.data.goodsCategoryPojo;
-            if (res.data.data.goodsCategoryPojo.length > 0) {
-              that.nodatashow = false;
-            } else {
+            console.log('res');
+            console.log(res.data.code);
+            if(res.data.code == 1){
+              that.list = res.data.data.goodsCategoryPojo;
+              if (res.data.data.goodsCategoryPojo.length > 0) {
+                that.nodatashow = false;
+              } else {
+                that.nodatashow = true;
+              }
+            }else{
               that.nodatashow = true;
             }
-          });
+          })
       },
 
       // 存储二级标题ID

@@ -69,10 +69,10 @@
           </div>
 
           <!-- 费用明细 -->
-          <div class="paydetails" v-if="fymx_item.shopId == item.shopId" v-for="(fymx_item,fymx_index) in fymx_listdata" :key="fymx_index+'title'">
+          <div class="paydetails" v-for="(fymx_item,fymx_index) in fymx_listdata" :key="fymx_index+'title'" v-if="fymx_item.shopId == item.shopId">
             <a href="http://web.zhulihr.com/fysm.html" target="_blank">
               <div class="title clearfix">
-                <p v-if="fymx_item2.type==0" v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2">{{fymx_item2.chineseName}}</p>
+                <p v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2" v-if="fymx_item2.type===0" >{{fymx_item2.chineseName}}</p>
                 <!-- <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="抓周" /> -->
               </div>
             </a>
@@ -1015,7 +1015,6 @@ export default {
           } else {
             // debugger;
             that.$toast(data.data.info);
-            that.$toast('生成订单失败');
             return;
           }
         })

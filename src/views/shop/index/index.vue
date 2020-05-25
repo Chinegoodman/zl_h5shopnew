@@ -71,7 +71,7 @@
         </li>
       </ul>
     </div>
-    <div @click="gonewcomer" class="newcomerindexguild">
+    <div @click="gonewcomer" class="newcomerindexguild" v-if="list_content_show_type===0">
       <img src="@/assets/imgs/newcomer/xrhdrk.png" alt="">
     </div>
 
@@ -530,7 +530,7 @@ export default {
             tab : that.active
         }
       });
-      that.titleclick(that.active);
+      that.titleclick(that.active,false);
     }
     //新人专区推广弹层只弹一次
     if(getsessionStorage('newcommershellflag') != 'yethas'){
@@ -732,7 +732,8 @@ export default {
         });
     },
     // 头部导航点击事件
-    titleclick(tabindex) {
+    titleclick(tabindex,status) {
+      if(status){}
       let that = this;
       this.removesession();
       
@@ -767,6 +768,7 @@ export default {
       switch(tabindex){
         case 0 :
           //推荐列表
+          window.sessionStorage.removeItem('homelisttjstorerange');
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
           }else{
@@ -775,6 +777,7 @@ export default {
           break
         case 1 :
         //直播列表 
+        window.sessionStorage.removeItem('homelistzbstorerange');
         if(getsessionStorage('homelistzbstorerange')){
             that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
         }else{
@@ -796,7 +799,8 @@ export default {
         }
         break  
         case 2 :  
-          //新品列表 
+        //新品列表
+        window.sessionStorage.removeItem('homelistxpstorerange');  
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
         }else{
@@ -822,6 +826,7 @@ export default {
           clearInterval(that.goldpricetimer);  
           that.goldpricetimer = setInterval(that.goldmass,5000);
           //投资金列表 
+          window.sessionStorage.removeItem('homelisttzjstorerange');  
           if(getsessionStorage('homelisttzjstorerange')){
             that.homelisttzjmsg = getsessionStorage('homelisttzjstorerange');
           }else{

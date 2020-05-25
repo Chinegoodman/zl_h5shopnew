@@ -83,10 +83,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="main-btn" v-if="is_vip!=0">
+            <div class="main-btn" v-if="is_vip!=0" @click="gotopaymoney">
                 立即续费
             </div>
-            <div class="main-btn" v-if="is_vip==0">
+            <div class="main-btn" v-if="is_vip==0" @click="gotopaymoney">
                 立即开通 ¥99/年 <span>¥299/年</span>
             </div>
         </div>
@@ -108,6 +108,9 @@
         methods: {
             goback() {
                 this.$router.go(-1);
+            },
+            gotopaymoney(){
+                this.$toast("暂未开通");
             }
         },
         mounted() {

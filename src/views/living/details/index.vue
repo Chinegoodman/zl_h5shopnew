@@ -163,7 +163,7 @@
         </div>
 
         <!-- 红利人 -->
-        <div @click="hlrtipsstatus=true" class="hlrtipsbtn">
+        <div @click="hlrtipsstatus=true" class="hlrtipsbtn" v-if="false">
           <img src="./../../../assets/imgs/living/details/hlr.png" alt="抓周" />
         </div>
         <div class="hlrtipsmb" v-if="hlrtipsstatus">
@@ -192,7 +192,7 @@
           </div>
         </div>
         <!-- 会员权益 -->
-        <div class="hlrtipsbtn member">
+        <div class="hlrtipsbtn member" @click="gotovippage">
           <img src="./../../../assets/imgs/living/details/member.png" alt="抓周" />
         </div>
       </div>
@@ -263,8 +263,9 @@
 </template>
 
 <script>
-  import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
-  // import livingdetails from "./js/index.js";
+  // import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
+  import livingdetails from "./js/index-es6.js";
+  
   export default livingdetails;
 </script>
 <style lang='less' scoped>
