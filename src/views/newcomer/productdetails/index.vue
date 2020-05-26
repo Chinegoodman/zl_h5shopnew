@@ -328,9 +328,11 @@
                 <span class="kf" @click="gotokefu"><img src="@/views/shop/productdetails/imgs/spxqkf.png" alt="抓周"></span>
             </div>
             <div class="rt">
-                <span class="bye" @click="openoptionsselect" >立即购买</span>
+                <span class="bye" @click="openoptionsselect" v-show="productoptionsselectdata.is_exist!=0">立即购买</span>
+                <span class="bye" v-show="productoptionsselectdata.is_exist==0">选择的规格商品暂时无货</span>
             </div>
         </div>
+        <weixinshell :weixincovertype="wxcovertypedata" v-if="weixincovershow"></weixinshell>
         <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
         <productoptionsselect :currentpagetype_data="currentpagetype" :bottom_btncolor_data="bottom_btncolor" @_buynumber='buynumber' @_addit='addit' @_buyit='buyit' @_specs_select='specs_select' @_productoptionsselectclose='closeoptionsselect' :productoptionsselectdata="productoptionsselectdata"></productoptionsselect>
         <mengban :mengbanstatus="mengbanstatus" @mengbanclick="mengbanclose"></mengban>
@@ -346,6 +348,7 @@
     // import bottomloading from './../../../components/bottomloading.vue'
     import mengban from './../../../components/mengban.vue'
     import downloadandopenapp from './../../../components/downloadandopenapp.vue'
+    import weixinshell from './../../../components/weixinshell.vue'
     import productoptionsselect from './../../../components/productoptionsselect.vue'
     import { checkdevice } from './../../../utils/checkdevice.js'
     import { smoothgoto } from '@/utils/smoothgoto'
@@ -361,6 +364,7 @@
         components: {
             // bottomloading,
             mengban,
+            weixinshell,
             productoptionsselect,
             downloadandopenapp
         },
@@ -557,7 +561,9 @@
                     scrollTop:0,
                 },
                 covertypedata : 'downloadcovershow',  //下载及启动APP组件类别
+                wxcovertypedata :'weixincovershow',
                 downloadcovershow : false,  //下载及启动APP弹层
+                weixincovershow : false,
                 linkurldownload : '', //下载链接
                 linkurlopen : '' //拉起APP的链接
             };
@@ -641,7 +647,12 @@
                 }
             },
             popdownlaodandopenapp(){
-                this.downloadcovershow = true;
+                let that = this;
+                if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
+                    that.weixincovershow = true;
+                }else{
+                    that.downloadcovershow = true;
+                }
             },
             shutappbtnsbox(){
                 this.downloadcovershow = false;

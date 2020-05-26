@@ -46,7 +46,7 @@ const personalcenter = {
     },
     //确认收货
     affirmGoods(params) {
-        return axios.post(`${base.yxf}/wapi/v1/sure4order`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/order/sure4order/hl`, qs.stringify(params));
     },
     //省市区三级联动 数据接口
     linkage(params) {

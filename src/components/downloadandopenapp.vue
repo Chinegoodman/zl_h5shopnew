@@ -11,7 +11,7 @@
                 <p>请登录抓周APP操作</p>
             </div>
             <div class="btn_box">
-                <a class="openappbtn" :href="link_url_open">启动APP</a>
+                <a class="openappbtn" :href="link_url_open" target="_blank">启动APP</a>
                 <a class="openappbtn" :href="link_url_download==1?'https://apk.izhuazhou.cn/zsapk/zz_zs.apk':'https://apps.apple.com/cn/app/id1487579824'" target="_blank" ref="startdowm">下载APP</a>
             </div>
         </div>

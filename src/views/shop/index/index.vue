@@ -770,7 +770,6 @@ export default {
       that.hasmorepage = 1;
       that.nodatashow = false;
       // ljx
-     
       that.active = tabindex;
       that.list_content_show_type = tabindex;
       that.$router.push(

@@ -12,7 +12,7 @@
           <van-list class="video-content" v-model="listloading" :finished="listfinished"  :finished-text="finishedText"  :error.sync="vanerror" error-text="请求失败，点击重新加载"
             :offset="10"
             @load="tabListInfo"
-            v-if="!serviceorderlist_show"
+            v-show="!serviceorderlist_show"
           >
             <!-- 订单有内容 -->
             <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in orderlist" :key="index"  v-show="orderlist.length>0">
@@ -52,7 +52,7 @@
                     <div @click.stop="sendtips" class="pay">提醒发货</div>
                   </div>
                   <div class="warns_tab2" v-if="item.order.status==2">
-                    <div class="pay" @click.stop='checkwl(item.order)'>查看物流</div>
+                    <div class="quxiao" @click.stop='checkwl(item.order)'>查看物流</div>
                     <div class="pay" @click.stop='confirmgetgoods(item.order)'>确认收货</div>
                     <!-- <div class="pay" @click.stop='affirmGoods(item.order)'>确认收货</div> -->
                   </div>
@@ -73,10 +73,10 @@
            <van-list class="video-content" v-model="servicelistloading" :finished="servicelistfinished"  :finished-text="servicefinishedText" :error.sync="servicevanerror" error-text="请求失败，点击重新加载"
             :offset="10"
             @load="shouhouInfo"
-            v-if="serviceorderlist_show"
+            v-show="serviceorderlist_show"
           >
           
-            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in serviceorderlist" :key="index"  v-show="serviceorderlist.length>0 && serviceorderlist_show">
+            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in serviceorderlist" :key="index" v-show="serviceorderlist.length>0 && serviceorderlist_show">
               <div class="wares_list clearfix">
                 <div class="time">
                   <div class="time_center">
@@ -528,7 +528,7 @@ export default {
             that.listloading = false;
           } 
           else {
-            if(that.hasmorepage === 1){
+            if(that.hasmorepage == 1){
               that.nodatashow = true;
             }else{
               that.listloading = false;
@@ -574,7 +574,7 @@ export default {
           that.servicelistfinished = false;
           that.servicelistloading = false;
         } else {
-          if(that.hasmorepage === 1){
+          if(that.hasmorepage == 1){
               that.nodatashow = true;
           }else{
             that.servicelistloading = false;
@@ -624,13 +624,17 @@ export default {
       let tabid = Number(this.$route.query.tabid);
       that.active = tabid;
       that.cause();
+      this.nextPage = 0;
+      that.servicenextPage = 0;
+      this.orderlist = [];
+      this.serviceorderlist = [];
       if(this.active == 5){
         //售后
         this.serviceorderlist_show = true;
-        this.shouhouInfo(); 
+        // this.shouhouInfo(); 
       }else{
         this.serviceorderlist_show = false;
-        this.tabListInfo();
+        // this.tabListInfo();
       }
     }
     //移除订单详情页的数据存储
@@ -681,6 +685,7 @@ export default {
 }
 .order .order_body .wares_list {
   margin-top: 0.2rem;
+  min-height: 1rem;
 }
 .order .tab .van-tabs__wrap--scrollable .van-tab {
   background: #fff;
@@ -698,6 +703,10 @@ export default {
 }
 .order .van-tabs__content{
   margin-top: .2rem;
+  min-height: 1rem;
+}
+.order .video-content{
+  min-height: 1rem;
 }
 .order .van-toast--html, .van-toast--text{
  z-index: 10001 !important;

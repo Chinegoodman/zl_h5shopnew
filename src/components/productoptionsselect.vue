@@ -46,7 +46,7 @@
             <p v-else @click="addit" class="addit">加入购物车</p>
             <p @click="buyit" class="buyit">立即购买</p>
         </div>
-        <div class="btns newcomer" v-show="$route.query.frompage == 'newcomer'">
+        <div class="btns newcomer" v-show="productoptionsselectdata.is_exist!=0 && $route.query.frompage == 'newcomer'">
             <p @click="buyit" class="buyit">确认</p>
         </div>
         <div class="btns" v-show="productoptionsselectdata.is_exist==0">
@@ -110,9 +110,6 @@
             },
             specs_select(level,specs_id,ishidevalue){
                 let that = this;
-                if(that.$route.query.frompage == 'newcomer'){
-                    return;
-                }
                 if(ishidevalue==1){
                     this.$toast('此规格不可选');
                     return;
