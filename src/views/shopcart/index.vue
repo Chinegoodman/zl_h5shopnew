@@ -424,7 +424,7 @@ export default {
     },
     checkalll() {
       let that = this;
-      if(that.allchecked == false){
+      if(that.allchecked){
         for(let a =0;a<that.list.length;a++){
           if(that.list[a].isselect == false){
             that.list[a].isselect = true;

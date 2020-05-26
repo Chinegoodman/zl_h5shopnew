@@ -924,10 +924,8 @@
                         optionstxt:pagebaseInfo.specsInfo,
                     }
                     // 规格数据
-                    let SpecGroup = res.data.data.goodsSpecs;
-                    let defaultSpec = res.data.data.defaultSpec;
+                    let SpecGroup = res.data.data.defaultSpec;
                     that.productoptionsselectdata.SpecGroup = JSON.parse(SpecGroup);
-                    that.productoptionsselectdata.defaultSpec = JSON.parse(defaultSpec);
                     that.productoptionsselectdata.specs_id =pagebaseInfo.specsId;
                     // // 获取店铺信息及关注状态
                     that.getshopInfo(pagebaseInfo.shopId);
