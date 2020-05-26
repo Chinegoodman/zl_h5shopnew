@@ -32,7 +32,7 @@
           v-for="(tit, index) in titlistmassage"
           :key="index"
         >
-          <div class="tab-title" slot="title" @click="titleclick(tit.tabindex)" >{{tit.category_name}}</div>
+          <div class="tab-title" slot="title" @click="titleclick(tit.tabindex,1)" >{{tit.category_name}}</div>
         </van-tab>
       </van-tabs>
     </div>
@@ -731,12 +731,31 @@ export default {
           that.vanerror = true;
         });
     },
+    clearsessionStoragelist(index){
+      let that = this;
+      switch(index){
+        case 0:
+          window.sessionStorage.removeItem('homelisttjstorerange');
+          break;
+        case 1:
+          window.sessionStorage.removeItem('homelistzbstorerange');
+          break;
+        case 2:
+          window.sessionStorage.removeItem('homelistxpstorerange');
+          break;
+        case 3:
+          window.sessionStorage.removeItem('homelistxpstorerange');  
+          break;
+      }  
+    },
     // 头部导航点击事件
     titleclick(tabindex,status) {
-      if(status){}
       let that = this;
       this.removesession();
-      
+      if(status){
+        //清除缓存列表
+        that.clearsessionStoragelist(tabindex);
+      }
       this.twoID = "";
       this.threeID = "";
       
@@ -761,14 +780,11 @@ export default {
             tab : that.active
           }
       });
-
-     
       //关掉投资金金价定时器
       clearInterval(that.goldpricetimer);
       switch(tabindex){
         case 0 :
           //推荐列表
-          window.sessionStorage.removeItem('homelisttjstorerange');
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
           }else{
@@ -777,9 +793,8 @@ export default {
           break
         case 1 :
         //直播列表 
-        window.sessionStorage.removeItem('homelistzbstorerange');
         if(getsessionStorage('homelistzbstorerange')){
-            that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
+          that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
         }else{
           that.api.homedetails
           .homelistfenleizb({})
@@ -800,7 +815,6 @@ export default {
         break  
         case 2 :  
         //新品列表
-        window.sessionStorage.removeItem('homelistxpstorerange');  
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
         }else{
@@ -821,19 +835,17 @@ export default {
             }
           })
         }
-          break
+        break
         case 3 :
-          clearInterval(that.goldpricetimer);  
-          that.goldpricetimer = setInterval(that.goldmass,5000);
-          //投资金列表 
-          window.sessionStorage.removeItem('homelisttzjstorerange');  
-          if(getsessionStorage('homelisttzjstorerange')){
-            that.homelisttzjmsg = getsessionStorage('homelisttzjstorerange');
-          }else{
-            that.homelisttzj();
-          }
-          break
-          
+        //投资金列表 
+        clearInterval(that.goldpricetimer);  
+        that.goldpricetimer = setInterval(that.goldmass,5000);
+        if(getsessionStorage('homelistxpstorerange')){
+          that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
+        }else{
+          that.homelisttzj();
+        }
+        break
       }
     },
     //直播的分类筛选 直播中 每日必看...
@@ -1197,7 +1209,9 @@ export default {
         }
     }
   },
-  beforeCreate() {}, //生命周期 - 创建之前
+  beforeCreate() {
+    window.sessionStorage.removeItem('homelisttjstorerange');
+  }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后

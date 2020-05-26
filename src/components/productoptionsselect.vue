@@ -7,9 +7,15 @@
         </div>
         <div class="top clearfix">
             <img :src="productoptionsselectdata.selectshow.img" alt="抓周">
-            <div class="selectoptions">
+            <div class="selectoptions" v-if="$route.query.isnewuser==1">
                 <p class="price" v-if="$route.query.appname=='wukong'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
-                <p class="price" v-else>￥{{productoptionsselectdata.selectshow.price}}</p>
+                <p class="price" v-if="$route.query.isnewuser==1">￥{{productoptionsselectdata.selectshow.price}}</p>
+                <p class="price" v-if="$route.query.isnewuser!=1">￥{{productoptionsselectdata.selectshow.marketPrice}}</p>
+                <span>{{productoptionsselectdata.selectshow.optionstxt}}</span>
+            </div>
+            <div class="selectoptions" v-else>
+                <p class="price" v-if="$route.query.appname=='wukong'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
+                <p class="price">￥{{productoptionsselectdata.selectshow.price}}</p>
                 <span>{{productoptionsselectdata.selectshow.optionstxt}}</span>
             </div>
         </div>

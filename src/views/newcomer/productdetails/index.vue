@@ -909,6 +909,7 @@
                     that.productoptionsselectdata.selectshow ={
                         img:pagebaseInfo.specImage,
                         price:pagebaseInfo.price,
+                        marketPrice:pagebaseInfo.marketPrice,
                         optionstxt:pagebaseInfo.specsInfo,
                     }
                     // 规格数据
