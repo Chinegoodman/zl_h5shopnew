@@ -871,11 +871,11 @@
                     that.goodsBannerdata.imgarr=[];
                     that.buyerselectdata.skuId = pagebaseInfo.skuId;
                     that.buyerselectdata.kezhong = pagebaseInfo.weight;
-                     if(that.$route.query.isnewuser==1){
+                    if(that.$route.query.isnewuser==1){
                           that.buyerselectdata.price = pagebaseInfo.price;
-                     }else{
-                         that.buyerselectdata.price = pagebaseInfo.marketPrice;
-                     }
+                    }else{
+                        that.buyerselectdata.price = pagebaseInfo.marketPrice;
+                    }
                    
                     that.buyerselectdata.realGoldPrice = pagebaseInfo.realGoldPrice;
                     // debugger;
@@ -1039,10 +1039,14 @@
                     that.buyerselectdata.skuId = dynamicSpecGroupdata.skuId;//等待返回接口
                     that.buyerselectdata.kezhong = dynamicSpecGroupdata.gram;
                     if(dynamicSpecGroupdata.vendibilityStock>0){
-                        that.productoptionsselectdata.selectshow.price=dynamicSpecGroupdata.price;
-                        that.buyerselectdata.price=dynamicSpecGroupdata.price
+                        if(that.$route.query.isnewuser==1){
+                            that.buyerselectdata.price=dynamicSpecGroupdata.price;
+                            that.productoptionsselectdata.selectshow.price=dynamicSpecGroupdata.price;
+                        }else{
+                            that.buyerselectdata.price=dynamicSpecGroupdata.marketPrice;
+                            that.productoptionsselectdata.selectshow.price=dynamicSpecGroupdata.marketPrice;
+                        }
                         that.productoptionsselectdata.selectshow.optionstxt=dynamicSpecGroupdata.specs_info;
-                        that.buyerselectdata.price=dynamicSpecGroupdata.price
                     }else if(dynamicSpecGroupdata.vendibilityStock==0){
                         if(that.$route.query.isnewuser==1){
                             that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.price;
