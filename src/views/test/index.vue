@@ -5,12 +5,12 @@
         <hr>
         query{{this.$route.query}} <br>
         params{{this.$route.params}} <br>
-        <uploadfile :uploaddatainit="uploaddatainit" @_upimglistchange="upimglistchange"></uploadfile>
+        <uploadfile :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile>
     </div>
 </template>
 
 <script>
-    import uploadfile from '@/components/uploadfile.vue'
+    import uploadfile from '@/components/uploadfile_multiple.vue'
     export default {
         components: {
             uploadfile
@@ -18,8 +18,20 @@
         data () {
             return {
                 uploaddatainit:{
-                    upimglist:[],
-                    maxnumber:1,
+                    upfileslist:[],
+                    maxnumber:4,
+                    issingle:true,//除了图片之外的资源建议设置为true(单文件上传模式)
+                    w:'',
+                    h:'',
+                    // filetype
+                    //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
+                    //'1.all':图片 (所有)
+                    // '2':音频
+                    // '3':视频
+                    // '4':zip文件
+                    // '5':办公文件 MS 及 wps
+                    // '6':html css js相关
+                    filetype:"1",
                 }
             };
         },
@@ -27,8 +39,9 @@
 
         },
         methods: {
-            upimglistchange(listdata){
+            upfileslistchange(listdata){
                 console.log(listdata);
+                // this.uploaddatainit.upfileslist = listdata;
             }
         },
 mounted() {
