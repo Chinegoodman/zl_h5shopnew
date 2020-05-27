@@ -871,7 +871,12 @@
                     that.goodsBannerdata.imgarr=[];
                     that.buyerselectdata.skuId = pagebaseInfo.skuId;
                     that.buyerselectdata.kezhong = pagebaseInfo.weight;
-                    that.buyerselectdata.price = pagebaseInfo.price;
+                     if(that.$route.query.isnewuser==1){
+                          that.buyerselectdata.price = pagebaseInfo.price;
+                     }else{
+                         that.buyerselectdata.price = pagebaseInfo.marketPrice;
+                     }
+                   
                     that.buyerselectdata.realGoldPrice = pagebaseInfo.realGoldPrice;
                     // debugger;
                     if(pagebaseInfo.gbanner.length>0){
@@ -917,10 +922,17 @@
                     }else{
                         that.productoptionsselectdata.is_exist=0;
                     }
+
+                    let shellprice = 0;
+                    if(that.$route.query.isnewuser==1){
+                        shellprice = that.pagebaseInfo.price;
+                    }else{
+                        shellprice = that.pagebaseInfo.marketPrice;
+                    }
+
                     that.productoptionsselectdata.selectshow ={
                         img:pagebaseInfo.specImage,
-                        price:pagebaseInfo.price,
-                        marketPrice:pagebaseInfo.marketPrice,
+                        price: shellprice,
                         optionstxt:pagebaseInfo.specsInfo,
                     }
                     // 规格数据
@@ -1032,7 +1044,12 @@
                         that.productoptionsselectdata.selectshow.optionstxt=dynamicSpecGroupdata.specs_info;
                         that.buyerselectdata.price=dynamicSpecGroupdata.price
                     }else if(dynamicSpecGroupdata.vendibilityStock==0){
-                        that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.price;
+                        if(that.$route.query.isnewuser==1){
+                            that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.price;
+                        }else{
+                            that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.marketPrice;
+                        }
+                        
                         that.productoptionsselectdata.selectshow.optionstxt= '所选规格暂时无货哦';
                         // that.productoptionsselectdata.selectshow.optionstxt= that.pagebaseInfo.specs_info;
                         // price:pagebaseInfo.price,
