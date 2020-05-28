@@ -49,8 +49,6 @@ Vue.use(Swipe); //下拉刷新 轻提示 图片懒加载 瀑布流滚动加载
 Vue.use(SwipeItem); //下拉刷新 轻提示 图片懒加载 瀑布流滚动加载
 // Vue.use(Vant);
 
-// Vue.use(vueSwiper); //swiper官方插件
-
 import eruda from 'eruda';
 if (process.env.VUE_APP_ENV == 'uat') {
     // 测试环境
@@ -65,6 +63,10 @@ if (process.env.VUE_APP_ENV == 'uat') {
     // 开发环境
     eruda.init();
 }
+
+import MetaInfo from 'vue-meta-info'; //vue-meta-info 优化SEO
+Vue.use(MetaInfo);
+
 
 import api from './api'
 Vue.prototype.api = api;

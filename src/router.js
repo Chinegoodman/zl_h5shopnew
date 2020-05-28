@@ -20,6 +20,8 @@ Router.prototype.push = function push(location) {
 Vue.use(Router)
 
 const router = new Router({
+    mode: 'history',
+    base: '/1H5shop/',
     routes: [{
             path: '/',
             redirect: '/shop'
