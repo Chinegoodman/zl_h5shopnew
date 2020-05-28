@@ -26,11 +26,13 @@
             <div class="checkall" @click="dianpucheckevery(index,item.isselect)">
               <van-checkbox v-model="item.isselect"></van-checkbox>
             </div>
-            <span class="icon-shops"><img src="../../assets/imgs/shopcart/icon-shops.png" alt /></span>
-            <span class="tit">
-              {{item.shopName}}
-            </span>
-            <span class="gd"><img src="../../assets/imgs/follow/xiangqing@2x.png" alt /></span>
+            <span @click="gotoshopowner(item)">
+              <span   class="icon-shops" ><img src="../../assets/imgs/shopcart/icon-shops.png" alt /></span>
+              <span class="tit">
+                {{item.shopName}}
+              </span>
+              <span class="gd"><img src="../../assets/imgs/follow/xiangqing@2x.png" alt /></span>
+            </span>  
           </div>
           <!-- <van-checkbox-group v-model="checklist" ref="checkbox"> -->
           <div class="car_list_items clearfix" v-for="(tab,i) in item.items" :key="i">
@@ -42,9 +44,9 @@
             <span class="im">
               <img :src="tab.productPic" alt />
             </span>
-            <div class="imMask" v-if="tab.sp1!=0">
-              <div v-if="tab.sp1==1">商品无效</div>
-              <div v-else-if="tab.sp1==2">已售罄</div>
+            <div class="imMask" v-if="tab.sp1_status">
+              <div v-if="tab.sp1_status==1">商品无效</div>
+              <div v-else-if="tab.sp1_status==2">已售罄</div>
             </div>
             <div class="car_list_title">
               <h4 class="title _txtov2">{{tab.productName}}</h4>
@@ -101,7 +103,7 @@
                 <div class="rt">
                   <span class="n">投资金类商品</span>
                   <div class="type">(购物车内含<span class="t">融通金</span>购物车内含)</div> 
-                  <div class="num">共<span>1</span> 件</div>
+                  <div class="num">共<span>{{invesLeng}}</span> 件</div>
                 </div> 
               </li>
               <li>
@@ -113,7 +115,7 @@
                 </div>
                 <div class="rt">
                   <span class="n">其他商品</span>
-                  <div class="num">共<span>1</span> 件</div>
+                  <div class="num">共<span>{{otherLeng}}</span> 件</div>
                 </div> 
               </li>
             </ul>
@@ -124,7 +126,6 @@
         </div>
     </div>
     <!-- 投资金及其他商品分开结算弹层 end-->
-
   </div>
 </template>
 
@@ -190,7 +191,8 @@ export default {
       invesLeng: '',
       otherLeng:'',
       inves: true,
-      other: false
+      other: false,
+      sp1_status : false //商品的有效状态1为失效
     };
   },
   watch: {
@@ -202,7 +204,6 @@ export default {
     gotoshop(){
       this.$router.push({name:'shopindex'});
     },
-
     allpricefn(){
       let that = this;
       let price = 0;
@@ -264,44 +265,6 @@ export default {
       that.productarr = productarr;
       that.allprice = price
     },
-    // 单选一个商品
-    checkone(self,father) {
-      // debugger;
-      let that =this;
-      if(self.isselect == true){
-        that.allchecked = false;
-      }
-      setTimeout(() => {
-        if(father.items.length == 1){
-          father.isselect = self.isselect;
-        }else{
-          let noselect = 0;
-          for(let a=0;a<father.items.length;a++){
-            if(father.items[a].isselect == true){
-              noselect++;
-            }
-          }
-          if(noselect == father.items.length){
-            father.isselect = true;
-          }else{
-            father.isselect = false;
-          }
-        }
-        let fatherisselect = 0;
-        for(let aa = 0; aa < that.list.length;aa++){
-          // debugger;
-          if(that.list[aa].isselect == true){
-            fatherisselect++;
-          }
-          if(fatherisselect == that.list.length){
-            that.allchecked = true;
-          }else{
-            that.allchecked = false;
-          }
-        }
-        that.allpricefn();
-      }, 0);
-    },
     // 添加关注
     addlist() {
       let that = this;
@@ -323,6 +286,17 @@ export default {
     // 跳转地址选择页面
     gotocheck() {
       this.$router.push("/address/check");
+    },
+    gotoshopowner(item){
+      let that = this;
+      if(item.shopId==null || that.$store.state.user.userid==null){
+          this.$toast('数据错误，请刷新页面');
+      }else{
+        that.$router.push({path:'/shop/shopowner',query:{
+            shop_userId : that.$store.state.user.userid,
+            shop_id : item.shopId
+        }})
+      }
     },
     // 数量减
     jian(index,data,father,domselect) {
@@ -375,12 +349,28 @@ export default {
     },
     // 编辑与完成的切换事件
     gotobian() {
-      if (this.bobtn) {
-        this.bianbtn = "完成";
-        this.bobtn = false;
+      let that = this;
+      if (that.bobtn) {
+        that.bianbtn = "完成";
+        that.bobtn = false;
+        //将所有过期商品设置为可选
+        for(let a =0;a<that.list.length;a++){
+           for(let i=0;i<that.list[a].items.length;i++){
+            if(that.list[a].items[i].sp1 >= 0){
+               that.list[a].items[i].sp1 = 0;
+            }
+          }
+        }
       } else {
-        this.bianbtn = "编辑";
-        this.bobtn = true;
+        that.bianbtn = "编辑";
+        that.bobtn = true;
+        for(let a =0;a<that.list.length;a++){
+           for(let i=0;i<that.list[a].items.length;i++){
+            if(that.list[a].items[i].sp1_status){
+              that.list[a].items[i].sp1 = that.list[a].items[i].sp1_status;
+            } 
+          }
+        }
       }
     },
     // 删除该商品
@@ -408,10 +398,50 @@ export default {
         that.$toast('请选择要删除的商品');
       }
     },
+    // 单选一个商品
+    checkone(self,father) {
+      // debugger;
+      let that =this;
+      if(self.isselect == true){
+        that.allchecked = false;
+      }
+      setTimeout(() => {
+        if(father.items.length == 1){
+          father.isselect = self.isselect;
+        }else{
+          let noselect = 0;
+          for(let a=0;a<father.items.length;a++){
+            if(father.items[a].isselect == true){
+              noselect++;
+            }
+          }
+          if(noselect == father.items.length){
+            father.isselect = true;
+          }else{
+            father.isselect = false;
+          }
+        }
+        let fatherisselect = 0;
+        for(let aa = 0; aa < that.list.length;aa++){
+          // debugger;
+          if(that.list[aa].isselect == true){
+            fatherisselect++;
+          }
+          if(fatherisselect == that.list.length){
+            that.allchecked = true;
+          }else{
+            that.allchecked = false;
+          }
+        }
+        that.allpricefn();
+      }, 0);
+    },
     // 店铺选中事件
     dianpucheckevery(index,currentstatus) {
-      console.log(currentstatus)
       let that = this;
+      console.log(that.list.length);
+      console.log(that.list[index].items.length);
+
       if(currentstatus == true){
         that.allchecked = false;
       }
@@ -422,10 +452,11 @@ export default {
         that.allpricefn();
       }, 0);
     },
+    //全选
     checkalll() {
       let that = this;
       if(that.allchecked){
-        for(let a =0;a<that.list.length;a++){
+        for(let a =0;a < that.list.length; a++){
           if(that.list[a].isselect == false){
             that.list[a].isselect = true;
             that.dianpucheckevery(a,false);
@@ -460,10 +491,17 @@ export default {
           for(let i =0;i<resdata.length;i++){
             resdata[i].isselect = false;
             for(let k =0;k<resdata[i].items.length;k++){
+              if(resdata[i].items[k].sp1 == 1){
+                resdata[i].items[k].sp1_status = 1;
+              }
+              if(resdata[i].items[k].sp1 == 2){
+                resdata[i].items[k].sp1_status = 2;
+              }
               resdata[i].items[k].isselect = false;
             }
           }
-          // console.log(resdata);
+          console.log('resdata');
+          console.log(resdata);
         }
         that.list = resdata;//添加默认项 isselect:false
         if (that.list.length == 0) {
@@ -489,7 +527,6 @@ export default {
       let listnew = [];
       listnew = JSON.parse(JSON.stringify(this.list));//地址引用的解决
       let listindex=[];
-      console.log(that.productarr)
       for(let i=0;i<that.productarr.length;i++){
         for(let a =0; a<listnew.length;a++){
           if(that.productarr[i].shopId == listnew[a].shopId){
@@ -516,31 +553,34 @@ export default {
           }
         }
       }
+
       let arrayOrder = [];
-        let arrayOrders = [];
-        let leng = [];
-        let lengs = [];
+      let arrayOrders = [];
+      let leng = [];
+      let lengs = [];
       listnew2.forEach(e=>{
         let fatherItem;
         let childItem = [];
         e.items.forEach(items=>{
+          //正常商品
           if(items.sp1 == '0'){
+            //正常商品
             if(items.sp2=='0'){
               childItem.push(items);
               fatherItem = e;
               fatherItem.items = childItem;
-              leng.push(items.quantity * 1)
+              leng.push(items.quantity * 1);
               if (arrayOrder.indexOf(fatherItem) == -1) {
-                  arrayOrder.push(fatherItem);
-                }
+                arrayOrder.push(fatherItem);
+              }
             }else{
+              //投资金商品
               childItem.push(items);
                 // console.log(childItem)
                 fatherItem = e;
                 // console.log(fatherItem)
                 fatherItem.items = childItem;
                 lengs.push(items.quantity * 1)
-                console.log(lengs)
                     // fatherItem.items.push(childItem)
                     // console.log(fatherItem)
                 if (arrayOrders.indexOf(fatherItem) == -1) {
@@ -548,42 +588,40 @@ export default {
               }
             }
           }
-          console.log(items)
+          // console.log(items)
         })
+       
       })
       //console.log(arrayOrders,arrayOrder)
       // debugger;
       var s = 0;
-        var ind = 0;
-        console.log(arrayOrder, arrayOrders,leng,lengs, 'childItem')
-        if (arrayOrder.length > 0 && arrayOrders.length > 0) {
-            for (var x = 0; x < leng.length; x++) {
-                s += leng[x]
-                    that.otherLeng=s
-                console.log(s)
-            }
-            for (var j = 0; j < lengs.length; j++) {
-                ind += lengs[j]
-                    that.invesLeng= ind
-                
-            }
-                    that.judgementType=true,
-                    that.arrayOrder=arrayOrder,
-                    that.arrayOrders=arrayOrders
-                
-                // wx.navigateTo({
-                //     url: '/pages/order/order-pay?form=shopping'
-                // })
-                // wx.setStorageSync('arrayOrder', arrayOrder)
-                // console.log(arrayOrder, 'arrayOrder')
-        } else if (arrayOrder.length > 0 && arrayOrders.length == 0) {
-            that.$router.push({name:'confirmorder'})
-            setsessionStorage('orderListdata', arrayOrder)
-        } else if (arrayOrder.length == 0 && arrayOrders.length > 0) {
-            that.$router.push({name:'confirmorder'})
-            setsessionStorage('orderListdata', arrayOrders)
+      var ind = 0;
+      if (arrayOrder.length > 0 && arrayOrders.length > 0) {
+          for (var x = 0; x < leng.length; x++) {
+              s += leng[x]
+              that.otherLeng=s
+          }
+          for (var j = 0; j < lengs.length; j++) {
+              ind += lengs[j]
+                  that.invesLeng= ind
+              
+          }
+          that.judgementType=true,
+          that.arrayOrder=arrayOrder,
+          that.arrayOrders=arrayOrders
+          // wx.navigateTo({
+          //     url: '/pages/order/order-pay?form=shopping'
+          // })
+          // wx.setStorageSync('arrayOrder', arrayOrder)
+          // console.log(arrayOrder, 'arrayOrder')
+      } else if (arrayOrder.length > 0 && arrayOrders.length == 0) {
+          that.$router.push({name:'confirmorder'})
+          setsessionStorage('orderListdata', arrayOrder)
+      } else if (arrayOrder.length == 0 && arrayOrders.length > 0) {
+          that.$router.push({name:'confirmorder'})
+          setsessionStorage('orderListdata', arrayOrders)
 
-        }
+      }
       setsessionStorage("pagefrom","shopcart"); 
       // setsessionStorage("orderListdata",listnew2); 
       setsessionStorage("allprice",that.allprice); 
