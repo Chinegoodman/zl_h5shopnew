@@ -79,6 +79,7 @@ new Vue({
     render: h => h(App),
     mounted() {
         // You'll need this for renderAfterDocumentEvent.
-        document.dispatchEvent(new Event('render-event'))
+        // document.dispatchEvent(new Event('render-event'))
+        document.dispatchEvent(new Event('custom-render-trigger'))
     }
 }).$mount('#app')
