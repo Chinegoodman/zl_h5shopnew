@@ -607,7 +607,8 @@ export default {
         this.$router.push({
           path: "/living/livingreplay",
           query : {
-            tab : that.list_content_show_type
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
           }
         });
       }

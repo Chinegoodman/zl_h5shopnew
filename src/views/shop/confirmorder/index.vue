@@ -296,6 +296,8 @@ export default {
             webtype: 1
           }
         });
+      }else{
+        this.$router.go(-1);
       }
     },
     // 阻止冒泡
@@ -842,6 +844,8 @@ export default {
       });
       // console.log(that.ajax_order);
       let ajax_getshowPrice = JSON.parse(JSON.stringify(that.listshow));
+      console.log('ajax_getshowPrice');
+      console.log(ajax_getshowPrice);
       // {"goods":[{"skuId":1780661640987681260,"count":6}],"shopId":101763,"freight":18,"isPackage":0};
       let contentdata = [];
 
@@ -859,7 +863,7 @@ export default {
         let expressName = '';
         freight = ajax_getshowPrice[i].order.freightAmount;
         isPackage = ajax_getshowPrice[i].order.isPackage;
-        expressName = ajax_getshowPrice[i].order.freightAmountArr[i].name;
+        expressName = ajax_getshowPrice[i].order.freightAmountArr[0].name;
         contentdata.push({
           shopId: ajax_getshowPrice[i].shopId,
           freight: freight,
