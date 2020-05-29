@@ -33,3 +33,10 @@ export function removesessionStorage(name) {
     if (!name) return;
     window.sessionStorage.removeItem(name);
 }
+
+export function getfilename(filefullname) {
+    return filefullname.substring(0, filefullname.lastIndexOf('.'));
+}
+export function getfilelasttag(filefullname) {
+    return filefullname.substring(filefullname.lastIndexOf('.') + 1, filefullname.length);
+}
