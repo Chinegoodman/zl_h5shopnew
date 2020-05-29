@@ -354,6 +354,25 @@
     import { smoothgoto } from '@/utils/smoothgoto'
 
     export default {
+        metaInfo (){
+            return {
+                title: this.document_title, // set a title
+                meta: [
+                    {                 // set meta
+                        name: 'keywords',
+                        content: '黄金价格实时走势中心,黄金价格,今日黄金价格,最新黄金价格,黄金价格走势,24小时走势,历史走势,走势分析图,国际黄金价格,上交所,美女直播,电商直播'
+                    },
+                    {
+                        name:'description',
+                        content:'中国黄金投资网(中国黄金网)专业提供黄金价格,中国黄金,黄金期货,黄金投资,黄金交易所,金价,黄金公司,黄金网站,黄金开户,纸黄金,黄金外汇实时图形行情资讯及实时行情服务!'
+                    }
+                ],
+            // link: [{                 // set link
+            //   rel: 'asstes',
+            //   href: 'https://assets-cdn.github.com/' 
+            // }]
+            };
+        },
         // =======================
 
             // webtype:0 是App;1是H5
@@ -371,70 +390,10 @@
         data () {
             let that = this;
             return {
+                document_title:'抓周直播电商平台 - 黄金购物价格_今日黄金价格_最新黄金价格_黄金价格走势_24小时走势_历史走势_走势分析图_国际黄金价格_上交所_美元走势_美女直播_电商直播',
+
                 product_skuid:'',
                 topbtnstatus:false,
-                // // swiper默认配置
-                // tpswiperOption:{
-                //     //显示分页
-                //     pagination: {
-                //       el: '.swiper-pagination'
-                //     },
-                //     //设置点击箭头
-                //     // navigation: {
-                //     //   nextEl: '.swiper-button-next', 
-                //     //   prevEl: '.swiper-button-prev'
-                //     // },
-                //     //自动轮播
-                //     // autoplay: {
-                //     //   delay: 4000,
-                //     //   //当用户滑动图片后继续自动轮播
-                //     //   disableOnInteraction: false,
-                //     // },
-                //     autoplay:false,
-                //     //开启循环模式
-                //     loop: false,
-
-                //     //小手掌抓取滑动
-                //     grabCursor: true,
-                    
-                //     on: {
-                //         //滑动开始时回调函数
-                //         slideChangeTransitionStart: function() {
-                //         //滑动之后回调函数
-                //         // slideChangeTransitionEnd: function() {
-                //             // that.currentimgIndex = this.realIndex;  //获取轮播图片下标索引；这里有一个坑，之前网上找到的是用activeIndex，但后来网上说的是这个realIndex，原来activeIndex是swiper2.0的；而realIndex是swiper3.0的，（使用realIndex才实现了下标索引）
-                //             that.currentimgIndex = this.activeIndex;  
-                //             that.currentimgIndex_wukong = this.activeIndex;
-                //             if(that.currentimgIndex_wukong >= that.swiperlength-1){
-                //                 that.currentimgIndex_wukong = that.swiperlength-2;
-                //             }
-                //             // console.log(that.currentimgIndex);
-                //             if(that.goodsBannerdata.video){
-                //                 // 如果有视频
-                //                 if(that.currentimgIndex==that.swiperlength-1){
-                //                         // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                //                         that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                //                         that.tpswiperboxfather = false;
-                //                         that.goAnchor('product_detailsbox');
-                //                 }else if(that.currentimgIndex != 0){ 
-                //                     that.videodomstatus = false;
-                //                     let video = that.$refs.videodom;
-                //                     video.pause();
-                //                 }
-                //             }else{
-                //                 // 没有视频内容
-                //                 if(that.currentimgIndex==that.swiperlength-1){
-                //                         // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                //                         that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                //                         that.tpswiperboxfather = false;
-                //                         that.goAnchor('product_detailsbox');
-                //                 }else if(that.currentimgIndex != 0){ 
-                //                     that.videodomstatus = false;
-                //                 }
-                //             }
-                //         }
-                //     },
-                // },
                 goodsBannerdata:{
                     video:'',
                     gif:'',
@@ -861,7 +820,8 @@
                         return;
                     }
                     let pagebaseInfo = res.data.data;
-                    // document.title=pagebaseInfo.goodsTitle;
+                    // that.document_title=pagebaseInfo.goodsTitle + that.document_title;
+                    that.document_title=pagebaseInfo.goodsTitle;
 
                     that.sharedata.skuID=that.product_skuid;// APP分享需要的数据
                     that.sharedata.title=pagebaseInfo.goodsTitle;// APP分享需要的数据

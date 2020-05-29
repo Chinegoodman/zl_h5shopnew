@@ -9,7 +9,7 @@
     //import x from ''
     export default {
         metaInfo: {
-          title: '抓周直播电商平台 - 黄金购物价格_今日黄金价格_最新黄金价格_黄金价格走势_24小时走势_历史走势_走势分析图_国际黄金价格_上交所_美元走势_美女直播_电商直播', // set a title
+          title: '抱歉，你找的页面或ID不存在', // set a title
           meta: [{                 // set meta
             name: 'keywords',
             content: '黄金价格实时走势中心,黄金价格,今日黄金价格,最新黄金价格,黄金价格走势,24小时走势,历史走势,走势分析图,国际黄金价格,上交所,美女直播,电商直播'
