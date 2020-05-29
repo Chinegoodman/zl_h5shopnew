@@ -78,10 +78,10 @@ export default {
   },
   mounted() {
     this.getmoney();
-    document.title = "我的余额";
+    // document.title = "我的余额";
   },
   beforeCreate() {
-    document.title = "我的余额";
+    // document.title = "我的余额";
     document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
   }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

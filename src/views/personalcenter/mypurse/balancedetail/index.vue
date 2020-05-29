@@ -266,12 +266,12 @@ export default {
   },
   mounted() {
     let that = this;
-    document.title = "我的余额";
+    // document.title = "我的余额";
     that.getwallettype();
     that.save_search();
   },
   beforeCreate() {
-    document.title = "我的余额";
+    // document.title = "我的余额";
     document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
   }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
