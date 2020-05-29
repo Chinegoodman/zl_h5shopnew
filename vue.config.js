@@ -64,7 +64,9 @@ module.exports = {
                     staticDir: path.join(__dirname, `${current_outputDir}`),
                     // 对应自己的路由文件，比如a有参数，就需要写成 /a/param1。
                     routes: [
-                        '/', '/404', '/login', '/regist', '/living/livingreplay', '/shop/shopowner',
+                        '/', '/404', '/login', '/regist',
+                        //  '/living/livingreplay',
+                        '/shop/shopowner',
                         '/shopcart', '/shop/producttypelist',
                         '/personalcenter/index',
                         '/personalcenter/member', '/personalcenter/order/index', '/personalcenter/order/orderdetails',

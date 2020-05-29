@@ -32,6 +32,20 @@
 <script>
     //import x from ''
     export default {
+        metaInfo: {
+          title: '抓周直播电商平台 - 黄金购物价格_今日黄金价格_最新黄金价格_黄金价格走势_24小时走势_历史走势_走势分析图_国际黄金价格_上交所_美元走势_美女直播_电商直播', // set a title
+          meta: [{                 // set meta
+            name: 'keywords',
+            content: '黄金价格实时走势中心,黄金价格,今日黄金价格,最新黄金价格,黄金价格走势,24小时走势,历史走势,走势分析图,国际黄金价格,上交所,美女直播,电商直播'
+          },{
+            name:'description',
+            content:'中国黄金投资网(中国黄金网)专业提供黄金价格,中国黄金,黄金期货,黄金投资,黄金交易所,金价,黄金公司,黄金网站,黄金开户,纸黄金,黄金外汇实时图形行情资讯及实时行情服务!'
+          }],
+          // link: [{                 // set link
+          //   rel: 'asstes',
+          //   href: 'https://assets-cdn.github.com/' 
+          // }]
+        },
         components: {
 
         },
