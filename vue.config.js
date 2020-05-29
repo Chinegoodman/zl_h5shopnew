@@ -42,8 +42,8 @@ module.exports = {
             '/devapi': {
                 // target: 'http://192.168.1.75:8080', //刘哥测试地址
                 // target: 'http://47.103.198.168', //测试服
-                // target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
-                target: 'https://shop.zhulihr.com', //生产222
+                target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
+                // target: 'https://shop.zhulihr.com', //生产222
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
@@ -63,7 +63,7 @@ module.exports = {
                     // 这个目录只能有一级，如果目录层次大于一级，在生成的时候不会有任何错误提示，在预渲染的时候只会卡着不动。
                     staticDir: path.join(__dirname, `${current_outputDir}`),
                     // 对应自己的路由文件，比如a有参数，就需要写成 /a/param1。
-                    routes: ['/', '/login', '/personalcenter/index', '/shopcart', '/shop/shopowner'],
+                    routes: ['/', '/login', '/regist', '/personalcenter/index', '/shopcart', '/shop/shopowner'],
                     // 这个很重要，如果没有配置这段，也不会进行预编译
                     renderer: new Renderer({
                         inject: {
