@@ -78,5 +78,6 @@ module.exports = {
                 // new BundleAnalyzerPlugin(), //webpack-bundle-analyzer 分析打包体积 暂时展示
             ],
         };
-    }
+    },
+    productionSourceMap: process.env.VUE_APP_ENV != 'production' //生产包打包时不显示源码
 }
