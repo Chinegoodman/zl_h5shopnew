@@ -906,8 +906,9 @@
                         return;
                     }
                     let pagebaseInfo = res.data.data.basicInfo;
-                    // that.document_title=pagebaseInfo.goodsTitle + that.document_title;
-                    that.document_title=pagebaseInfo.goodsTitle;
+                    console.log(pagebaseInfo);
+
+                    that.document_title=pagebaseInfo.goods_title;
 
                     that.sharedata.skuID=that.product_skuid;// APP分享需要的数据
                     that.sharedata.title=pagebaseInfo.goods_title;// APP分享需要的数据
