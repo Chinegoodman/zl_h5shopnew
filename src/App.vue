@@ -256,7 +256,8 @@
         }
       }
 
-      &.router-link-exact-active{
+      // &.router-link-exact-active{
+      &.router-link-active{
         .default{
           display: none;
         }
