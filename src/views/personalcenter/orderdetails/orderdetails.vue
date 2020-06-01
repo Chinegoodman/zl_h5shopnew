@@ -176,7 +176,6 @@
                    <li>创建时间：{{fymx_item.createTime}}</li>
                    <li>付款时间：{{fymx_item.paymentTime}}</li>
                  </ul>
-                 <div>{{details}}</div>
               </div>
         <!-- 底部操作按钮 -->
         <div class="bottombtnbox" v-show="pageshow">
@@ -188,10 +187,7 @@
           <p @click="ordercancel" v-if="orderStatuscode==0">取消订单</p>
           <p @click="returncash" v-if="orderStatuscode==70">退款中</p>
           <p @click="removeOrder4C" v-if="orderStatuscode==3||orderStatuscode==4||orderStatuscode==71">删除订单</p>
-
-          <!-- <p @click.stop="orderReturnmoney(item,item.order.uid)" v-if="item.order.status==7">退款</p> -->
-          <p @click.stop="orderReturnmoney(pagedata.items)">退款</p>
-          
+          <p @click.stop="orderReturnmoney(details)" v-if="details.order.confirmStatus==7">退款</p>
         </div>
 
         
@@ -475,6 +471,8 @@ export default {
     let that = this;
     that.userID = that.$store.state.user.userid;
     this.details = getsessionStorage("returnmoneydata");
+
+
 
   },
   beforeCreate() {}, //生命周期 - 创建之前
