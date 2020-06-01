@@ -108,7 +108,7 @@ import { clearInterval } from 'timers';
 </template>
 
 <script>
-//import x from ''
+import {checkdevice} from '@/utils/checkdevice'
 export default {
   components: {},
   data() {
@@ -129,7 +129,11 @@ export default {
       timer: "", //计时器
 
       setpassword: "", //设置密码
-      setpassword2: "" //设置密码2
+      setpassword2: "", //设置密码2
+
+      identifier:checkdevice(),//设备吗
+      brand:checkdevice()=='pc'?'pc':'h5mobild',//品牌
+      models:'h5',//机型
     };
   },
   computed: {},
@@ -229,7 +233,10 @@ export default {
           mobile: that.phonenum,
           verificationCode: that.phonecode,
           client:'h5',
-          loginType: 2
+          loginType: 2,
+          identifier:that.identifier,//设备吗
+          brand:that.brand,//品牌
+          models:that.models,//机型
         })
         .then(data => {
           that.$toast(data.data.info);
@@ -277,7 +284,10 @@ export default {
           mobile: that.phonenum2,
           password: that.password,
           client:'h5',
-          loginType: 1
+          loginType: 1,
+          identifier:that.identifier,//设备吗
+          brand:that.brand,//品牌
+          models:that.models,//机型
         })
         .then(data => {
           that.$toast(data.data.info);
