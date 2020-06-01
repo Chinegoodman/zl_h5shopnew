@@ -27,12 +27,12 @@
               </div>
               <div class="rt">
                 <span class="tit">{{item.goodsTitle}}</span>
-                <div class="box-price" v-if="0">
-                  <div class="old-price">原价：<span>￥</span>{{item.price}}</div>
+                <div class="box-price" v-if="isNewUser==1">
+                  <div class="old-price">原价：<span>￥</span>{{item.marketPrice}}</div>
                   <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span>{{item.price}}</div>
                 </div>
-                <div class="box-price-fei" v-if="1">
-                  <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span>{{item.price}}</div>
+                <div class="box-price-fei" v-if="isNewUser!=1">
+                  <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span>{{item.marketPrice}}</div>
                   <div class="current-price">原价：<span>￥</span><span class="pr">{{item.price}}</span></div>
                 </div>
                 <div class="bye">立即购买</div>
@@ -92,6 +92,7 @@ export default {
   },
   data() {
     return {
+      isNewUser : '', //是否新人用户
       nodatashow:false,
       pagetypedata:"discountshop", //无数据提示组件下类别
       active: 1,
@@ -199,6 +200,9 @@ export default {
               that.homelistmassage = that.homelistmassage.concat(res.data.data.goodsList);
             }
             that.nextpage = res.data.data.nextPage;
+            that.isNewUser = res.data.data.isNewUser;
+            console.log('that.isNewUser');
+            console.log(that.isNewUser);
             
             if (that.nextpage != "") {
               that.listfinished = false;

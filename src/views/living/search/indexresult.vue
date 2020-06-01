@@ -52,6 +52,7 @@
             class="goodsli"
             v-for="(item,index) in homelistmassage"
             :key="index"
+            :id="item.goods_id"
           >
 
             <div class="show-flag-goods" v-if="item.sku_id">
@@ -59,7 +60,7 @@
                 <img :src="item.goods_image" alt="珠宝商品" />
               </div>
               <span class="tit">{{item.goods_title}}</span>
-              <div class="price">{{item.price}}</div>
+              <div class="price"><span>￥</span>{{item.price}}</div>
               <div class="price_btm"> {{item.brand_name}}</div>
               <div class="canged" v-if="item.isCollection==1"></div>
               <div class="cang" v-if="item.isCollection==0"></div>
