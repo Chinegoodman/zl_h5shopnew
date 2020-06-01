@@ -639,7 +639,6 @@
             // 返回上一页
             goback(){
                 var returnflag = getsessionStorage('returnflag');
-                console.log();
                 if(returnflag){
                     this.$router.push({path:'/shop'});
                 }else{
@@ -1024,7 +1023,6 @@
                     specsId:that.buyerselectdata.specs_id_pinjie,
                     userId:that.userID,
                 }).then(res=>{
-                    console.log(res.data.data);
                     // Toast('提示');
                     let dynamicSpecGroupdata;
                     dynamicSpecGroupdata = res.data.data;

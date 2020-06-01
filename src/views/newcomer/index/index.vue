@@ -201,8 +201,6 @@ export default {
             }
             that.nextpage = res.data.data.nextPage;
             that.isNewUser = res.data.data.isNewUser;
-            console.log('that.isNewUser');
-            console.log(that.isNewUser);
             
             if (that.nextpage != "") {
               that.listfinished = false;
