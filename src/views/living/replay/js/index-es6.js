@@ -1,5 +1,3 @@
-import Tim from "tim-js-sdk";
-import COS from "cos-js-sdk-v5";
 import {
     setsessionStorage,
     getsessionStorage
@@ -24,7 +22,7 @@ export default {
             player: "", //player实例
             canplaythroughstatus: false,
             reloadtimes: 0,
-            timgroupstatus: false, //tim群聊默认隐藏
+            timgroupstatus: false,
             livingendstatus: true, // 直播  默认为未结束
             confirmordermbstatus: false, //直播间 主播推送到用户的立即付款状态 默认 false
             confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
@@ -41,27 +39,6 @@ export default {
 
             selfsf: 0, //自己的 身份标识  0 普通用户， 1 房间主播， 2 房间内管理员
             targetsf: 0, // 被查看用户 身份标识 0 普通用户， 1 房间主播， 2 房间内管理员
-
-            // IM TIM 相关参数====================开始
-            options: {
-                SDKAppID: 1400068060 // 接入时需要将0替换为您的即时通信应用的 SDKAppIDw
-            },
-            timresdata: "", //登录成功  或 退出登录 返回的信息
-            timtxt: "", //输入框输入的文本内容
-            imiptshowstatus: false, //输入框的默认状态
-            currentpersonid: "", //userId
-            conversationID: "", //会话ID
-            messageInfo: "收到的消息", //接受消息文本
-            messageList: [], //群聊内容    ({isvip,name,msgtxt});
-            nextReqMessageID: "", //用于续拉，分页续拉时需传入该字段。
-            conversationList: [], // 会话列表，用该列表覆盖原有的会话列表,
-            isActive: 0, //默认选中第一个,
-            userName: "用户名",
-            receivemsgdata: '',
-
-            IMtanchuangTimer: '', //im弹窗
-            IMtanchuang_currentdata: '', //im弹窗 历史数据保存并判断是否为同一条数据
-            // IM TIM 相关参数====================结束
         };
     },
     computed: {
@@ -109,10 +86,6 @@ export default {
                 }
             }
             return currentgoodnew;
-        },
-        // tim实例化
-        tim() {
-            return Tim.create(this.options);
         }
     },
     watch: {
@@ -479,15 +452,11 @@ export default {
         }
     },
 
-    beforeCreate() {
-        // this.tim.on(this.tim.EVENT.KICKED_OUT, this.onKickedOut);
-    },
+    beforeCreate() {},
     beforeMount() {}, //生命周期 - 挂载之前
     beforeUpdate() {}, //生命周期 - 更新之前
     updated() {}, //生命周期 - 更新之后
     beforeDestroy() {
-        // this.quitGroup();
-        // this.logoutfn();
         this.player.destroy(true);
     }, //生命周期 - 销毁之前
     destroyed() {}, //生命周期 - 销毁完成
