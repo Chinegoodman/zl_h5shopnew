@@ -520,12 +520,10 @@ export default {
     let that = this;
     that.bannerimages();
     that.getadvertisingarea(); //广告区
-
-
+    if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
-
       that.titleclick(tab,false);
-    
+    }
     //新人专区推广弹层只弹一次
     if(getsessionStorage('newcommershellflag') != 'yethas'){
       that.newcomershellshowstate = true;

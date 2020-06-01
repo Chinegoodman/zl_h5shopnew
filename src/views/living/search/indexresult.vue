@@ -341,12 +341,18 @@ export default {
       }else{
         if(!that.iflogin()){return;}
         setsessionStorage("livinglidata", item);
-        this.$router.push({
-          path: "/living/livingdetails",
-          // query: {
-          //   livingurl: paramsdata.streamAddr
-          // }
-        });
+        if(item.state==0){
+          this.$router.push({
+            path: "/living/livingdetails"
+          });
+        }else if(item.state==1){
+          this.$router.push({
+            path: "/living/livingreplay",
+            query : {
+              liveId : item.id
+            }
+          });
+        }
       }
     }
   },
