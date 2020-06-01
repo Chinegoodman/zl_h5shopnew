@@ -32,8 +32,8 @@
                   <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span>{{item.price}}</div>
                 </div>
                 <div class="box-price-fei" v-if="isNewUser!=1">
-                  <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span>{{item.marketPrice}}</div>
-                  <div class="current-price">原价：<span>￥</span><span class="pr">{{item.price}}</span></div>
+                  <div class="price"><span class="icon"><img src="@/assets/imgs/newcomer/xrj.png" alt=""></span><span>￥</span> {{item.price}}</div>
+                  <div class="current-price">原价：<span>￥</span><span class="pr">{{item.marketPrice}}</span></div>
                 </div>
                 <div class="bye">立即购买</div>
               </div>
