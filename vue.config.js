@@ -58,5 +58,6 @@ module.exports = {
             //TODO: 灰度及生产环境的 包 不执行此插件 【防止jenkins打包不成功】
             // new BundleAnalyzerPlugin(), //webpack-bundle-analyzer 分析打包体积
         ]
-    }
+    },
+    productionSourceMap: process.env.VUE_APP_ENV != 'production'
 }

@@ -886,7 +886,7 @@
                         return;
                     }
                     let pagebaseInfo = res.data.data.basicInfo;
-                    document.title=pagebaseInfo.goods_title;
+                    // document.title=pagebaseInfo.goods_title;
 
                     that.sharedata.skuID=that.product_skuid;// APP分享需要的数据
                     that.sharedata.title=pagebaseInfo.goods_title;// APP分享需要的数据
