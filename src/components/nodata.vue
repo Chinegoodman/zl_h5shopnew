@@ -64,6 +64,17 @@
                 你还没有收藏过任何商品，赶紧去逛逛吧~   
             </div>
         </div>
+        <!-- 详情页无网络或者接口异常时的提示-->
+        <div class="mybrowsenodata prodetails_nodata" v-if="pagetype=='prodetails_nodata'">
+            <div class="nodataimg prodetails_nodata">
+                <img src="../assets/imgs/icons/404.png" alt="404">
+            </div>
+            <div class="nodatatext">
+                您的网络不太给力哦</br>
+                没网的日子，好！空！虚！
+            </div>
+            <p class="btn" @click="reloadpage">重试</p>
+        </div>
     </div>
 </template>
 
@@ -89,7 +100,9 @@
 
         },
         methods: {
-
+            reloadpage(){
+                this.$emit('_reloadpage')
+            }
         },
         mounted() {
 
@@ -128,6 +141,28 @@
         .nodataimg{
             width:3.22rem;
             padding-top:1.82rem;
+        }
+    }
+    .mybrowsenodata.prodetails_nodata{
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        .nodataimg.prodetails_nodata{
+            margin: 0 auto;
+            padding: 0 0 0.82rem;
+        }
+        p.btn{
+            cursor: pointer;
+            background-color: rgba(255, 189, 4, 1);
+            color: rgba(255, 255, 255, 1);
+            font-size: 0.317rem;
+            border-radius: 0.35rem;
+            height: 0.7rem;
+            line-height: 0.7rem;
+            width: 2.3rem;
+            text-align:center;
+            margin:0.45rem auto 0;
         }
     }
 }
