@@ -346,7 +346,6 @@
 </template>
 
 <script>
-  // import livingdetailsshare from "./js/index_share.js";
   import livingdetailsshare from "./../../../../node_modules/yxfh5living/livingsharepage.js";
   export default livingdetailsshare;
 </script>
