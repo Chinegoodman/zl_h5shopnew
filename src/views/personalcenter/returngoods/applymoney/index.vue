@@ -6,25 +6,28 @@
     </div>
     <!-- 商品信息部分 -->
     <div class="goodsmass clearfix" v-if="details">
-      <div class="masspic">
-        <img v-if="details.orderItemList[0].productPic" :src="details.orderItemList[0].productPic" alt="" />
-        <img v-else src="../../../../assets/logo-gray.png" alt />
-      </div>
-      <div class="masscontent">
-        <div class="shoptit _txtov2">{{details.orderItemList[0].productName}}</div>
-        <div class="shopys">
-          <span>{{details.orderItemList[0].productAttr}}</span>
+      <div class="goodsmass-box" v-for="(item,index) in details.orderItemList" :key="index">
+        <div class="masspic">
+          <img v-if="item.productPic" :src="item.productPic" alt="" />
+          <img v-else src="../../../../assets/logo-gray.png" alt />
         </div>
-        <div class="shop">支持七天无理由退货</div>
-      </div>
-      <div class="massmoney clearfix">
-        <div class="money"><span class="ic">￥</span>{{details.orderItemList[0].productPrice}}</div>
-        <div class="shopnum clearfix">
-          <span @click="jian()">-</span>
-          <span class="show">{{quantity}}</span>
-          <span @click="jia(details.orderItemList[0].productQuantity)">+</span>
+        <div class="masscontent">
+          <div class="shoptit _txtov2">{{item.productName}}</div>
+          <div class="shopys">
+            <span>{{item.productAttr}}</span>
+          </div>
+          <div class="shop">支持七天无理由退货</div>
+        </div>
+        <div class="massmoney clearfix">
+          <div class="money"><span class="ic">￥</span>{{item.productPrice}}</div>
+          <div class="shopnum clearfix">
+            <span>-</span>
+            <span class="show">{{item.productQuantity}}</span>
+            <span>+</span>
+          </div>
         </div>
       </div>
+      
     </div>
     <!-- 退货原因部分 -->
     <div class="content">
@@ -81,6 +84,10 @@
 import Vue from "vue";
 import { Uploader } from "vant";
 import base from "@/api/base.js"; // 导入接口域名列表
+import {
+  setsessionStorage,
+  getsessionStorage
+} from "../../../../utils/index.js";
 Vue.use(Uploader);
 export default {
   components: {},
@@ -120,11 +127,11 @@ export default {
       this.api.returngoods.
       returnOrderMoney({
         userId:that.$store.state.user.userid,
-        orderUid: that.uid,
+        orderUid: that.details.order.uid,
         // source : item.source,
         source : 'H5',
-        quantity: that.quantity,
-        skuId: item.orderItemList[0].productSkuId,
+        // quantity: that.quantity,
+        // skuId: item.orderItemList[0].productSkuId, //后端修改方式
         returnReason: that.name,
         description: that.textarea
         }).then(data=>{
@@ -198,10 +205,9 @@ export default {
   
   mounted() {
     if(this.$route.query){
-      this.uid = this.$route.query.uid,
       this.tabid = this.$route.query.tabid,
-      this.details = JSON.parse(this.$route.query.details);
-      this.quantity = this.details.orderItemList[0].productQuantity;
+      this.details = getsessionStorage("returnmoneydata");
+      // console.log('returnmoneydata');
       // console.log(this.details);
     }
     this.cause();

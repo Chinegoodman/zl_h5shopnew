@@ -393,6 +393,8 @@
         <productoptionsselect :currentpagetype_data="currentpagetype" :bottom_btncolor_data="bottom_btncolor" @_buynumber='buynumber' @_addit='addit' @_buyit='buyit' @_specs_select='specs_select' @_productoptionsselectclose='closeoptionsselect' :productoptionsselectdata="productoptionsselectdata"></productoptionsselect>
         <mengban :mengbanstatus="mengbanstatus" @mengbanclick="mengbanclose"></mengban>
         <van-loading class="optionsselectloading" v-show="loadingstatus" type="spinner" color="#1989fa" vertical />
+
+        <nodata @_reloadpage="reloadpage" class="nodatadom" :pagetype="nodatapagetypedata" v-if="nodatashow"></nodata>
     </div>
 </template>
 
@@ -405,6 +407,7 @@
     // import bottomloading from './../../../components/bottomloading.vue'
     import mengban from './../../../components/mengban.vue'
     import productoptionsselect from './../../../components/productoptionsselect.vue'
+    import nodata from './../../../components/nodata.vue'
     import { checkdevice } from './../../../utils/checkdevice.js'
     import { smoothgoto } from '@/utils/smoothgoto'
 
@@ -439,12 +442,14 @@
             xqbottom,
             // bottomloading,
             mengban,
-            productoptionsselect
+            productoptionsselect,
+            nodata
         },
         data () {
             let that = this;
             return {
                 document_title:'抓周直播电商平台 - 黄金购物价格_今日黄金价格_最新黄金价格_黄金价格走势_24小时走势_历史走势_走势分析图_国际黄金价格_上交所_美元走势_美女直播_电商直播',
+                nodatapagetypedata:"prodetails_nodata",//nodata组件参数
                 product_skuid:'',
                 topbtnstatus:false,
                 // // swiper默认配置
@@ -626,7 +631,8 @@
                 noscroll:{
                     iftrue:false,
                     scrollTop:0,
-                }
+                },
+                nodatashow:false,
             };
         },
         computed: {
@@ -652,6 +658,10 @@
         watch:{
         },
         methods: {
+            // 重新加载页面
+            reloadpage(){
+                this.$router.go(0);
+            },
             // 顶部轮播切换事件
             topswiperonChange(activeIndex){
                 //滑动开始时回调函数
@@ -903,6 +913,7 @@
                     // 页面基本信息
                     if(res.data.code != 1){
                         that.$toast(res.data.info);
+                        that.nodatashow=true;
                         return;
                     }
                     let pagebaseInfo = res.data.data.basicInfo;
@@ -1008,6 +1019,7 @@
                     if(ress.data.code==1){
                         that.shopdata = ress.data.data;
                     }else{
+                        that.nodatashow=true;
                         that.shopdata={
                             shopId:null,
                             userId:null,

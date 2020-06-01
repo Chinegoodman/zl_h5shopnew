@@ -199,6 +199,36 @@ export default [{
             }]
         }
     },
+    //退款申诉提交页
+    {
+        path: '/returngoods/appeal',
+        name: 'returngoodsappeal',
+        navstatus: false,
+        component: resolve => require(['./../../views/personalcenter/returngoods/appeal/index.vue'], resolve),
+        meta: {
+            name: 'returngoodsappeal',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '退款申诉提交页',
+                url: '/returngoods/appeal',
+            }]
+        }
+    },
+    //退款申诉成功页
+    {
+        path: '/returngoods/appealsuccess',
+        name: 'returngoodsappealsuccess',
+        navstatus: false,
+        component: resolve => require(['./../../views/personalcenter/returngoods/appealsuccess/index.vue'], resolve),
+        meta: {
+            name: 'returngoodsappealsuccess',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '退款申诉成功页',
+                url: '/returngoods/appealsuccess',
+            }]
+        }
+    },
     //退货申请协商历史页
     {
         path: '/returngoods/history',

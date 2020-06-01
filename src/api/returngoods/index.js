@@ -31,6 +31,10 @@ const returngoods = {
     returnOrderMoney(params) {
         return axios.post(`${base.yxf}/wapi/v1/order/cancleOrderItem`, qs.stringify(params));
     },
+    // 申诉提交
+    returnOrderMoneywappeal(params) {
+        return axios.post(`${base.yxf}/wapi/v1/order/wappeal`, qs.stringify(params));
+    },
     //分页查看退货列表
     pageReturnOrders(userId, nextPage) {
         return axios.get(`${base.yxf}/wapi/v1/order/pageReturnOrders?userId=${userId}&nextPage=${nextPage}`); //音乐列表

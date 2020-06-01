@@ -70,7 +70,7 @@ const homedetails = {
         return axios.post(`${base.yxf}/wapi/v1/goods/getProductCategory`, qs.stringify(params));
     },
     // 投资金推荐tab列表 ljx
-    homelisttjzpost(params) {
+    homelisttzjpost(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/getTZJRoomGoods`, qs.stringify(params));
     }
 

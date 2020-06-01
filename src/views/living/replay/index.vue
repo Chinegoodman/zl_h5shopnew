@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class="videoswrapout">
-    <!-- 直播中、、、 -->
+    <!-- 直播回放-->
     <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay">
       <div class="video">
         <div id="videodom"></div>
@@ -56,27 +56,6 @@
             </div>
             <div class="videospj" @click.stop="gotodetails(item.sku_id)">立即购买</div> -->
           </div>
-          <!-- 任务部分 -->
-          <!-- <div class="main-right" v-if="false">
-            <div class="renwbox">
-              <div class="videorwpic">
-                <img src="./../../../assets/imgs/living/details/renwu.png" alt />
-              </div>
-              <div class="renwutxt">未知任务</div>
-            </div>
-            <div class="renwbox">
-              <div class="videorwpic">
-                <img src="./../../../assets/imgs/living/details/renwu.png" alt />
-              </div>
-              <div class="renwutxt">未知任务</div>
-            </div>
-            <div class="renwbox">
-              <div class="videorwpic">
-                <img src="./../../../assets/imgs/living/details/renwu.png" alt />
-              </div>
-              <div class="renwutxt">未知任务</div>
-            </div>
-          </div> -->
         </div>
         <!-- 直播消息  聊天输入部分-->
         <div class="content-bottom">
@@ -92,51 +71,9 @@
                       黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
                 </div>
               </div>
-              <div class="msgboxwrap" v-for="(item,index) in messageList" :key="index">
-                <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
-                    <img v-if="item.isvip==0" src="./../../../assets/imgs/living/details/jb1.png" alt />
-                    <img v-else src="./../../../assets/imgs/living/details/tongzhi.png" alt />
-                    <p class="name">{{item.name}}：</p>
-                    <p>{{item.msgtxt}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 聊天输入部分 -->
-          <div class="chattalk clearfix" v-if="false">
-            <p class="chatinp" @click="imiptshowstatus=true">你想说点什么。。。</p>
-            <div class="service">
-              <div class="servicepic">
-                <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png"> -->
-                <img src="./../../../assets/logo.png">
-              </div>
-              <div class="servicebtn">
-                <img src="./../../../assets/imgs/living/details/service.png">
-              </div>
-            </div>
-            <div class="chatsp"  @click.stop="goodschoosestatus=true">
-              <!-- <div class="chatsptxt">商品</div> -->
-            </div>
-            <div class="chatgd">
-              <img src="./../../../assets/imgs/living/details/gengduo.png" alt />
-            </div>
-            <div class="chatxin">
-              <!-- <div class="licknum">666</div> -->
-              <div class="chatxinicon">
-                <img src="./../../../assets/imgs/living/details/like.png" alt />
-              </div>
             </div>
           </div>
         </div>
-
-        
-        <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus">
-          <div class="imiptshow" @click.stop="returnfn">
-            <input type="text" autofocus="autofocus" v-model="timtxt" @keyup.enter="txtpost" />
-            <p @click.stop="txtpost" style="cursor:pointer;">发送</p>
-          </div>
-        </div>
-
         <!-- 主播上架的商品 -->
         <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
           <div class="goodsbox" @click.stop="returnfn">
@@ -196,21 +133,6 @@
           <img src="./../../../assets/imgs/living/details/member.png" alt="抓周" />
         </div>
       </div>
-
-    </div>
-    <!-- 直播结束、、 -->
-    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.face_url+')'}">
-      <div class="close" @click.stop="$router.go(-1);">
-        <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
-      </div>
-      <img class="faceurl" :src="livinglidata.face_url" alt="抓周">
-      <p class="name">{{livinglidata.nickname}}</p>
-      <div class="enddata">
-        <p>直播已结束</p>
-        <span class="number">{{livinglidata.nickname}}</span>
-        <span class="title">总观看人数</span>
-      </div>
-      <p class="followbtn" @click.stop="follow(false)">关注主播</p>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
@@ -226,44 +148,10 @@
         <img @click.stop="confirmordermbstatus=false" class="confirmordermbclosebtn" src="./../../../assets/imgs/living/details/cuohao.png" alt="抓周">
       </div>
     </div>
-    <!-- 管理员权限弹窗 -->
-    <div class="controlmb" v-if="livingendstatus&&controlstatus">
-      <div class="close" @click.stop="controlstatus=controlstatus_2=false;controlstatus_1=true">
-        <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
-      </div>
-      <div class="control" v-if="controlstatus_1">
-        <p>将“某某某”用户</p>
-        <div class="btn" @click="controlstatus_1=false;controlstatus_2=true;">
-          <img src="./../../../assets/imgs/living/controls/jy.png" alt="抓周">
-          <span>禁言</span>
-        </div>
-        <div class="btn" @click="tichuzbj">
-          <img src="./../../../assets/imgs/living/controls/tr.png" alt="抓周">
-          <span>踢出直播间</span>
-        </div>
-      </div>
-
-      <div class="control control2" v-if="controlstatus_2">
-        <p>将“某某某”用户</p>
-        <div class="btn">
-          <span>禁言3分钟</span>
-        </div>
-        <div class="btn">
-          <span>禁言10分钟</span>
-        </div>
-        <div class="btn">
-          <span>直播间禁言</span>
-        </div>
-        <div class="btn">
-          <span>取消禁言</span>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-  // import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
   import livingdetails from "./js/index-es6.js";
   export default livingdetails;
 </script>

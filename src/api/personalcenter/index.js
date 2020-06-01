@@ -6,7 +6,7 @@ import qs from 'qs'; // 根据需求是否导入qs模块
 const personalcenter = {
     // 商品订单接口
     getpageorders(userid, status, nextPage) {
-        return axios.get(`${base.yxf}/wapi/v1/order/pageorders?userId=${userid}&status=${status}&nextPage=${nextPage}`); //音乐列表
+        return axios.get(`${base.yxf}/wapi/v1/order/pageorders/hlr?userId=${userid}&status=${status}&nextPage=${nextPage}`); //音乐列表
     },
     // 取消订单
     getcancleorder(orderId, source, operator, cancelReason) {
