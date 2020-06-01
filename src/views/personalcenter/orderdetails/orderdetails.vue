@@ -71,7 +71,7 @@
               <div class="shopnamebox clearfix">
                 <div class="shopicon">
                   <!-- <img :src="pagedata.shopIcon" alt /> -->
-                  <img :src="pagedata.shopLogo" alt />
+                  <img :src="pagedata.shopLogo?pagedata.shopLogo:default_img_shoplogo" alt />
                 </div>
                 <span class="shopname">{{pagedata.shopName}}</span>
               </div>
@@ -168,11 +168,15 @@
         </div>
         <!-- 订单详情 -->
               <div class="bottomorderdetailmsg">
-                 <div><span class="ic"></span> 订单详情</div>
+                 <div class="title" ><span class="ic"></span> 订单详情</div>
                  <ul>
-                   <li>订单编号:{{fymx_item.orderSn}}</li>
-                   <li>创建时间:{{fymx_item.currentDateTime}}</li>
+                   <li>订单编号：{{fymx_item.orderSn}}</li>
+                   <li>支付方式：{{fymx_item.payType==0?'支付宝':'微信'}}</li>
+                   <li>支付交易号：{{fymx_item.paySerailNo}}</li>
+                   <li>创建时间：{{fymx_item.createTime}}</li>
+                   <li>付款时间：{{fymx_item.paymentTime}}</li>
                  </ul>
+                 <div>{{details}}</div>
               </div>
         <!-- 底部操作按钮 -->
         <div class="bottombtnbox" v-show="pageshow">
@@ -184,6 +188,10 @@
           <p @click="ordercancel" v-if="orderStatuscode==0">取消订单</p>
           <p @click="returncash" v-if="orderStatuscode==70">退款中</p>
           <p @click="removeOrder4C" v-if="orderStatuscode==3||orderStatuscode==4||orderStatuscode==71">删除订单</p>
+
+          <!-- <p @click.stop="orderReturnmoney(item,item.order.uid)" v-if="item.order.status==7">退款</p> -->
+          <p @click.stop="orderReturnmoney(pagedata.items)">退款</p>
+          
         </div>
 
         
@@ -212,7 +220,7 @@
 import {
   setsessionStorage,
   getsessionStorage
-} from "./../../../utils/index.js";
+} from "../../../utils/index.js";
 export default {
   components: {},
   data() {
@@ -240,11 +248,25 @@ export default {
       orderStatuscode: -100, //订单状态状态码 orderStatus.status
       orderStatus: "", //订单状态
       paystatus: false, //支付成功的状态：默认为false
-      timeinterval: "" //进入页面后的 轮询事件
+      timeinterval: "", //进入页面后的 轮询事件
+      default_img_shoplogo: require('../../../assets/imgs/shopcart/icon-shops.png'), //默认图片
+      details : '' //订单页传到详情页的数据
     };
   },
   computed: {},
   methods: {
+     //跳转退款页
+    orderReturnmoney(item){
+      let that = this;
+      //save returnmoney data
+      this.$router.push({
+        path: "/returngoods/applymoney",
+        query: {
+          uid: item.orderUid,
+          tabid : that.$route.query.tabid
+        }
+      });
+    },
     //取消订单
     closeOrder() {
       let zs = this;
@@ -452,6 +474,8 @@ export default {
     this.getOrderDetail();
     let that = this;
     that.userID = that.$store.state.user.userid;
+    this.details = getsessionStorage("returnmoneydata");
+
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

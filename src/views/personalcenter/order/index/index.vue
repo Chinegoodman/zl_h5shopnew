@@ -30,42 +30,40 @@
                   </div>
                 </div>
                 <div class="wares_list_center clearfix" v-for="(items,index) in item.orderItemList" :key="index" >
-                  <span class="m">
-                    <img :src="items.productPic" alt />
-                  </span>
-                  <div class="wares_list_right">
-                    <p class="wares_list_right_p _txtov2">
-                      {{items.productName}}
-                    </p>
-                    <span class="warns_price"><span class="ic">￥</span>{{items.productPrice}}</span>
-                    <span class="warns_num">X {{items.productQuantity}}</span>
-                    <div class="warns_tab">{{items.productAttr}}</div>
-                    <div class="warns_tui"><p class="warns_text_info">支持七天无理由退货</p></div>
-                  </div>
-                  <div class="warns_tab1"><span class="n">共{{item.order.totalQuantity}}件</span> 应付总额：￥{{item.order.payAmount}}</div>
-                  <div style="font-size:.22rem;color:rgba(153,153,153,1);text-align: right;margin-top:.15rem;" v-if='item.order.status==2||item.order.status==3' >{{item.order.deliveryCompany}}运单号:{{item.order.deliverySn}}</div>
-                  <div class="warns_tab2" v-if="item.order.status==0">
-                    <div class="quxiao" @click.stop="gocancel(item.order.uid)">取消订单</div>
-                    <div class="pay" @click.stop="gopaymoney(item)">立即付款</div>
-                  </div>
-                  <div class="warns_tab2" v-if="item.order.status==1">
-                    <div @click.stop="sendtips" class="pay">提醒发货</div>
-                  </div>
-                  <div class="warns_tab2" v-if="item.order.status==2">
-                    <div class="quxiao" @click.stop='checkwl(item.order)'>查看物流</div>
-                    <div class="pay" @click.stop='confirmgetgoods(item.order)'>确认收货</div>
-                    <!-- <div class="pay" @click.stop='affirmGoods(item.order)'>确认收货</div> -->
-                  </div>
-                  <div class="warns_tab2" v-if="item.order.status==3||item.order.status==4||item.order.status==71">
-                    <div class="quxiao" @click.stop="removeOrder4C(item.order.uid)">删除订单</div>
-                  </div>
-                  <div class="warns_tab2" v-if="item.order.status==7">
-                    <div class="quxiao" @click.stop="orderReturnmoney(item,item.order.uid)">退款</div>
-                  </div>
-                  <div class="warns_tab2" v-if="item.order.status==6">
-                    <div class="quxiao" @click.stop="orderReturn(items,item.order.uid)">退货</div>
-                  </div>
+                    <span class="m">
+                      <img :src="items.productPic" alt />
+                    </span>
+                    <div class="wares_list_right">
+                      <p class="wares_list_right_p _txtov2">
+                        {{items.productName}}
+                      </p>
+                      <span class="warns_price"><span class="ic">￥</span>{{items.productPrice}}</span>
+                      <span class="warns_num">X {{items.productQuantity}}</span>
+                      <div class="warns_tab">{{items.productAttr}}</div>
+                      <div class="warns_tui"><p class="warns_text_info">支持七天无理由退货</p></div>
+                    </div>
+                    <div class="warns_tab2 warns_tab3" v-if="item.order.confirmStatus==6">
+                      <div class="quxiao" @click.stop="orderReturn(items,item.order.uid)">退货</div>
+                    </div>
                 </div>  
+                <div class="warns_tab1"><span class="n">共{{item.order.totalQuantity}}件</span> 应付总额：￥{{item.order.payAmount}}</div>
+                <div style="font-size:.22rem;color:rgba(153,153,153,1);text-align: right;margin-top:.15rem;" v-if='item.order.status==2||item.order.status==3' >{{item.order.deliveryCompany}}运单号:{{item.order.deliverySn}}</div>
+                <div class="warns_tab2" v-if="item.order.status==0">
+                  <div class="quxiao" @click.stop="gocancel(item.order.uid)">取消订单</div>
+                  <div class="pay" @click.stop="gopaymoney(item)">立即付款</div>
+                </div>
+                <div class="warns_tab2" v-if="item.order.status==1">
+                  <div @click.stop="sendtips" class="pay">提醒发货</div>
+                </div>
+                <div class="warns_tab2" v-if="item.order.status==2">
+                  <div class="quxiao" @click.stop='checkwl(item.order)'>查看物流</div>
+                  <div class="pay" @click.stop='confirmgetgoods(item.order)'>确认收货</div>
+                  <!-- <div class="pay" @click.stop='affirmGoods(item.order)'>确认收货</div> -->
+                </div>
+                <div class="warns_tab2" v-if="item.order.status==3||item.order.status==4||item.order.status==71">
+                  <div class="quxiao" @click.stop="removeOrder4C(item.order.uid)">删除订单</div>
+                </div>
+                <!-- </div>   -->
               </div>
             </div>
           </van-list>
@@ -268,7 +266,7 @@ export default {
       let tabid = Number(this.$route.query.tabid);
       if(that.serviceorderlist_show){
         console.log(orderdata.items[0].productSkuId);
-        // //售后跳转商品详情
+        //售后跳转商品详情
         this.$router.push({
           name: "productdetails",
           params: {
@@ -278,13 +276,14 @@ export default {
         });
       }else{
         //跳详情
+        //save pay data
         var lastordermsg = {
             'amont' : orderdata.order.payAmount,
             'orderId' : orderdata.order.uid,
             'tabid' : this.$route.query.tabid
         }
         setsessionStorage("lastpaymsg",lastordermsg);
-
+        //order pay suession or failed flag about
         localStorage.setItem(
           "confirmpageorder",
           JSON.stringify({
@@ -296,6 +295,9 @@ export default {
             // paytype: that.paytypedata.currentindex
           })
         );
+
+        //save return money page data
+        setsessionStorage("returnmoneydata",orderdata);
 
         this.$router.push({
           path: "/personalcenter/order/orderdetails",
@@ -322,9 +324,6 @@ export default {
         // message:'正在取消订单',
         duration: 30000
       });
-      console.log(zs.closeId);
-      console.log(zs.$store.state.user.userid);
-      console.log(zs.name);
       zs.api.personalcenter
         .getcancleorder(zs.closeId, "H5", zs.$store.state.user.userid, zs.name)
         .then(res => {
@@ -480,17 +479,6 @@ export default {
         path: "/returngoods/apply",
         query: {
           uid: uid,
-          details: JSON.stringify(item)
-        }
-      });
-    },
-    //跳转退款页
-    orderReturnmoney(item, uid){
-      this.$router.push({
-        path: "/returngoods/applymoney",
-        query: {
-          uid: uid,
-          tabid : this.active,
           details: JSON.stringify(item)
         }
       });

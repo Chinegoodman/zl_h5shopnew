@@ -67,7 +67,7 @@
                 </div>
                 <h1 class="title _txtov2">{{pagebaseInfo.goodsTitle}}</h1>
                 <div class="pricebox" v-if="$route.query.appname != 'wukong'">
-                    <div class="vipprice clearfix" v-if="$route.query.isnewuser==1">
+                    <div class="vipprice clearfix" v-if="pagebaseInfo.isNewUser==1">
                         <p><span>￥</span>{{pagebaseInfo.price}}</p>
                         <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
                         <p class="originalprice"><span>￥</span>{{pagebaseInfo.marketPrice}}</p>
@@ -853,7 +853,7 @@
                 let userid = '';
                 this.api.newcomer.getComerStoreInfo({
                     skuId: that.product_skuid,
-                    uid:that.userID
+                    userId:that.userID
                 }).then(res=>{
                     // 页面基本信息
                     if(res.data.code != 1){
@@ -871,7 +871,7 @@
                     that.goodsBannerdata.imgarr=[];
                     that.buyerselectdata.skuId = pagebaseInfo.skuId;
                     that.buyerselectdata.kezhong = pagebaseInfo.weight;
-                    if(that.$route.query.isnewuser==1){
+                    if(that.pagebaseInfo.isNewUser==1){
                           that.buyerselectdata.price = pagebaseInfo.price;
                     }else{
                         that.buyerselectdata.price = pagebaseInfo.marketPrice;
@@ -924,7 +924,7 @@
                     }
 
                     let shellprice = 0;
-                    if(that.$route.query.isnewuser==1){
+                    if(that.pagebaseInfo.isNewUser==1){
                         shellprice = that.pagebaseInfo.price;
                     }else{
                         shellprice = that.pagebaseInfo.marketPrice;
@@ -1039,7 +1039,7 @@
                     that.buyerselectdata.skuId = dynamicSpecGroupdata.skuId;//等待返回接口
                     that.buyerselectdata.kezhong = dynamicSpecGroupdata.gram;
                     if(dynamicSpecGroupdata.vendibilityStock>0){
-                        if(that.$route.query.isnewuser==1){
+                        if(that.pagebaseInfo.isNewUser==1){
                             that.buyerselectdata.price=dynamicSpecGroupdata.price;
                             that.productoptionsselectdata.selectshow.price=dynamicSpecGroupdata.price;
                         }else{
@@ -1048,7 +1048,7 @@
                         }
                         that.productoptionsselectdata.selectshow.optionstxt=dynamicSpecGroupdata.specs_info;
                     }else if(dynamicSpecGroupdata.vendibilityStock==0){
-                        if(that.$route.query.isnewuser==1){
+                        if(that.pagebaseInfo.isNewUser==1){
                             that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.price;
                         }else{
                             that.productoptionsselectdata.selectshow.price= that.pagebaseInfo.marketPrice;
@@ -1380,6 +1380,7 @@
         mounted() {
             let that = this;
             that.product_skuid = that.$route.params.product_id;
+            
             //下载及拉起APP
             that.downloadandopen();
             // debugger;
@@ -1428,8 +1429,10 @@
             
             if(that.$route.params.webtype==0){ //app端
                 that.topbtnstatus = false;
+                that.userID = that.$route.query.userid;  
             }else{
                 that.topbtnstatus = true;
+                that.userID = that.$store.state.user.userid;
             }
             // 监听滚动显示导航模块
             window.onscroll=()=>{

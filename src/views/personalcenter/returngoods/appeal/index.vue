@@ -2,13 +2,9 @@
   <div class="returnSubmit">
         <div class="header">
       <img class="back" @click="goback" src="@/assets/imgs/follow/xiangqing@2x.png" alt />
-      <span>协商历史</span>
+      <span>申诉</span>
     </div>
     <div class="returnSubmit__user">
-      <div class="returnSubmit__user_info">
-        <img :src="url" alt="">
-        <div>{{username}}</div>
-      </div>
       <div class="text-textarea">
         <span class="tit">备注说明：</span>
         <textarea type="text"  @input="infoText" v-model="textarea" placeholder="100个字以内。"></textarea>
@@ -68,20 +64,20 @@ export default {
       let that = this;
       this.api.returngoods.insertReturnConsult({
         userId : that.$store.state.user.userid,
-        returnId: that.uid,
-        content: that.textarea,
-        url: this.fileList.toString()
+        uid: that.uid,
+        bak: that.textarea,
+        pics: this.fileList.toString()
       }).then(data=>{
-       if(data.data.code==1){
-         this.$toast('提交成功');
-         this.$router.go(-1);  
-       }
+          if(data.data.code==1){
+              this.$toast('提交成功');
+              this.$router.push({
+                path: "/returngoods/appealsuccess"
+              });
+          }
         }) 
     }
   },
   mounted() {
-    this.username = this.$store.state.user.userdata.userInfo.nickname;
-    this.url = this.$store.state.user.userdata.userInfo.face_url;
     this.uid = this.$route.query.uid;
   },
   beforeCreate() {}, //生命周期 - 创建之前
@@ -150,7 +146,7 @@ export default {
         border-radius: 50%;
       }
     }
-    .text-textarea{
+    .text-textarea{ 
       font-size : .28rem;
       font-family:PingFang SC;
       font-weight:500;
@@ -164,7 +160,7 @@ export default {
         position : absolute;
         left : .1rem;
         top : .21rem;
-         z-index: 10
+        z-index: 10
       }
       textarea {
         width: 76.5%;

@@ -61,7 +61,7 @@
         <span>创意者秀</span>
       </p>
     </div>
-    <div class="guild-area" v-if="guildarea.length > 0 && list_content_show_type===0">
+    <div class="guild-area" v-show="guildarea.length > 0 && list_content_show_type===0">
       <ul>
         <li v-for="(item,index) in guildarea" :key="index" id="item.id" :to="item.toUrl"  @click="gotodiamondlist(item)">
           <span class="m">
@@ -71,7 +71,7 @@
         </li>
       </ul>
     </div>
-    <div @click="gonewcomer" class="newcomerindexguild" v-if="list_content_show_type===0">
+    <div @click="gonewcomer" class="newcomerindexguild" v-show="list_content_show_type===0">
       <img src="@/assets/imgs/newcomer/xrhdrk.png" alt="">
     </div>
 
@@ -520,17 +520,9 @@ export default {
     let that = this;
     that.bannerimages();
     that.getadvertisingarea(); //广告区
-
-    if (that.$route.query.tab != undefined) {
+    if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
-      that.active = tab;
-      this.$router.push({
-        path:'/shop',
-        query : {
-            tab : that.active
-        }
-      });
-      that.titleclick(that.active,false);
+      that.titleclick(tab,false);
     }
     //新人专区推广弹层只弹一次
     if(getsessionStorage('newcommershellflag') != 'yethas'){
@@ -745,12 +737,14 @@ export default {
           window.sessionStorage.removeItem('homelistxpstorerange');
           break;
         case 3:
-          window.sessionStorage.removeItem('homelistxpstorerange');  
+          window.sessionStorage.removeItem('homelisttzjstorerange');  
           break;
       }  
     },
     // 头部导航点击事件
     titleclick(tabindex,status) {
+      console.log('tabindex');
+      console.log(tabindex);
       let that = this;
       this.removesession();
       if(status){
@@ -763,21 +757,22 @@ export default {
       this.nextpage= '';
       that.nextPage_zb = '';
       that.nextPage_xp = '';
-      that.nextpage_tzj = 1;
-      that.homelistmassage = [], //推荐列表
-      that.homelistzbmsg = [], //直播列表
-      that.homelistxpmsg =[], //新品列表
-      that.homelisttzjmsg =[], //投资金列表
+      that.nextpage_tzj = '1';
+      that.homelistmassage = []; //推荐列表
+      that.homelistzbmsg = []; //直播列表
+      that.homelistxpmsg =[]; //新品列表
+      that.homelisttzjmsg =[]; //投资金列表
       that.hasmorepage = 1;
       that.nodatashow = false;
       // ljx
       that.active = tabindex;
       that.list_content_show_type = tabindex;
+      
       that.$router.push(
         {
           path:'/shop',
           query : {
-            tab : that.active
+            tab : that.active 
           }
       });
       //关掉投资金金价定时器
@@ -788,6 +783,7 @@ export default {
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
           }else{
+            console.log(1559);
             that.homelisttj();
           }
           break
@@ -840,8 +836,8 @@ export default {
         //投资金列表 
         clearInterval(that.goldpricetimer);  
         that.goldpricetimer = setInterval(that.goldmass,5000);
-        if(getsessionStorage('homelistxpstorerange')){
-          that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
+        if(getsessionStorage('homelisttzjstorerange')){
+          that.homelisttzjmsg = getsessionStorage('homelisttzjstorerange');
         }else{
           that.homelisttzj();
         }
@@ -921,11 +917,6 @@ export default {
             that.$toast(res.data.info);
           }
         })
-        .catch(err => {
-          that.listloading = false;
-          that.vanerror = true;
-          that.$toast(res.data.info);
-        });
     },
     //直播列表
     homelistzb(){
@@ -1039,7 +1030,7 @@ export default {
         duration: 200000
       });
       that.api.homedetails
-        .homelisttjzpost({
+        .homelisttzjpost({
           userId : that.$store.state.user.userid,
           nextpage : that.nextpage_tzj
         })
@@ -1089,11 +1080,6 @@ export default {
             that.$toast(res.data.info);
           }
         })
-        .catch(err => {
-          that.listloading_tzj = false;
-          that.vanerror_tzj = true;
-          that.$toast("数据错误");
-        });
     },
     //首页新品排序
     tabsort(item){
@@ -1210,7 +1196,7 @@ export default {
     }
   },
   beforeCreate() {
-    window.sessionStorage.removeItem('homelisttjstorerange');
+    // window.sessionStorage.removeItem('homelisttjstorerange');
   }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
@@ -1231,7 +1217,9 @@ export default {
 
 <style lang='less'>
 //@import url()
-
+.shopindexwrap{
+  min-height: 10rem;
+}
 #shopwrap .van-tabs--line .van-tabs__wrap {
   height: 0.74rem;
   padding: .1rem 0;

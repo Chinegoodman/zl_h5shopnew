@@ -61,6 +61,9 @@
             <div class="details_info_buttom_btu" v-if="details.rorder.status==0" @click="urge(details.rorder.uid)">催促进度</div>
             <div class="details_info_buttom_btu" v-if="details.rorder.status==1" @click="returnlaststepshop(details.rorder.uid)">退货</div>
           </div>
+          <div>
+            <div class="details_info_buttom_btu" @click="gotoappealpage(details.rorder.uid)">申诉</div>
+          </div>
         </div>
       </div>
   </div>
@@ -84,6 +87,7 @@ export default {
     urge(uid) {
       this.$toast("催促成功" + uid);
     },
+    //跳转到退货发货页
     returnlaststepshop(){
       this.$router.push({
         path: "/returngoods/returnshopssend",
@@ -96,6 +100,15 @@ export default {
     historyList() {
       this.$router.push({
         path: "/returngoods/history",
+        query: {
+          uid: this.uId
+        }
+      });
+    },
+    //协商历史跳转
+    gotoappealpage() {
+      this.$router.push({
+        path: "/returngoods/appeal",
         query: {
           uid: this.uId
         }
