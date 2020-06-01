@@ -65,8 +65,8 @@
             </div>
         </div>
         <!-- 详情页无网络或者接口异常时的提示-->
-        <div class="mybrowsenodata" v-if="pagetype=='prodetails_nodata'">
-            <div class="nodataimg">
+        <div class="mybrowsenodata prodetails_nodata" v-if="pagetype=='prodetails_nodata'">
+            <div class="nodataimg prodetails_nodata">
                 <img src="../assets/imgs/icons/404.png" alt="404">
             </div>
             <div class="nodatatext">
@@ -143,17 +143,27 @@
             padding-top:1.82rem;
         }
     }
-    p.btn{
-        cursor: pointer;
-        background-color: rgba(255, 189, 4, 1);
-        color: rgba(255, 255, 255, 1);
-        font-size: 0.317rem;
-        border-radius: 0.35rem;
-        height: 0.7rem;
-        line-height: 0.7rem;
-        width: 2.3rem;
-        text-align:center;
-        margin:0.45rem auto 0;
+    .mybrowsenodata.prodetails_nodata{
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        .nodataimg.prodetails_nodata{
+            margin: 0 auto;
+            padding: 0 0 0.82rem;
+        }
+        p.btn{
+            cursor: pointer;
+            background-color: rgba(255, 189, 4, 1);
+            color: rgba(255, 255, 255, 1);
+            font-size: 0.317rem;
+            border-radius: 0.35rem;
+            height: 0.7rem;
+            line-height: 0.7rem;
+            width: 2.3rem;
+            text-align:center;
+            margin:0.45rem auto 0;
+        }
     }
 }
 </style>
