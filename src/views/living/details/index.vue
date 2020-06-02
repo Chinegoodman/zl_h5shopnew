@@ -263,8 +263,7 @@
 </template>
 
 <script>
-  // import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
-  import livingdetails from "./js/index-es6.js";
+  import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
   
   export default livingdetails;
 </script>
