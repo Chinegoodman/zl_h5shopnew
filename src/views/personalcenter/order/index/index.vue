@@ -15,7 +15,7 @@
             v-show="!serviceorderlist_show"
           >
             <!-- 订单有内容 -->
-            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in orderlist" :key="index"  v-show="orderlist.length>0">
+            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in orderlist" :key="index"  v-if="orderlist.length>0">
               <div class="wares_list clearfix">
                 <div class="time">
                   <div class="time_center">
@@ -74,7 +74,7 @@
             v-show="serviceorderlist_show"
           >
           
-            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in serviceorderlist" :key="index" v-show="serviceorderlist.length>0 && serviceorderlist_show">
+            <div @click.stop="checkorder(item,index)" class="order_body" v-for="(item,index) in serviceorderlist" :key="index" v-if="serviceorderlist.length>0 && serviceorderlist_show">
               <div class="wares_list clearfix">
                 <div class="time">
                   <div class="time_center">
@@ -490,47 +490,46 @@ export default {
     tabListInfo() {
       let that = this;
       // 点击tab事件触发的加载
-        that.$toast.loading({
-          message: "加载中...",
-          duration: 200000
-        });
-    that.api.personalcenter
-      .getpageorders(that.$store.state.user.userid,(that.active - 1), that.nextPage)
-      .then(res => {
-        // console.log(res.data.data.orders);
-        that.$toast.clear();
-        that.listloading = false;
-        if(res.data.code == 1){
-          if (res.data.data.orders && res.data.data.orders.length > 0) {
-            // debugger;
-            that.nodatashow = false;
-            that.hasmorepage = 2;
-            res.data.data.orders.forEach(e => {
-              that.orderlist.push(e);
-            });
-          } 
-          that.nextPage = res.data.data.nextPage;
-          // debugger;
-          if (that.nextPage != "") {
-            that.listfinished = false;
-            that.listloading = false;
-          } 
-          else {
-            if(that.hasmorepage == 1){
-              that.nodatashow = true;
-            }else{
-              that.listloading = false;
-              that.finishedText = '亲~已经到底了';
-            }
-            that.listfinished = true;
-          }
-          that.$forceUpdate();
+      that.$toast.loading({
+        message: "加载中...",
+        duration: 200000
+      });
+      that.api.personalcenter
+        .getpageorders(that.$store.state.user.userid,(that.active - 1), that.nextPage)
+        .then(res => {
+          // console.log(res.data.data.orders);
           that.$toast.clear();
-        }else{
-          that.$toast(res.data.info);
-        }
+          that.listloading = false;
+          if(res.data.code == 1){
+            if (res.data.data.orders && res.data.data.orders.length > 0) {
+              // debugger;
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.orders.forEach(e => {
+                that.orderlist.push(e);
+              });
+            } 
+            that.nextPage = res.data.data.nextPage;
+            // debugger;
+            if (that.nextPage != "") {
+              that.listfinished = false;
+              that.listloading = false;
+            } 
+            else {
+              if(that.hasmorepage == 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading = false;
+                that.finishedText = '亲~已经到底了';
+              }
+              that.listfinished = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+          }
       })
-  
     },
     // 售后数据请求与渲染
     shouhouInfo() {
@@ -573,7 +572,6 @@ export default {
         that.$forceUpdate();
         that.$toast.clear();
       })
-  
     },
     // tab点击事件 及 回调 tabListInfo
     tabindex(index) {
@@ -691,7 +689,7 @@ export default {
 }
 .order .van-tabs__content{
   margin-top: .2rem;
-  min-height: 1rem;
+  min-height: 8rem;
 }
 .order .video-content{
   min-height: 1rem;

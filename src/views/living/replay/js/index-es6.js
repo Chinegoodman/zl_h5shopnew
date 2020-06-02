@@ -139,7 +139,7 @@ export default {
 
                     // autoplay: true,
                     // autoplayMuted: true,
-                    preloadTime: 1, //预加载时长(秒)	30
+                    preloadTime: 15, //预加载时长(秒)	30
                     // useHls: true,
                     loop: true,
                     isLive: true,

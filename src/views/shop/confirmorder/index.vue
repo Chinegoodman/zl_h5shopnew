@@ -131,11 +131,12 @@
                   <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
                 </div>
               </div>
-              <div class="li" v-if="fymx_item24.type==4 && false" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
+              <!-- 发票 -->
+              <div class="li" v-if="fymx_item24.type==4" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
                 <p class="commontitle">{{fymx_item24.chineseName}}</p>
                 <span></span>
-                <div class="li_price">￥{{fymx_item24.price}}</div>
-                <div class="li_price">H5端敬请期待</div>
+                <!-- <div class="li_price">￥{{fymx_item24.price}}</div> -->
+                <div class="li_price" @click="gotoinvoice" >不开发票<span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div>
               </div>
               <div class="li" v-if="fymx_item25.type==5" v-for="(fymx_item25,fymx_index25) in fymx_item.content" :key="fymx_index25+'lily'">
                 <p class="commontitle">{{fymx_item25.chineseName}}</p>
@@ -299,6 +300,12 @@ export default {
       }else{
         this.$router.go(-1);
       }
+    },
+    //跳转发票页
+    gotoinvoice(){
+       this.$router.push({
+        name: "invoice"
+      });
     },
     // 阻止冒泡
     stopfn() {

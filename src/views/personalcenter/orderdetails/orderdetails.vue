@@ -187,7 +187,7 @@
           <p @click="ordercancel" v-if="orderStatuscode==0">取消订单</p>
           <p @click="returncash" v-if="orderStatuscode==70">退款中</p>
           <p @click="removeOrder4C" v-if="orderStatuscode==3||orderStatuscode==4||orderStatuscode==71">删除订单</p>
-          <p @click.stop="orderReturnmoney(details)" v-if="details.order.confirmStatus==7">退款</p>
+          <p @click.stop="orderReturnmoney(details)" v-if="details && details.order.confirmStatus==7">退款</p>
         </div>
 
         

@@ -28,6 +28,14 @@ export default {
   },
   computed: {},
   methods: {
+    goback(){
+      this.$router.push({
+        path: "/personalcenter/order",
+        query: {
+          tabid: 5
+        }
+      });
+    },
     returnpage() {
       this.$router.push({
         path: "/personalcenter/order",

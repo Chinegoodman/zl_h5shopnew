@@ -1,0 +1,97 @@
+.invoicewrap{
+    .header {
+        width: 7.5rem;
+        border-bottom: 1px solid #DEDEDE;
+        background: white;
+        text-align: center;
+        position: fixed;
+        z-index: 100;
+
+        img {
+            transform: rotate(180deg);
+            width: 0.2rem;
+            height: 0.35rem;
+            display: block;
+            padding: 0.4rem 0;
+            margin-left: 0.46rem;
+        }
+
+        span {
+            position: absolute;
+            top: 0.4rem;
+            left: 50%;
+            margin-left: -0.55rem;
+            font-size: 0.34rem;
+            color: #333333;
+        }
+    }
+    .invoice-con{
+        padding: 1.3rem .2rem .2rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        ul{
+            li{
+                height: 1rem;
+                line-height: 1rem;
+                font-size: .28rem;
+                color:rgba(31,31,31,1);
+                position: relative;
+                .asker{
+                    display: inline-block;
+                    width: .26rem;
+                    height: .26rem;
+                    vertical-align: middle;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .rt{
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    .taitoumsg{
+                        border: none;
+                        padding: .25;
+                        height: .5rem;
+                        line-height: .5rem;
+                    }
+                    .txt {
+                        display: block;
+                        padding-right: .2rem;
+                    }
+                }
+                
+            }
+        }
+        .btm-area{
+            position: fixed;
+            left: 50%;
+            bottom: .5rem;
+            transform: translateX(-50%);
+            .sure{
+                display: block;
+                width: 6.24rem;
+                height: .94rem;
+                line-height: .94rem;
+                border-radius: .47rem;
+                font-size: .32rem;
+                color:rgba(255,255,255,1);
+                text-align: center;
+                background:rgba(255,189,4,1);
+                margin: 0 auto;
+            }
+            p{
+                font-size: .26rem;
+                font-weight:400;
+                color:rgba(153,153,153,1);
+                text-align: center;
+                margin-top: .2rem;
+                span{
+                    color: rgba(255, 32, 19, 1)
+                }
+            }
+        }
+    }
+}

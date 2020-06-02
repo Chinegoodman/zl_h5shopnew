@@ -124,17 +124,22 @@ export default {
     subReturnGoods(item){
       let that = this;
       if(this.bacauseId!=''){
+      that.$toast.loading({
+        message: "提交中...",
+        duration: 200000
+      });
       this.api.returngoods.
       returnOrderMoney({
         userId:that.$store.state.user.userid,
         orderUid: that.details.order.uid,
         // source : item.source,
         source : 'H5',
-        // quantity: that.quantity,
+        quantity: 0,
         // skuId: item.orderItemList[0].productSkuId, //后端修改方式
         returnReason: that.name,
         description: that.textarea
         }).then(data=>{
+          that.$toast.clear();
           if(data.data.code==1){
               this.$toast("退款成功");
               that.goreturndetail();

@@ -36,20 +36,22 @@
         <div>退货信息</div>
             <!-- 商品信息部分 -->
     <div class="goodsmass clearfix">
-      <div class="masspic">
-        <img :src="details.rorder.productPic" alt />
-      </div>
-      <div class="masscontent">
-        <div class="shoptit _txtov2">{{details.rorder.productName}}</div>
-        <div class="shopys">
-          <span>{{details.rorder.productAttr}}</span>
+      <div class="box-masspic" v-for="(itemshops,index) in details.items" :key="index">
+        <div class="masspic">
+          <img :src="itemshops.productPic" alt />
         </div>
-        <div class="shop">支持七天无理由退货</div>
-      </div>
-      <div class="massmoney clearfix">
-        <div class="money"><span class="sm">￥</span>{{details.rorder.productPrice}}</div>
-        <span class="n">x{{1}}</span>
-      </div>
+        <div class="masscontent">
+          <div class="shoptit _txtov2">{{itemshops.productName}}</div>
+          <div class="shopys">
+            <span>{{itemshops.productAttr}}</span>
+          </div>
+          <div class="shop">支持七天无理由退货</div>
+        </div>
+        <div class="massmoney clearfix">
+          <div class="money"><span class="sm">￥</span>{{itemshops.productPrice}}</div>
+          <span class="n">x{{1}}</span>
+        </div>
+      </div>  
     </div>
         <div class="details_info_bottom">
           <div>退货原因：{{details.rorder.reason}}</div>
@@ -61,7 +63,7 @@
             <div class="details_info_buttom_btu" v-if="details.rorder.status==0" @click="urge(details.rorder.uid)">催促进度</div>
             <div class="details_info_buttom_btu" v-if="details.rorder.status==1" @click="returnlaststepshop(details.rorder.uid)">退货</div>
           </div>
-          <div>
+          <div v-if="details.rorder.status==5">
             <div class="details_info_buttom_btu" @click="gotoappealpage(details.rorder.uid)">申诉</div>
           </div>
         </div>

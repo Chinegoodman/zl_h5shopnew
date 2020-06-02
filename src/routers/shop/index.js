@@ -60,7 +60,7 @@ export default [{
             ]
         }
     },
-    // 商城 --金钢区-列表页(首页点入)
+    // 商城 --金钢区-列表页(首页点入) 
     {
         path: 'diamond',
         name: 'diamond',
@@ -96,6 +96,26 @@ export default [{
                 name: '确认订单页',
                 url: '/shop/confirmorder',
             }]
+        }
+    },
+    // 商城 --确认订单页-发票页 
+    {
+        path: 'invoice',
+        name: 'invoice',
+        component: resolve => require(['./../../views/shop/invoice/index.vue'], resolve),
+        meta: {
+            name: 'invoice',
+            navstatus: false,
+            //面包屑需要的参数
+            breadnav: [{
+                    name: '商城首页',
+                    url: '/invoice/index',
+                },
+                {
+                    name: '商城店主页页',
+                    url: '/shop/invoice',
+                },
+            ]
         }
     },
     // 商城 在线支付页面

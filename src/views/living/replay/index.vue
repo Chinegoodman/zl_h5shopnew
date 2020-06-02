@@ -60,15 +60,14 @@
         <!-- 直播消息  聊天输入部分-->
         <div class="content-bottom">
           <!-- 消息列表 -->
-          <div class="bottomchat" v-show="timgroupstatus" ref="msgboxscroll">
+          <div class="bottomchat" v-show="1" ref="msgboxscroll">
             <div class="msgboxwrapouter" ref="msgboxwrap">
               <div class="msgboxwrap">
                 <div class="msgbox clearfix">
                     <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png" alt /> -->
-                    <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt />
+                    <!-- <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt /> -->
                     <p class="name">系统公告：</p>
-                    <p>抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
-                      黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
+                    <p class="warmtips"> 请文明发言，禁目发布违法违规内容；购买直播推荐产品请确认您拍下的链接描述与实际商品一致；切勿相信线下直接转账等非通过本平台结算的交易方式工，谨防上当受骗！ </p>
                 </div>
               </div>
             </div>
@@ -100,7 +99,7 @@
         </div>
 
         <!-- 红利人 -->
-        <div @click="hlrtipsstatus=true" class="hlrtipsbtn">
+        <div @click="hlrtipsstatus=true" class="hlrtipsbtn" v-if="false">
           <img src="./../../../assets/imgs/living/details/hlr.png" alt="抓周" />
         </div>
         <div class="hlrtipsmb" v-if="hlrtipsstatus">

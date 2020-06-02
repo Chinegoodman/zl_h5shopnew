@@ -62,17 +62,27 @@ export default {
     //提交
     subText(){
       let that = this;
-      this.api.returngoods.insertReturnConsult({
+      that.$toast.loading({
+        // message:'正在取消订单',
+        duration: 30000
+      });
+      let postrq = {
         userId : that.$store.state.user.userid,
         uid: that.uid,
         bak: that.textarea,
-        pics: this.fileList.toString()
+        pics: this.fileList
+      }
+      this.api.returngoods.returnOrderMoneywappeal({
+        rq : JSON.stringify(postrq)
       }).then(data=>{
+          that.$toast.clear();
           if(data.data.code==1){
-              this.$toast('提交成功');
-              this.$router.push({
+              that.$toast('提交成功');
+              that.$router.push({
                 path: "/returngoods/appealsuccess"
               });
+          }else{
+             that.$toast(data.data.info)
           }
         }) 
     }
