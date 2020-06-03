@@ -70,7 +70,7 @@
       <div class="returnyytc-inner">
         <div class="yytctit">选择原因:{{name}}</div>
         <div style="font-size:.28rem;">
-          由于抓周平台出售商品均为贵重物品和定制物品，选择此 项仅退金料费与石料费，手工费、平台费、快递费与保价 费已经实际产生，无法退
+          由于聚美金品平台出售商品均为贵重物品和定制物品，选择此 项仅退金料费与石料费，手工费、平台费、快递费与保价 费已经实际产生，无法退
         </div>
         <div class="two_show">
           <div class="two_show_cancel" @click="cancelTwo()"> 取消</div>

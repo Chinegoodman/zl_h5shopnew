@@ -275,7 +275,7 @@ export default [{
             }]
         }
     },
-    //个人中心--关于抓周
+    //个人中心--关于聚美金品
     {
         path: '/aboutzhuazhou',
         name: 'aboutzhuazhou',

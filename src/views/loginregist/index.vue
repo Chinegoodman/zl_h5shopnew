@@ -3,7 +3,7 @@
     <div class="loginwrap">
         <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="返回"></div>
         <img class="logo" src="./../../assets/logo.png" alt="" srcset="">
-        <p class="name">抓周</p>
+        <p class="name">聚美金品</p>
         <div class="bottom">
             <div class="btnbox clearfix">
                 <!-- <div class="btnli red" @click="$toast('想得美,H5没有一键登录')">一键登录</div> -->

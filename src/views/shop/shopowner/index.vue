@@ -4,14 +4,14 @@
     <div class="shopkeepermass-top">
         <div class="hd_top">
             <span class="goback" @click="shopback"><img src="./../../../assets/imgs/icons/sp-pic-fanh@2x.png" /></span>
-            <a class="gouwuche" href="javascript:void(0)" @click="gotoshopcart"><img src="./../../../assets/imgs/shop/gouwuche.png" alt="抓周" /></a>
+            <a class="gouwuche" href="javascript:void(0)" @click="gotoshopcart"><img src="./../../../assets/imgs/shop/gouwuche.png" alt="聚美金品" /></a>
             <div class="box-more-info">
-                <!-- <span class="more-info"><img src="./../../../assets/imgs/shop/moreinfo.png" alt="抓周" /></span> -->
+                <!-- <span class="more-info"><img src="./../../../assets/imgs/shop/moreinfo.png" alt="聚美金品" /></span> -->
                  <div class="propt_nav" v-if="false">
                     <span class="ic-corner"  ><img src="./../../../assets/imgs/shop/corner.png" alt /></span>
                     <ul >
                         <li>
-                            <a href="#"><span class="ic"><img src="./../../../assets/imgs/shop/goindex.png" alt /></span>抓周首页</a>
+                            <a href="#"><span class="ic"><img src="./../../../assets/imgs/shop/goindex.png" alt /></span>聚美金品首页</a>
                         </li>
                         <li>
                             <a href="#"><span class="ic"><img src="./../../../assets/imgs/shop/kf.png" alt /></span>在线客服</a>

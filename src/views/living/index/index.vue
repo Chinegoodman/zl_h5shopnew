@@ -2,25 +2,25 @@
 <template>
   <div class="livingindex">
     <div class="header">
-      <img src="@/assets/imgs/icons/logo.png" alt="抓周" class="lefticon" />
+      <img src="@/assets/imgs/icons/logo.png" alt="聚美金品" class="lefticon" />
       <div @click="gotosearch" class="searchbtn">
-        <img src="@/assets/imgs/video/fangdj@2x.png" alt="抓周" />
+        <img src="@/assets/imgs/video/fangdj@2x.png" alt="聚美金品" />
         <p class="_txtov1">大家都在搜“大美新疆”</p>
       </div>
       <div class="rightbtn">
-        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="抓周 无消息" />
+        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="聚美金品 无消息" />
       </div>
     </div>
 
     <!-- <div style="width:100%;height:0.2rem;background:#fff;"></div> -->
 
-    <!-- 直播视频列表 -->
+    <!-- 视频列表 -->
     <ul>
       <li class="banner" v-if="livinglistdata.length > 0"  v-for="(item,index) in livinglistdata" :key="index" @click.stop="gotodetails(item)" :style="{background:'url(' +item.cover+ ') rgba(204,204,204,0.65)'}">
         <div class="banner_header clearfix">
           <img @click.stop="checkanchor(item.id)" class="face" :src="item.face_url" />
-          <img v-if="item.is_attention==1 || item.is_attention==2" src="./../../../assets/imgs/video/guanzhuxihuan@2x.png" alt="抓周" class="follow" @click.stop="follow(true,item.uid,index)">
-          <img v-if="item.is_attention==3 || item.is_attention== null" src="./../../../assets/imgs/video/weiguanzhuxiaoshipin@2x.png" alt="抓周" class="followed" @click.stop="follow(false,item.uid,index)">
+          <img v-if="item.is_attention==1 || item.is_attention==2" src="./../../../assets/imgs/video/guanzhuxihuan@2x.png" alt="聚美金品" class="follow" @click.stop="follow(true,item.uid,index)">
+          <img v-if="item.is_attention==3 || item.is_attention== null" src="./../../../assets/imgs/video/weiguanzhuxiaoshipin@2x.png" alt="聚美金品" class="followed" @click.stop="follow(false,item.uid,index)">
           <div class="banner_header_left">
             <span @click.stop="checkanchor(item.id)" class="_txtov1">{{item.nickname}}</span>
             <img
@@ -32,7 +32,7 @@
         <div class="livingstatusbox" v-if="true">
           <img
             src="../../../assets/imgs/living/zbz.png"
-            alt="抓周直播"
+            alt="聚美金品"
           />
         </div>
         <div class="banner_footer">
@@ -47,9 +47,9 @@
             <van-icon name="arrow" class="icon_right"  v-if="item.goodsList.length>2"/>
           </div>
           <div class="heartshow">
-            <img @click.stop="heartclick(index)" src="./../../../assets/imgs/living/details/xiaoxinxin3.png" alt="抓周">
+            <img @click.stop="heartclick(index)" src="./../../../assets/imgs/living/details/xiaoxinxin3.png" alt="聚美金品">
             <div class="gifbox" v-if="gifstatus[index]==true">
-              <img src="./../../../assets/imgs/living/details/xingif.gif" alt="抓周">
+              <img src="./../../../assets/imgs/living/details/xingif.gif" alt="聚美金品">
               <!-- 0.8s -->
             </div>
           </div>
@@ -57,7 +57,7 @@
         </div>
       </li>
       <li v-if="livinglistnonestatus" style="background:#ccc; color:#fff;font-size:0.28rem;line-height:3.64rem;text-align:center;">
-        暂无主播在直播
+        暂无主播在
       </li>
     </ul>
   </div>
@@ -107,8 +107,8 @@ export default {
     return {
       searchvalue: "",
       active: 0,
-      livinglistdata: [], //直播列表
-      livinglistnonestatus:false,//是否显示无直播的状态
+      livinglistdata: [], //列表
+      livinglistnonestatus:false,//是否显示无的状态
 
       giftimer:'',
       gifstatus:[],
@@ -128,7 +128,7 @@ export default {
     gotosearch() {
       this.$router.push({ name: "livingsearch" });
     },
-    // 跳转到直播详情页
+    // 跳转到详情页
     gotodetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
@@ -145,14 +145,14 @@ export default {
         path: `/shop/productdetails/${skuid}/1?liveId=${liveId}`
       });
     },
-    // 获取最新直播间列表
+    // 获取最新间列表
     getNewRoomList() {
       let that = this;
       // console.log(1111);
       this.api.living
         .getNewRoomList2({
           // recommend:'',//是否推荐 1是 空为否
-          state: 0, //0-直播中 1-结束
+          state: 0, //0-中 1-结束
           nextpage: "", //分页id
           pageSize: "", //每页数据
           keyWord: "", //搜索词

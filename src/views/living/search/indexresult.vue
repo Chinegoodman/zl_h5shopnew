@@ -30,7 +30,7 @@
       </div>
       <van-tabs v-model="active" color="#FFBD04" line-width="0.3rem" line-height="0.05rem" @click="homelistjktab">
         <van-tab title="全部" name="a"> </van-tab>
-        <van-tab title="直播" name="b"> </van-tab>
+        <van-tab title="" name="b"> </van-tab>
         <van-tab title="精品" name="c"> </van-tab>
       </van-tabs>
     </div>
@@ -72,7 +72,7 @@
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url" v-if="item.face_url" alt="抓周" />
+                  <img :src="item.face_url" v-if="item.face_url" alt="聚美金品" />
                 </span>
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>

@@ -21,7 +21,7 @@
                  <ul v-if="mybrowselist.length>0">
                     <li v-for="(item,index) in mybrowselist" :key="index" @click="gotodetails(item)" >
                       <span class="m">
-                        <img :src="item.goods_image" alt="抓周" class="vip-pic"/>
+                        <img :src="item.goods_image" alt="聚美金品" class="vip-pic"/>
                       </span>
                       <span class="t">{{item.goods_title}}</span>
                       <span class="price"><span>￥</span>{{item.price}}</span>

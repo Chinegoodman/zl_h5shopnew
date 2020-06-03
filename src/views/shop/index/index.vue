@@ -3,26 +3,26 @@
   <div class="shopwrap" id="shopwrap">
     <div class="header">
       <div @click="gotosertchpage" class="searchbtn">
-        <img src="@/assets/imgs/video/fangdj@2x.png" alt="抓周" />
+        <img src="@/assets/imgs/video/fangdj@2x.png" alt="聚美金品" />
         <p class="_txtov1">大家都在搜</p>
       </div>
       <div class="hd_rt">
         <div class="xunbao">
           <span class="im">
-            <img src="@/assets/imgs/shop/xunbao.png" alt="抓周" />
+            <img src="@/assets/imgs/shop/xunbao.png" alt="聚美金品" />
           </span>
           <span class="t">寻宝</span>
         </div>
         <div class="xunbao">
           <span class="im">
-            <img src="@/assets/imgs/shop/xiaoxi.png" alt="抓周" />
+            <img src="@/assets/imgs/shop/xiaoxi.png" alt="聚美金品" />
           </span>
           <span class="t">消息</span>
         </div>
       </div>
       <!-- <div class="rightbtn">
-        <!-- <img src="@/assets/imgs/video/xiaoxi@2x.png" alt="抓周 有消息" />
-        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="抓周 无消息" />
+        <!-- <img src="@/assets/imgs/video/xiaoxi@2x.png" alt="聚美金品 有消息" />
+        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="聚美金品 无消息" />
       </div> -->
     </div>
     <div class="navbar">
@@ -65,7 +65,7 @@
       <ul>
         <li v-for="(item,index) in guildarea" :key="index" id="item.id" :to="item.toUrl"  @click="gotodiamondlist(item)">
           <span class="m">
-            <img :src="item.pictureUrl?item.pictureUrl:default_img_guildarea" alt="抓周" />
+            <img :src="item.pictureUrl?item.pictureUrl:default_img_guildarea" alt="聚美金品" />
           </span>
           <span class="t">{{item.name}}</span>
         </li>
@@ -103,7 +103,7 @@
             </div>
             <div class="goodsli_title clearfix">
               <span class="img_w">
-                <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                <img :src="item.face_url?item.face_url:default_img_head" alt="聚美金品" />
               </span>
               <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
             </div>
@@ -120,7 +120,7 @@
         <div class="changesmallsize" v-if="change_big_small_flag_tj===0" @click="changeimgsize_tj()"></div>
       </div>
     </div> 
-    <!-- 直播列表数据展示 --> 
+    <!-- 列表数据展示 --> 
     <div class="index_list_recommend lili" v-show="list_content_show_type===1">
         <div class="nav_type">
           <ul>
@@ -152,7 +152,7 @@
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                  <img :src="item.face_url?item.face_url:default_img_head" alt="聚美金品" />
                 </span>
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>
@@ -315,7 +315,7 @@
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                  <img :src="item.face_url?item.face_url:default_img_head" alt="聚美金品" />
                 </span>
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>
@@ -398,7 +398,7 @@ export default {
       ercommend: [], //每日推荐
       everday:'',
       homelistmassage: [], //推荐列表
-      homelistzbmsg: [], //直播列表
+      homelistzbmsg: [], //列表
       homelistxpmsg: [], //新品列表
       homelisttzjmsg: [], //投资金列表
       titlistmassage: [
@@ -407,8 +407,8 @@ export default {
           tabindex: 0  //推荐
         },
         {
-          category_name:"直播",
-          tabindex: 1  //直播
+          category_name:"",
+          tabindex: 1  //
         },
         {
           category_name:"商城",
@@ -419,7 +419,7 @@ export default {
           tabindex: 3  //推荐
         }
       ], //头部导航数据
-      zhibotitletype : [], //直播分类导航
+      zhibotitletype : [], //分类导航
       xinpintitletype : [],   //新品分类导航
       xinpintitsort : [ //新品三级导航排序
         {
@@ -467,9 +467,9 @@ export default {
       twoID:"",
       threeID:"",
       post_tab_type : 1,  //推荐  接口文档没更新  2为新品 已改其他接口实现
-      list_content_show_type : 0,  // 1为推荐列表显示 2为直播列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
-      obj_option : {},   //点击导航“直播” 传入请求直播列表的类型参数
-      tab_active : 0, //直播列表下的分类查询选种项  热播中 每日必看...
+      list_content_show_type : 0,  // 1为推荐列表显示 2为列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
+      obj_option : {},   //点击导航“” 传入请求列表的类型参数
+      tab_active : 0, //列表下的分类查询选种项  热播中 每日必看...
       tab_active_xp : 0, //新品下的分类查询选种项
       titesortactive : 0, //新品三级导选中项
       price_area_step : [
@@ -500,10 +500,10 @@ export default {
       obj_option_xp :{
         priceSort: 0,
         price_area : '1000以下'
-      }, //点击导航“新品” 传入请求直播列表的类型参数
+      }, //点击导航“新品” 传入请求列表的类型参数
       filtershow_flag : false,
       change_big_small_flag_tj : 1, //推荐切换大小图外层class条件
-      change_big_small_flag_zb : 1, //直播切换大小图外层class条件
+      change_big_small_flag_zb : 1, //切换大小图外层class条件
       change_big_small_flag_xp : 1, //新品切换大小图外层class条件
       change_big_small_flag_tzj : 1, //新品切换大小图外层class条件
       default_img_small: require('../../../assets/imgs/shop/list-default-small.png'), //默认图片
@@ -583,7 +583,7 @@ export default {
         }
       });
     },
-    // 跳转到直播详情页
+    // 跳转到详情页
     gotolivingdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
@@ -759,7 +759,7 @@ export default {
       that.nextPage_xp = '';
       that.nextpage_tzj = '1';
       that.homelistmassage = []; //推荐列表
-      that.homelistzbmsg = []; //直播列表
+      that.homelistzbmsg = []; //列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
       that.hasmorepage = 1;
@@ -788,7 +788,7 @@ export default {
           }
           break
         case 1 :
-        //直播列表 
+        //列表 
         if(getsessionStorage('homelistzbstorerange')){
           that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
         }else{
@@ -803,7 +803,7 @@ export default {
                 that.obj_option.categoryName = that.zhibotitletype[0].name;
                 that.homelistzb();
               }else{
-                this.$toast("直播分类暂无数据");
+                this.$toast("分类暂无数据");
               }   
             }
           })
@@ -844,7 +844,7 @@ export default {
         break
       }
     },
-    //直播的分类筛选 直播中 每日必看...
+    //的分类筛选 中 每日必看...
     tabtittypezhibo(obj,index){
       let that = this;
       that.tab_active = index;
@@ -918,7 +918,7 @@ export default {
           }
         })
     },
-    //直播列表
+    //列表
     homelistzb(){
       let that = this;
       that.$toast.loading({
@@ -1167,7 +1167,7 @@ export default {
         }
       
     },
-    //直播列表切换大小图
+    //列表切换大小图
     changeimgsize_zb(){
        var that = this;
         if(that.change_big_small_flag_zb === 1){

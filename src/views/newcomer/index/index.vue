@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class="newcomerwrap" id="newcomerwrap">
-    <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="抓周"></div>
+    <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="聚美金品"></div>
     <div class="banner">
       <img src="@/assets/imgs/newcomer/dbbj.png" alt="">
       <span @click="gotonewcomerrole" class="current-role"><img src="@/assets/imgs/newcomer/xrgz.png" alt=""></span>

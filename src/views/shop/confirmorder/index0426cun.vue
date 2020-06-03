@@ -73,7 +73,7 @@
             <a href="http://web.zhulihr.com/fysm.html" target="_blank">
               <div class="title clearfix">
                 <p v-if="fymx_item2.type==0" v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2">{{fymx_item2.chineseName}}</p>
-                <!-- <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="抓周" /> -->
+                <!-- <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="聚美金品" /> -->
               </div>
             </a>
             <div class="pd_list">
@@ -153,7 +153,7 @@
         <div class="paytypebox clearfix">
           <div class="paytype clearfix" v-for="(item,index) in paytypedata.arr" :key="index">
             <div class="left">
-              <img :src="item.logo" alt="抓周">
+              <img :src="item.logo" alt="聚美金品">
               <div class="content">
                 <p>{{item.name}}</p>
                 <span>{{item.title}}</span>
@@ -195,10 +195,10 @@
         <p>请选择配送方式</p>
         <div class="typelist" v-for="(item,index) in freightAmountcurrent.arr" :key="index">
           <div class="left">
-            <img v-if="item.type==801" src="./../../../assets/imgs/sf/jr.png" alt="抓周">
-            <img v-if="item.type==802" src="./../../../assets/imgs/sf/cc.png" alt="抓周">
-            <img v-if="item.type==803" src="./../../../assets/imgs/sf/cr.png" alt="抓周">
-            <img v-if="item.type==804" src="./../../../assets/imgs/sf/gr.png" alt="抓周">
+            <img v-if="item.type==801" src="./../../../assets/imgs/sf/jr.png" alt="聚美金品">
+            <img v-if="item.type==802" src="./../../../assets/imgs/sf/cc.png" alt="聚美金品">
+            <img v-if="item.type==803" src="./../../../assets/imgs/sf/cr.png" alt="聚美金品">
+            <img v-if="item.type==804" src="./../../../assets/imgs/sf/gr.png" alt="聚美金品">
           </div>
           <div class="right" @click="selectfreighttype(item)">
             <p v-if="item.price == 0">收件地址不支持此服务</p>

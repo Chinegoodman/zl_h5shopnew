@@ -7,7 +7,7 @@
         <div class="header_tou">
           <div class="logined-box" v-if="$store.state.user.isLogin">
               <img v-if="$store.state.user.userdata.userInfo.face_url" :src="$store.state.user.userdata.userInfo.face_url" class="hd-face" />
-              <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
+              <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="聚美金品" class="hd-face"/>
               <div class="use_top">
                 <span class="logined">{{$store.state.user.userdata.userInfo.nickname}}</span>
                 <span class="level_use" @click="go_levelinstruct">
@@ -25,7 +25,7 @@
               <div class="info_use">爪爪值<span>{{$store.state.user.userdata.integral}}</span>/<span>{{$store.state.user.userdata.level}}</span>  <span class="edit_info" @click="gomyinfo"><span class="edit"></span>完善资料</span></div>
           </div>
           <div v-else @click="gotologin" style="cursor:pointer;">
-              <img  src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
+              <img  src="./../../../assets/imgs/personal/mine_default.png" alt="聚美金品" class="hd-face"/>
               <span class="log_guild">点击登录</span>
           </div>
         </div>
@@ -70,7 +70,7 @@
     <!-- 我的订单 start -->
     <div class="translate">
       <div class="pub-top-tile">
-        <div class="top_in"><span class="lt">关于抓周</span></div>
+        <div class="top_in"><span class="lt">关于聚美金品</span></div>
       </div>
       <ul class="about-zhua-zhou">
         <li v-for="(item,index) in aboutZhuaZhouList" :key="index" @click="zhuaZhouList(index)">
@@ -192,7 +192,7 @@ export default {
           img : require("@/assets/imgs/personal/aboutZhuaZhou02.png")
         },
         {
-          name : "关于抓周",
+          name : "关于聚美金品",
           img : require("@/assets/imgs/personal/aboutZhuaZhou03.png")
         }
       ]
@@ -330,7 +330,7 @@ export default {
             that.$router.push({path :"/returngoods/index"});
       }
     },
-    //关于抓周
+    //关于聚美金品
     zhuaZhouList(index){
       var that = this;
       switch(index){

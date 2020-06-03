@@ -53,11 +53,11 @@ const homedetails = {
     diamondlistpost(params) {
         return axios.post(`${base.yxf}/mapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
     },
-    // 首页直播tab列表 ljx
+    // 首页tab列表 ljx
     homelistzbpost(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/getGoldTypeLiveRoomList`, qs.stringify(params));
     },
-    // 直播分类接口 ljx
+    // 分类接口 ljx
     homelistfenleizb(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/homepage/goldType`, qs.stringify(params));
     },

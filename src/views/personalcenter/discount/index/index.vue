@@ -28,7 +28,7 @@
                  <ul v-if="discountlist.length>0" ref="browse_ul">
                     <!-- <li v-for="(item,index) in discountlist" :key="index" >
                       <span class="m">
-                        <img :src="item.goods_image" alt="抓周" class="vip-pic"/>
+                        <img :src="item.goods_image" alt="聚美金品" class="vip-pic"/>
                       </span>
                       <span class="t">{{item.goods_title}}</span>
                       <span class="price">{{item.price}}</span>

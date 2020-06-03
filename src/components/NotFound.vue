@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
     <div class='404page'>
-        <p class="tips404">抓周H5提醒你。你找的页面不存在</p>
+        <p class="tips404">聚美金品H5提醒你。你找的页面不存在</p>
     </div>
 </template>
 
@@ -33,9 +33,9 @@ beforeMount() {
     // let newmeta1 = document.createElement('meta');
     // let newmeta2 = document.createElement('meta');
     // newmeta1.name = 'keywords';
-    // newmeta1.content = '抓周,珠宝';
+    // newmeta1.content = '聚美金品,珠宝';
     // newmeta2.name = 'description';
-    // newmeta2.content = '抓周，珠宝首饰，服务大众';
+    // newmeta2.content = '聚美金品，珠宝首饰，服务大众';
     // document.getElementsByTagName('head')[0].appendChild(newmeta1);
     // document.getElementsByTagName('head')[0].appendChild(newmeta2);
 }, //生命周期 - 挂载之前

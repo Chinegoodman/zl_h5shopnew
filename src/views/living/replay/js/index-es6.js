@@ -15,19 +15,19 @@ export default {
         return {
             livingtimer: null,
             livinglidata: "",
-            // livingurl:'http://liveali.ifeng.com/live/CCTV.m3u8',//直播地址
+            // livingurl:'http://liveali.ifeng.com/live/CCTV.m3u8',//地址
             goodschoosestatus: false, //商品选择模块 默认隐藏
 
-            //直播相关
+            //相关
             player: "", //player实例
             canplaythroughstatus: false,
             reloadtimes: 0,
             timgroupstatus: false,
-            livingendstatus: true, // 直播  默认为未结束
-            confirmordermbstatus: false, //直播间 主播推送到用户的立即付款状态 默认 false
-            confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
+            livingendstatus: true, //   默认为未结束
+            confirmordermbstatus: false, //间 主播推送到用户的立即付款状态 默认 false
+            confirmorderdata: '', //间 主播推送到用户的立即付款 相关数据
 
-            goodsList: [], //直播间的商品列表
+            goodsList: [], //间的商品列表
             // currentgood:[],//当前商品【只有一条商品】
 
             controlstatus: false, //管理员权限弹窗
@@ -42,7 +42,7 @@ export default {
         };
     },
     computed: {
-        // 直播相关
+        // 相关
         wdwidth() {
             return document.documentElement.clientWidth;
         },
@@ -182,13 +182,13 @@ export default {
 
             that.$toast.loading("视频正在加载中。。。。");
             // 播放器异常事件
-            // 直播结束
+            // 结束
             that.player.on("ended", function() {
                 console.log("视频 ended");
                 that.canplaythroughstatus = false;
                 that.livingendstatus = false;
             });
-            // 直播错误
+            // 错误
             that.player.on("error", function() {
                 console.log("视频 error");
                 that.canplaythroughstatus = false;
@@ -286,8 +286,8 @@ export default {
             });
         },
 
-        // 直播及群聊相关 开始
-        // 播放直播、视频 事件
+        // 及群聊相关 开始
+        // 播放、视频 事件
         videopaly() {
             let that = this;
             if (that.canplaythroughstatus) {
@@ -342,7 +342,7 @@ export default {
                     })
             }
         },
-        // 直播间商品列表
+        // 间商品列表
         getgoodsList() {
             let that = this;
             this.api.living
@@ -375,7 +375,7 @@ export default {
                 .additem4Live({
                     skuId: sku_id,
                     userId: that.$store.state.user.userid,
-                    roomId: that.livinglidata.id, //直播间ID
+                    roomId: that.livinglidata.id, //间ID
                     shopId: shopid,
                     quantity: 1
                 })
@@ -398,7 +398,7 @@ export default {
                     }
                 })
         },
-        //立即购买 点击事件 直播弹窗 
+        //立即购买 点击事件 弹窗 
         confirmorderclick(confirmorderdata) {
             let that = this;
             let confirmorderdatanew = confirmorderdata;

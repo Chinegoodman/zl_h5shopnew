@@ -21,14 +21,14 @@
             <ul class="balance-list">
               <!-- <li to="/personalcenter/mypurse/balancedetail">
                 <span class="im">
-                  <img src="@/assets/imgs/personal/bill.png" alt="抓周">
+                  <img src="@/assets/imgs/personal/bill.png" alt="聚美金品">
                 </span>
                 <span class="t">账单明细</span>
                 <span class="gd"></span>
               </li> -->
               <li to="/personalcenter/mypurse/balancedetail" @click="gotodetail">
                   <span class="im">
-                    <img src="@/assets/imgs/personal/bill.png" alt="抓周">
+                    <img src="@/assets/imgs/personal/bill.png" alt="聚美金品">
                   </span>
                   <span class="t">账单明细</span>
                   <span class="gd"></span>

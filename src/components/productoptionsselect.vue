@@ -6,7 +6,7 @@
             <img src="./../assets/imgs/icons/spge-guanbi@2x.png" alt="" v-else>
         </div>
         <div class="top clearfix">
-            <img :src="productoptionsselectdata.selectshow.img" alt="抓周">
+            <img :src="productoptionsselectdata.selectshow.img" alt="聚美金品">
             <!-- <div class="selectoptions" v-if="$route.query.isnewuser==1 || $route.query.isnewuser==0">
                 <p class="price" v-if="$route.query.appname=='wukong'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
                 <p class="price" v-if="$route.query.isnewuser==1">￥{{productoptionsselectdata.selectshow.price}}</p>

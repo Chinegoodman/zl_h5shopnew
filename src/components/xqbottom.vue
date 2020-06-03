@@ -4,33 +4,33 @@
         <div class="bottomboxwrap" :class="{wukong:$route.query.appname == 'wukong'}" v-if="pagetype=='productdetails'">
             <div class="left" v-if="currentpagetype == 'livingpage'">
                 <div class="li" v-if="!isAttention_status" @click="gotoshoucang(true)">
-                    <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="聚美金品">
                     <!-- <p>收藏</p> -->
                 </div>
                 <div class="li" v-if="isAttention_status" @click="gotoshoucang(false)">
-                    <img src="@/views/shop/productdetails/imgs/spxqysc.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqysc.png" alt="聚美金品">
                     <!-- <p>收藏</p> -->
                 </div>
             </div>
             <div class="left" v-if="currentpagetype != 'livingpage'">
                 <div class="li" @click="gotodp" v-if="$route.query.appname == 'wukong'">
-                    <img src="@/views/shop/productdetails/imgs/dpsy.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/dpsy.png" alt="聚美金品">
                     <!-- <p>马甲包店铺</p> -->
                 </div>
                 <div class="li" @click="gotodp" v-if="$route.query.appname != 'wukong'">
-                    <img src="@/views/shop/productdetails/imgs/spxqdp.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqdp.png" alt="聚美金品">
                     <!-- <p>店铺</p> -->
                 </div>
                 <div class="li" @click="gotokefu" v-if="$route.query.appname != 'wukong' && serviceshow">
-                    <img src="@/views/shop/productdetails/imgs/spxqkf.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqkf.png" alt="聚美金品">
                     <!-- <p>客服</p> -->
                 </div>
                 <div class="li" v-if="!isAttention_status && $route.query.appname != 'wukong'" @click="gotoshoucang(true)">
-                    <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="聚美金品">
                     <!-- <p>收藏</p> -->
                 </div>
                 <div class="li" v-if="isAttention_status && $route.query.appname != 'wukong'" @click="gotoshoucang(false)">
-                    <img src="@/views/shop/productdetails/imgs/spxqysc.png" alt="抓周">
+                    <img src="@/views/shop/productdetails/imgs/spxqysc.png" alt="聚美金品">
                     <!-- <p>收藏</p> -->
                 </div>
                 <div class="li" @click="gotoshopcart" v-if="$route.query.appname == 'wukong'"  >

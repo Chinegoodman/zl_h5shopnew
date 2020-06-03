@@ -13,11 +13,11 @@
     <div class="containerwrap">
       <div class="top">
         <div class="top1" v-if="paystatus == true">
-          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="抓周">
+          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="聚美金品">
           <p>订单支付成功，感谢您的购买！</p>
         </div>
         <div class="top1 top11" v-if="paystatus == false">
-          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="抓周">
+          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="聚美金品">
           <p>订单提交成功，请尽快付款哦！</p>
           <span>未支付订单在30分钟后自动关闭</span>
         </div>

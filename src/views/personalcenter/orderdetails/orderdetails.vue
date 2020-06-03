@@ -94,7 +94,7 @@
                 <a href="http://web.zhulihr.com/fysm.html" target="_blank">
                   <div class="title clearfix">
                     <p v-if="fymx_item2.type==0" v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2">{{fymx_item2.caption}}</p>
-                    <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="抓周" />
+                    <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="聚美金品" />
                   </div>
                 </a>
                 <div class="pd_list">
@@ -155,7 +155,7 @@
                   </div>
                   <div class="li telbox" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
                     <a :href="'tel:'+fymx_item27.display">
-                      <img src="./../../../assets/imgs/icons/sp-kf@2x.png" alt="抓周">
+                      <img src="./../../../assets/imgs/icons/sp-kf@2x.png" alt="聚美金品">
                       <span>{{fymx_item27.caption}}</span>
                     </a>
                     <!-- <p class="commontitle">{{fymx_item27.caption}}</p>

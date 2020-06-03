@@ -2,13 +2,13 @@
 <template>
   <div class="videoswrap">
     <div class="header">
-      <img src="@/assets/imgs/icons/logo.png" alt="抓周" class="lefticon" />
+      <img src="@/assets/imgs/icons/logo.png" alt="聚美金品" class="lefticon" />
       <div @click="searchtz" class="searchbtn">
-        <img src="@/assets/imgs/video/fangdj@2x.png" alt="抓周" />
+        <img src="@/assets/imgs/video/fangdj@2x.png" alt="聚美金品" />
         <p class="_txtov1">大家都在搜“大美新疆”大家都在搜“大美新疆”大家都在搜“大美新疆”大家都在搜“大美新疆”</p>
       </div>
       <div class="rightbtn">
-        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="抓周 无消息" />
+        <img src="@/assets/imgs/icons/xiaoxqp.png" alt="聚美金品 无消息" />
       </div>
     </div>
     <!-- <div class="video-search clearfix">
@@ -85,7 +85,7 @@
       </div>
       </div>-->
     </van-list>
-    <!-- 直播跳转按钮 -->
+    <!-- 跳转按钮 -->
     <router-link :to="{name:'livingindex'}">
       <div class="videozbsp">
         <img src="./../../../assets/imgs/video/wyaopai@2x.png" alt />

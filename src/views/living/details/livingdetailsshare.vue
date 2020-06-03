@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class="videoswrapout">
-    <!-- 直播中、、、 -->
+    <!-- 中、、、 -->
     <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay">
       <div class="video" >
         <div id="videodom" :style='{background : "url(" + zhibojianaddcode_bg_cover + ") no-repeat center center",backgroundSize: cover}'></div>
@@ -14,7 +14,7 @@
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
               <div class="dznamepic">
-                <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="抓周" />
+                <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="聚美金品" />
               </div>
               <div class="dznamemass">
                 <div class="nametit _txtov1">{{livinglidata.name}}</div>
@@ -28,17 +28,17 @@
               <div class="dznamegz" v-if="livinglidata.is_attention==1 || livinglidata.is_attention== 2" @click.stop="follow(true)">已关注</div> -->
             </div>
             <!-- <div class="close" @click.stop="$router.go(-1);">
-              <img src="./../../../assets/imgs/living/details/cuohao.png" alt="抓周" />
+              <img src="./../../../assets/imgs/living/details/cuohao.png" alt="聚美金品" />
             </div> -->
             
             <div class="complaints">
-              <img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" />
+              <img src="./../../../assets/imgs/living/details/complaints.png" alt="聚美金品" />
             </div>
             <div class="dznameid" @click.stop="returnfn">
               <span>ID:{{livinglidata.liveId}}</span>
             </div>
             <!-- <div class="close" @click.stop="$router.go(-1);">
-              <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
+              <img src="./../../../assets/imgs/living/details/close.png" alt="聚美金品" />
             </div> -->
           </div>
           <!-- <div class="dznameid" @click.stop="returnfn">ID:{{livinglidata.liveId}}</div> -->
@@ -49,13 +49,13 @@
           <div class="main-left clearfix" v-if="currentgood!='' && currentgood!=null && currentgood!=undefined">
           <!-- <div class="main-left clearfix" v-if="currentgood!='' && currentgood!=null && currentgood!=undefined" v-for="(item,index) in goodsList" :key="index"> -->
             <div class="videosp" @click.stop="gotodetails(currentgood.sku_id)">
-              <img :src="currentgood.goods_image" alt="抓周" />
+              <img :src="currentgood.goods_image" alt="聚美金品" />
             </div>
             <div class="videospj" @click.stop="gotodetails(currentgood.sku_id)">
 
-              <img src="./../../../assets/imgs/living/details/buy.png" alt="抓周" /></div>
+              <img src="./../../../assets/imgs/living/details/buy.png" alt="聚美金品" /></div>
             <!-- <div class="videosp" @click.stop="gotodetails(item.sku_id)">
-              <img :src="item.goods_image" alt="抓周" />
+              <img :src="item.goods_image" alt="聚美金品" />
             </div>
             <div class="videospj" @click.stop="gotodetails(item.sku_id)">立即购买</div> -->
           </div>
@@ -81,7 +81,7 @@
             </div>
           </div> -->
         </div>
-        <!-- 直播消息  聊天输入部分-->
+        <!-- 消息  聊天输入部分-->
         <div class="content-bottom">
           <!-- 消息列表 -->
           <div class="bottomchat" v-show="timgroupstatus" ref="msgboxscroll">
@@ -91,7 +91,7 @@
                     <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png" alt /> -->
                     <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt />
                     <p class="name">系统公告：</p>
-                    <p>抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
+                    <p>聚美金品是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
                       黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
                 </div>
               </div>
@@ -144,15 +144,15 @@
         <!-- 主播上架的商品 -->
         <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
           <div class="goodsbox" @click.stop="returnfn">
-            <p>直播界面</p>
+            <p>界面</p>
             <ul>
               <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
-                <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/>
+                <img :src="item.goods_image" alt="聚美金品" @click.stop="gotodetails(item.sku_id)"/>
                 <div class="details">
                   <p class="name _txtov1">{{item.goods_title}}</p>
                   <p class="guige _txtov1">{{item.sku_id}}</p>
                   <div class="shop clearfix">
-                    <img v-if="item.brand_logo" :src="item.brand_logo" alt="抓周">
+                    <img v-if="item.brand_logo" :src="item.brand_logo" alt="聚美金品">
                     <p>{{item.brand_name}}</p>
                   </div>
                   <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">加入购物车</div>
@@ -170,13 +170,13 @@
         <div v-if="false" @click="hlrtipsstatus=true" class="hlrtipsbtn">红利人 > </div>
         <div class="hlrtipsmb" v-if="hlrtipsstatus">
           <div class="hlrtipscontainer">
-            <img @click="hlrtipsstatus=false" src="@/assets/imgs/icons/scpzsc.png" alt="抓周，红利人">
+            <img @click="hlrtipsstatus=false" src="@/assets/imgs/icons/scpzsc.png" alt="聚美金品，红利人">
             <div class="titlebox">
               <p>红利人说明</p>
             </div>
             <ul>
               <li>
-                1.平台工厂上新日抓周用户进行抓抢，第一个付款成功抓到新品宝贝的用户，拥有该新品宝贝的全平台订单专属红利分享权。                            
+                1.平台工厂上新日聚美金品用户进行抓抢，第一个付款成功抓到新品宝贝的用户，拥有该新品宝贝的全平台订单专属红利分享权。                            
               </li>
               <li>
                 2.该新品宝贝每成交一笔订单，黄金、k金、镶嵌、钻石、宝石、玉石等珠宝类首饰，每单分享2元红利，白银类产品，每单分享1元红利。                            
@@ -188,7 +188,7 @@
                 4.未抢到专属红利分享权的用户，订单关闭后的2个小时内可取消订单，2个小时之后由于商品属于订制商品在制作中则不能取消订单。                            
               </li>
               <li>
-                5.抓周用户会员抢到的专属红利分享权，黄金、k金、镶嵌、钻石、宝石、玉石等珠宝类首饰，每单分享5元红利，白银类产品，每单分享2元红利。
+                5.聚美金品用户会员抢到的专属红利分享权，黄金、k金、镶嵌、钻石、宝石、玉石等珠宝类首饰，每单分享5元红利，白银类产品，每单分享2元红利。
               </li>
             </ul>
           </div>
@@ -196,15 +196,15 @@
       </div>
 
     </div>
-    <!-- 直播结束、、 -->
+    <!-- 结束、、 -->
     <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.face_url+')'}">
       <div class="close" @click.stop="$router.go(-1);">
         <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
       </div>
-      <img class="faceurl" :src="livinglidata.face_url" alt="抓周">
+      <img class="faceurl" :src="livinglidata.face_url" alt="聚美金品">
       <p class="name">{{livinglidata.nickname}}</p>
       <div class="enddata">
-        <p>直播已结束</p>
+        <p>已结束</p>
         <span class="number">{{livinglidata.nickname}}</span>
         <!-- <span class="title">总观看人数</span> -->
       </div>
@@ -213,7 +213,7 @@
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
       <div class="confirmorder" @click.stop="returnfn">
-        <img :src="confirmorderdata.imageUrl" alt="抓周">
+        <img :src="confirmorderdata.imageUrl" alt="聚美金品">
         <p class="name _txtov1">{{confirmorderdata.goodsTitle}}</p>
         <span class="tips">{{confirmorderdata.specInfo}}</span>
         <div class="price_number clearfix">
@@ -221,7 +221,7 @@
           <p class="number">库存1件(暂无此字段)</p>
         </div>
         <div class="btn" @click.stop="confirmorderclick(confirmorderdata)">立即付款</div>
-        <img @click.stop="confirmordermbstatus=false" class="confirmordermbclosebtn" src="./../../../assets/imgs/living/details/cuohao.png" alt="抓周">
+        <img @click.stop="confirmordermbstatus=false" class="confirmordermbclosebtn" src="./../../../assets/imgs/living/details/cuohao.png" alt="聚美金品">
       </div>
     </div>
     <!-- 管理员权限弹窗 -->
@@ -232,12 +232,12 @@
       <div class="control" v-if="controlstatus_1">
         <p>将“某某某”用户</p>
         <div class="btn" @click="controlstatus_1=false;controlstatus_2=true;">
-          <img src="./../../../assets/imgs/living/controls/jy.png" alt="抓周">
+          <img src="./../../../assets/imgs/living/controls/jy.png" alt="聚美金品">
           <span>禁言</span>
         </div>
         <div class="btn" @click="tichuzbj">
-          <img src="./../../../assets/imgs/living/controls/tr.png" alt="抓周">
-          <span>踢出直播间</span>
+          <img src="./../../../assets/imgs/living/controls/tr.png" alt="聚美金品">
+          <span>踢出间</span>
         </div>
       </div>
 
@@ -250,7 +250,7 @@
           <span>禁言10分钟</span>
         </div>
         <div class="btn">
-          <span>直播间禁言</span>
+          <span>间禁言</span>
         </div>
         <div class="btn">
           <span>取消禁言</span>
@@ -261,10 +261,10 @@
     <!-- <div class="loading" v-if="openapptips">正在拉起本地app</div> -->
 
     <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes==0">
-      直播正在加载中。。。
+      正在加载中。。。
     </div>
     <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes>=1">
-      主播可能已停止直播或网络不稳定，刷新页面试试
+      主播可能已停止或网络不稳定，刷新页面试试
     </div>
 
     <!-- 浏览器下载及拉起 start-->
@@ -273,9 +273,9 @@
         <div class="box_con03">
           <div class="pt_box">
             <span>
-                <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="抓周">
+                <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="聚美金品">
             </span>
-            <p>请登录抓周APP操作</p>
+            <p>请登录聚美金品APP操作</p>
           </div>
           <div class="btn_box">
             <a class="openappbtn" :href="downloadappurl" target="_blank">下载APP</a>
@@ -293,18 +293,18 @@
           <div class="box_con01">
               <div class="pt_box">
                 <span>
-                    <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="抓周">
+                    <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="聚美金品">
                 </span>
                 <div class="con01_in" v-if="guilddownloadtype_show">
-                  <p class="b">链接直播打不开</p>
+                  <p class="b">链接打不开</p>
                   <p>请点击右上角“···”，选择在“浏览器”中打开</p>
                   <div class="btn_box btn-box-wx">
-                    <a class="openappbtn" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.shop.zhualive" target="_blank">下载抓周APP</a>
-                    <a class="openappbtn" target="_blank" @click="openappletcode" v-if="false">抓周小程序查看</a>
+                    <a class="openappbtn" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.shop.zhualive" target="_blank">下载聚美金品APP</a>
+                    <a class="openappbtn" target="_blank" @click="openappletcode" v-if="false">聚美金品小程序查看</a>
                   </div>
                 </div>
                 <div class="con01_code" v-if="appletcode_show">
-                  <div class="applet"><img src="./img/applets-code.png" alt=""></div>
+                  <div class="applet"><img src="./img/applets-code.png" alt="聚美金品小程序"></div>
                   <p class="b">长按识别小程序码</p>
                   <p>若无法长按扫码</p>
                   <p>请截屏保存图片微信识别二维码</p>
@@ -318,12 +318,12 @@
     </div>      
     <!-- 微信打开 end-->
 
-    <!-- 直播加密 start-->
+    <!-- 加密 start-->
      <div class="openappbtnsbox-w" v-if="zhibojianaddcode">
       <div class="openappbtnsbox openappbtnsbox_zbjm" @click="open_openappbtnsbox_zbjm">
         <div class="box_con04">
           <div class="pt_box">
-            <p>加密直播间</p>
+            <p>加密间</p>
             <span class="t">请输入邀请码</span>
             <div class="input_area">
               <input type="text" />
@@ -339,7 +339,7 @@
         </div>  
       </div>
     </div>  
-    <!-- 直播加密 end-->
+    <!-- 加密 end-->
 
 
   </div>

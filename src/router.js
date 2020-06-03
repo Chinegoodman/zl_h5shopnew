@@ -32,7 +32,7 @@ const router = new Router({
                 name: 'living',
                 navstatus: true,
                 breadnav: [{
-                    name: '直播',
+                    name: '',
                     url: '/living',
                 }]
             },

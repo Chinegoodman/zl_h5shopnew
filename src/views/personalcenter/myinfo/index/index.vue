@@ -9,7 +9,7 @@
             <li>
                 <div class="lt">头像</div>
                 <div class="rt">
-                    <img v-if="baseuserinfo.face_url" :src="baseuserinfo.face_url?baseuserinfo.face_url:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
+                    <img v-if="baseuserinfo.face_url" :src="baseuserinfo.face_url?baseuserinfo.face_url:'../../../assets/imgs/personal/mine_default.png'" alt="聚美金品" class="hd-face"/>
                 </div>
                 <div class="van-uploader-box">
                    <input type="file" class="upfile" @change="upimgs">

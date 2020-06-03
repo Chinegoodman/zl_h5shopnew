@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
     <div v-if="loadingstatus" class="loading">
-        <img class="imggif" src="./../assets/imgs/icons/sp-loading@2x.png" alt="抓周">
+        <img class="imggif" src="./../assets/imgs/icons/sp-loading@2x.png" alt="聚美金品">
         <span>{{loadingmsg}}</span>
     </div>
 </template>

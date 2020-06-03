@@ -48,7 +48,7 @@
                     items.status==5?'您申请的退货商品我们正在检测。':items.status==6?
                     '您申请的退货商品正在向商家退货':items.status==7?'您申请的退货商品店铺已回收，我们将尽快为您处理退款事宜。':
                     items.status==8?'您申请的退货商品款项已经成功退到您的原支付渠道。'
-                    :items.status==9?'您申请的退货已经完成，感谢您对抓周的支持。':'您有一条新消息，请点击查看'}}</div>
+                    :items.status==9?'您申请的退货已经完成，感谢您对聚美金品的支持。':'您有一条新消息，请点击查看'}}</div>
                   <div class="warns_tab2">
                     <div class="pay" @click="detailsReturn(items)">查看详情</div>
                   </div>

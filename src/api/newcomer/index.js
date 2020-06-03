@@ -1,5 +1,5 @@
 /**
- * 直播页面接口列表
+ * 页面接口列表
  */
 
 import base from '../base'; // 导入接口域名列表
@@ -15,7 +15,7 @@ const newcomer = {
     getComerStoreInfo(params) {
         return axios.post(`${base.yxf}/wapi/v1/goods/getGiftGoodsSkuDetail`, qs.stringify(params));
     },
-    // // 获取最新直播间列表2
+    // // 获取最新间列表2
     // getNewRoomList2(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/live/getLiveRoomList`, qs.stringify(params));
     // }
@@ -29,24 +29,24 @@ const newcomer = {
     //     return axios.post(`${base.yxf}/wapi/v1/attention/user/delete`, qs.stringify(params));
     // },
 
-    // // 直播间商品列表
+    // // 间商品列表
     // goodsList(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/goods/living/goodsList`, qs.stringify(params));
     // },
-    // // 直播间根据skuId获取购物商品
+    // // 间根据skuId获取购物商品
     // getGoodsSkuTemplateById(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/goods/getGoodsSkuTemplateById`, qs.stringify(params));
     // },
 
-    // // 获得直播间用户信息
+    // // 获得间用户信息
     // getLiveInfo(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/live/getLiveInfo`, qs.stringify(params));
     // },
-    // // 加入或者离开直播间
+    // // 加入或者离开间
     // joinOrLeaveRoom(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/live/joinOrLeaveRoom`, qs.stringify(params));
     // },
-    // // 直播间 踢人
+    // // 间 踢人
     // KickoutGroup(params) {
     //     return axios.post(`${base.yxf}/wapi/v1/live/sendKickoutGroupMsg`, qs.stringify(params));
     // },

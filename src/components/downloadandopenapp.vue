@@ -6,9 +6,9 @@
         <div class="box-content">
             <div class="pt_box">
                 <span>
-                <img src="@/assets/logo.png" alt="抓周">
+                <img src="@/assets/logo.png" alt="聚美金品">
             </span>
-                <p>请登录抓周APP操作</p>
+                <p>请登录聚美金品APP操作</p>
             </div>
             <div class="btn_box">
                 <a class="openappbtn" :href="link_url_open" target="_blank">启动APP</a>

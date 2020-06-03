@@ -49,13 +49,13 @@
                         <div class="listpic">
                             <img src="./../../../assets/imgs/member/memberzbj.png" alt />
                         </div>
-                        <div class="listtxt">直播间<br>欢迎特效</div>
+                        <div class="listtxt">间<br>欢迎特效</div>
                     </li>
                     <li>
                         <div class="listpic">
                             <img src="./../../../assets/imgs/member/memberdm.png" alt />
                         </div>
-                        <div class="listtxt">直播间<br>弹幕畅聊</div>
+                        <div class="listtxt">间<br>弹幕畅聊</div>
                     </li>
                     <li>
                         <div class="listpic">

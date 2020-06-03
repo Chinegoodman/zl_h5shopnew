@@ -5,7 +5,7 @@
       <img class="back" @click="goback" src="../../../assets/imgs/follow/xiangqing@2x.png" alt />
       <span>用户等级</span>
     </div>
-     <img src="http://playback.17biyi.com/92118ae6914862db73b6b9d7f0000121" alt="抓周">
+     <img src="http://playback.17biyi.com/92118ae6914862db73b6b9d7f0000121" alt="聚美金品">
   </div>
 </template>
 

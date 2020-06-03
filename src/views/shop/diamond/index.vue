@@ -30,7 +30,7 @@
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                  <img :src="item.face_url?item.face_url:default_img_head" alt="聚美金品" />
                 </span>
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>
@@ -154,7 +154,7 @@ export default {
             return true
         }
     },
-     // 跳转到直播详情页
+     // 跳转到详情页
     gotolivingdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}

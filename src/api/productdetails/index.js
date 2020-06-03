@@ -49,7 +49,7 @@ const productdetails = {
     additem(params) {
         return axios.post(`${base.yxf}/wapi/v1/order/additem`, qs.stringify(params));
     },
-    // 直播间 加入购物车
+    // 间 加入购物车
     additem4Live(params) {
         return axios.post(`${base.yxf}/wapi/v1/order/additem4Live`, qs.stringify(params));
     },

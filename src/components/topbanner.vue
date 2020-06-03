@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
     <div class="topbanner">
-        <img src="@/assets/imgs/follow/xiangqing@2x.png" alt="抓周" style="transform:rotate(180deg);" @click="goback">
+        <img src="@/assets/imgs/follow/xiangqing@2x.png" alt="聚美金品" style="transform:rotate(180deg);" @click="goback">
         <p>{{title}}</p>
     </div>
 </template>

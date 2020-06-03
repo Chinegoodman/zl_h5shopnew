@@ -103,7 +103,8 @@ const personalcenter = {
     },
     //获取oss信息
     osstoken(params) {
-        return axios.post('https://shop.zhulihr.com/wapi/v1/user/ossApiToken', params);
+        // return axios.post('https://shop.zhulihr.com/wapi/v1/user/ossApiToken', params);
+        return axios.post('http://web.service.17qixi.com/wapi/v1/user/ossApiToken', params);
     },
     //提交投诉建议
     updatacomplaints(params) {

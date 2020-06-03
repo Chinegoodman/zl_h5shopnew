@@ -4,7 +4,7 @@
         <!-- <van-pull-refresh :head-height="refreshheight" loosing-text="松手就刷新啦" loading-text="loading" v-model="isLoading" @refresh="onRefresh"> -->
         <div class='productdetails' id="productdetails">
             <!-- <div @click="goback" :class="{show:$route.params.webtype!=0&&topbtnstatus==true}" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="返回"></div> -->
-            <div @click="goback" v-if="topbtnstatus" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="抓周"></div>
+            <div @click="goback" v-if="topbtnstatus" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="聚美金品"></div>
             
             <!-- 轮播模块 -->
             <div class="tpswiperboxfather" :class="{fixed:tpswiperboxfather}" @click="topswiperclick">
@@ -52,7 +52,7 @@
                     <div class="wukong_pagination" v-if="$route.query.appname == 'wukong'">
                         <span>{{currentimgIndex_wukong+1}}</span>/<span>{{swiperlength-1}}</span>
                     </div>  
-                    <img v-if="goodsBannerdata.video" @click="videoplay" src="./../../../assets/imgs/icons/sp-pic-play@2x.png" alt="抓周" class="videobtn">
+                    <img v-if="goodsBannerdata.video" @click="videoplay" src="./../../../assets/imgs/icons/sp-pic-play@2x.png" alt="聚美金品" class="videobtn">
                 </div>
             </div>
             <!-- 商品标题及价格 关注与取关取消关注 -->
@@ -60,7 +60,7 @@
                 <div class="pricebox" v-if="$route.query.appname == 'wukong'">  
                     <div class="vipprice clearfix">
                         <p><span>￥</span>{{pagebaseInfo.member_price}}</p>
-                        <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
+                        <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="聚美金品"> -->
                         <p class="originalprice">￥{{pagebaseInfo.price}}</p>
                     </div>
                     <!-- <div class="originalprice">￥{{pagebaseInfo.price}}</div> -->
@@ -69,7 +69,7 @@
                 <div class="pricebox" v-if="$route.query.appname != 'wukong'">
                     <div class="vipprice clearfix">
                         <p>￥{{pagebaseInfo.member_price}}</p>
-                        <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
+                        <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="聚美金品"> -->
                         <p class="originalprice">￥{{pagebaseInfo.price}}</p>
                     </div>
                     <!-- <div class="originalprice">￥{{pagebaseInfo.price}}</div> -->
@@ -169,7 +169,7 @@
                 <div @click="checkshop(shopdata.shopId,shopdata.userId)" class="contentbox">
                     <div class="top">
                         <img class="shopicon" :src="shopdata.face_url" :alt="shopdata.shopName" @error="defImg()">
-                        <img v-show="false" class="shopliving" src="./../../../assets/imgs/icons/sp-zzzbo@2x.png" alt="直播">
+                        <img v-show="false" class="shopliving" src="./../../../assets/imgs/icons/sp-zzzbo@2x.png" alt="">
                         <p class="shopname _txtov1">{{shopdata.shopName}}</p>
                         <div class="shoptags clearfix">
                             <div class="shoptagchild">
@@ -270,7 +270,7 @@
                 <p class="title title_haveline">商品详情</p>
                 <!-- 情况一：图片时 -->
                 <!-- <div class="imgbox">
-                    <img src="./../../../assets/logo.png" alt="抓周">
+                    <img src="./../../../assets/logo.png" alt="聚美金品">
                 </div> -->
                 <!-- 情况二：富文本时 -->
                 <div class="imgbox" v-html="pagebaseInfo.goods_desc">
@@ -599,12 +599,12 @@
                 gotobuystatustimer1:'',
                 gotobuystatustimer2:'',
 
-                currentpagetype:'',//当前页面类型 livingpage 为直播间打开当前页
+                currentpagetype:'',//当前页面类型 livingpage 为间打开当前页
                 service:{
                     "version": '116',
                     "client":''
                 },//当前页面版本小于 116 隐藏底部按钮客服
-                bottom_btncolor:'',//底部按钮的app给的颜色值  直播间放的详情页的UI变更需求
+                bottom_btncolor:'',//底部按钮的app给的颜色值  间放的详情页的UI变更需求
                 default_img_detail: require('../../../assets/logo-gray.png'),
                
                 // 规格选择时 停止底部页面滚动
@@ -1121,7 +1121,7 @@
                 if(that.$route.query.liveId==undefined||that.$route.query.liveId==''||that.$route.query.liveId==0){
 
                 }else{
-                    // 直播间过来的
+                    // 间过来的
                     liveId = that.$route.query.liveId;
                 }
                 let OrderImmediatelydata ={
@@ -1147,7 +1147,7 @@
 
                     insured_price:that.pagebaseInfo.insured_price?that.pagebaseInfo.insured_price:0,//保价费
 
-                    liveId:liveId,//直播间过来时的传参
+                    liveId:liveId,//间过来时的传参
                 }
                 // debugger;
                 if(that.$route.params.webtype==0){
@@ -1257,12 +1257,12 @@
                         }
                     })
                 }else{
-                    // 直播间过来的
-                    // console.log('直播间来的:'+that.$route.query.liveId);
+                    // 间过来的
+                    // console.log('间来的:'+that.$route.query.liveId);
                     that.api.productdetails.additem4Live({
                         skuId:that.buyerselectdata.skuId,
                         userId:that.userID,
-                        roomId:that.$route.query.liveId,//直播间ID
+                        roomId:that.$route.query.liveId,//间ID
                         shopId:that.pagebaseInfo.brand_id,
                         quantity:that.buyerselectdata.number,
                     }).then(res=>{
@@ -1532,7 +1532,7 @@
             window.getShareJson=()=>{
                 return JSON.stringify(this.sharedata)
             };
-            // 直播间打开H5详情页事件
+            // 间打开H5详情页事件
             window.updateAlert=(pagetype)=>{
                 if(pagetype.type=="live"){
                     that.currentpagetype = 'livingpage';

@@ -3,7 +3,7 @@
   <div class="about_wrap">
     <div class="header">
       <img class="back" @click="goback" src="../../../assets/imgs/follow/xiangqing@2x.png" alt />
-      <span>关于抓周</span>
+      <span>关于聚美金品</span>
     </div>
     <div class="about-txt">
       <p>开发中，敬请期待...</p>

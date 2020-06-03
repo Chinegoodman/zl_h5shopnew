@@ -19,7 +19,7 @@
           </div>
           <div class="paytype clearfix" v-for="(item,index) in paytypedata.arr" :key="index">
             <div class="left">
-              <img :src="item.logo" alt="抓周">
+              <img :src="item.logo" alt="聚美金品">
               <div class="content">
                 <p>{{item.name}}</p>
                 <span>{{item.title}}</span>
