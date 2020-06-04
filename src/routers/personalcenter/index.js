@@ -72,7 +72,7 @@ export default [{
     },
     {
         path: 'order',
-        name: 'order',
+        // name: 'order',
         component: () =>
             import ('./../../views/personalcenter/order/index.vue'),
         meta: {
@@ -263,7 +263,7 @@ export default [{
     //个人中心--完善资料-我的资料
     {
         path: '/myinfo',
-        name: 'myinfo',
+        // name: 'myinfo',
         component: () =>
             import ('./../../views/personalcenter/myinfo/index.vue'),
         meta: {
@@ -396,7 +396,7 @@ export default [{
     //个人中心--购买帮助
     {
         path: 'helpbuy',
-        name: 'helpbuy',
+        // name: 'helpbuy',
         component: () =>
             import ('./../../views/personalcenter/helpbuy/index.vue'),
         meta: {
