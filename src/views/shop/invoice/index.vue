@@ -38,7 +38,9 @@
             <input class="taitoumsg" v-model="taxmsg"  type="text" placeholder="请输入纳税人识别号">
           </div>
         </li>
-        <li>
+      </ul>
+      <ul>
+        <li @click="openinvoiceshellshell">
           发票内容
           <span class="asker"><img src="./../../../assets/imgs/icons/fpnr.png" alt /></span>
           <div class="rt">
@@ -52,12 +54,44 @@
           </div>
         </li>
       </ul>
+      <ul class="permsg">
+        <li>
+          <span class="tit">收票人信息</span>
+        </li>
+        <li>
+          收票人手机：
+          <div class="rt">
+            <input class="taitoumsg" v-model="taitoumsg"  type="text" placeholder="请输入收票人手机号">
+            <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
+          </div>
+        </li>
+        <li>
+          收票人邮箱：
+          <div class="rt">
+            <input class="taitoumsg" v-model="taxmsg"  type="text" placeholder="请输入收票人邮箱">
+          </div>
+        </li>
+      </ul>
       <div class="btm-area">
         <span class="sure">确认</span>
-        <p>本单不开具发票,<span>继续下单</span></p> 
+        <p>本单不开具发票,<span @click="shopback">继续下单</span></p> 
       </div>
-      
     </div>
+
+    <!-- 发票内容弹层 start-->
+    <div class="invoiceshell" v-if="invoiceshellshow">
+        <div class="shell-cover" @click="shutinvoiceshellshell"></div>
+        <div class="shell-content">
+           <span class="tit">发票内容说明</span>
+           <div class="con">
+             <p>1、发票内容将显示详细商品名称与价格信息；</p>
+             <p>2、部分商家可能开具发票内容为商品所属类别及价格信息，如有特殊需求，请向客服咨询。</p>
+           </div>
+           <span class="shutshell" @click="shutinvoiceshellshell"><img src="../../../assets/imgs/icons/spxqs-close.png" alt=""></span>
+        </div>
+    </div>
+    <!-- 发票内容弹层 end-->
+
   </div>
 </template>
 
@@ -112,7 +146,8 @@ export default {
       radiotype : '1', //发票类型
       taitoumsg : '', //发票抬头
       taxmsg : '', //纳税人信息
-      checked : true 
+      checked : true,
+      invoiceshellshow : false 
     };
   },
   computed: {},
@@ -129,6 +164,12 @@ export default {
     invoicetype(name){
       console.log('name');
       console.log(name);
+    },
+    openinvoiceshellshell(){
+      this.invoiceshellshow = true;
+    },
+    shutinvoiceshellshell(){
+      this.invoiceshellshow = false;
     },
     // 获取商品列表
     diamondlist(){
@@ -187,11 +228,15 @@ export default {
   mounted() {
     let that = this;
   },
-  beforeCreate() {}, //生命周期 - 创建之前
+  beforeCreate() {
+    document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
+  },
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
-  beforeDestroy() {}, //生命周期 - 销毁之前
+    beforeDestroy() {
+    document.querySelector('body').setAttribute('style', '')
+  },
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };

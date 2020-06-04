@@ -1,20 +1,20 @@
 <!-- 组件说明 -->
 <template>
-    <div v-show="productoptionsselectdata.status" class='productoptionsselect' :class="{wukong:$route.query.appname == 'wukong',livingpage:currentpagetype=='livingpage'}">
+    <div v-show="productoptionsselectdata.status" class='productoptionsselect' :class="{jmjp:$route.query.appname == 'jmjp',livingpage:currentpagetype=='livingpage'}">
         <div @click="productoptionsselectclose" class="closebtn">
-            <img src="./../assets/imgs/icons/spxqs-close.png" alt="" v-if="$route.query.appname=='wukong'">
+            <img src="./../assets/imgs/icons/spxqs-close.png" alt="" v-if="$route.query.appname=='jmjp'">
             <img src="./../assets/imgs/icons/spge-guanbi@2x.png" alt="" v-else>
         </div>
         <div class="top clearfix">
             <img :src="productoptionsselectdata.selectshow.img" alt="抓周">
             <!-- <div class="selectoptions" v-if="$route.query.isnewuser==1 || $route.query.isnewuser==0">
-                <p class="price" v-if="$route.query.appname=='wukong'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
+                <p class="price" v-if="$route.query.appname=='jmjp'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
                 <p class="price" v-if="$route.query.isnewuser==1">￥{{productoptionsselectdata.selectshow.price}}</p>
                 <p class="price" v-if="$route.query.isnewuser==0">￥{{productoptionsselectdata.selectshow.marketPrice}}</p>
                 <span>{{productoptionsselectdata.selectshow.optionstxt}}</span>
             </div> -->
             <div class="selectoptions">
-                <p class="price" v-if="$route.query.appname=='wukong'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
+                <p class="price" v-if="$route.query.appname=='jmjp'"><span>￥</span>{{productoptionsselectdata.selectshow.price}}</p>
                 <p class="price">￥{{productoptionsselectdata.selectshow.price}}</p>
                 <span>{{productoptionsselectdata.selectshow.optionstxt}}</span>
             </div>
@@ -375,7 +375,7 @@
         }
     }
 }
-.productoptionsselect.wukong,.productoptionsselect.wukong.livingpage{
+.productoptionsselect.jmjp,.productoptionsselect.jmjp.livingpage{
     .closebtn{
         width : .29rem;
         height: .29rem;
@@ -387,10 +387,10 @@
             float: left;
             margin-top: .29rem;
             .price{
-                color: @wukong_title;
+                color: @jmjp_title;
                 span{
                     display: inline-block;
-                    color: @wukong_title;
+                    color: @jmjp_title;
                     font-size: .24rem;
                 }
             }
@@ -425,7 +425,7 @@
         padding: .26rem 0.26rem  0.72rem;
         border-bottom : none;
         .title{
-            color: @wukong;
+            color: @jmjp;
         }
         .number_wrap{
             border: 1px solid rgba(144,144,144,.5);
@@ -455,18 +455,18 @@
             &.addit{
                 background-image: none;
                 background-color: #fff;
-                color: @wukong;
-                border-color: @wukong;
+                color: @jmjp;
+                border-color: @jmjp;
             }
             &.buyit{
                 background-image: none;
                 color: #fff;
-                background-color: @wukong;
+                background-color: @jmjp;
             }
         }
         .nomoregoods{
             width: 4rem;
-            background-color: @wukong;
+            background-color: @jmjp;
         }
     }
 }
@@ -514,7 +514,7 @@
             .price{
                 font-size: 0.34rem;
                 line-height: 0.45rem;
-                color: @wukong_old;
+                color: @jmjp_old;
                 margin-bottom: 0.08rem;
             }
             span{
@@ -565,8 +565,8 @@
                         margin-right: 0.2rem;
                         background-color: rgba(245,245,245,1);
                         &.selected{
-                            color: @wukong_old;
-                            border: 1px solid @wukong_old;
+                            color: @jmjp_old;
+                            border: 1px solid @jmjp_old;
                             background-color: rgba(255,255,255,1);
                         }
                         &.noselect{
@@ -662,16 +662,16 @@
             text-align: center;
             font-size: 0.32rem;
             color: #fff;
-            // box-shadow: 0px 0.025rem 0.1rem 0px @wukong;
+            // box-shadow: 0px 0.025rem 0.1rem 0px @jmjp;
             &.addit{
                 background-image: none;
                 background-color: #fff;
-                color: @wukong_old;
+                color: @jmjp_old;
             }
             &.buyit{
                 background-image: none;
                 color: #fff;
-                background-color: @wukong_old;
+                background-color: @jmjp_old;
             }
 
             &.nomoregoods{

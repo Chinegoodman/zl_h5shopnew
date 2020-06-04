@@ -1,34 +1,18 @@
 <!-- 组件说明 -->
 <template>
-    <div class="productdetailswrap" :class="{wukong:$route.query.appname == 'wukong'}" :style="noscrollstyle">
+    <div class="productdetailswrap" :class="{jmjp:$route.query.appname == 'jmjp'}" :style="noscrollstyle">
         <!-- <van-pull-refresh :head-height="refreshheight" loosing-text="松手就刷新啦" loading-text="loading" v-model="isLoading" @refresh="onRefresh"> -->
         <div class='productdetails' id="productdetails">
             <!-- <div @click="goback" :class="{show:$route.params.webtype!=0&&topbtnstatus==true}" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="返回"></div> -->
-            <div @click="goback" v-if="topbtnstatus" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="抓周"></div>
+            <div class="header clearfix" v-if="$route.query.appname == 'jmjp'">
+                <img @click="goback" src="./../../../assets/imgs/icons/detail-prev-majiabao.png" alt />
+                <p>返回</p>
+            </div>
+            <div @click="goback" v-if="topbtnstatus && $route.query.appname != 'jmjp'" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="抓周"></div>
             
             <!-- 轮播模块 -->
             <div class="tpswiperboxfather" :class="{fixed:tpswiperboxfather}" @click="topswiperclick">
-                <div class="tpswiperbox">
-                    <!-- <swiper ref="swiperdom" class="topswiper" v-if="goodsBannerdata.imgarr.length>0" :options="tpswiperOption">
-                        <swiper-slide class="swiper-slide" v-if="goodsBannerdata.video">
-                            <video
-                            x5-video-orientation="portraint"
-                            x-webkit-airplay="allow"
-                            playsinline="true"
-                            x5-video-player-fullscreen="false"
-                            style="object-fit: contain; width: 100%; display: block;"
-                            :poster="goodsBannerdata.imgarr[0].url"
-                            webkit-playsinline="true"
-                             @click="topswiperclick" @ended="videoended" class="videodom" :class="{show:videodomstatus}" ref="videodom" preload :src="goodsBannerdata.video"></video>
-                        </swiper-slide>
-                        <swiper-slide class="swiper-slide" v-for="(item,index) in goodsBannerdata.imgarr" :key="index">
-                            <img @click="topswiperclick" class="swiperimg" :src="item.url"/>
-                        </swiper-slide>
-                        <swiper-slide class="swiper-slide tips">
-                            <p>左拉跳转商品介绍啦</p>
-                        </swiper-slide>
-                        <div class="swiper-pagination"  slot="pagination" v-if="$route.query.appname != 'wukong'"></div>
-                    </swiper> -->
+                <div class="tpswiperbox" :class="{'jmjpswiper':$route.query.appname=='jmjp'}">
                     <van-swipe ref="swiperdom" class="topswiper" :loop="false" indicator-color="#FFBD04" @change="topswiperonChange">
                         <van-swipe-item class="swiper-slide" v-if="goodsBannerdata.video">
                             <video
@@ -49,15 +33,15 @@
                             <p>左拉跳转商品介绍啦</p>
                         </van-swipe-item>
                     </van-swipe>
-                    <div class="wukong_pagination" v-if="$route.query.appname == 'wukong'">
-                        <span>{{currentimgIndex_wukong+1}}</span>/<span>{{swiperlength-1}}</span>
+                    <div class="jmjp_pagination" v-if="$route.query.appname == 'jmjp'">
+                        <span>{{currentimgIndex_jmjp+1}}</span>/<span>{{swiperlength-1}}</span>
                     </div>  
                     <img v-if="goodsBannerdata.video" @click="videoplay" src="./../../../assets/imgs/icons/sp-pic-play@2x.png" alt="抓周" class="videobtn">
                 </div>
             </div>
             <!-- 商品标题及价格 关注与取关取消关注 -->
             <div class="protitlebox borderf6">
-                <div class="pricebox" v-if="$route.query.appname == 'wukong'">  
+                <div class="pricebox" v-if="$route.query.appname == 'jmjp'">  
                     <div class="vipprice clearfix">
                         <p><span>￥</span>{{pagebaseInfo.member_price}}</p>
                         <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
@@ -66,14 +50,14 @@
                     <!-- <div class="originalprice">￥{{pagebaseInfo.price}}</div> -->
                 </div>
                 <h1 class="title _txtov2">{{pagebaseInfo.goods_title}}</h1>
-                <div class="pricebox" v-if="$route.query.appname != 'wukong'">
+                <div class="pricebox" v-if="$route.query.appname != 'jmjp'">
                     <div class="vipprice clearfix">
                         <p>￥{{pagebaseInfo.member_price}}</p>
                         <!-- <img src="./../../../assets/imgs/icons/sp-viphuiy@2x.png" alt="抓周"> -->
                         <p class="originalprice">￥{{pagebaseInfo.price}}</p>
                     </div>
                     <!-- <div class="originalprice">￥{{pagebaseInfo.price}}</div> -->
-                    <div class="sellsnumber" v-if="$route.query.appname != 'wukong' && pagebaseInfo.goodsSalesQuantity!=0">销量&nbsp;{{pagebaseInfo.goodsSalesQuantity}}</div>
+                    <div class="sellsnumber" v-if="$route.query.appname != 'jmjp' && pagebaseInfo.goodsSalesQuantity!=0">销量&nbsp;{{pagebaseInfo.goodsSalesQuantity}}</div>
                 </div>
 
                 <div v-if="false" @click="followgoodsadd" class="followimg" v-show="pagebaseInfo.isAttention2Goods==0||pagebaseInfo.isAttention2Goods==-1">
@@ -84,7 +68,7 @@
                     <img src="./../../../assets/imgs/icons/sp-yiguanz@2x.png" alt="已关注">
                     <span>已关注</span>
                 </div>
-                <div class="tipsbox" v-if="$route.query.appname != 'wukong'">
+                <div class="tipsbox" v-if="$route.query.appname != 'jmjp'">
                     <p><img src="@/assets/imgs/icons/dppz.png" alt="大牌品质，工厂价格，个性定制，创意者秀"><span>大牌品质</span></p>
                     <p><img src="@/assets/imgs/icons/gcjg.png" alt="大牌品质，工厂价格，个性定制，创意者秀"><span>工厂价格</span></p>
                     <p><img src="@/assets/imgs/icons/gxdz.png" alt="大牌品质，工厂价格，个性定制，创意者秀"><span>个性定制</span></p>
@@ -92,7 +76,7 @@
                 </div>
             </div>
             <!-- (马甲包)规格模块 -->
-            <div class="proguige borderf6 clearfix" v-if="$route.query.appname == 'wukong'">
+            <div class="proguige borderf6 clearfix" v-if="$route.query.appname == 'jmjp'">
                 <div class="guige_in">
                     <p class="sm_title">规格</p>
                     <div class="selectbox">
@@ -118,8 +102,8 @@
                     <p class="sm_title">送至</p>
                     <div class="selectbox" @click="addressclick">
                         <p>
-                            <img src="./../../../assets/imgs/icons/dd-spxqdz.png" alt="配送" v-if="$route.query.appname == 'wukong'">
-                            <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt="配送" v-if="$route.query.appname != 'wukong'">
+                            <img src="./../../../assets/imgs/icons/dd-spxqdz.png" alt="配送" v-if="$route.query.appname == 'jmjp'">
+                            <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt="配送" v-if="$route.query.appname != 'jmjp'">
                             <span class="_txtov1" v-show="appgive.addressdata.address!=''">{{appgive.addressdata.address}}</span>
                             <span v-show="appgive.addressdata.address==''">请选择或添加收货地址</span>
                         </p>
@@ -139,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="child clearfix baojia" v-if="$route.query.appname != 'wukong' && false">
+                <div class="child clearfix baojia" v-if="$route.query.appname != 'jmjp' && false">
                     <p class="sm_title">保价</p>
                     <div class="selectbox">
                         <p>￥{{pagebaseInfo.insured_price}}</p>
@@ -147,7 +131,7 @@
                 </div>
             </div>
             <!-- (非马甲包)规格模块 -->
-            <div class="proguige borderf6 clearfix" v-if="$route.query.appname != 'wukong'">
+            <div class="proguige borderf6 clearfix" v-if="$route.query.appname != 'jmjp'">
                 <p class="sm_title">规格</p>
                 <div class="selectbox">
                     <p class="_txtov1" @click="openoptionsselect">已选:{{pagebaseInfo.specs_info}}</p>
@@ -161,7 +145,7 @@
             </div>
             <!-- TODO: 马甲包也给隐藏掉这个店主部分 -->
             <!-- 店主信息 -->
-            <div class="shopowner borderf6" v-if="$route.query.appname == 'wukong'">
+            <div class="shopowner borderf6" v-if="$route.query.appname == 'jmjp'">
                 <div class="title clearfix" v-if="false">
                     <img src="./../../../assets/imgs/icons/sp-dianz-icon@2x.png" alt="店主">
                     <span>店主信息</span>
@@ -463,9 +447,9 @@
                 //         // slideChangeTransitionEnd: function() {
                 //             // that.currentimgIndex = this.realIndex;  //获取轮播图片下标索引；这里有一个坑，之前网上找到的是用activeIndex，但后来网上说的是这个realIndex，原来activeIndex是swiper2.0的；而realIndex是swiper3.0的，（使用realIndex才实现了下标索引）
                 //             that.currentimgIndex = this.activeIndex;  
-                //             that.currentimgIndex_wukong = this.activeIndex;
-                //             if(that.currentimgIndex_wukong >= that.swiperlength-1){
-                //                 that.currentimgIndex_wukong = that.swiperlength-2;
+                //             that.currentimgIndex_jmjp = this.activeIndex;
+                //             if(that.currentimgIndex_jmjp >= that.swiperlength-1){
+                //                 that.currentimgIndex_jmjp = that.swiperlength-2;
                 //             }
                 //             // console.log(that.currentimgIndex);
                 //             if(that.goodsBannerdata.video){
@@ -502,7 +486,7 @@
                 videodomstatus:false,//视频节点默认隐藏不显示等待点击触发
                 tpswiperboxfather:false,
                 currentimgIndex:0,
-                currentimgIndex_wukong : 0,
+                currentimgIndex_jmjp : 0,
                 swiperlength:0,
                 pagebaseInfo:'',//页面基础信息
 
@@ -652,9 +636,9 @@
                 // slideChangeTransitionEnd: function() {
                     // that.currentimgIndex = this.realIndex;  //获取轮播图片下标索引；这里有一个坑，之前网上找到的是用activeIndex，但后来网上说的是这个realIndex，原来activeIndex是swiper2.0的；而realIndex是swiper3.0的，（使用realIndex才实现了下标索引）
                     that.currentimgIndex = this.activeIndex;  
-                    that.currentimgIndex_wukong = this.activeIndex;
-                    if(that.currentimgIndex_wukong >= that.swiperlength-1){
-                        that.currentimgIndex_wukong = that.swiperlength-2;
+                    that.currentimgIndex_jmjp = this.activeIndex;
+                    if(that.currentimgIndex_jmjp >= that.swiperlength-1){
+                        that.currentimgIndex_jmjp = that.swiperlength-2;
                     }
                     // console.log(that.currentimgIndex);
                     if(that.goodsBannerdata.video){
@@ -1610,8 +1594,8 @@
 
 
     @import url('./../../../assets/css/common.less');
-    .productdetailswrap.wukong .productdetails .swiper-pagination-bullet-active{
-        background:@wukong;
+    .productdetailswrap.jmjp .productdetails .swiper-pagination-bullet-active{
+        background:@jmjp;
         width:0.2rem;
         height:0.2rem;
     }

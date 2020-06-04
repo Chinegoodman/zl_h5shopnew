@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
     <div class='bottombox'>
-        <div class="bottomboxwrap" :class="{wukong:$route.query.appname == 'wukong'}" v-if="pagetype=='productdetails'">
+        <div class="bottomboxwrap" :class="{jmjp:$route.query.appname == 'jmjp'}" v-if="pagetype=='productdetails'">
             <div class="left" v-if="currentpagetype == 'livingpage'">
                 <div class="li" v-if="!isAttention_status" @click="gotoshoucang(true)">
                     <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="抓周">
@@ -13,27 +13,27 @@
                 </div>
             </div>
             <div class="left" v-if="currentpagetype != 'livingpage'">
-                <div class="li" @click="gotodp" v-if="$route.query.appname == 'wukong'">
+                <div class="li" @click="gotodp" v-if="$route.query.appname == 'jmjp'">
                     <img src="@/views/shop/productdetails/imgs/dpsy.png" alt="抓周">
                     <!-- <p>马甲包店铺</p> -->
                 </div>
-                <div class="li" @click="gotodp" v-if="$route.query.appname != 'wukong'">
+                <div class="li" @click="gotodp" v-if="$route.query.appname != 'jmjp'">
                     <img src="@/views/shop/productdetails/imgs/spxqdp.png" alt="抓周">
                     <!-- <p>店铺</p> -->
                 </div>
-                <div class="li" @click="gotokefu" v-if="$route.query.appname != 'wukong' && serviceshow">
+                <div class="li" @click="gotokefu" v-if="$route.query.appname != 'jmjp' && serviceshow">
                     <img src="@/views/shop/productdetails/imgs/spxqkf.png" alt="抓周">
                     <!-- <p>客服</p> -->
                 </div>
-                <div class="li" v-if="!isAttention_status && $route.query.appname != 'wukong'" @click="gotoshoucang(true)">
+                <div class="li" v-if="!isAttention_status && $route.query.appname != 'jmjp'" @click="gotoshoucang(true)">
                     <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="抓周">
                     <!-- <p>收藏</p> -->
                 </div>
-                <div class="li" v-if="isAttention_status && $route.query.appname != 'wukong'" @click="gotoshoucang(false)">
+                <div class="li" v-if="isAttention_status && $route.query.appname != 'jmjp'" @click="gotoshoucang(false)">
                     <img src="@/views/shop/productdetails/imgs/spxqysc.png" alt="抓周">
                     <!-- <p>收藏</p> -->
                 </div>
-                <div class="li" @click="gotoshopcart" v-if="$route.query.appname == 'wukong'"  >
+                <div class="li" @click="gotoshopcart" v-if="$route.query.appname == 'jmjp'"  >
                     <img src="@/views/shop/productdetails/imgs/spxqgwc.png" alt="">
                 </div>
             </div>
@@ -317,7 +317,7 @@
         }
     }
 }
-.bottomboxwrap.wukong{
+.bottomboxwrap.jmjp{
     height: 1.2rem;
     padding: 0.22rem 0;
     .left{
@@ -343,13 +343,13 @@
             &.addit{
                 background-image: none;
                 background-color: #fff;
-                border-color: @wukong;;
-                color: @wukong;
+                border-color: @jmjp;;
+                color: @jmjp;
             }
             &.buyit{
                 background-image: none;
                 color: #fff;
-                background-color: @wukong;
+                background-color: @jmjp;
             }
         }
         .nomoregoods{
