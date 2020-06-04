@@ -946,6 +946,8 @@
                     that.productoptionsselectdata.specs_id =pagebaseInfo.specs_id;
                     // // 获取店铺信息及关注状态
                     that.getshopInfo(pagebaseInfo.brand_id);
+                }).catch(err=>{
+                    that.nodatashow=true;
                 })
             },
             // 跳转查看店铺
@@ -987,6 +989,8 @@
                             userId:null,
                         }
                     }
+                }).catch(err=>{
+                    that.nodatashow=true;
                 })
             },
             // 页面数据初始化
