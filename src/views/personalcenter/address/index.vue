@@ -46,9 +46,9 @@ export default {
   computed: {},
   created() {
     let that = this;
-    let user = localStorage.getItem("user-info");
-    let userj = JSON.parse(user);
-    let userid = userj.userid;
+    // let user = localStorage.getItem("user-info-h5");
+    // let userj = JSON.parse(user);
+    let userid = this.$store.state.user.userid;
     this.api.personalcenter.postaddresslist({ uid: userid }).then(res => {
       if (that.checked) {
         let list = res.data.data.list.filter(function(item, index) {

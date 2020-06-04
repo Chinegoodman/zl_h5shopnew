@@ -509,16 +509,16 @@ export default {
   },
   // created() {
   //   let that = this;
-  //   let user = localStorage.getItem("user-info");
+  //   let user = localStorage.getItem("user-info-h5");
   //   let userj = JSON.parse(user);
   //   that.userId = userj.userid;
   //   console.log(that.userId);
   // },
   mounted() {
     let that = this;
-    let user = localStorage.getItem("user-info");
-    let userj = JSON.parse(user);
-    that.userIdss = userj.userid;
+    // let user = localStorage.getItem("user-info-h5");
+    // let userj = JSON.parse(user);
+    that.userIdss = this.$store.state.user.userid;
     that.shopdzmass();
   },
   beforeCreate() {}, //生命周期 - 创建之前

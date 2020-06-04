@@ -224,7 +224,7 @@ export default {
   },
   // created() {
   //   let that = this;
-  //   let user = localStorage.getItem("user-info");
+  //   let user = localStorage.getItem("user-info-h5");
   //   let userj = JSON.parse(user);
   //   that.userId = userj.userid;
   //   console.log(that.userId);
