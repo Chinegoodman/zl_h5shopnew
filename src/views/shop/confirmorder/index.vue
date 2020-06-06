@@ -793,26 +793,53 @@ export default {
       //get about msg
       if (getsessionStorage("pagefrom") == "productdetails") {
         let ordermass = getsessionStorage("OrderImmediatelydata");
-
-      that.$toast.loading({
-        // message:'',
-        duration: 30000
-      }); 
-      //下面that.zongfei 在下单前计费回显中取
-       this.api.shopcart
-        .getOrderUsAbleCoupon({
-          uid : that.$store.state.user.userid,
-          // uid : 9106,
-          price : price, 
-          shopId : ordermass.shopId,
-          goodsSkuIdList :ordermass.productSkuId
-        })
-        .then(res => {
-          that.$toast.clear();
-          if (res.data.code == 1) {
-            that.couponList = res.data.data;
-          }
-        })
+        that.$toast.loading({
+          // message:'',
+          duration: 30000
+        }); 
+        //下面that.zongfei 在下单前计费回显中取
+        this.api.shopcart
+          .getOrderUsAbleCoupon({
+            uid : that.$store.state.user.userid,
+            // uid : 9106,
+            price : price, 
+            shopId : ordermass.shopId,
+            goodsSkuIdList :ordermass.productSkuId
+          })
+          .then(res => {
+            console.log(111);
+            that.$toast.clear();
+            if (res.data.code == 1) {
+              that.couponList = res.data.data;
+            }
+          })
+      }else if(getsessionStorage("pagefrom") == "shopcart"){
+        this.listshow = getsessionStorage("orderListdata");
+        this.goodsallprice = getsessionStorage("allprice");
+        console.log('this.listshow.items[0]');
+        console.log(this.listshow);
+        that.$toast.loading({
+          // message:'',
+          duration: 30000
+        }); 
+        //下面that.zongfei 在下单前计费回显中取
+        this.api.shopcart
+          .getOrderUsAbleCoupon({
+            uid : that.$store.state.user.userid,
+            // uid : 9106,
+            price : this.goodsallprice, 
+            shopId : this.listshow[0].shopId,
+            goodsSkuIdList : this.listshow[0].items[0].productSkuId
+          })
+          .then(res => {
+            console.log(222);
+            that.$toast.clear();
+            if (res.data.code == 1) {
+              console.log('res.data.data-couponList');
+              console.log(res.data.data);
+              that.couponList = res.data.data;
+            }
+          })
       }    
     },
     //打开优惠券
