@@ -814,11 +814,44 @@ export default {
             }
           })
       }else if(getsessionStorage("pagefrom") == "shopcart"){
-        this.listshow = getsessionStorage("orderListdata");
-        this.goodsallprice = getsessionStorage("allprice");
+        that.listshow = getsessionStorage("orderListdata");
+        that.goodsallprice = getsessionStorage("allprice");
+        let skuIdListStrPost = [];
         console.log('this.listshow.items[0]');
         console.log(this.listshow);
-        that.$toast.loading({
+        
+        for(var k = 0; k < this.listshow.length; k ++){
+          for(var j = 0; j < this.listshow[k].items.length; j++){
+            console.log('this.listshow[k].items[j]--' + j);
+            console.log(this.listshow[k].items[j].productSkuId);
+            if(j == this.listshow[k].items.length){
+              console.log(253);
+              break;
+            }
+            skuIdListStrPost.push(this.listshow[k].items[j].productSkuId);
+            console.log('skuIdListStrPost');
+            console.log(skuIdListStrPost);
+          }
+          
+        }
+
+        for(var k = 0; k < this.listshow.length; k ++){
+          let params_post = {
+            goodsallprice : this.goodsallprice,
+            shopId : this.listshow[k].shopId,
+            productSkuIdStrList : skuIdListStrPost
+          }
+          that.takecouponlistdata(params_post);
+        }
+        
+
+        
+      }    
+    },
+    //获取下单用的优惠券公供接口
+    takecouponlistdata(params){
+      let that = this;
+      that.$toast.loading({
           // message:'',
           duration: 30000
         }); 
@@ -827,9 +860,9 @@ export default {
           .getOrderUsAbleCoupon({
             uid : that.$store.state.user.userid,
             // uid : 9106,
-            price : this.goodsallprice, 
-            shopId : this.listshow[0].shopId,
-            goodsSkuIdList : this.listshow[0].items[0].productSkuId
+            price : params.goodsallprice, 
+            shopId : params.shopId,
+            goodsSkuIdList : params.productSkuIdStrList
           })
           .then(res => {
             console.log(222);
@@ -840,8 +873,7 @@ export default {
               that.couponList = res.data.data;
             }
           })
-      }    
-    },
+    }, 
     //打开优惠券
     opencouponshow(){
       this.couponshow = true;
