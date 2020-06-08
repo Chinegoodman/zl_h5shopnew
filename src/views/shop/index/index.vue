@@ -524,10 +524,20 @@ export default {
       let tab = Number(this.$route.query.tab);
       that.titleclick(tab,false);
     }
-    //新人专区推广弹层只弹一次
-    if(getsessionStorage('newcommershellflag') != 'yethas'){
-      that.newcomershellshowstate = true;
+    //新人专区推广弹层-游客模式直接弹，登录后新人弹 否则不弹
+    if(that.$store.state.user.userid || that.$store.state.user.userid != 0){
+      that.api.homedetails.checknewcomercondition({
+        id : that.$store.state.user.userid
+      }).then(res =>{
+        console.log('res');
+        console.log(res);
+      })
+    }else{ 
+      if(getsessionStorage('newcommershellflag') != 'yethas'){
+        that.newcomershellshowstate = true;
+      }
     }
+    
   },
   methods: {
     //跳转新人专区

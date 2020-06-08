@@ -72,6 +72,10 @@ const homedetails = {
     // 投资金推荐tab列表 ljx
     homelisttzjpost(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/getTZJRoomGoods`, qs.stringify(params));
+    },
+    // 判断是否新手(然后显示推送弹层)
+    checknewcomercondition(params) {
+        return axios.post(`${base.yxf}/wapi/v1/user/isNoviceById`, qs.stringify(params));
     }
 
 }
