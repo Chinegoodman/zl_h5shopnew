@@ -20,8 +20,8 @@
           发票类型
           <div class="rt">
             <van-radio-group v-model="radiotype" direction="horizontal" @change="invoicetype" >
-              <van-radio name="2">纸质发票</van-radio>
-              <van-radio name="1">电子发票</van-radio>
+              <van-radio name="2" v-if="istzj==0">纸质发票</van-radio>
+              <van-radio name="1" v-if="istzj==1">电子发票</van-radio>
             </van-radio-group>
           </div>
         </li>
@@ -32,7 +32,7 @@
             <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
           </div>
         </li>
-        <li>
+        <li v-if="radioperson==2">
           纳税人识别号
           <div class="rt">
             <input class="taitoumsg" v-model="taxmsg"  type="text" placeholder="请输入纳税人识别号">
@@ -50,11 +50,11 @@
         <li>
           设置为默认抬头
           <div class="rt">
-            <van-switch v-model="checked" active-color="#07c160" inactive-color="#fff" />
+            <van-switch v-model="checked" @change="invoicecheckdefault" active-color="#07c160" inactive-color="#fff" />
           </div>
         </li>
       </ul>
-      <ul class="permsg">
+      <ul class="permsg" v-if="istzj==1">
         <li>
           <span class="tit">收票人信息</span>
         </li>
@@ -73,7 +73,7 @@
         </li>
       </ul>
       <div class="btm-area">
-        <span class="sure" @click="submitaddinvoice" >确认</span>
+        <span :class="{'sure-gray':true, 'sure-active':submitbtnstate}" @click="submitaddinvoice" >确认</span>
         <p>本单不开具发票,<span @click="shopback">继续下单</span></p> 
       </div>
     </div>
@@ -142,15 +142,17 @@ export default {
   },
   data() {
     return {
+      istzj : '', //是否为投资金商品
       radioperson : '1', //开具类型
-      radiotype : '2', //发票类型
+      radiotype : '2', //发票类型 1为电子 2为纸质
       taitoumsg : '', //发票抬头
       taxmsg : '', //纳税人信息
-      checked : true, //是否默认
+      checked : false, //是否默认
       personipone : '',
       personmail : '',
       invoiceshellshow : false,
-      userID : '' 
+      userID : '',
+      submitbtnstate : true 
     };
   },
   computed: {},
@@ -161,12 +163,24 @@ export default {
       that.$router.go(-1);
     },
     kaijutype(name){
-      console.log('name');
-      console.log(name);
+      if(name==1){
+        this.taitoumsg = '个人';
+        this.taxmsg = '';
+      }else{
+        this.taitoumsg = '';
+      }
       this.radioperson = name;
     },
     invoicetype(name){
       this.radiotype = name;
+    },
+    invoicecheckdefault(name){
+      if(name == 1){
+        this.checked = true;
+      }else{
+        this.checked = false;
+      }
+      this.checked = name;
     },
     openinvoiceshellshell(){
       this.invoiceshellshow = true;
@@ -174,7 +188,7 @@ export default {
     shutinvoiceshellshell(){
       this.invoiceshellshow = false;
     },
-    // 获取商品列表
+    // 获取默认发票内容
     getdefaultinvoice(){
       let that = this;
       that.$toast.loading({
@@ -189,6 +203,17 @@ export default {
         that.$toast.clear();
         if(res.data.code == 1){
           console.log(res.data);
+          that.invoiceOrder = res.data.data.invoiceOrder;
+          if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
+            that.radiotype = "2";
+          }else{
+            that.radiotype = "1";
+          }
+          that.taitoumsg = res.data.data.invoiceTitle;
+          that.taxmsg = res.data.data.taxCode;
+          if(res.data.data.firstChoice == 1){
+            that.checked = true;
+          }
         }
         else{
           that.$toast(res.data.info);
@@ -198,10 +223,24 @@ export default {
     //确认新增发票
     submitaddinvoice(){
       let that = this;
+
+      if(that.taitoumsg == undefined || that.taitoumsg == ''){
+        that.$toast('发票抬头不能为空');
+        return;
+      }
+      if(that.radioperson == 2 && (that.taxmsg == undefined || that.taxmsg == '')){
+        that.$toast('纳税人识别号不能为空');
+        return;
+      }
+      if(that.checked == true){
+        that.checked = 1;
+      }else{
+        that.checked = 0;
+      } 
       that.$toast.loading({
           message: "加载中...",
           duration: 200000
-        });  
+        });   
       that.api.shopcart
       .takeaddnewinvoice({
         "userId" : that.userID,
@@ -216,7 +255,12 @@ export default {
       .then(res => {
         that.$toast.clear();
         if(res.data.code == 1){
-          console.log(res.data);
+          let invoicenewmsg = {
+            id : res.data.data.id,
+            invoicecontent : res.data.data.invoiceContent
+          }
+          setsessionStorage('invoicenewmsg',invoicenewmsg)
+          that.shopback();
         }
         else{
           that.$toast(res.data.info);
@@ -234,6 +278,7 @@ export default {
   mounted() {
     let that = this;
     that.userID = that.$store.state.user.userid;
+    that.istzj = that.$route.query.istzj;
     that.getdefaultinvoice(); //上来加载默认发票
   },
   beforeCreate() {

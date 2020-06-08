@@ -136,7 +136,7 @@
                 <p class="commontitle">{{fymx_item24.chineseName}}</p>
                 <span></span>
                 <!-- <div class="li_price">￥{{fymx_item24.price}}</div> -->
-                <div class="li_price" @click="gotoinvoice" >不开发票<span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div>
+                <div class="li_price" @click="gotoinvoice(fymx_item)" >{{fymx_item24.invoicevalue}}<span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div>
               </div>
               <div class="li" v-if="fymx_item25.type==5" v-for="(fymx_item25,fymx_index25) in fymx_item.content" :key="fymx_index25+'lily'">
                 <p class="commontitle">{{fymx_item25.chineseName}}</p>
@@ -267,7 +267,8 @@ export default {
       coupon_choose_id : 0, //选定的优惠券id
       coupon_choose_price : 0, //选定的优惠券价格
       cun_contentdata : {},  //存一下上次下单前计费的参数对象,选中优惠券后调用 回显接口时用更新过优惠券金额的参数对象
-      coupon_clicked_show : false
+      coupon_clicked_show : false,
+      invoicevalue: '不开发票'
     };
   },
   computed: {
@@ -302,9 +303,12 @@ export default {
       }
     },
     //跳转发票页
-    gotoinvoice(){
+    gotoinvoice(item){
        this.$router.push({
-        name: "invoice"
+        name: "invoice",
+        query : {
+          istzj : item.istZj
+        }
       });
     },
     // 阻止冒泡
@@ -933,11 +937,14 @@ export default {
         contentdata.push({
           shopId: ajax_getshowPrice[i].shopId,
           freight: freight,
+          // uid : '',
           isPackage: isPackage,
           goods: goods,
           couponId :'',
           couponAmount : 0,
-          expressName : expressName
+          expressName : expressName,
+          billType : 0,
+          billHeaderId : 221
         });
       }
       // console.log(psfdata);
@@ -970,8 +977,30 @@ export default {
           that.$toast.clear();
           if (res.data.code == 1) {
             let resedata = res.data.data;
+            console.log('resedata');
+            console.log(resedata);
             that.zongfei = resedata.allPrice;
             that.fymx_listdata = resedata.shops;
+            //发票信息回显
+            if(getsessionStorage('invoicenewmsg')){
+              let invoicenewmsg = getsessionStorage('invoicenewmsg');
+              that.fymx_listdata.map(itemshops => {
+                itemshops.content.map(itemscontent => {
+                  if(itemscontent.type==4){
+                    itemscontent.invoicevalue = invoicenewmsg.invoicecontent;
+                  }
+                })
+              })
+            }else{
+              that.fymx_listdata.map(itemshops => {
+                itemshops.content.map(itemscontent => {
+                  if(itemscontent.type==4){
+                    itemscontent.invoicevalue = '不开发票';
+                  }
+                })
+              })
+            }
+
             //获取优惠券列表
             // if(!coupon_clicked_show){
               that.fetchorderusablecoupon(that.zongfei);

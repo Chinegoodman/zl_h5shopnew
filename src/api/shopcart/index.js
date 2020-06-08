@@ -47,6 +47,14 @@ const shopcart = {
     paystatus(params) {
         return axios.post(`${base.yxf}/wapi/v1/pay/select/status`, qs.stringify(params));
     },
+    // 获取默认发票接口
+    takedefaultinvoice(params) {
+        return axios.post(`${base.yxf}/wapi/v1/user/getChoicedInvoice`, qs.stringify(params));
+    },
+    // 获取新增发票接口
+    takeaddnewinvoice(params) {
+        return axios.post(`${base.yxf}/wapi/v1/user/createInvoice`, qs.stringify(params));
+    }
 }
 
 export default shopcart;

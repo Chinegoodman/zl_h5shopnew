@@ -529,8 +529,13 @@ export default {
       that.api.homedetails.checknewcomercondition({
         id : that.$store.state.user.userid
       }).then(res =>{
-        console.log('res');
-        console.log(res);
+        if(res.data.code == 1){
+          if(res.data.data == 1){
+            that.newcomershellshowstate = true;
+          }else{
+            that.newcomershellshowstate = false;
+          }
+        }
       })
     }else{ 
       if(getsessionStorage('newcommershellflag') != 'yethas'){
