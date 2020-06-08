@@ -28,14 +28,14 @@
         <li>
           发票抬头
           <div class="rt">
-            <input class="taitoumsg" v-model="taitoumsg"  type="text" placeholder="请输入抬头信息">
+            <input class="taitoumsg" v-model="taitoumsg" @blur="taitoumsginput"  type="text" placeholder="请输入抬头信息">
             <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
           </div>
         </li>
         <li v-if="radioperson==2">
           纳税人识别号
           <div class="rt">
-            <input class="taitoumsg" v-model="taxmsg"  type="text" placeholder="请输入纳税人识别号">
+            <input class="taitoumsg" v-model="taxmsg" @blur="taxmsgblur"  type="text" placeholder="请输入纳税人识别号">
           </div>
         </li>
       </ul>
@@ -182,6 +182,18 @@ export default {
       }
       this.checked = name;
     },
+    taitoumsginput(){
+      var that = this;
+      if(that.taitoumsg == undefined || that.taitoumsg == ''){
+        that.submitbtnstate = false;
+      }
+    },
+    taxmsgblur(){
+      var that = this;
+      if(that.taxmsg == undefined || that.taxmsg == ''){
+        that.submitbtnstate = false;
+      }
+    },
     openinvoiceshellshell(){
       this.invoiceshellshow = true;
     },
@@ -202,7 +214,6 @@ export default {
       .then(res => {
         that.$toast.clear();
         if(res.data.code == 1){
-          console.log(res.data);
           that.invoiceOrder = res.data.data.invoiceOrder;
           if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
             that.radiotype = "2";
@@ -211,6 +222,9 @@ export default {
           }
           that.taitoumsg = res.data.data.invoiceTitle;
           that.taxmsg = res.data.data.taxCode;
+          if(!that.taitoumsg && !that.taxmsg){
+            that.submitbtnstate = false;
+          }
           if(res.data.data.firstChoice == 1){
             that.checked = true;
           }
@@ -223,7 +237,6 @@ export default {
     //确认新增发票
     submitaddinvoice(){
       let that = this;
-
       if(that.taitoumsg == undefined || that.taitoumsg == ''){
         that.$toast('发票抬头不能为空');
         return;
