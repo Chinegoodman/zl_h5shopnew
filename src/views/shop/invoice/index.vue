@@ -20,8 +20,8 @@
           发票类型
           <div class="rt">
             <van-radio-group v-model="radiotype" direction="horizontal" @change="invoicetype" >
-              <van-radio name="1">纸质发票</van-radio>
-              <van-radio name="2">电子发票</van-radio>
+              <van-radio name="2">纸质发票</van-radio>
+              <van-radio name="1">电子发票</van-radio>
             </van-radio-group>
           </div>
         </li>
@@ -61,19 +61,19 @@
         <li>
           收票人手机：
           <div class="rt">
-            <input class="taitoumsg" v-model="taitoumsg"  type="text" placeholder="请输入收票人手机号">
+            <input class="taitoumsg" v-model="personipone"  type="text" placeholder="请输入收票人手机号">
             <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
           </div>
         </li>
         <li>
           收票人邮箱：
           <div class="rt">
-            <input class="taitoumsg" v-model="taxmsg"  type="text" placeholder="请输入收票人邮箱">
+            <input class="taitoumsg" v-model="personmail"  type="text" placeholder="请输入收票人邮箱">
           </div>
         </li>
       </ul>
       <div class="btm-area">
-        <span class="sure">确认</span>
+        <span class="sure" @click="submitaddinvoice" >确认</span>
         <p>本单不开具发票,<span @click="shopback">继续下单</span></p> 
       </div>
     </div>
@@ -143,11 +143,14 @@ export default {
   data() {
     return {
       radioperson : '1', //开具类型
-      radiotype : '1', //发票类型
+      radiotype : '2', //发票类型
       taitoumsg : '', //发票抬头
       taxmsg : '', //纳税人信息
-      checked : true,
-      invoiceshellshow : false 
+      checked : true, //是否默认
+      personipone : '',
+      personmail : '',
+      invoiceshellshow : false,
+      userID : '' 
     };
   },
   computed: {},
@@ -160,10 +163,10 @@ export default {
     kaijutype(name){
       console.log('name');
       console.log(name);
+      this.radioperson = name;
     },
     invoicetype(name){
-      console.log('name');
-      console.log(name);
+      this.radiotype = name;
     },
     openinvoiceshellshell(){
       this.invoiceshellshow = true;
@@ -172,45 +175,48 @@ export default {
       this.invoiceshellshow = false;
     },
     // 获取商品列表
-    diamondlist(){
+    getdefaultinvoice(){
       let that = this;
       that.$toast.loading({
           message: "加载中...",
           duration: 200000
         });  
-      that.api.homedetails
-      .diamondlistpost({
-        "id" : that.type_id
+      that.api.shopcart
+      .takedefaultinvoice({
+        "userId" : that.userID
       })
       .then(res => {
         that.$toast.clear();
-        that.listloading = false;
         if(res.data.code == 1){
-          if (res.data.data.list && res.data.data.list.length > 0) {
-            that.nodatashow = false;
-            that.hasmorepage = 2;
-            res.data.data.list.forEach(e => {
-              that.diamondlistmsg.push(e);
-            });
-          } 
-
-          that.nextPage = res.data.data.nextpage;
-          if (that.nextPage != "" && that.nextPage !== undefined) {
-            that.listfinished = false;
-            that.listloading = false;
-          } else {
-            if(that.hasmorepage === 1){
-                that.nodatashow = true;
-              return;
-            }else{
-              that.listfinished = true;
-              that.listloading_ = false;
-              that.finished_text = '亲~已经到底了';
-            }
-            
-          }
-          that.$forceUpdate();
-          that.$toast.clear();
+          console.log(res.data);
+        }
+        else{
+          that.$toast(res.data.info);
+        }
+      })
+    },
+    //确认新增发票
+    submitaddinvoice(){
+      let that = this;
+      that.$toast.loading({
+          message: "加载中...",
+          duration: 200000
+        });  
+      that.api.shopcart
+      .takeaddnewinvoice({
+        "userId" : that.userID,
+        "invoiceType" : that.radiotype,
+        "invoiceOrder" : that.radioperson,
+        "invoiceTitle" : that.taitoumsg,
+        "taxCode" : that.taxmsg,
+        "firstChoice" : that.checked,
+        "reciverPhone" : that.personipone,
+        "reciverMail" : that.personmail
+      })
+      .then(res => {
+        that.$toast.clear();
+        if(res.data.code == 1){
+          console.log(res.data);
         }
         else{
           that.$toast(res.data.info);
@@ -227,6 +233,8 @@ export default {
   // },
   mounted() {
     let that = this;
+    that.userID = that.$store.state.user.userid;
+    that.getdefaultinvoice(); //上来加载默认发票
   },
   beforeCreate() {
     document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
