@@ -24,7 +24,8 @@
         "xgplayer": "^2.6.14",
         "xgplayer-flv": "^2.3.2",
         "xgplayer-hls.js": "^2.2.2",
-        "yxfh5living": "^0.0.5"
+        "yxfh5living": "^0.0.5",
+        "zlapi": "^0.0.5"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^3.12.0",
