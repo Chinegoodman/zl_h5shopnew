@@ -1003,7 +1003,7 @@ export default {
           freightAmount: item.order.freightAmount,
           deliveryProduct: item.order.freightAmountname,
           billType: that.bilTypePost,
-          couponId: that.cun_contentdata[index].couponId?that.cun_contentdata[index].couponId:0,
+          couponId: that.cun_contentdata[index].couponId?that.cun_contentdata[index].couponId:'',
           couponAmount: that.cun_contentdata[index].couponAmount?that.cun_contentdata[index].couponAmount:0,
           totalQuantity: arrquantitynew
         };
