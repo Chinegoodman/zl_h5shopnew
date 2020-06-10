@@ -103,7 +103,7 @@
                     <p class="commontitle">{{fymx_item20.caption}}</p>
                     <div class="li_price">{{fymx_item20.display}}</div>
                     <div class="peisongsmall">
-                      {{fymx_item20.detail}} ￥{{fymx_item20.value}}
+                      {{fymx_item20.detail}}<mark class="m">￥{{fymx_item20.value}}</mark>
                     </div>
                   </div>
                   <!-- <div class="li" v-if="!freightstatus">
@@ -131,11 +131,14 @@
                     </div> -->
 
                   </div>
-                  <div class="li" v-if="fymx_item24.type==4&&false" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
+                  <div class="li" v-if="fymx_item24.type==4" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
                     <p class="commontitle">{{fymx_item24.caption}}</p>
                     <span></span>
-                    <!-- <div class="li_price">￥{{fymx_item24.price}}</div> -->
-                    <div class="li_price">H5端敬请期待</div>
+                    <div class="li_price">{{fymx_item24.detail}}</div>
+                  </div>
+                  <div class="li" v-if="fymx_item28.type==8" v-for="(fymx_item28,fymx_index28) in fymx_item.content" :key="fymx_index28+'lifp'">
+                    <p class="commontitle">{{fymx_item28.caption}}</p>
+                    <div class="li_price">{{fymx_item28.detail}}</div>
                   </div>
                   <div class="li" v-if="fymx_item25.type==5" v-for="(fymx_item25,fymx_index25) in fymx_item.content" :key="fymx_index25+'lily'">
                     <p class="commontitle">{{fymx_item25.caption}}</p>
