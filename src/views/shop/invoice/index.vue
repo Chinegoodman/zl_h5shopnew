@@ -186,12 +186,16 @@ export default {
       var that = this;
       if(that.taitoumsg == undefined || that.taitoumsg == ''){
         that.submitbtnstate = false;
+      }else{
+        that.submitbtnstate = true;
       }
     },
     taxmsgblur(){
       var that = this;
       if(that.taxmsg == undefined || that.taxmsg == ''){
         that.submitbtnstate = false;
+      }else{
+        that.submitbtnstate = true;
       }
     },
     openinvoiceshellshell(){
@@ -270,6 +274,7 @@ export default {
         if(res.data.code == 1){
           let invoicenewmsg = {
             id : res.data.data.id,
+            type : res.data.data.invoiceType,
             invoicecontent : res.data.data.invoiceContent
           }
           setsessionStorage('invoicenewmsg',invoicenewmsg)

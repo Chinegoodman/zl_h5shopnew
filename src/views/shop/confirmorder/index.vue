@@ -122,11 +122,8 @@
               <div class="li lizj" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
                 <p class="commontitle">{{fymx_item27.chineseName}}</p>
                 <div class="li_price c">
-                  <span class="sy" v-if="couponList.length == 1" >{{fymx_item27.detailName}}</span> 
-                  <!-- <span class="sy" v-else-if="couponList.length > 0" @click="opencouponshow">{{fymx_item27.detailName}}</span> -->
-                  <span class="sy" v-else @click="opencouponshow">
-                    <span v-if="!coupon_clicked_show">{{couponList.length - 1}}张可用</span>
-                    <span v-else>{{fymx_item27.detailName}}</span>
+                  <span class="sy"  @click="opencouponshow(fymx_item,fymx_index)">
+                    <span>{{fymx_item27.detailName}}</span>
                   </span>
                   <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
                 </div>
@@ -164,10 +161,10 @@
             <div class="coupontype-inner">
               <div class="yytctit">优惠券</div>
               <div class="yytctit__list" v-for="(item,index) in couponList" :key=index  @click="selectCoupon(index,item)">
-                <div style=" display: flex;justify-content: space-between;align-items: center;">{{item.name}}
-                  <img style="width:0.3rem;height:0.3rem;" :src="index==activebecause ? require('@/assets/imgs/personal/return-select.png') : require('@/assets/imgs/personal/return-unselect.png')" alt />
+                <div style=" display: flex;align-items: center;"><span>{{item.type==0?"满减券：":item.type==1?"满赠券：":"代金券："}}</span>{{item.name}}
+                  <img class="gd" style="width:0.3rem;height:0.3rem;" :src="index==activebecause ? require('@/assets/imgs/personal/return-select.png') : require('@/assets/imgs/personal/return-unselect.png')" alt />
                   </div>
-                <div style="font-size: .22rem;margin-top:.2rem;color: rgba(153,153,153,1);">{{item.platf_description}}</div>
+                <!-- <div style="font-size: .22rem;margin-top:.2rem;color: rgba(153,153,153,1);">{{item.userTypeText}}</div> -->
               </div>
               <div class="yytctit_operation">
               <div class="yytctit__close" @click="closeCoupon(couponList)">完成</div>
@@ -218,6 +215,7 @@ export default {
     return {
       activebecause: 0,
       couponshow : false,
+      couponindex : 0, //当前处理的第几个商品的索引记录
       pagetypedata: "confirmorder", //底部按钮模块类别  此页面对应的是 确认订单
       goodsallprice: 0, //商品的总价格不包含运费
       // zongewaifei:0,//总得额外费用===>>快递费运费
@@ -268,7 +266,9 @@ export default {
       coupon_choose_price : 0, //选定的优惠券价格
       cun_contentdata : {},  //存一下上次下单前计费的参数对象,选中优惠券后调用 回显接口时用更新过优惠券金额的参数对象
       coupon_clicked_show : false,
-      invoicevalue: '不开发票'
+      invoicevalue: '不开发票',
+      bilTypePost : 0,  //最后下单时传的发票类型
+      billHeaderIdPost : '' //最后下单时传的发票ID
     };
   },
   computed: {
@@ -416,6 +416,8 @@ export default {
     pagedatashow() {
       let that = this;
       var moduleList = that.$store.state.user;
+      ///检测地址--无地址不渲染下面订单内容
+      if (!that.checkaddressdata())return;
       if (getsessionStorage("pagefrom") == "productdetails") {
         let ordermass = getsessionStorage("OrderImmediatelydata");
         that.ajax_order = [
@@ -700,16 +702,10 @@ export default {
         that.leavemsg.push("");
       }
 
-      // console.log(that.listshow);
+      //检测地址--有地址的时候
       if (that.checkaddressdata()) {
         //有配送地址 先调用配送地址 然后获取计价相关的
         that.computedFreight();
-      } else {
-        //没有配送地址 默认配送费用为0 计价相关的
-        for (let bb = 0; bb < that.listshow.length; bb++) {
-          that.listshow[bb].order.freightAmount = 0;
-        }
-        that.getshowPrice();
       }
     },
     //222检查是否有地址信息
@@ -791,70 +787,16 @@ export default {
           this.getshowPrice();
         })
     },
-    //获取下单用的优惠劵
-    fetchorderusablecoupon(price){
-      let that =  this;
-      //get about msg
-      if (getsessionStorage("pagefrom") == "productdetails") {
-        let ordermass = getsessionStorage("OrderImmediatelydata");
-        that.$toast.loading({
-          // message:'',
-          duration: 30000
-        }); 
-        //下面that.zongfei 在下单前计费回显中取
-        this.api.shopcart
-          .getOrderUsAbleCoupon({
-            uid : that.$store.state.user.userid,
-            // uid : 9106,
-            price : price, 
-            shopId : ordermass.shopId,
-            goodsSkuIdList :ordermass.productSkuId
-          })
-          .then(res => {
-            console.log(111);
-            that.$toast.clear();
-            if (res.data.code == 1) {
-              that.couponList = res.data.data;
-            }
-          })
-      }else if(getsessionStorage("pagefrom") == "shopcart"){
-        that.listshow = getsessionStorage("orderListdata");
-        that.goodsallprice = getsessionStorage("allprice");
-        let skuIdListStrPost = [];
-        console.log('this.listshow.items[0]');
-        console.log(this.listshow);
-        
-        for(var k = 0; k < this.listshow.length; k ++){
-          for(var j = 0; j < this.listshow[k].items.length; j++){
-            console.log('this.listshow[k].items[j]--' + j);
-            console.log(this.listshow[k].items[j].productSkuId);
-            if(j == this.listshow[k].items.length){
-              console.log(253);
-              break;
-            }
-            skuIdListStrPost.push(this.listshow[k].items[j].productSkuId);
-            console.log('skuIdListStrPost');
-            console.log(skuIdListStrPost);
-          }
-          
-        }
-
-        for(var k = 0; k < this.listshow.length; k ++){
-          let params_post = {
-            goodsallprice : this.goodsallprice,
-            shopId : this.listshow[k].shopId,
-            productSkuIdStrList : skuIdListStrPost
-          }
-          that.takecouponlistdata(params_post);
-        }
-        
-
-        
-      }    
-    },
     //获取下单用的优惠券公供接口
-    takecouponlistdata(params){
+    takecouponlistdata(params,index){
       let that = this;
+      //单个或多个skuid串接
+      let skuid_arrlist = [];
+      params.goods.map(item => {
+        skuid_arrlist.push(item.skuId);
+      });
+      that.cun_contentdata[index].shopId = params.shopId;
+
       that.$toast.loading({
           // message:'',
           duration: 30000
@@ -864,23 +806,22 @@ export default {
           .getOrderUsAbleCoupon({
             uid : that.$store.state.user.userid,
             // uid : 9106,
-            price : params.goodsallprice, 
+            price : that.zongfei, 
             shopId : params.shopId,
-            goodsSkuIdList : params.productSkuIdStrList
+            goodsSkuIdList : skuid_arrlist.toString()
           })
           .then(res => {
-            console.log(222);
             that.$toast.clear();
             if (res.data.code == 1) {
-              console.log('res.data.data-couponList');
-              console.log(res.data.data);
               that.couponList = res.data.data;
             }
           })
     }, 
-    //打开优惠券
-    opencouponshow(){
+    //打开优惠券弹层
+    opencouponshow(item,index){
       this.couponshow = true;
+      this.couponindex = index;
+      this.takecouponlistdata(item,index);
     },
     //选取优惠券
     selectCoupon(index,item){
@@ -892,11 +833,11 @@ export default {
     closeCoupon(couponList){
       let that = this;
       if(this.coupon_choose_id == 0 && this.coupon_choose_price == 0){
-        that.cun_contentdata[0].couponId = couponList[0].couponId;
-        that.cun_contentdata[0].couponAmount = couponList[0].price;
+        that.cun_contentdata[that.couponindex].couponId = couponList[0].couponId;
+        that.cun_contentdata[that.couponindex].couponAmount = couponList[0].price;
       }else{
-        that.cun_contentdata[0].couponId = this.coupon_choose_id;
-        that.cun_contentdata[0].couponAmount = this.coupon_choose_price;
+        that.cun_contentdata[that.couponindex].couponId = this.coupon_choose_id;
+        that.cun_contentdata[that.couponindex].couponAmount = this.coupon_choose_price;
       }
       //选完优惠券后，计费再次回显
       that.fymx_listdata = [];
@@ -914,8 +855,8 @@ export default {
       });
       // console.log(that.ajax_order);
       let ajax_getshowPrice = JSON.parse(JSON.stringify(that.listshow));
-      console.log('ajax_getshowPrice');
-      console.log(ajax_getshowPrice);
+      // console.log('ajax_getshowPrice');
+      // console.log(ajax_getshowPrice);
       // {"goods":[{"skuId":1780661640987681260,"count":6}],"shopId":101763,"freight":18,"isPackage":0};
       let contentdata = [];
 
@@ -937,14 +878,12 @@ export default {
         contentdata.push({
           shopId: ajax_getshowPrice[i].shopId,
           freight: freight,
-          // uid : '',
+          uid : that.$store.state.user.userid,
           isPackage: isPackage,
           goods: goods,
           couponId :'',
           couponAmount : 0,
-          expressName : expressName,
-          billType : 0,
-          billHeaderId : 221
+          expressName : expressName
         });
       }
       // console.log(psfdata);
@@ -977,37 +916,37 @@ export default {
           that.$toast.clear();
           if (res.data.code == 1) {
             let resedata = res.data.data;
-            console.log('resedata');
-            console.log(resedata);
+            // console.log('resedata');
+            // console.log(resedata);
             that.zongfei = resedata.allPrice;
             that.fymx_listdata = resedata.shops;
-            //发票信息回显
-            if(getsessionStorage('invoicenewmsg')){
-              let invoicenewmsg = getsessionStorage('invoicenewmsg');
-              that.fymx_listdata.map(itemshops => {
-                itemshops.content.map(itemscontent => {
-                  if(itemscontent.type==4){
-                    itemscontent.invoicevalue = invoicenewmsg.invoicecontent;
-                  }
-                })
-              })
-            }else{
-              that.fymx_listdata.map(itemshops => {
-                itemshops.content.map(itemscontent => {
-                  if(itemscontent.type==4){
-                    itemscontent.invoicevalue = '不开发票';
-                  }
-                })
-              })
-            }
-
-            //获取优惠券列表
-            // if(!coupon_clicked_show){
-              that.fetchorderusablecoupon(that.zongfei);
-            // }
-            
+            that.invoicenewmsgmethod();
           }
         })
+    },
+    invoicenewmsgmethod(){
+      let that = this;
+      //发票信息回显
+      if(getsessionStorage('invoicenewmsg')){
+        let invoicenewmsg = getsessionStorage('invoicenewmsg');
+        that.fymx_listdata.map(itemshops => {
+          itemshops.content.map(itemscontent => {
+            if(itemscontent.type==4){
+              itemscontent.invoicevalue = invoicenewmsg.invoicecontent;
+              that.billHeaderIdPost = invoicenewmsg.id;
+              that.bilTypePost = invoicenewmsg.type;
+            }
+          })
+        })
+      }else{
+        that.fymx_listdata.map(itemshops => {
+          itemshops.content.map(itemscontent => {
+            if(itemscontent.type==4){
+              itemscontent.invoicevalue = '不开发票';
+            }
+          })
+        })
+      }
     },
     // 生成订单 //成功后拉起支付
     confirmorderfn() {
@@ -1024,8 +963,9 @@ export default {
       localStorage.removeItem("confirmpageorder");
 
       let createorderdatanew = JSON.parse(JSON.stringify(that.listshow));
+      // console.log('createorderdatanew');
       // console.log(createorderdatanew);
-
+      // console.log(createorderdatanew);
       let isPackageFee = 0;
       that.createorderdataajax = [];
       createorderdatanew.forEach(function(item, index) {
@@ -1033,6 +973,12 @@ export default {
         let currentgoodnew = that.fymx_listdata[index].content.filter(item => {
           return item.type == 6; //单个订单 的 商品总价
         });
+
+        let arrquantitynew = item.items.map(itemnew => {
+          return itemnew.quantity; //单个订单 的 商品总价
+        });
+        arrquantitynew = arrquantitynew.reduce((n,m) => n + m);
+
         let createorderdatali = {
           operator: that.$store.state.user.userid,
           order: {},
@@ -1042,7 +988,7 @@ export default {
         };
         //创建订单需要的ajax数据
         createorderdatali.order = {
-          billHeaderId: 0,
+          billHeaderId: that.billHeaderIdPost,
           payAmount: currentgoodnew[0].price,
           // payType : that.paytypedata.arr[that.paytypedata.currentindex].payType,//后台移除此字段了
           receiverId: that.addressdata.id,
@@ -1056,10 +1002,11 @@ export default {
           note: that.leavemsg[index],
           freightAmount: item.order.freightAmount,
           deliveryProduct: item.order.freightAmountname,
-          billType: 0,
-          totalQuantity: 0
+          billType: that.bilTypePost,
+          couponId: that.cun_contentdata[index].couponId?that.cun_contentdata[index].couponId:0,
+          couponAmount: that.cun_contentdata[index].couponAmount?that.cun_contentdata[index].couponAmount:0,
+          totalQuantity: arrquantitynew
         };
-
         createorderdatali.orderItemList = [];
         for (let a = 0; a < item.items.length; a++) {
           let orderItemListli = {
@@ -1074,10 +1021,9 @@ export default {
             productWeight: item.items[a].productWeight,
             serviceFee: item.items[a].serviceFee,
             shopId: item.items[a].shopId,
-            studioLiveId: item.items[a].studioLiveId
-              ? item.items[a].studioLiveId
-              : 0
+            studioLiveId: item.items[a].studioLiveId? item.items[a].studioLiveId: 0
           };
+
           createorderdatali.orderItemList.push(orderItemListli);
         }
         if (item.order.isPackage == 1) {
@@ -1158,6 +1104,8 @@ export default {
     // that.checkaddressdata();
     // 数据从存储获取并展示
     this.pagedatashow();
+    //从缓里读取发票信息
+    that.invoicenewmsgmethod();
     // if (that.checkaddressdata()) {
     //   //有配送地址 先调用配送地址 然后获取计价相关的
     //   this.computedFreight();
