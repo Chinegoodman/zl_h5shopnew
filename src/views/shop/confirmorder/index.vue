@@ -1,197 +1,295 @@
 <!-- 组件说明 -->
 <template>
-  <div class="confirmorderwrap">
-    <div class="header clearfix">
-      <img
-        @click="goprevpage"
-        style="transform:rotate(180deg);"
-        src="./../../../assets/imgs/icons/sp-gengduo@2x.png"
-        alt
-      />
-      <p>填写订单</p>
-    </div>
-    <div class="containerwrap">
-      <!-- 收货地址 -->
-      <div class="address clearfix" v-if="addressdata.id!=''">
-        <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt />
-        <div class="content">
-          <div class="top clearfix">
-            <span class="name">{{addressdata.name}}</span>
-            <span class="phone">{{addressdata.phone}}</span>
-            <span class="tags red">收件人</span>
-            <span class="tags default" v-show="addressdata.is_default==1">默认</span>
-          </div>
-          <div class="details _txtov2" @click="addressclick">
-            {{addressdata.province+' '+addressdata.city+' '+addressdata.area+' '+addressdata.street+' '+addressdata.address}}
-          </div>
-          <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
-        </div>
+  <div class="pagebox">
+    <!-- 填写订单页 -->
+    <div class="confirmorderwrap" v-if="!invoicecontentshow">
+      <div class="header clearfix">
+        <img
+          @click="goprevpage"
+          style="transform:rotate(180deg);"
+          src="./../../../assets/imgs/icons/sp-gengduo@2x.png"
+          alt
+        />
+        <p>填写订单</p>
       </div>
-      <div class="address hasnoaddressdata clearfix" v-else>
-        <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt />
-        <div class="content" @click="addressclick">
-          <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
-          <div class="details _txtov2">
-            请先选择顶部的收货地址
-          </div>
-        </div>
-      </div>
-
-      <!-- 商品数据及支付方式和配送方式 -->
-      <div class="product_paytype_transptype">
-        <div class="product clearfix" v-for="(item,index) in listshow" :key="index">
-          <div class="shopnamebox clearfix">
-            <div class="shopicon">
-              <img :src="item.shopIcon" alt />
+      <div class="containerwrap">
+        <!-- 收货地址 -->
+        <div class="address clearfix" v-if="addressdata.id!=''">
+          <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt />
+          <div class="content">
+            <div class="top clearfix">
+              <span class="name">{{addressdata.name}}</span>
+              <span class="phone">{{addressdata.phone}}</span>
+              <span class="tags red">收件人</span>
+              <span class="tags default" v-show="addressdata.is_default==1">默认</span>
             </div>
-            <span class="shopname">{{item.shopName}}</span>
+            <div class="details _txtov2" @click="addressclick">
+              {{addressdata.province+' '+addressdata.city+' '+addressdata.area+' '+addressdata.street+' '+addressdata.address}}
+            </div>
             <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
           </div>
-          <div class="rongtong-cn" v-if="false">
-            <span class="nm">融通金实时金价：</span>
-            <span class="pr">￥744.34/克</span>
-          </div>
-          <div class="goodbox clearfix" v-for="(iteminner,indexs) in item.items" :key="indexs">
-            <img :src="iteminner.productPic" alt="商品" />
-            <div class="details">
-              <p class="title _txtov2">{{iteminner.productName}}</p>
-              <!-- <p class="tips">&nbsp;</p> -->
-              <div class="options _txtov1">{{iteminner.productAttr}}</div>
-              <!-- <p class="tips">不支持七天无理由退货</p> -->
-            </div>
-            <div class="price_number">
-              <p>￥{{iteminner.price}}</p>
-              <span>x{{iteminner.quantity}}</span>
+        </div>
+        <div class="address hasnoaddressdata clearfix" v-else>
+          <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt />
+          <div class="content" @click="addressclick">
+            <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
+            <div class="details _txtov2">
+              请先选择顶部的收货地址
             </div>
           </div>
+        </div>
 
-          <!-- 费用明细 -->
-          <div class="paydetails" v-for="(fymx_item,fymx_index) in fymx_listdata" :key="fymx_index+'title'" v-if="fymx_item.shopId == item.shopId">
-            <a href="http://web.zhulihr.com/fysm.html" target="_blank">
-              <div class="title clearfix">
-                <p v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2" v-if="fymx_item2.type===0" >{{fymx_item2.chineseName}}</p>
-                <!-- <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="抓周" /> -->
+        <!-- 商品数据及支付方式和配送方式 -->
+        <div class="product_paytype_transptype">
+          <div class="product clearfix" v-for="(item,index) in listshow" :key="index">
+            <div class="shopnamebox clearfix">
+              <div class="shopicon">
+                <img :src="item.shopIcon" alt />
               </div>
-            </a>
-            <div class="pd_list">
-              <!-- 配送方式 -->
-              <div class="li peisong" v-if="fymx_item20.type==1" v-for="(fymx_item20,fymx_index20) in fymx_item.content" :key="fymx_index20+'peisong'">
-                <p class="commontitle">{{fymx_item20.chineseName}}</p>
-                <!-- <div class="li_price" v-if="freightstatus" @click="mbopen(item.order,item.order.freightAmounttype,item.order.freightAmountname,index);">{{fymx_item20.expressName}} <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div> -->
-                <div class="li_price"><span class="kd">{{fymx_item20.expressName}}</span><span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div>
-                <!-- <div class="li_price" v-if="!freightstatus" style="color:red;">请先选择顶部的收货地址 ></div> -->
-                <div class="peisongsmall">
-                  {{fymx_item20.detailName}}<i class="c">￥{{fymx_item20.price}}</i>
+              <span class="shopname">{{item.shopName}}</span>
+              <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
+            </div>
+            <div class="rongtong-cn" v-if="false">
+              <span class="nm">融通金实时金价：</span>
+              <span class="pr">￥744.34/克</span>
+            </div>
+            <div class="goodbox clearfix" v-for="(iteminner,indexs) in item.items" :key="indexs">
+              <img :src="iteminner.productPic" alt="商品" />
+              <div class="details">
+                <p class="title _txtov2">{{iteminner.productName}}</p>
+                <!-- <p class="tips">&nbsp;</p> -->
+                <div class="options _txtov1">{{iteminner.productAttr}}</div>
+                <!-- <p class="tips">不支持七天无理由退货</p> -->
+              </div>
+              <div class="price_number">
+                <p>￥{{iteminner.price}}</p>
+                <span>x{{iteminner.quantity}}</span>
+              </div>
+            </div>
+
+            <!-- 费用明细 -->
+            <div class="paydetails" v-for="(fymx_item,fymx_index) in fymx_listdata" :key="fymx_index+'title'" v-if="fymx_item.shopId == item.shopId">
+              <a href="http://web.zhulihr.com/fysm.html" target="_blank">
+                <div class="title clearfix">
+                  <p v-for="(fymx_item2,fymx_index2) in fymx_item.content" :key="fymx_index2" v-if="fymx_item2.type===0" >{{fymx_item2.chineseName}}</p>
+                  <!-- <img src="./../../../assets/imgs/icons/dd-wenda@2x.png" al="抓周" /> -->
                 </div>
-              </div>
-              <div class="li" v-if="!freightstatus">
-                <p class="commontitle">快递费</p>
-                <div class="li_price" style="color:red;">请先选择顶部的收货地址</div>
-              </div>
-              <!-- <div class="li" v-else>
-                <p class="commontitle">快递费(含保价费)</p>
-                <div class="li_price">￥{{item.order.freightAmount}}</div>
-              </div> -->
-
-              <div class="li" v-if="fymx_item21.type==2" v-for="(fymx_item21,fymx_index21) in fymx_item.content" :key="fymx_index21+'li'">
-                <p class="commontitle">{{fymx_item21.chineseName}}</p>
-                <span></span>
-                <div class="li_price">￥{{fymx_item21.price}}</div>
-              </div>
-              <div class="li" v-if="fymx_item23.type==3" v-for="(fymx_item23,fymx_index23) in fymx_item.content" :key="fymx_index23+'libz'">
-                <p class="commontitle">{{fymx_item23.chineseName}}</p>
-                <!-- <span>{{index}}</span> -->
-                <span class="checkshowtxt">{{fymx_item23.detailName}}<span v-if="fymx_item23.price!=0" style="float:none;margin:0;color:red;">&nbsp;￥{{fymx_item23.price}}</span></span>
-
-                  <!-- v-model="listshow[index].order.isPackage" -->
-                  <!-- v-model="listshow[index].order.isPackagestatus" -->
-                <!-- <van-switch
-                  :value="listshow[index].order.isPackagestatus"
-                  @input="switchchange(index,fymx_index)"
-                  size="0.5rem"
-                  inactive-color="white"
-                  active-color="rgb(106,215,107)"
-                /> -->
-                <div class="checkboxwrap" @click="switchchange(index,fymx_index)">
-                  <span class="radio" :class="{left:!listshow[index].order.isPackagestatus,right:listshow[index].order.isPackagestatus}"></span>
+              </a>
+              <div class="pd_list">
+                <!-- 配送方式 -->
+                <div class="li peisong" v-if="fymx_item20.type==1" v-for="(fymx_item20,fymx_index20) in fymx_item.content" :key="fymx_index20+'peisong'">
+                  <p class="commontitle">{{fymx_item20.chineseName}}</p>
+                  <!-- <div class="li_price" v-if="freightstatus" @click="mbopen(item.order,item.order.freightAmounttype,item.order.freightAmountname,index);">{{fymx_item20.expressName}} <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div> -->
+                  <div class="li_price"><span class="kd">{{fymx_item20.expressName}}</span></div>
+                  <span class="gd gdps"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
+                  <!-- <div class="li_price" v-if="!freightstatus" style="color:red;">请先选择顶部的收货地址 ></div> -->
+                  <div class="peisongsmall">
+                    {{fymx_item20.detailName}}<i class="c">￥{{fymx_item20.price}}</i>
+                  </div>
                 </div>
-              </div>
-              <!-- 发票 -->
-              <div class="li" v-if="fymx_item24.type==4" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
-                <p class="commontitle">{{fymx_item24.chineseName}}</p>
-                <span></span>
-                <!-- <div class="li_price">￥{{fymx_item24.price}}</div> -->
-                <div class="li_price" @click="gotoinvoice(fymx_item)" >{{fymx_item24.invoicevalue}}<span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span></div>
-              </div>
-              <div class="li" v-if="fymx_item25.type==5" v-for="(fymx_item25,fymx_index25) in fymx_item.content" :key="fymx_index25+'lily'">
-                <p class="commontitle">{{fymx_item25.chineseName}}</p>
-                <span></span>
-                <div class="li_price"><input type="text" v-model="leavemsg[index]" placeholder="选填,请输入您对订单或商品的一些要求或事宜"></div>
-              </div>
-              <div class="li lizj" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
-                <p class="commontitle">{{fymx_item27.chineseName}}</p>
-                <div class="li_price c">
-                  <span class="sy"  @click="opencouponshow(fymx_item,fymx_index)">
-                    <span>{{fymx_item27.detailName}}</span>
-                  </span>
+                <div class="li" v-if="!freightstatus">
+                  <p class="commontitle">快递费</p>
+                  <div class="li_price" style="color:red;">请先选择顶部的收货地址</div>
+                </div>
+                <!-- <div class="li" v-else>
+                  <p class="commontitle">快递费(含保价费)</p>
+                  <div class="li_price">￥{{item.order.freightAmount}}</div>
+                </div> -->
+
+                <div class="li" v-if="fymx_item21.type==2" v-for="(fymx_item21,fymx_index21) in fymx_item.content" :key="fymx_index21+'li'">
+                  <p class="commontitle">{{fymx_item21.chineseName}}</p>
+                  <span></span>
+                  <div class="li_price">￥{{fymx_item21.price}}</div>
+                </div>
+                <div class="li" v-if="fymx_item23.type==3" v-for="(fymx_item23,fymx_index23) in fymx_item.content" :key="fymx_index23+'libz'">
+                  <p class="commontitle">{{fymx_item23.chineseName}}</p>
+                  <!-- <span>{{index}}</span> -->
+                  <span class="checkshowtxt">{{fymx_item23.detailName}}<span v-if="fymx_item23.price!=0" style="float:none;margin:0;color:red;">&nbsp;￥{{fymx_item23.price}}</span></span>
+
+                    <!-- v-model="listshow[index].order.isPackage" -->
+                    <!-- v-model="listshow[index].order.isPackagestatus" -->
+                  <!-- <van-switch
+                    :value="listshow[index].order.isPackagestatus"
+                    @input="switchchange(index,fymx_index)"
+                    size="0.5rem"
+                    inactive-color="white"
+                    active-color="rgb(106,215,107)"
+                  /> -->
+                  <div class="checkboxwrap" @click="switchchange(index,fymx_index)">
+                    <span class="radio" :class="{left:!listshow[index].order.isPackagestatus,right:listshow[index].order.isPackagestatus}"></span>
+                  </div>
+                </div>
+                <!-- 发票 -->
+                <div class="li" v-if="fymx_item24.type==4" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
+                  <p class="commontitle">{{fymx_item24.chineseName}}</p>
+                  <span></span>
+                  <!-- <div class="li_price">￥{{fymx_item24.price}}</div> -->
+                  <div class="li_price" @click="gotoinvoice(fymx_item)" >{{fymx_item24.invoicevalue}}</div>
                   <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
                 </div>
-              </div>
-              <div class="li lizj" v-if="fymx_item26.type==6" v-for="(fymx_item26,fymx_index26) in fymx_item.content" :key="fymx_index26+'lizj'">
-                <p class="commontitle">{{fymx_item26.chineseName}}</p>
-                <span></span>
-                <div class="li_price c"><span class="sy">￥</span>{{fymx_item26.price}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 引入的底部模块 -->
-    <!-- <xqbottom @_confirmorderfn="confirmorderfn" :allprice="zongfei" :pagetype="pagetypedata"></xqbottom> -->
-    <xqbottom @_confirmorderfn="confirmorderfn" :allprice="zongfei" :pagetype="pagetypedata"></xqbottom>
-
-    <!-- 优惠券弹层 -->
-    <div class="coupontypebox" v-if="couponshow">
-       <!-- 取消原因弹窗 -->
-          <!-- <div class="returnyytc" v-if="thyyshow"> -->
-            <div class="coupontype-inner">
-              <div class="yytctit">优惠券</div>
-              <div class="yytctit__list" v-for="(item,index) in couponList" :key=index  @click="selectCoupon(index,item)">
-                <div style=" display: flex;align-items: center;"><span>{{item.type==0?"满减券：":item.type==1?"满赠券：":"代金券："}}</span>{{item.name}}
-                  <img class="gd" style="width:0.3rem;height:0.3rem;" :src="index==activebecause ? require('@/assets/imgs/personal/return-select.png') : require('@/assets/imgs/personal/return-unselect.png')" alt />
+                <div class="li" v-if="fymx_item25.type==5" v-for="(fymx_item25,fymx_index25) in fymx_item.content" :key="fymx_index25+'lily'">
+                  <p class="commontitle">{{fymx_item25.chineseName}}</p>
+                  <span></span>
+                  <div class="li_price"><input type="text" v-model="leavemsg[index]" placeholder="选填,请输入您对订单或商品的一些要求或事宜"></div>
+                </div>
+                <div class="li lizj" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
+                  <p class="commontitle">{{fymx_item27.chineseName}}</p>
+                  <div class="li_price c">
+                    <span class="sy"  @click="opencouponshow(fymx_item,fymx_index)">
+                      <span>{{fymx_item27.detailName}}</span>
+                    </span>
                   </div>
-                <!-- <div style="font-size: .22rem;margin-top:.2rem;color: rgba(153,153,153,1);">{{item.userTypeText}}</div> -->
+                  <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
+                </div>
+                <div class="li lizj" v-if="fymx_item26.type==6" v-for="(fymx_item26,fymx_index26) in fymx_item.content" :key="fymx_index26+'lizj'">
+                  <p class="commontitle">{{fymx_item26.chineseName}}</p>
+                  <span></span>
+                  <div class="li_price c"><span class="sy">￥</span>{{fymx_item26.price}}</div>
+                </div>
               </div>
-              <div class="yytctit_operation">
-              <div class="yytctit__close" @click="closeCoupon(couponList)">完成</div>
-              </div>
-            </div>
-          <!-- </div> -->
-    </div>
-    
-    <!-- 配送弹层 -->
-    <div class="freighttypemb" v-if="mbstatus" @click.stop="mbclose">
-      <div class="freighttype" @click.stop="stopfn">
-        <p>请选择配送方式</p>
-        <div class="typelist" v-for="(item,index) in freightAmountcurrent.arr" :key="index">
-          <div class="left">
-            <img v-if="item.type==801" src="./../../../assets/imgs/sf/jr.png" alt="抓周">
-            <img v-if="item.type==802" src="./../../../assets/imgs/sf/cc.png" alt="抓周">
-            <img v-if="item.type==803" src="./../../../assets/imgs/sf/cr.png" alt="抓周">
-            <img v-if="item.type==804" src="./../../../assets/imgs/sf/gr.png" alt="抓周">
-          </div>
-          <div class="right" @click="selectfreighttype(item)">
-            <p v-if="item.price == 0">收件地址不支持此服务</p>
-            <div v-if="item.type == freightAmountcurrent.type && item.price > 0" class="select" :class="{active:item.type == freightAmountcurrent.type}">
-              ￥{{item.price}} <span></span>
-            </div>
-            <div v-if="item.type != freightAmountcurrent.type && item.price > 0" class="select">
-              ￥{{item.price}} <span></span>
             </div>
           </div>
         </div>
       </div>
+      <!-- 引入的底部模块 -->
+      <!-- <xqbottom @_confirmorderfn="confirmorderfn" :allprice="zongfei" :pagetype="pagetypedata"></xqbottom> -->
+      <xqbottom @_confirmorderfn="confirmorderfn" :allprice="zongfei" :pagetype="pagetypedata"></xqbottom>
+
+      <!-- 优惠券弹层 -->
+      <div class="coupontypebox" v-if="couponshow">
+        <!-- 取消原因弹窗 -->
+            <!-- <div class="returnyytc" v-if="thyyshow"> -->
+              <div class="coupontype-inner">
+                <div class="yytctit">优惠券</div>
+                <div class="yytctit__list" v-for="(item,index) in couponList" :key=index  @click="selectCoupon(index,item)">
+                  <div style=" display: flex;align-items: center;"><span>{{item.type==0?"满减券：":item.type==1?"满赠券：":"代金券："}}</span>{{item.name}}
+                    <img class="gd" style="width:0.3rem;height:0.3rem;" :src="index==activebecause ? require('@/assets/imgs/personal/return-select.png') : require('@/assets/imgs/personal/return-unselect.png')" alt />
+                    </div>
+                  <!-- <div style="font-size: .22rem;margin-top:.2rem;color: rgba(153,153,153,1);">{{item.userTypeText}}</div> -->
+                </div>
+                <div class="yytctit_operation">
+                <div class="yytctit__close" @click="closeCoupon(couponList)">完成</div>
+                </div>
+              </div>
+            <!-- </div> -->
+      </div>
+      
+      <!-- 配送弹层 -->
+      <div class="freighttypemb" v-if="mbstatus" @click.stop="mbclose">
+        <div class="freighttype" @click.stop="stopfn">
+          <p>请选择配送方式</p>
+          <div class="typelist" v-for="(item,index) in freightAmountcurrent.arr" :key="index">
+            <div class="left">
+              <img v-if="item.type==801" src="./../../../assets/imgs/sf/jr.png" alt="抓周">
+              <img v-if="item.type==802" src="./../../../assets/imgs/sf/cc.png" alt="抓周">
+              <img v-if="item.type==803" src="./../../../assets/imgs/sf/cr.png" alt="抓周">
+              <img v-if="item.type==804" src="./../../../assets/imgs/sf/gr.png" alt="抓周">
+            </div>
+            <div class="right" @click="selectfreighttype(item)">
+              <p v-if="item.price == 0">收件地址不支持此服务</p>
+              <div v-if="item.type == freightAmountcurrent.type && item.price > 0" class="select" :class="{active:item.type == freightAmountcurrent.type}">
+                ￥{{item.price}} <span></span>
+              </div>
+              <div v-if="item.type != freightAmountcurrent.type && item.price > 0" class="select">
+                ￥{{item.price}} <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 开具发票页 -->
+    <div class="invoicewrap" v-if="invoicecontentshow">
+      <div class="header">
+        <img class="back" @click="shopback" src="../../../assets/imgs/follow/xiangqing@2x.png" alt />
+        <span>开具发票</span>
+      </div>
+      <div class="invoice-con">
+        <ul>
+          <li>
+            开具类型
+            <div class="rt">
+              <van-radio-group v-model="radioperson" direction="horizontal" @change="kaijutype" >
+                <van-radio name="1">个人</van-radio>
+                <van-radio name="2">单位</van-radio>
+              </van-radio-group>
+            </div>
+          </li>
+          <li>
+            发票类型
+            <div class="rt">
+              <van-radio-group v-model="radiotype" direction="horizontal" @change="invoicetype" >
+                <van-radio name="2" v-if="istzj==0">纸质发票</van-radio>
+                <van-radio name="1" v-if="istzj==1">电子发票</van-radio>
+              </van-radio-group>
+            </div>
+          </li>
+          <li>
+            发票抬头
+            <div class="rt">
+              <input class="taitoumsg" v-model="taitoumsg" @blur="taitoumsginput"  type="text" placeholder="请输入抬头信息">
+              <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
+            </div>
+          </li>
+          <li v-if="radioperson==2">
+            纳税人识别号
+            <div class="rt">
+              <input class="taitoumsg" v-model="taxmsg" @blur="taxmsgblur"  type="text" placeholder="请输入纳税人识别号">
+            </div>
+          </li>
+        </ul>
+        <ul>
+          <li @click="openinvoiceshellshell">
+            发票内容
+            <span class="asker"><img src="./../../../assets/imgs/icons/fpnr.png" alt /></span>
+            <div class="rt">
+              <span class="txt" >明细</span>
+            </div>
+            </li>
+          <li>
+            设置为默认抬头
+            <div class="rt">
+              <van-switch v-model="checked" @change="invoicecheckdefault" active-color="#07c160" inactive-color="#fff" />
+            </div>
+          </li>
+        </ul>
+        <ul class="permsg" v-if="istzj==1">
+          <li>
+            <span class="tit">收票人信息</span>
+          </li>
+          <li>
+            收票人手机：
+            <div class="rt">
+              <input class="taitoumsg" v-model="personipone"  type="text" placeholder="请输入收票人手机号">
+              <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
+            </div>
+          </li>
+          <li>
+            收票人邮箱：
+            <div class="rt">
+              <input class="taitoumsg" v-model="personmail"  type="text" placeholder="请输入收票人邮箱">
+            </div>
+          </li>
+        </ul>
+        <div class="btm-area">
+          <span :class="{'sure-gray':true, 'sure-active':submitbtnstate}" @click="submitaddinvoice" >确认</span>
+          <p>本单不开具发票,<span @click="shopback">继续下单</span></p> 
+        </div>
+      </div>
+
+      <!-- 发票内容弹层 start-->
+      <div class="invoiceshell" v-if="invoiceshellshow">
+          <div class="shell-cover" @click="shutinvoiceshellshell"></div>
+          <div class="shell-content">
+            <span class="tit">发票内容说明</span>
+            <div class="con">
+              <p>1、发票内容将显示详细商品名称与价格信息；</p>
+              <p>2、部分商家可能开具发票内容为商品所属类别及价格信息，如有特殊需求，请向客服咨询。</p>
+            </div>
+            <span class="shutshell" @click="shutinvoiceshellshell"><img src="../../../assets/imgs/icons/spxqs-close.png" alt=""></span>
+          </div>
+      </div>
+      <!-- 发票内容弹层 end-->
     </div>
   </div>
 </template>
@@ -200,6 +298,40 @@
 import base from "@/api/base.js"; // 导入接口域名列表
 import axios from "axios";
 import {
+    //   AddressEdit,
+    //   Area,
+    //   Calendar,
+    //   Checkbox,
+    //   CheckboxGroup,
+    //   CountDown,
+    //   DatetimePicker,
+    //   Dialog,
+    //   DropdownItem,
+    //   Form,
+    //   Field,
+    //   ImagePreview,
+    //   Locale,
+    //   Notify,
+    //   Picker,
+    //   Sku,
+    //   SwipeCell,
+    RadioGroup,
+    Radio,
+    Switch 
+    // ====项目中可能用到的===
+    //  Uploader,
+    // Tab,
+    // Tabs,
+    // List,
+    // Lazyload,
+    // Search
+    // ====项目中可能用到的===
+    // Toast
+    // Loading,
+    // Swipe,
+    // SwipeItem
+} from 'vant';
+import {
   setsessionStorage,
   getsessionStorage
 } from "./../../../utils/index.js";
@@ -207,7 +339,11 @@ import { constants } from "fs";
 import { clearInterval } from "timers";
 //import x from ''
 export default {
-  components: {},
+  components: {
+    vanRadioGroup : RadioGroup,
+    vanRadio : Radio,
+    vanSwitch : Switch 
+  },
   data() {
     return {
       activebecause: 0,
@@ -262,10 +398,22 @@ export default {
       coupon_choose_id : 0, //选定的优惠券id
       coupon_choose_price : 0, //选定的优惠券价格
       cun_contentdata : {},  //存一下上次下单前计费的参数对象,选中优惠券后调用 回显接口时用更新过优惠券金额的参数对象
-      coupon_clicked_show : false,
+      coupon_clicked_show : false, //优惠券弹层
+      invoicecontentshow : false, //发票页显示
       invoicevalue: '不开发票',
       bilTypePost : 0,  //最后下单时传的发票类型
-      billHeaderIdPost : '' //最后下单时传的发票ID
+      billHeaderIdPost : '', //最后下单时传的发票ID
+      istzj : '', //是否为投资金商品
+      radioperson : '1', //开具类型
+      radiotype : '2', //发票类型 1为电子 2为纸质
+      taitoumsg : '', //发票抬头
+      taxmsg : '', //纳税人信息
+      checked : false, //是否默认
+      personipone : '', //个人电话
+      personmail : '',  //个人邮箱
+      invoiceshellshow : false, //发票弹层
+      userID : '', //用户id
+      submitbtnstate : true  //发票提交按钮状态
     };
   },
   computed: {
@@ -298,15 +446,6 @@ export default {
       }else{
         this.$router.go(-1);
       }
-    },
-    //跳转发票页
-    gotoinvoice(item){
-       this.$router.push({
-        name: "invoice",
-        query : {
-          istzj : item.istZj
-        }
-      });
     },
     // 阻止冒泡
     stopfn() {
@@ -1094,6 +1233,154 @@ export default {
     addressclick() {
       this.$router.push({ name: "addresscheck" });
     },
+    //以下方法为发票页相关
+    //跳转发票页
+    gotoinvoice(item){
+      let that = this;
+      that.invoicecontentshow = true;
+      //istzj : item.istZj
+      // this.$router.push({
+      //   name: "invoice",
+      //   query : {
+      //     istzj : item.istZj
+      //   }
+      // });
+    },
+     //返回发票页
+    shopback(){
+      this.invoicecontentshow = false;
+    },
+    //开具类型
+    kaijutype(name){
+      if(name==1){
+        this.taitoumsg = '个人';
+        this.taxmsg = '';
+      }else{
+        this.taitoumsg = '';
+      }
+      this.radioperson = name;
+    },
+    //发票类型
+    invoicetype(name){
+      this.radiotype = name;
+    },
+    //发票是否默认
+    invoicecheckdefault(name){
+      if(name == 1){
+        this.checked = true;
+      }else{
+        this.checked = false;
+      }
+      this.checked = name;
+    },
+    //发票抬头
+    taitoumsginput(){
+      var that = this;
+      if(that.taitoumsg == undefined || that.taitoumsg == ''){
+        that.submitbtnstate = false;
+      }else{
+        that.submitbtnstate = true;
+      }
+    },
+    //发票纳税人信息
+    taxmsgblur(){
+      var that = this;
+      if(that.taxmsg == undefined || that.taxmsg == ''){
+        that.submitbtnstate = false;
+      }else{
+        that.submitbtnstate = true;
+      }
+    },
+    //打开发票弹窗
+    openinvoiceshellshell(){
+      this.invoiceshellshow = true;
+    },
+    //关闭发票弹窗
+    shutinvoiceshellshell(){
+      this.invoiceshellshow = false;
+    },
+    // 获取默认发票内容
+    getdefaultinvoice(){
+      let that = this;
+      that.$toast.loading({
+          message: "加载中...",
+          duration: 200000
+        });  
+      that.api.shopcart
+      .takedefaultinvoice({
+        "userId" : that.$store.state.user.userid
+      })
+      .then(res => {
+        that.$toast.clear();
+        if(res.data.code == 1){
+          that.invoiceOrder = res.data.data.invoiceOrder;
+          if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
+            that.radiotype = "2";
+          }else{
+            that.radiotype = "1";
+          }
+          that.taitoumsg = res.data.data.invoiceTitle;
+          that.taxmsg = res.data.data.taxCode;
+          if(!that.taitoumsg && !that.taxmsg){
+            that.submitbtnstate = false;
+          }
+          if(res.data.data.firstChoice == 1){
+            that.checked = true;
+          }
+        }
+        else{
+          that.$toast(res.data.info);
+        }
+      })
+    },
+    //确认新增发票
+    submitaddinvoice(){
+      let that = this;
+      if(that.taitoumsg == undefined || that.taitoumsg == ''){
+        that.$toast('发票抬头不能为空');
+        return;
+      }
+      if(that.radioperson == 2 && (that.taxmsg == undefined || that.taxmsg == '')){
+        that.$toast('纳税人识别号不能为空');
+        return;
+      }
+      if(that.checked == true){
+        that.checked = 1;
+      }else{
+        that.checked = 0;
+      } 
+      that.$toast.loading({
+          message: "加载中...",
+          duration: 200000
+        });   
+      that.api.shopcart
+      .takeaddnewinvoice({
+        "userId" : that.userID,
+        "invoiceType" : that.radiotype,
+        "invoiceOrder" : that.radioperson,
+        "invoiceTitle" : that.taitoumsg,
+        "taxCode" : that.taxmsg,
+        "firstChoice" : that.checked,
+        "reciverPhone" : that.personipone,
+        "reciverMail" : that.personmail
+      })
+      .then(res => {
+        that.$toast.clear();
+        if(res.data.code == 1){
+          let invoicenewmsg = {
+            id : res.data.data.id,
+            type : res.data.data.invoiceType,
+            invoicecontent : res.data.data.invoiceContent
+          }
+          setsessionStorage('invoicenewmsg',invoicenewmsg);
+          that.invoicenewmsgmethod();
+          that.shopback();
+        }
+        else{
+          that.$toast(res.data.info);
+        }
+      })
+    }
   },
   mounted() {
     let that = this;
@@ -1103,6 +1390,9 @@ export default {
     this.pagedatashow();
     //从缓里读取发票信息
     that.invoicenewmsgmethod();
+
+    //后端获取默认发票信息
+    that.getdefaultinvoice();
     // if (that.checkaddressdata()) {
     //   //有配送地址 先调用配送地址 然后获取计价相关的
     //   this.computedFreight();
@@ -1134,4 +1424,18 @@ export default {
 
 <style lang='less'>
 //@import url()
+  .invoice-con ul li .van-radio__icon--checked .van-icon{
+    background:rgba(255,189,4,1);
+    border-color: rgba(255,189,4,1);
+  }
+  .invoice-con ul li .van-switch{
+    width: .9rem;
+    height: .3rem;
+    border-width : 2px;
+  }
+  .invoice-con ul li .van-switch__node{
+    width: .3rem;
+    height: .3rem;
+    border : 1px solid rgba(0,0,0,.1);
+  }
 </style>

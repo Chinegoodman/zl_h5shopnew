@@ -91,7 +91,6 @@
         </div>
     </div>
     <!-- 发票内容弹层 end-->
-
   </div>
 </template>
 
@@ -148,11 +147,11 @@ export default {
       taitoumsg : '', //发票抬头
       taxmsg : '', //纳税人信息
       checked : false, //是否默认
-      personipone : '',
-      personmail : '',
-      invoiceshellshow : false,
-      userID : '',
-      submitbtnstate : true 
+      personipone : '', //个人电话
+      personmail : '',  //个人邮箱
+      invoiceshellshow : false, //发票弹层
+      userID : '', //用户id
+      submitbtnstate : true  //发票提交按钮状态
     };
   },
   computed: {},
