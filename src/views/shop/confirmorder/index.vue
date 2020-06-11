@@ -21,21 +21,18 @@
             <span class="tags red">收件人</span>
             <span class="tags default" v-show="addressdata.is_default==1">默认</span>
           </div>
-          <div class="details _txtov2">
+          <div class="details _txtov2" @click="addressclick">
             {{addressdata.province+' '+addressdata.city+' '+addressdata.area+' '+addressdata.street+' '+addressdata.address}}
           </div>
-          <p @click="addressclick" class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
+          <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
         </div>
       </div>
-      <div class="address clearfix" v-else>
+      <div class="address hasnoaddressdata clearfix" v-else>
         <img src="./../../../assets/imgs/icons/dd-shoujr-l@2x.png" alt />
-        <div class="content">
-          <div class="top clearfix">
-            <span class="name">&nbsp;</span>
-          </div>
-          <p @click="addressclick" class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
+        <div class="content" @click="addressclick">
+          <p class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></p>
           <div class="details _txtov2">
-            &nbsp;
+            请先选择顶部的收货地址
           </div>
         </div>
       </div>
