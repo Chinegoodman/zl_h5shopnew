@@ -116,15 +116,6 @@
                   <span class="radio" :class="{left:!listshow[index].order.isPackagestatus,right:listshow[index].order.isPackagestatus}"></span>
                 </div>
               </div>
-              <div class="li lizj" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
-                <p class="commontitle">{{fymx_item27.chineseName}}</p>
-                <div class="li_price c">
-                  <span class="sy"  @click="opencouponshow(fymx_item,fymx_index)">
-                    <span>{{fymx_item27.detailName}}</span>
-                  </span>
-                  <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
-                </div>
-              </div>
               <!-- 发票 -->
               <div class="li" v-if="fymx_item24.type==4" v-for="(fymx_item24,fymx_index24) in fymx_item.content" :key="fymx_index24+'lifp'">
                 <p class="commontitle">{{fymx_item24.chineseName}}</p>
@@ -136,6 +127,15 @@
                 <p class="commontitle">{{fymx_item25.chineseName}}</p>
                 <span></span>
                 <div class="li_price"><input type="text" v-model="leavemsg[index]" placeholder="选填,请输入您对订单或商品的一些要求或事宜"></div>
+              </div>
+              <div class="li lizj" v-if="fymx_item27.type==7" v-for="(fymx_item27,fymx_index27) in fymx_item.content" :key="fymx_index27+'lizj'">
+                <p class="commontitle">{{fymx_item27.chineseName}}</p>
+                <div class="li_price c">
+                  <span class="sy"  @click="opencouponshow(fymx_item,fymx_index)">
+                    <span>{{fymx_item27.detailName}}</span>
+                  </span>
+                  <span class="gd"><img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
+                </div>
               </div>
               <div class="li lizj" v-if="fymx_item26.type==6" v-for="(fymx_item26,fymx_index26) in fymx_item.content" :key="fymx_index26+'lizj'">
                 <p class="commontitle">{{fymx_item26.chineseName}}</p>
