@@ -173,6 +173,8 @@ export default {
                 item.is_geted = true;
                 that.discountlist.splice(index,1,item);
                 that.getListInfo();
+              }else{
+                that.$toast(res.data.info);
               }
           });
         },
