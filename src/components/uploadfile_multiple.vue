@@ -3,7 +3,7 @@
     <!-- <div class="uploadfile">
     </div> -->
     <div class="files-wrap clearfix">
-        <template  v-for="(item,index) in uploaddatainit.upfileslist">
+        <template  v-for="(item,index) in defaultfileslist">
             <div class="pic-box" v-if="index+1<=uploaddatainit.maxnumber" :key="index">
                 <img :src="item" v-if="uploaddatainit.filetype=='1'||uploaddatainit.filetype=='1.all'">
                 <video v-if="uploaddatainit.filetype=='3'" :src="item" controls="controls">
@@ -18,9 +18,9 @@
                 </div>
             </div>
         </template>
-        <div class="picupbox imgtips" v-if="uploaddatainit.upfileslist.length<uploaddatainit.maxnumber">
+        <div class="picupbox imgtips" v-if="defaultfileslist.length<uploaddatainit.maxnumber">
             <img class="imgtips" src="data:image/png;base64,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">
-            <span class="imgtips">文件上传的最大数量为：{{uploaddatainit.maxnumber}}</span>
+            <span class="imgtips">上传最大数量：{{uploaddatainit.maxnumber}}</span>
             <input v-if="uploaddatainit.issingle" type="file" @change="upfiles" :accept="file_accept">
             <input v-if="!uploaddatainit.issingle" type="file" @change="upfiles" :accept="file_accept" multiple>
         </div>
@@ -38,13 +38,17 @@
             uploaddatainit:{
                 type:Object,
                 value:{
-                    upfileslist:[],//默认回显的文件列表
+                    // upfileslist:[],//默认回显的文件列表
                     maxnumber:1,//最大的文件数量
                     issingle:true,//默认单文件上传
                     w:0,//图片宽度
                     h:0,//图片高度
                     filetype:"1",//默认为常用图片类型
                 },
+            },
+            defaultfileslist:{
+                type:Array,
+                value:[]
             },
         },
         data () {
@@ -96,7 +100,7 @@
                 let zs = this;
                 let files_arr = e.target.files;
                 for (let index = 0; index < files_arr.length; index++) {
-                    if(index+zs.uploaddatainit.upfileslist.length < zs.uploaddatainit.maxnumber){
+                    if(index+zs.defaultfileslist.length < zs.uploaddatainit.maxnumber){
                         let file = files_arr[index];
                         let filefullname =files_arr[index].name;
                         let filename =filefullname.substring(0,filefullname.lastIndexOf('.'));
@@ -143,7 +147,7 @@
                                         // readyState == 4 为请求完成，status == 200为请求陈宫返回的状态
                                         xhr.onreadystatechange = function () {
                                             if (xhr.readyState == 4 && xhr.status == 200) {
-                                                that.uploaddatainit.upfileslist.push(urlRes + aliyunFileKey);
+                                                that.defaultfileslist.push(urlRes + aliyunFileKey);
                                                 e.target.value = "";//置空input的值
                                                 that.upfileslistchange();
                                             }
@@ -176,7 +180,7 @@
                                         // readyState == 4 为请求完成，status == 200为请求陈宫返回的状态
                                         xhr.onreadystatechange = function () {
                                             if (xhr.readyState == 4 && xhr.status == 200) {
-                                                that.uploaddatainit.upfileslist.push(urlRes + aliyunFileKey);
+                                                that.defaultfileslist.push(urlRes + aliyunFileKey);
                                                 e.target.value = "";//置空input的值
                                                 that.upfileslistchange();
                                             }
@@ -218,7 +222,7 @@
                             // readyState == 4 为请求完成，status == 200为请求陈宫返回的状态
                             xhr.onreadystatechange = function () {
                                 if (xhr.readyState == 4 && xhr.status == 200) {
-                                    that.uploaddatainit.upfileslist.push(urlRes + aliyunFileKey);
+                                    that.defaultfileslist.push(urlRes + aliyunFileKey);
                                     e.target.value = "";//置空input的值
                                     that.upfileslistchange();
                                 }
@@ -232,23 +236,23 @@
             },
             // 删除文件
             closepic(index) {
-                this.uploaddatainit.upfileslist.splice(index, 1);
+                this.defaultfileslist.splice(index, 1);
                 this.upfileslistchange();
             },
             upfileslistchange(){
                 let zs = this;
                 // console.log(zs.uploaddatainit.issingle);
-                // console.log(zs.uploaddatainit.upfileslist.length<=zs.uploaddatainit.maxnumber);
+                // console.log(zs.defaultfileslist.length<=zs.uploaddatainit.maxnumber);
                 
                 if(!zs.uploaddatainit.issingle){
-                    if(zs.uploaddatainit.upfileslist.length<=zs.uploaddatainit.maxnumber){
-                        zs.$emit('_upfileslistchange',zs.uploaddatainit.upfileslist.slice(0,zs.uploaddatainit.maxnumber));
+                    if(zs.defaultfileslist.length<=zs.uploaddatainit.maxnumber){
+                        zs.$emit('_upfileslistchange',zs.defaultfileslist.slice(0,zs.uploaddatainit.maxnumber));
                         // zs.$forceUpdate();
                     }else{
                         return;
                     }
                 }else{
-                    zs.$emit('_upfileslistchange',zs.uploaddatainit.upfileslist);
+                    zs.$emit('_upfileslistchange',zs.defaultfileslist);
                     // zs.$forceUpdate();
                 }
             }
@@ -323,7 +327,7 @@
 
         position:relative;
         &::after{
-            content:'点击上传';
+            content:'上传';
             color:#000;
             font-size:11px;
             position:absolute;
@@ -331,6 +335,8 @@
             // top:50%;
             top:35%;
             transform:translate(-50%,-50%);
+            width:70%;
+            text-align:center;
         }
         &.imgtips{
             box-sizing:border-box;
@@ -345,7 +351,8 @@
         span.imgtips{
             font-size:11px;
             display:block;
-            padding:0 7px;
+            // padding:0 7px;
+            padding:0px;
             text-align:center;
             margin-top:-8px;
         }

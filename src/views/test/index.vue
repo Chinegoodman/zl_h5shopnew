@@ -5,7 +5,7 @@
         <hr>
         query{{this.$route.query}} <br>
         params{{this.$route.params}} <br>
-        <uploadfile :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile>
+        <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile>
     </div>
 </template>
 
@@ -18,9 +18,9 @@
         data () {
             return {
                 uploaddatainit:{
-                    upfileslist:[],
+                    // upfileslist:[],
                     maxnumber:4,
-                    issingle:true,//除了图片之外的资源建议设置为true(单文件上传模式)
+                    issingle:false,//除了图片之外的资源建议设置为true(单文件上传模式)
                     w:'',
                     h:'',
                     // filetype
@@ -32,7 +32,8 @@
                     // '5':办公文件 MS 及 wps
                     // '6':html css js相关
                     filetype:"1",
-                }
+                },
+                defaultfileslist:[],
             };
         },
         computed: {
@@ -59,7 +60,6 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 
 <style lang='less' scoped>
 //@import url()
-
 </style>
 
 <style lang='less'>
