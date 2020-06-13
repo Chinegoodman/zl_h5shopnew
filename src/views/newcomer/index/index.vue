@@ -3,7 +3,7 @@
   <div class="newcomerwrap" id="newcomerwrap">
     <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="抓周"></div>
     <div class="banner">
-      <img src="@/assets/imgs/newcomer/dbbj.png" alt="">
+      <img src="http://playback.17biyi.com/06d00317a38825085d542fcdc4643e50" alt="">
       <span @click="gotonewcomerrole" class="current-role"><img src="@/assets/imgs/newcomer/xrgz.png" alt=""></span>
     </div>
     <div class="xp_big_list">  

@@ -456,7 +456,10 @@
                         font-size: 0.25rem;
                         height: 0.82rem;
                         line-height: 0.82rem;
-
+                        max-width: 5rem;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
                         &.linethrough {
                             text-decoration: line-through;
                             color: rgba(153, 153, 153, 1);
@@ -491,6 +494,10 @@
                             padding-right: 0.6rem;
                             color: #ccc;
                             font-size: 0.12rem;
+                            mark{
+                                background: none;
+                                color:rgba(255, 91, 79, 1);
+                            }
                         }
                     }
 
