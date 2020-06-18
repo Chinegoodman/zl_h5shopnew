@@ -64,6 +64,21 @@ export default [{
             }]
         }
     },
+    // 直播 直播个人中心页
+    {
+        path: 'livingpersonalpage',
+        name: 'livingpersonalpage',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/personalpage/index.vue'], resolve),
+        meta: {
+            name: 'livingpersonalpage',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/livingpersonalpage',
+            }]
+        }
+    },
     {
         path: 'livingsearch',
         name: 'livingsearch',

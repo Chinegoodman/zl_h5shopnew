@@ -758,8 +758,8 @@ export default {
     },
     // 头部导航点击事件
     titleclick(tabindex,status) {
-      console.log('tabindex');
-      console.log(tabindex);
+      // console.log('tabindex');
+      // console.log(tabindex);
       let that = this;
       this.removesession();
       if(status){
@@ -798,7 +798,6 @@ export default {
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
           }else{
-            console.log(1559);
             that.homelisttj();
           }
           break
@@ -836,9 +835,9 @@ export default {
             if(res.data.code == 1){
               if(res.data.data.length > 0){
                 that.xinpintitletype = res.data.data;
-                console.log(that.xinpintitletype);
+                // console.log(that.xinpintitletype);
                 that.obj_option_xp.categoryId = that.xinpintitletype[0].id;
-                console.log(1515151);
+        
                 that.homelistxp(); //新品
               }else{
                 this.$toast("新品分类暂无数据");
@@ -913,7 +912,6 @@ export default {
             } 
 
             that.nextpage = res.data.data.nextpage;
-            console.log(that.nextpage);
             if(that.nextpage != "") {
               that.listfinished = false;
               that.listloading = false;

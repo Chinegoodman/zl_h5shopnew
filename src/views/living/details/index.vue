@@ -12,7 +12,7 @@
         <div class="content-top">
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
-              <div class="dznamepic">
+              <div class="dznamepic" @click.stop="gotolivingpersonal">
                 <img v-if="livinglidata.face_url" :src="livinglidata.face_url" alt="抓周" />
               </div>
               <div class="dzguankan">
@@ -24,18 +24,18 @@
                   <span class="_txtov1" v-if="livinglidata.realcount!=''">{{livinglidata.realcount}}人在观看</span>
                 </div>
               </div>
-              <div class="dznamegz" v-if="livinglidata.is_attention==3 || livinglidata.is_attention== null" @click.stop="follow(false)">
+              <div class="dznamegz" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">
                 <img src="./../../../assets/imgs/living/details/attention.png">
               </div>
-              <div class="dznamegz" v-if="livinglidata.is_attention==1 || livinglidata.is_attention== 2" @click.stop="follow(true)">已关注</div>
+              <div class="dznamegz" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</div>
             </div>
-            <div class="complaints">
+            <div class="complaints" @click.stop="openComplaintsShell">
               <img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" />
             </div>
             <div class="dznameid" @click.stop="returnfn">
               <span>ID:{{livinglidata.id}}</span>
             </div>
-            <div class="close" @click.stop="$router.go(-1);">
+            <div class="close" @click.stop="returnprevpage">
               <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
             </div>
           </div>
@@ -86,7 +86,7 @@
               <div class="msgboxwrap">
                 <div class="msgbox clearfix">
                     <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png" alt /> -->
-                    <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt />
+                    <!-- <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt /> -->
                     <p class="name">系统公告：</p>
                     <p>抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
                       黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
@@ -140,18 +140,18 @@
         <!-- 主播上架的商品 -->
         <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
           <div class="goodsbox" @click.stop="returnfn">
-            <p>直播界面</p>
+            <p><span class="ic"></span>全部商品<span v-if="goodsList.length">({{goodsList.length}})</span></p>
             <ul>
               <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
                 <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/>
                 <div class="details">
                   <p class="name _txtov1">{{item.goods_title}}</p>
-                  <p class="guige _txtov1">{{item.sku_id}}</p>
+                  <p class="guige _txtov1">{{item.price.toFixed(2)}}</p>
                   <div class="shop clearfix">
-                    <img v-if="item.brand_logo" :src="item.brand_logo" alt="抓周">
+                    <img v-if="item.brand_logo" src="@/assets/imgs/icons/zbddp.png" alt="抓周">
                     <p>{{item.brand_name}}</p>
                   </div>
-                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">加入购物车</div>
+                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)"></div>
                   <!-- <div class="btn gray">已添加</div> -->
                 </div>
               </li>
@@ -159,6 +159,7 @@
                 主播暂未添加商品
               </li>
             </ul>
+            <span class="closeshell" @click.stop="goodschoosestatus=false"></span>
           </div>
         </div>
 
@@ -259,13 +260,21 @@
         </div>
       </div>
     </div>
+    <!-- 投诉建议弹层start -->
+    <div class="complaints living-complaints" v-if="complaintsShellShow">
+        <div class="complaints-cover" @click="closeComplaintsShellShow" ></div>
+        <div class="complaints-content">
+            <complaints :_livingToComplaintsFlag="livingToComplaintsFlag" @_closeComplaintsShellShow="closeComplaintsShellShow"></complaints>
+        </div>
+    </div>
+    <!-- 投诉建议弹层end -->
   </div>
 </template>
 
 <script>
   import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
-  
   export default livingdetails;
+
 </script>
 <style lang='less' scoped>
 @import url("./css/index.less");

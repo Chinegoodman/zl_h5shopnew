@@ -12,12 +12,12 @@
       <van-tabs v-model="isActive" >
         <van-tab :title="item.name"  :key="index" v-for="(item,index) in tab_list_arr" >
           <div class="tab-title" slot="title"  @click="changeTab(item.tab_id)" >{{item.name}}</div>
-          <van-list class="video-content" v-model="listloading" :finished="listfinished" :finished-text="finished_text" :error.sync="vanerror" error-text="请求失败，点击重新加载"
+          <van-list class="video-content"  v-model="listloading" :finished="listfinished" :finished-text="finished_text" :error.sync="vanerror" error-text="请求失败，点击重新加载"
             :offset="10"
             @load="getListInfo"
           >
             <!-- 收藏或浏览有内容 -->
-            <div class="browse_list clearfix">
+            <div class="van-clearfix browse_list clearfix">
                  <ul v-if="mybrowselist.length>0">
                     <li v-for="(item,index) in mybrowselist" :key="index" @click="gotodetails(item)" >
                       <span class="m">
@@ -96,7 +96,7 @@ export default {
           ],
           mybrowselist:[],//后台获取收藏 浏览列表
           listloading: true, //默认是加载中。。。
-          listfinished: false,
+          listfinished: true,
           vanerror: false,
           nodatashow : false, 
           pagetypedata:"mybrowse",
