@@ -729,8 +729,8 @@
             // 视频播放
             videoplay(){
                 let that = this;
-                this.swiper.slideTo(0, 300, false);
                 that.videodomstatus = true;
+                that.$refs.swiperdom.swipeTo(0);
                 let video = that.$refs.videodom;
                 video.play();
             },

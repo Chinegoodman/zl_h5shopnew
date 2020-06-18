@@ -209,7 +209,7 @@
           <li>
             开具类型
             <div class="rt">
-              <van-radio-group v-model="radioperson" direction="horizontal" @change="kaijutype" >
+              <van-radio-group v-model="kaijutype" direction="horizontal" @change="kaijutypeclick" >
                 <van-radio name="1">个人</van-radio>
                 <van-radio name="2">单位</van-radio>
               </van-radio-group>
@@ -218,8 +218,8 @@
           <li>
             发票类型
             <div class="rt">
-              <van-radio-group v-model="radiotype" direction="horizontal" @change="invoicetype" >
-                <van-radio name="2" v-if="istzj==0">纸质发票</van-radio>
+              <van-radio-group v-model="fapiaotype" direction="horizontal" @change="invoicetypeclick" >
+                <van-radio name="2" v-if="istzj!=1">纸质发票</van-radio>
                 <van-radio name="1" v-if="istzj==1">电子发票</van-radio>
               </van-radio-group>
             </div>
@@ -231,7 +231,7 @@
               <!-- <img src="./../../../assets/imgs/icons/dd-gengd@2x.png" alt /> -->
             </div>
           </li>
-          <li v-if="radioperson==2">
+          <li v-if="kaijutype==2">
             纳税人识别号
             <div class="rt">
               <input class="taitoumsg" v-model="taxmsg" @blur="taxmsgblur"  type="text" placeholder="请输入纳税人识别号">
@@ -401,14 +401,19 @@ export default {
       coupon_clicked_show : false, //优惠券弹层
       invoicecontentshow : false, //发票页显示
       invoicevalue: '不开发票',
+      invoicenewmsg : {
+        id : '',
+        type : '',
+        invoicecontent :''
+      }, //发票信息回显储存
       bilTypePost : 0,  //最后下单时传的发票类型
       billHeaderIdPost : '', //最后下单时传的发票ID
       istzj : '', //是否为投资金商品
-      radioperson : '1', //开具类型
-      radiotype : '2', //发票类型 1为电子 2为纸质
-      taitoumsg : '', //发票抬头
+      fapiaotype : '1', //发票类型 1为电子 2为纸质   与后端一致  
+      kaijutype : '1', //开具类型  1为个人 2为企业  与后端一致
+      taitoumsg : '个人', //发票抬头
       taxmsg : '', //纳税人信息
-      checked : false, //是否默认
+      checked : true, //是否默认
       personipone : '', //个人电话
       personmail : '',  //个人邮箱
       invoiceshellshow : false, //发票弹层
@@ -444,7 +449,10 @@ export default {
           }
         });
       }else{
-        this.$router.go(-1);
+        this.$router.push({
+          name: "shopcart"
+        });
+        // this.$router.go(-1);
       }
     },
     // 阻止冒泡
@@ -1062,15 +1070,14 @@ export default {
     },
     invoicenewmsgmethod(){
       let that = this;
-      //发票信息回显
-      if(getsessionStorage('invoicenewmsg')){
-        let invoicenewmsg = getsessionStorage('invoicenewmsg');
+      //发票默认信息
+      if(that.invoicenewmsg.id != ''){
         that.fymx_listdata.map(itemshops => {
           itemshops.content.map(itemscontent => {
             if(itemscontent.type==4){
-              itemscontent.invoicevalue = invoicenewmsg.invoicecontent;
-              that.billHeaderIdPost = invoicenewmsg.id;
-              that.bilTypePost = invoicenewmsg.type;
+              itemscontent.invoicevalue = that.invoicenewmsg.invoicecontent;
+              that.billHeaderIdPost = that.invoicenewmsg.id;
+              that.bilTypePost = that.invoicenewmsg.type;
             }
           })
         })
@@ -1093,7 +1100,8 @@ export default {
         return;
       }
       if (!that.freightfeestatus) {
-        that.$toast("请编辑并选择顺丰支持的配送地址再下单");
+        // that.$toast("请编辑并选择顺丰支持的配送地址再下单");
+        that.$toast("投资金定单暂不支持支付");
         return;
       }
       localStorage.removeItem("confirmpageorder");
@@ -1236,9 +1244,16 @@ export default {
     //以下方法为发票页相关
     //跳转发票页
     gotoinvoice(item){
+      console.log('item');
+      console.log(item);
       let that = this;
       that.invoicecontentshow = true;
-      //istzj : item.istZj
+      that.istzj = item.istZj;
+      if(that.istzj == 1){
+        that.fapiaotype = "1"; 
+      }else{
+        that.fapiaotype = "2";//纸质
+      }
       // this.$router.push({
       //   name: "invoice",
       //   query : {
@@ -1251,18 +1266,18 @@ export default {
       this.invoicecontentshow = false;
     },
     //开具类型
-    kaijutype(name){
+    kaijutypeclick(name){
       if(name==1){
         this.taitoumsg = '个人';
         this.taxmsg = '';
       }else{
         this.taitoumsg = '';
       }
-      this.radioperson = name;
+      this.kaijutype = name;
     },
     //发票类型
-    invoicetype(name){
-      this.radiotype = name;
+    invoicetypeclick(name){
+      this.fapiaotype = name;
     },
     //发票是否默认
     invoicecheckdefault(name){
@@ -1300,39 +1315,46 @@ export default {
       this.invoiceshellshow = false;
     },
     // 获取默认发票内容
-    getdefaultinvoice(){
-      let that = this;
-      that.$toast.loading({
-          message: "加载中...",
-          duration: 200000
-        });  
-      that.api.shopcart
-      .takedefaultinvoice({
-        "userId" : that.$store.state.user.userid
-      })
-      .then(res => {
-        that.$toast.clear();
-        if(res.data.code == 1){
-          that.invoiceOrder = res.data.data.invoiceOrder;
-          if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
-            that.radiotype = "2";
-          }else{
-            that.radiotype = "1";
-          }
-          that.taitoumsg = res.data.data.invoiceTitle;
-          that.taxmsg = res.data.data.taxCode;
-          if(!that.taitoumsg && !that.taxmsg){
-            that.submitbtnstate = false;
-          }
-          if(res.data.data.firstChoice == 1){
-            that.checked = true;
-          }
-        }
-        else{
-          that.$toast(res.data.info);
-        }
-      })
-    },
+    // getdefaultinvoice(){
+    //   let that = this;
+    //   that.$toast.loading({
+    //       message: "加载中...",
+    //       duration: 200000
+    //     });  
+    //   that.api.shopcart
+    //   .takedefaultinvoice({
+    //     "userId" : that.$store.state.user.userid
+    //   })
+    //   .then(res => {
+    //     that.$toast.clear();
+    //     if(res.data.code == 1){ 
+    //       that.fapiaotype = res.data.data.invoiceOrder.toString(); 
+    //       alert(that.istzj);
+    //       if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
+    //         that.kaijutype = "2";
+    //       }else{
+    //         that.kaijutype = "1";
+    //       }
+    //       that.taitoumsg = res.data.data.invoiceTitle;
+    //       that.taxmsg = res.data.data.taxCode;
+    //       if(!that.taitoumsg && !that.taxmsg){
+    //         that.submitbtnstate = false;
+    //       }
+    //       if(res.data.data.firstChoice == 1){
+    //         that.checked = true;
+    //       }
+    //       that.invoicenewmsg  = {
+    //         id : res.data.data.id,
+    //         type : that.fapiaotype,
+    //         invoicecontent : res.data.data.invoiceContent
+    //       }
+    //       that.invoicenewmsgmethod();
+    //     }
+    //     else{
+    //       that.$toast(res.data.info);
+    //     }
+    //   })
+    // },
     //确认新增发票
     submitaddinvoice(){
       let that = this;
@@ -1340,10 +1362,22 @@ export default {
         that.$toast('发票抬头不能为空');
         return;
       }
-      if(that.radioperson == 2 && (that.taxmsg == undefined || that.taxmsg == '')){
+      if(that.kaijutype == 2 && (that.taxmsg == undefined || that.taxmsg == '')){
         that.$toast('纳税人识别号不能为空');
         return;
       }
+
+      if(that.fapiaotype==1){
+        if(that.personipone == undefined || that.personipone == ''){
+           that.$toast('手机号不能为空');
+           return;
+        }
+        if(that.personmail == undefined || that.personmail == ''){
+           that.$toast('收票人邮箱不能为空');
+           return;
+        }
+      }
+
       if(that.checked == true){
         that.checked = 1;
       }else{
@@ -1356,8 +1390,8 @@ export default {
       that.api.shopcart
       .takeaddnewinvoice({
         "userId" : that.userID,
-        "invoiceType" : that.radiotype,
-        "invoiceOrder" : that.radioperson,
+        "invoiceType" : that.kaijutype,
+        "invoiceOrder" : that.fapiaotype, 
         "invoiceTitle" : that.taitoumsg,
         "taxCode" : that.taxmsg,
         "firstChoice" : that.checked,
@@ -1367,12 +1401,11 @@ export default {
       .then(res => {
         that.$toast.clear();
         if(res.data.code == 1){
-          let invoicenewmsg = {
+          that.invoicenewmsg  = {
             id : res.data.data.id,
-            type : res.data.data.invoiceType,
+            type : res.data.data.invoiceType.toString(),  //新增发票回显是这个字段 与 默认接口不一致
             invoicecontent : res.data.data.invoiceContent
           }
-          setsessionStorage('invoicenewmsg',invoicenewmsg);
           that.invoicenewmsgmethod();
           that.shopback();
         }
@@ -1392,7 +1425,7 @@ export default {
     that.invoicenewmsgmethod();
 
     //后端获取默认发票信息
-    that.getdefaultinvoice();
+    // that.getdefaultinvoice();
     // if (that.checkaddressdata()) {
     //   //有配送地址 先调用配送地址 然后获取计价相关的
     //   this.computedFreight();

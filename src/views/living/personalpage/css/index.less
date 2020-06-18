@@ -605,154 +605,18 @@
 }
 
 /**5.13ljs**/
-.w_wrap {
+.living-personal-wrap {
     max-width: 7.5rem;
-}
-
-.goods_list_box {
-    max-width: 7.5rem;
-    background: rgba(255, 255, 255, 1);
-    position: relative;
-    padding-top: .35rem;
-}
-
-.goodslist {
-    width: 7.1rem;
-    padding: .2rem;
-    /* display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; */
-    background: rgba(247, 247, 247, 1);
-    overflow: hidden;
-    cursor: pointer;
-    border-radius: .3rem .3rem 0 0;
-}
-
-.goodslist h2 {
-    font-size: .34rem;
-    font-family: PingFang SC;
-    font-weight: bold;
-    color: rgba(31, 31, 31, 1);
-    padding-bottom: .15rem;
-    position: relative;
-}
-
-.goodslist h2::after {
-    // content: url(beep.wav);
-    width: .45rem;
-    height: .05rem;
-    background: rgba(255, 189, 4, 1);
-    border-radius: 3px;
-    position: absolute;
-    bottom: .05rem;
-    left: .1rem;
-}
-
-.goodslist_xp{
-    margin-top: .3rem;
-}
-
-.goodsli {
-    width: 3.45rem;
-    height: 5.16rem;
-    overflow: hidden;
-    margin-bottom: 0.25rem;
-    border-radius: .12rem;
-    background: rgba(255, 255, 255, 1);
-    background-size: 100% 100%;
-    position: relative;
-    float: left;
-    cursor: pointer;
-}
-
-.goodsli:nth-of-type(even) {
-    margin-left: .2rem;
-}
-
-.goodsli .im {
-    width: 3.45rem;
-    height: 3.44rem;
-    border-radius: .12rem .12rem 0 0;
-    display: block;
-    overflow: hidden;
-}
-
-.goodsli .im img {
-    width: 100%;
-    height: 100%;
-    border-radius: .12rem .12rem 0 0;
-}
-
-.goodsli .tit {
-    display: block;
-    font-size: .26rem;
-    font-family: PingFang SC;
-    font-weight: bold;
-    color: rgba(31, 31, 31, 1);
-    margin-top: .22rem;
-    padding-left: .2rem;
-    height: .3rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.goodsli .price,
-.price_btm {
-    font-size: .3rem;
-    font-family: PingFang SC;
-    font-weight: 500;
-    color: rgba(255, 91, 79, 1);
-    margin-top: .2rem;
-    padding-left: .2rem;
-}
-
-.price_btm {
-    color: rgba(117, 117, 117, 1);
-    font-size: .2rem;
-}
-
-.goodsli .gd_btm {
-    margin-top: .36rem;
-}
-
-.goodsli .gd_btm span {
-    display: inline-block;
-}
-
-.goodsli .gd_btm .num {
-    font-size: .2rem;
-    font-family: PingFang SC;
-    font-weight: 400;
-    color: rgba(117, 117, 117, 1);
-    line-height: .4rem;
-    margin-left: .15rem;
-}
-
-.goodsli .cang,
-.goodsli .canged {
-    width: .6rem;
-    height: .6rem;
-    background: url("./../../../../assets/imgs/shop/cang.png") no-repeat 0 0;
-    background-size: .6rem .6rem;
-    border-radius: 50%;
-    position: absolute;
-    right: .13rem;
-    bottom: .13rem;
-}
-.goodsli .canged{
-    background: url("./../../../../assets/imgs/shop/canged.png") no-repeat 0 0;
-    background-size: .6rem .6rem;
 }
 
 .shopkeepermass-top {
     position: relative;
-    height: 4.98rem;
+    min-height: 4.98rem;
 }
 
 .shopkeepermass-top .shopbanner {
     width: 100%;
-    height: 3.51rem;
+    height: 2.78rem;
     overflow: hidden;
     // background: url("./img/dafult_img.png") no-repeat 0 0;
     background-size: 100% 100%;
@@ -766,9 +630,8 @@
 }
 
 .per_info {
-    height: 1.47rem;
+    min-height: 1.47rem;
     position: relative;
-    cursor: pointer;
     background: #fff;
 }
 
@@ -793,34 +656,68 @@
 }
 
 .per_info .info {
-    height: 1.47rem;
-    padding: .0 .2rem 0 1.96rem;
+    min-height: 1.47rem;
+    padding: 1.35rem .2rem 0 .25rem;
     background: rgba(255, 255, 255, 1);
     position: relative;
-    cursor: pointer;
+    font-family:PingFang SC;
+    font-weight:500;
+    .instruc{
+        padding: .25rem 0 0;
+        font-size: .24rem;
+        
+        color:rgba(117,117,117,1);
+        line-height: .38rem;
+    }
+    .pernanl-data{
+        padding:.1rem 0 .25rem;
+        .fs{
+            display: inline-block;
+            color:rgba(117,117,117,1);
+            font-size: .2rem;
+            .t{
+                display: inline-block;
+                font-size: .26rem;
+                font-weight:bold;
+                color:rgba(31,31,31,1);
+                margin-right: .08rem;
+            }
+        }   
+        .hz{
+            margin-left: .4rem;
+        }
+    }
+
+    .info-tit{
+        overflow: hidden;
+    }
 }
 
+
 .per_info .info .nicknames {
+    float: left;
     font-size: .34rem;
     font-family: PingFang SC;
     font-weight: bold;
     color: rgba(31, 31, 31, 1);
-    display: block;
-    padding-top: .16rem;
+    display: inline-block;
+    
 }
 
 .per_info .info .rz {
     display: inline-block;
+    float: left;
     padding: .03rem .08rem;
     height: .3rem;
     line-height: .3rem;
     background: rgba(255, 189, 4, 1);
     border-radius: .15rem;
-    margin-top: .21rem;
     font-size: .2rem;
     font-family: PingFang SC;
     font-weight: 400;
     color: rgba(31, 31, 31, 1);
+    margin-left: .1rem;
+    margin-top: .08rem;
 }
 
 .per_info .info .rz .ic {
@@ -851,6 +748,7 @@
     top: .55rem;
     cursor: pointer;
 }
+.per_info .info .qxgzbtn{background:rgba(154,154,154,1);}
 
 .per_info .info .hxgzbtn span img {
     width: .2rem;
@@ -1017,26 +915,7 @@
     height: 100%;
 }
 
-.loading_tips {
-    min-width: 3rem;
-    padding: .1rem .2rem;
-    height: .7rem;
-    line-height: .7rem;
-    color: rgba(255, 189, 4, 1);
-    font-size: .32rem;
-    font-family: PingFang SC;
-    font-weight: 500;
-    text-align: center;
-    background: rgba(0, 0, 0, .75);
-    position: fixed;
-    left: 50%;
-    top: 30%;
-    margin-left: -1.5rem;
-    z-index: 9999;
-    border-radius: .15rem;
-}
-
-.hd_top {
+.hd_top { 
     height: .4rem;
     position: absolute;
     left: 0;
@@ -1134,9 +1013,317 @@
     height: 100%;
 }
 
-.goodslist h2::after {
-    outline: none;
-    border: none;
-    display: block;
-    content: ' '
+//*直播间个人中心列表新样式*//
+.index_list_recommend{
+    padding: .5rem .2rem 0;
+
+}
+.list {
+    .goodslist {
+        min-height: 5rem;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .goodsli {
+            width: 3.45rem;
+            overflow: hidden;
+            margin-top: 0.25rem;
+            border-radius: .12rem;
+            background:rgba(255,255,255,1);
+            position: relative;
+            .im{
+                width: 3.45rem;
+                height: 5.16rem;
+                border-radius: .12rem;
+                &>img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: .12rem;
+                }
+            }
+            .goodsli_title {
+                position: absolute;
+                left: .2rem;
+                top:.2rem;
+                .img_w{
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    display: block;
+                    height: 0.6rem;
+                    width: 0.6rem;
+                    border-radius:50%;
+                    img {
+                        width: 100%;
+                        height: 100%; 
+                        border-radius:50%;
+                    }
+                }
+                
+                h2 {
+                    display: block;
+                    width: 3.05rem;
+                    height: 0.6rem;
+                    line-height:  0.6rem;
+                    font-size: 0.28rem;
+                    color: rgba(21, 21, 21, 1);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    &.indent {
+                        text-indent: 0.7rem;
+                    }
+                }
+            }
+
+            .tit{
+                display: block;
+                font-size: .26rem;
+                font-family:PingFang SC;
+                font-weight:bold;
+                color:rgba(31,31,31,1);
+                margin-top: .22rem;
+                position: absolute;
+                left: .2rem;
+                bottom: .8rem;
+            }
+
+            .gd_btm{
+                position: absolute;
+                left: .2rem;
+                bottom: .2rem;
+                span{
+                    display: inline-block;
+                }
+                .huifang,
+                .zb{
+                    width: .96rem;
+                    height: .3rem;
+                    vertical-align: middle;
+                }
+                .zb{
+                    background: url("./../../../../assets/imgs/shop/zhibo.png") no-repeat 0 0;
+                    background-size: .96rem .3rem;
+                }
+                .huifang{
+                    background: url("./../../../../assets/imgs/shop/huifang.png") no-repeat 0 0;
+                    background-size: .96rem .3rem;
+                }
+                .num{
+                    font-size: .2rem;
+                    font-family:PingFang SC;
+                    font-weight:400;
+                    color:rgba(117,117,117,1);
+                    line-height: .4rem;
+                     margin-left: .15rem;
+                }
+            }
+
+            .zan{
+                width: .6rem;
+                height: .6rem;
+                background: url("./../../../../assets/imgs/shop/zan.png") no-repeat 0 0;
+                background-size: .6rem .6rem;
+                position: absolute;
+                right: .13rem;
+                bottom: .13rem;
+            }
+
+            .goodsli_pricebox {
+                // margin-top: 0.06rem;
+
+                &>* {
+                    float: left;
+                }
+
+                p {
+                    font-size: 0.28rem;
+                    color: rgba(219, 49, 42, 1);
+                    // line-height: 0.61rem;
+                    line-height: 0.51rem;
+                    font-weight: bold;
+                    height: 0.51rem;
+                    margin-right: 0.14rem;
+                }
+
+                .bytips {
+                    background-color: rgba(254, 216, 180, 1);
+                    color: rgba(226, 99, 33, 1);
+                    margin-top: 0.085rem;
+                    margin-right: 0.13rem;
+                    border-radius: 0.06rem;
+                    font-size: 0.22rem;
+                }
+
+                .zstips {
+                    border: 1px solid rgba(147, 90, 144, 1);
+                    text-align: center;
+                    line-height: 0.34rem;
+                    color: rgba(147, 90, 144, 1);
+                    border-radius: 50%;
+                    width: 0.34rem;
+                    height: 0.34rem;
+                    margin-top: 0.085rem;
+                    font-size: 0.12rem;
+                }
+            }
+
+            .goodsli_numberbox {
+                display: flex;
+                justify-content: space-between;
+                width: 2.8rem;
+                min-width: 140px;
+                flex-wrap: nowrap;
+                padding: 0.1rem 0rem;
+
+                span {
+                    font-size: 0.22rem;
+                    color: rgba(145, 145, 145, 1);
+                    line-height: 0.29rem;
+                    height: 0.29rem;
+                }
+            }
+
+            .goodsli_linksbox {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                height: 0.3rem;
+                box-sizing: border-box;
+                padding-right: 0.08rem;
+
+                .shop {
+                    font-size: 0.22rem;
+                    color: rgba(194, 107, 68, 1);
+                    line-height: 0.3rem;
+                    cursor: pointer;
+                }
+
+                .details {
+                    font-size: 0.22rem;
+                    color: rgba(147, 147, 147, 1);
+                    line-height: 0.3rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+.big_list{
+    .goodslist {
+        padding: 0 .2rem 1.58rem;
+        .goodsli {
+            width: 7.1rem;
+            height: 4rem;
+            overflow: hidden;
+            .im{
+                width: 7.1rem;
+                height: 4rem;
+                &>img {
+                    width: 100%;
+                }
+            }
+            
+            .tit{
+                bottom: 0.81rem;
+            }
+
+            .gd_btm{
+                bottom: 0.21rem;
+                margin-top: .36rem;
+            }
+        }
+
+        .goodsli-ifens{
+            width: 7.5rem;
+            min-height: 1.58rem;
+            height: 1.58rem;
+            position: relative;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(235,235,233,1);
+            .im{
+                display: inline-block;
+                width: .84rem;
+                height: .84rem;
+                border-radius: 50%;
+                position: absolute;
+                left: .3rem;
+                top: .2rem;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .rt{
+                padding: .25rem 0 0 1.31rem;
+                .titltes{
+                    font-size: .32rem;
+                    color:rgba(21,21,21,1);
+                }
+                .hd{
+                    display: inline-block;
+                    width: .26rem;
+                    height: .26rem;
+                    margin-left: .11rem;
+                    // vertical-align: middle;
+                    margin-top: -0.04rem;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .data-detail{
+                    margin-top: .11rem;
+                    .fs{
+                        font-size: .2rem;
+                        color:rgba(118,118,118,1);
+                        margin-right: .25rem;
+                        .t{
+                            font-size: .24rem;
+                            color:rgba(32,32,32,1);
+                            margin-right: .05rem;
+                        }
+                    }
+                }
+                p{
+                    max-width: 2.97rem;
+                    font-size: .24rem;
+                    font-family:PingFang SC;
+                    font-weight:400;
+                    color:rgba(118,118,118,1);
+                    line-height: .38rem;
+                    margin-top: .08rem;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+            .attention,
+            .attentioned{
+                width: 1.6rem;
+                height: .6rem;
+                line-height: .6rem;
+                text-align: center;
+                background:rgba(255,190,4,1);
+                border-radius: .3rem;
+                font-size: .24rem;
+                color:rgba(32,32,32,1);
+                position: absolute;
+                right: .2rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .attentioned{
+                font-weight:500;
+                color:rgba(118,118,118,1);
+                background:rgba(235,235,233,1);
+            }
+        }
+    }
+    .goodslist-ifens{
+        padding: .25rem 0;
+        width: 7.5rem;
+    }
 }
