@@ -441,6 +441,9 @@ export default {
       let that = this;
       console.log(that.list.length);
       console.log(that.list[index].items.length);
+      // if(that.list[index].items.length==1 && (that.list[index].items[0].sp1_status == 2 || that.list[index].items[0].sp1_status == 3)){
+      //   console.log('该店铺只有一个商品且已售完');
+      // }
 
       if(currentstatus == true){
         that.allchecked = false;
