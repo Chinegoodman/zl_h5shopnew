@@ -26,7 +26,7 @@
                       <span class="t">{{item.goods_title}}</span>
                       <span class="price"><span>￥</span>{{item.price}}</span>
                       <span class="tx">{{item.brand_name}}</span>
-                      <span :class="[item.isCollection?'shoucanged':'shoucang']"  @click="mycollect(index)"></span>
+                      <span :class="[item.isCollection?'shoucanged':'shoucang']"  @click.stop="mycollect(index)"></span>
                     </li>
                  </ul>    
             </div>

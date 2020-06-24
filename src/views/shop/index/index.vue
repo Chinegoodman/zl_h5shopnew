@@ -241,8 +241,8 @@
               </div>
               <span class="tit">{{item.goods_title}}</span>
               <div class="price"><span>￥</span>{{item.price}}</div>
-              <div class="canged" v-if="item.isCollection==1"></div>
-              <div class="cang" v-if="item.isCollection==0"></div>
+              <div class="canged" v-if="item.isCollection==1" @click.stop="mycollect(item)"></div>
+              <div class="cang" v-if="item.isCollection==0" @click.stop="mycollect(item)"></div>
             </div>  
           </van-list>
           <div class="changebigsize" v-if="change_big_small_flag_xp===1" @click="changeimgsize_xp()"></div>
@@ -305,8 +305,8 @@
               <span class="tit">{{item.goods_title}}</span>
               <div class="price"><span>￥</span>{{item.price}}</div>
               <div class="price_btm">{{item.brand_name}}</div>
-              <div class="canged" v-if="item.isCollection==1"></div>
-              <div class="cang" v-if="item.isCollection==0"></div>
+              <div class="canged" v-if="item.isCollection==1" @click.stop="mycollect(item)"></div>
+              <div class="cang" v-if="item.isCollection==0" @click.stop="mycollect(item)"></div>
             </div>  
             <div class="show-flag-living" v-else>
               <div class="im">
@@ -512,7 +512,8 @@ export default {
       default_img_guildarea : require('../../../assets/logo-gray.png'),
       default_img_banner : require('../../../assets/imgs/shop/banner-default.png'),
       hasmorepage : 1, //是第一页还是多页后无数据区分  1为初始无数据 2为下拉之后无更多
-      newcomershellshowstate : false
+      newcomershellshowstate : false,
+      shoucang_type : '' //收藏与取消收藏请求类型
     };
   },
   computed: {},
@@ -1206,7 +1207,51 @@ export default {
         }else{
           that.change_big_small_flag_tzj = 1;
         }
-    }
+    },
+    //收藏与取消收藏
+    mycollect(item){
+      let that = this;
+      if(item.isCollection == 1){
+        that.shoucang_type = 2;
+        //关注过 取消关注
+        that.api.personalcenter.shopsshoucang({
+          "type" : that.shoucang_type,
+          "skuId" : item.sku_id,
+          "uid" : that.$store.state.user.userid
+        }).then(res => {
+          //增加关注
+          if(!res.data.code)return;
+          if(res.data.code == 1){
+            item.isCollection = 0;
+            that.homelistxp(); //刷新列表
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+              throw "取消关注失败";
+          }
+        })
+      }else if(item.isCollection == 0){
+        //未关注 增加关注
+        that.shoucang_type = 1;
+        that.api.personalcenter.shopsshoucang({
+          "type" : that.shoucang_type,
+          "skuId" : item.sku_id,
+          "uid" : that.$store.state.user.userid
+        }).then(res => {
+          //增加关注
+          if(!res.data.code)return;
+          if(res.data.code == 1){
+            item.isCollection = 1;
+            that.homelistxp(); //刷新列表
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+              throw "关注失败";
+          }
+          
+        })
+      }
+    }  
   },
   beforeCreate() {
     // window.sessionStorage.removeItem('homelisttjstorerange');

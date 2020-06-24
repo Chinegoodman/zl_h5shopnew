@@ -90,6 +90,7 @@
             float: left;
             display: inline-block;
             margin: 0 .25rem;
+            font-size: .28rem;
         }
     }
     .bottom_right{
@@ -165,6 +166,11 @@
                 .checkall{
                     display: inline-block;
                     float: left;
+                    img{
+                        display: inline-block;
+                        width:.35rem;
+                        height: .35rem;
+                    }
                 }
                 .tit{
                     max-width: 5rem;
@@ -178,6 +184,7 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
+                    cursor: pointer;
                 }
                 .gd{
                     width: .13rem;
@@ -186,6 +193,7 @@
                     img{
                         width: 100%;
                     }
+                    cursor: pointer;
                 }
             }
             .car_list_items{
@@ -277,10 +285,13 @@
                     }
                     .car_list_price{
                         margin-top: 0.3rem;
-                        font-size: 0.24rem;
+                        font-size: 0.32rem;
                         font-family:PingFang SC;
                         font-weight:500;
                         color:rgba(255,91,79,1);
+                        span{
+                            font-size: .24rem;
+                        }
                     }
                     .car_num{
                         width: 1.62rem;

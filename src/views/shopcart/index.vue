@@ -24,7 +24,8 @@
         <li class="car_list" v-for="(item,index) in list" :key="index">
           <div class="dianpu">
             <div class="checkall" @click="dianpucheckevery(index,item.isselect)">
-              <van-checkbox v-model="item.isselect"></van-checkbox>
+              <img v-if="item.itemCount == '1' && (item.items[0].sp1==1 || item.items[0].sp1==2)" src="../../assets/imgs/shopcart/noclick.png" alt="">
+              <van-checkbox v-model="item.isselect" v-else></van-checkbox>
             </div>
             <span @click="gotoshopowner(item)">
               <span   class="icon-shops" ><img src="../../assets/imgs/shopcart/icon-shops.png" alt /></span>
@@ -54,7 +55,7 @@
                 <!-- <span>颜色： jins</span> -->
                 <span>规格：{{tab.productAttr}}</span>
               </div>
-              <div class="car_list_price">￥{{tab.price}}</div>
+              <div class="car_list_price"><span>￥</span>{{tab.price}}</div>
               <div class="car_num">
                 <!-- <button @click="jian(index,tab,item)">-</button>
                 <span>{{tab.quantity}}</span>
@@ -79,7 +80,7 @@
         <span class="price">
           合计：<span style="font-size:0.35rem">￥{{allprice.toFixed(2)}}</span>
         </span>
-        <button @click="checkmoney">结算</button>
+        <button @click="checkmoney">结算({{past_pay_nums}})件</button>
       </div>
       <div class="bianji_right" v-else>
         <!-- <button class="add" @click="addlist">添加关注</button> -->
@@ -162,6 +163,7 @@ import {
     // SwipeItem
 } from 'vant'
 import {setsessionStorage} from './../../utils/index.js'
+import { setTimeout } from 'timers';
 export default {
   components: {
     vanCheckbox:Checkbox
@@ -192,7 +194,8 @@ export default {
       otherLeng:'',
       inves: true,
       other: false,
-      sp1_status : false //商品的有效状态1为失效
+      sp1_status : false, //商品的有效状态1为失效
+      past_pay_nums : 0 //结算最终数
     };
   },
   watch: {
@@ -434,25 +437,23 @@ export default {
           }
         }
         that.allpricefn();
+        that.getjiesuanALL()
       }, 0);
     },
     // 店铺选中事件
     dianpucheckevery(index,currentstatus) {
       let that = this;
-      console.log(that.list.length);
-      console.log(that.list[index].items.length);
-      // if(that.list[index].items.length==1 && (that.list[index].items[0].sp1_status == 2 || that.list[index].items[0].sp1_status == 3)){
-      //   console.log('该店铺只有一个商品且已售完');
-      // }
-
       if(currentstatus == true){
+        that.getjiesuanALL();
         that.allchecked = false;
       }
+
       for(let i=0;i<that.list[index].items.length;i++){
         that.list[index].items[i].isselect = !currentstatus;
       }
       setTimeout(() => {
         that.allpricefn();
+        that.getjiesuanALL();
       }, 0);
     },
     //全选
@@ -474,6 +475,115 @@ export default {
         }
       }
     },
+    getjiesuanALL(){
+      let that = this;
+      
+      let listnew = [];
+      listnew = JSON.parse(JSON.stringify(this.list));//地址引用的解决
+      let listindex=[];
+      for(let i=0;i<that.productarr.length;i++){
+        for(let a =0; a<listnew.length;a++){
+          if(that.productarr[i].shopId == listnew[a].shopId){
+            if(listindex.indexOf(a)<0){
+              listindex.push(a);
+            }
+          }
+        }
+      }
+      
+      let listnewA = JSON.parse(JSON.stringify(this.list));//地址引用的解决
+      for(let a = 0;a<listindex.length;a++){
+         let listnewaitems = listnewA[listindex[a]].items.filter(itemmm => itemmm.isselect == true);
+         listnewA[listindex[a]].items = listnewaitems;
+      }
+      // console.log('店铺列表');
+      // console.log(listnewA);
+      let listnew2 = [];
+      for(let b=0;b<listnewA.length;b++){
+        for(let c = 0;c<listindex.length;c++){
+          if(b==listindex[c]){
+            listnew2.push(listnewA[listindex[c]]);
+          }
+        }
+      }
+
+      let arrayOrder = [];
+      let arrayOrders = [];
+      let leng = [];
+      let lengs = [];
+      listnew2.forEach(e=>{
+        let fatherItem;
+        let childItem = [];
+        e.items.forEach(items=>{
+          //正常商品
+          if(items.sp1 == '0'){
+            //正常商品
+            if(items.sp2=='0'){
+              childItem.push(items);
+              fatherItem = e;
+              fatherItem.items = childItem;
+              leng.push(items.quantity * 1);
+              if (arrayOrder.indexOf(fatherItem) == -1) {
+                arrayOrder.push(fatherItem);
+              }
+            }else{
+              //投资金商品
+              childItem.push(items);
+                // console.log(childItem)
+                fatherItem = e;
+                // console.log(fatherItem)
+                fatherItem.items = childItem;
+                lengs.push(items.quantity * 1)
+                    // fatherItem.items.push(childItem)
+                    // console.log(fatherItem)
+                if (arrayOrders.indexOf(fatherItem) == -1) {
+                    arrayOrders.push(fatherItem);
+              }
+            }
+          }
+          // console.log(items)
+        })
+       
+      })
+
+      let current_num;
+      if(arrayOrders.length){
+        let newarr = arrayOrders.map((item) => {
+          return item.items.map((e) => {
+            // console.log('e.quantity');
+            return e.quantity;
+          });
+        })
+
+        let returnlastarr_tzj = [];
+        newarr.map((itemarr)=>{
+            returnlastarr_tzj = returnlastarr_tzj.concat(itemarr);
+        })
+        current_num = returnlastarr_tzj.reduce((n,m) => n + m);
+
+      }else{
+        current_num = 0;
+      }
+      
+      // let currenttzj_num;
+      let currentother_num;
+      if(arrayOrder.length){
+        let newothershops = arrayOrder.map((item) => {
+          return item.items.map((e) => {
+            return e.quantity;
+          });
+        })
+
+        let returnlastarr = [];
+        newothershops.map((itemarr)=>{
+            returnlastarr = returnlastarr.concat(itemarr);
+        })
+        currentother_num = returnlastarr.reduce((n,m) => n + m);
+      }else{
+        currentother_num = 0;
+      }
+      that.past_pay_nums = current_num + currentother_num;
+    },
     // 页面数据初始化
     listtable() {
       let that = this;
@@ -490,6 +600,10 @@ export default {
       that.api.shopcart.showcarcontent({ userId: userid }).then(function(res) {
         let resdata = res.data.data;
         that.loadingstatus = false;
+        // if(that.list[index].items.length==1 && (that.list[index].items[0].sp1_status == 2 || that.list[index].items[0].sp1_status == 3)){
+        //   console.log('该店铺只有一个商品且已售完');
+        // }
+
         if(resdata.length>0){
           for(let i =0;i<resdata.length;i++){
             resdata[i].isselect = false;

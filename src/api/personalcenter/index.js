@@ -80,7 +80,7 @@ const personalcenter = {
     },
     //商品收藏
     shopsshoucang(params) {
-        return axios.post(`${base.yxf}/mapi/v1/goods/collectGoods`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/goods/collectGoods`, qs.stringify(params));
     },
     //获取优惠中心优惠卷
     getDiscountList(params) {
