@@ -157,29 +157,34 @@ export default {
       ],
       myServeList : [
         {
+          name : "我的钱包",
+          img : require("@/assets/imgs/personal/my-money.png"),
+          list_id : 0
+        },
+        {
           name : "金银财宝",
           img : require("@/assets/imgs/personal/my-serve01.png"),
-          list_id : 0
+          list_id : 1
         },
         {
           name : "优惠中心",
           img : require("@/assets/imgs/personal/my-serve02.png"),
-          list_id : 1
+          list_id : 2
         },
         {
           name : "我的收藏",
           img : require("@/assets/imgs/personal/my-serve03.png"),
-          list_id : 2
+          list_id : 3
         },
         {
           name : "我的浏览",
           img : require("@/assets/imgs/personal/my-serve04.png"),
-          list_id : 3
+          list_id : 4
         },
         {
           name : "我的消息",
           img : require("@/assets/imgs/personal/my-serve05.png"),
-          list_id : 4
+          list_id : 5
         }
       ],
       aboutZhuaZhouList : [
@@ -300,23 +305,25 @@ export default {
     serveGuild(index){
       var that = this;
       switch(index){
-        case 0:
+         case 0:
+            //钱包页面
+            this.$router.push({ path: "/personalcenter/mypurse/livingpurse",query:{
+              userid:this.$store.state.user.userid,
+              webtype:1,//H5
+            }});
+            break;
+        case 1:
             //钱包页面
             this.$router.push({ path: "/personalcenter/mypurse",query:{
               userid:this.$store.state.user.userid,
               webtype:1,//H5
             }});
             break;
-        case 1:
+        case 2:
             that.$router.push({ path: "/personalcenter/discount",query:{
               userid:this.$store.state.user.userid,
               tabid:1 //H5
             }}); 
-            break;
-        case 2:
-            that.$router.push({path : "/mybrowse",query:{
-              tab_id : index
-            }});
             break;
         case 3:
             that.$router.push({path : "/mybrowse",query:{
@@ -324,6 +331,11 @@ export default {
             }});
             break;
         case 4:
+            that.$router.push({path : "/mybrowse",query:{
+              tab_id : index
+            }});
+            break;
+        case 5:
             that.gomyinfo();
             break;    
         default:

@@ -39,7 +39,7 @@ const homedetails = {
     },
     // 实时金价
     goldmassage(params) {
-        return axios.post(`${base.yxf}/mapi/v1/valuation/price/nowGold`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/valuation/price/nowGold`, qs.stringify(params));
     },
     // 首页推荐tab列表 ljx
     homelisttjpost(params) {
@@ -51,7 +51,7 @@ const homedetails = {
     },
     // 首页金钢区-内页列表
     diamondlistpost(params) {
-        return axios.post(`${base.yxf}/mapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
     },
     // 首页直播tab列表 ljx
     homelistzbpost(params) {
