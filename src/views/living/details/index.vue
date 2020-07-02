@@ -21,7 +21,7 @@
               <div class="dznamemass">
                 <div class="nametit _txtov1">{{livinglidata.nickname}}</div>
                 <div class="looknum">
-                  <span class="_txtov1" v-if="livinglidata.realcount!=''">{{livinglidata.realcount}}人在观看</span>
+                  <span class="_txtov1" v-if="livinglidata.realcount!=''">{{watchcount}}人在观看</span>
                 </div>
               </div>
               <div class="dznamegz" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">
@@ -88,7 +88,7 @@
                     <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png" alt /> -->
                     <!-- <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt /> -->
                     <p class="name">系统公告：</p>
-                    <p>抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
+                    <p class="xitong">抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
                       黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
                 </div>
               </div>
@@ -122,8 +122,10 @@
             </div>
             <div class="chatxin">
               <!-- <div class="licknum">666</div> -->
-              <div class="chatxinicon">
+              <div class="chatxinicon" @click.stop="likeClick">
+                <span class="praise-num" v-if="praiseCount">{{praiseCount}}</span>
                 <img src="./../../../assets/imgs/living/details/like.png" alt />
+                <canvas id="bubble"  width="90" height="300" class="like-fx" ></canvas>
               </div>
             </div>
           </div>
@@ -272,7 +274,8 @@
 </template>
 
 <script>
-  import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
+  // import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
+  import livingdetails from "./js/livingpage-es6.js";
   export default livingdetails;
 
 </script>

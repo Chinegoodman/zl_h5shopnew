@@ -5,7 +5,8 @@
 // 商品详情模块接口====店铺相关接口也在这里
 import productdetails from '@/api/productdetails';
 import login from '@/api/login'
-import living from '@/api/living/index.min.js'
+import living from '@/api/living/index.js'
+// import living from '@/api/living/index.min.js'
 // ==========================庞世锋============================
 
 // ==========================刘巍============================

@@ -108,7 +108,9 @@
               <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
-            <div class="zan"></div>
+            <div class="zan" @click.stop="clickPraisePoint(index)">
+              <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
+            </div>
             <div class="gd_btm">
                <span class="zb" v-if="item.state==0"></span>
                <span class="huifang" v-if="item.state==1"></span>
@@ -157,7 +159,9 @@
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
-              <div class="zan"></div>
+              <div class="zan" @click.stop="clickPraisePoint(index)">
+                <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
+              </div>
               <div class="gd_btm">
                 <span class="zb" v-if="item.state==0"></span>
                 <span class="huifang" v-if="item.state==1"></span>
@@ -343,6 +347,7 @@
 //import x from ''
 import nodata from './../../../components/nodata.vue'
 import newcomershell from './../../../components/newcomershell.vue'
+import piontPraise from './../../../components/piontPraise.vue'
 import {
   setsessionStorage,
   getsessionStorage
@@ -384,7 +389,8 @@ export default {
     newcomershell,
     vanTab:Tab,
     vanTabs:Tabs,
-    vanList:List
+    vanList:List,
+    piontPraise
   },
   data() {
     return {
@@ -514,28 +520,30 @@ export default {
       hasmorepage : 1, //是第一页还是多页后无数据区分  1为初始无数据 2为下拉之后无更多
       newcomershellshowstate : false,
       shoucang_type : '' //收藏与取消收藏请求类型
+
     };
   },
   computed: {},
   mounted() {
     let that = this;
     that.bannerimages();
-    that.getadvertisingarea(); //广告区
+    //广告区
+    that.getadvertisingarea(); 
+    //刷新列表
     if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
+      console.log('1997');
       that.titleclick(tab,false);
     }
     //新人专区推广弹层-游客模式直接弹，登录后新人弹 否则不弹
-    if(that.$store.state.user.userid || that.$store.state.user.userid != 0){
+    if(that.$store.state.user.userid && that.$store.state.user.userid != 0){
       that.api.homedetails.checknewcomercondition({
         id : that.$store.state.user.userid
       }).then(res =>{
-        if(res.data.code == 1){
-          if(res.data.data == 1){
-            that.newcomershellshowstate = true;
-          }else{
-            that.newcomershellshowstate = false;
-          }
+        if(res.data.data == 1){
+          that.newcomershellshowstate = true;
+        }else{
+          that.newcomershellshowstate = false;
         }
       })
     }else{ 
@@ -778,6 +786,10 @@ export default {
       that.homelistzbmsg = []; //直播列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
+      that.finished_text = '';
+      that.finished_text_zb = '';
+      that.finished_text_xp = '';
+      that.finished_text_tzj = '';
       that.hasmorepage = 1;
       that.nodatashow = false;
       // ljx
@@ -796,9 +808,13 @@ export default {
       switch(tabindex){
         case 0 :
           //推荐列表
+           console.log(1999);
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
+            this.nextpage = getsessionStorage('homelisttjstorerange_page');
+            // that.listfinished = false;
           }else{
+             console.log(2000);
             that.homelisttj();
           }
           break
@@ -806,6 +822,7 @@ export default {
         //直播列表 
         if(getsessionStorage('homelistzbstorerange')){
           that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
+          that.nextPage_zb = getsessionStorage('homelistzbstorerange_page');
         }else{
           that.api.homedetails
           .homelistfenleizb({})
@@ -828,6 +845,7 @@ export default {
         //新品列表
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
+          that.nextPage_xp = getsessionStorage('homelistxpstorerange_page');
         }else{
           that.api.homedetails
           .homelistfenleixp({})
@@ -853,6 +871,7 @@ export default {
         that.goldpricetimer = setInterval(that.goldmass,5000);
         if(getsessionStorage('homelisttzjstorerange')){
           that.homelisttzjmsg = getsessionStorage('homelisttzjstorerange');
+          that.nextpage_tzj = getsessionStorage('homelisttzjstorerange_page');
         }else{
           that.homelisttzj();
         }
@@ -913,6 +932,7 @@ export default {
             } 
 
             that.nextpage = res.data.data.nextpage;
+            setsessionStorage('homelisttjstorerange_page',that.nextpage);
             if(that.nextpage != "") {
               that.listfinished = false;
               that.listloading = false;
@@ -929,6 +949,7 @@ export default {
               that.$toast.clear();
           }else{
             that.$toast(res.data.info);
+            that.listfinished = true;
           }
         })
     },
@@ -962,6 +983,7 @@ export default {
           } 
 
           that.nextPage_zb = res.data.data.nextpage;
+          setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
           if (that.nextPage_zb != "" && that.nextPage_zb !== undefined) {
             that.listfinished_zb = false;
             that.listloading_zb = false;
@@ -979,6 +1001,7 @@ export default {
         }
         else{
           that.$toast(res.data.info);
+          that.listfinished_zb = true;
         }
       })
     },
@@ -1013,10 +1036,10 @@ export default {
             setsessionStorage('homelistxpstorerange',homelistxpstorerange);
           }
           that.nextPage_xp = res.data.data.nextPage;
+          setsessionStorage('homelistxpstorerange_page',that.nextPage_xp);
           if(that.nextPage_xp != "") {
             that.listloading_xp = false;
             that.listfinished_xp = false;
-            console.log('222');
           } 
           else {
             if(that.hasmorepage === 1){
@@ -1031,6 +1054,7 @@ export default {
           that.$toast.clear();
         }else{
           that.$toast(res.data.info);
+          that.listfinished_xp = true;
         }
       })
     },
@@ -1075,6 +1099,7 @@ export default {
             setsessionStorage('homelisttzjstorerange',homelisttzjstorerange);
             
             that.nextpage_tzj = res.data.data.nextpage;
+            setsessionStorage('homelisttzjstorerange_page',that.nextpage_tzj);
             console.log(that.nextpage_tzj);
             if (that.nextpage_tzj != "" && that.nextpage_tzj != "0") {
               that.listfinished_tzj = false;
@@ -1092,6 +1117,7 @@ export default {
             that.$toast.clear();
           }else{
             that.$toast(res.data.info);
+            that.listfinished_tzj = true;
           }
         })
     },
@@ -1211,6 +1237,9 @@ export default {
     //收藏与取消收藏
     mycollect(item){
       let that = this;
+      if(!that.$store.state.user.userid){
+        that.$toast('请先登录');
+      }
       if(item.isCollection == 1){
         that.shoucang_type = 2;
         //关注过 取消关注
@@ -1223,7 +1252,7 @@ export default {
           if(!res.data.code)return;
           if(res.data.code == 1){
             item.isCollection = 0;
-            that.homelistxp(); //刷新列表
+            // that.homelistxp(); //刷新列表
             that.$forceUpdate();
             that.$toast.clear();
           }else{
@@ -1242,7 +1271,7 @@ export default {
           if(!res.data.code)return;
           if(res.data.code == 1){
             item.isCollection = 1;
-            that.homelistxp(); //刷新列表
+            // that.homelistxp(); //刷新列表
             that.$forceUpdate();
             that.$toast.clear();
           }else{
@@ -1251,11 +1280,20 @@ export default {
           
         })
       }
-    }  
+    },
+    //点赞
+    clickPraisePoint(index){
+      let that = this;
+      //调用点赞组件点赞方法
+      that.$refs.piontPraise[index].likeClick();
+    }
   },
   beforeCreate() {
     // window.sessionStorage.removeItem('homelisttjstorerange');
   }, //生命周期 - 创建之前
+  created(){
+       
+  },
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
@@ -1340,4 +1378,5 @@ export default {
   line-height: 3em;
   width: 100%;
 }
+
 </style>

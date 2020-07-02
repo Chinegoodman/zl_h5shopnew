@@ -4,8 +4,8 @@
     top: 0;
     // left: 0;
     // min-height: calc(100%);
-    width: 7.5rem;
     min-height: 100vh;
+    width: 7.5rem;
     background-color:#F7F7F7;
     .searchtop{
         background-color:#fff;
@@ -157,6 +157,7 @@
         // left:0;
         // width:100%;
         width: 7.5rem;
+        z-index: 1000;
     }
     .searchinp{
         width:5.97rem;
@@ -183,6 +184,12 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
+            width: 7.1rem;
+            .goodsli{
+                min-height: 5.6rem;
+                width: 3.45rem;
+                display: block;
+            }
             .show-flag-living {
                 width: 3.45rem;
                 min-height: 5.6rem;
@@ -198,6 +205,7 @@
                     &>img {
                         width: 100%;
                         height: 100%;
+                        display: block;
                         border-radius: .12rem;
                     }
                 }
@@ -287,6 +295,7 @@
                     position: absolute;
                     right: .13rem;
                     bottom: .13rem;
+                    cursor: pointer;
                 }
 
                 .goodsli_pricebox {

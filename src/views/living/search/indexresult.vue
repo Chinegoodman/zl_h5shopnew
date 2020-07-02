@@ -35,7 +35,7 @@
       </van-tabs>
     </div>
     <div class="search-list-box">
-      <div :class="{'search-list' : true,'big_list' : change_big_small_flag_qb===0}" v-if="!nodatashow">
+      <div :class="{'search-list' : true,'big_list' : change_big_small_flag_qb===0}">
         <van-list
           class="goodslist"
           v-model="listloading"
@@ -43,7 +43,8 @@
           :finished-text="finished_text"
           :error.sync="vanerror"
           error-text="请求失败，点击重新加载"
-          :offset="10"
+          :offset="30"
+          :immediate-check="false"
           @load="homelistjk"
         >
 
@@ -62,8 +63,8 @@
               <span class="tit">{{item.goods_title}}</span>
               <div class="price"><span>￥</span>{{item.price}}</div>
               <div class="price_btm"> {{item.brand_name}}</div>
-              <div class="canged" v-if="item.isCollection==1"></div>
-              <div class="cang" v-if="item.isCollection==0"></div>
+              <div class="canged" v-if="item.isCollection==1" @click.stop="mycollect(item)"></div>
+              <div class="cang" v-if="item.isCollection==0" @click.stop="mycollect(item)"></div>
             </div>  
             <div class="show-flag-living" v-else>
               <div class="im">
@@ -77,7 +78,9 @@
                 <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
-              <div class="zan"></div>
+              <div class="zan" @click.stop="clickPraisePoint(index)">
+                <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise" :index="index"></piontPraise>
+              </div>
               <div class="gd_btm">
                 <span class="zb" v-if="item.state==0"></span>
                 <span class="huifang" v-if="item.state==1"></span>
@@ -130,17 +133,19 @@ import {
   setsessionStorage
 } from "./../../../utils/index.js";
 import nodata from './../../../components/nodata.vue'
+import piontPraise from './../../../components/piontPraise.vue'
 export default {
   components: {
     nodata,
     vanSearch:Search,
     vanTab : Tab,
     vanTabs : Tabs,
-    vanList : List 
+    vanList : List,
+    piontPraise 
   },
   data() {
     return {
-      nodatashow:true,
+      nodatashow:false,
       nextpage : '',
       pagetypedata:"searchdata",
       active: "a",
@@ -154,7 +159,7 @@ export default {
         threeCategoryId: "" //三级分类ID 默认：0
       },
       homesearchlist: [],
-      listloading: true,
+      listloading: false,
       listfinished: false,
       finished_text :'加载中...',
       vanerror: false,
@@ -216,6 +221,7 @@ export default {
       that.hasmorepage = 1;
       that.homelistmassage = [];
       that.homelistjk();
+
     },
     // 搜索接口
     homelistjk() {
@@ -234,11 +240,8 @@ export default {
         duration: 200000
       }); 
 
-      if(that.types==1){
-        that.hg_parameters["nextGoodsPage"] = that.nextgoodspage;
-      }
-      
       that.hg_parameters = {
+          userId :that.$store.state.user.userid,
           type:that.types,
           keyWord: that.homesearchmassage.keyword,
           // sort: 1,
@@ -249,15 +252,15 @@ export default {
           nextPage : that.nextpage
         };
 
-
-      console.log(that.hg_parameters);
+      if(that.types==1){
+        that.hg_parameters["nextGoodsPage"] = that.nextgoodspage;
+      }  
       that.api.productsearch
         .searchByKeyWord(that.hg_parameters)
         .then(res => {
-          // that.searched = false;
+          that.listloading = false;
           that.$toast.clear();
           if (res.data.code == 1) {
-            that.listloading = false;
             if(res.data.data.list && res.data.data.list.length > 0){
               that.nodatashow = false;
               that.hasmorepage = 2;
@@ -269,7 +272,12 @@ export default {
 
             that.nextpage = res.data.data.nextPage;
             if(that.types == 1){
-              that.nextgoodspage = res.data.data.nextGoodsPage;
+              if(res.data.data.nextGoodsPage == ''){
+                that.nextgoodspage = that.hg_parameters["nextGoodsPage"];
+              }else{
+                that.nextgoodspage = res.data.data.nextGoodsPage;
+              }
+              
             }
             
             if (that.nextpage != "") {
@@ -280,8 +288,7 @@ export default {
                 that.nodatashow=true;
               }else{
                 that.listloading = false;
-                // that.finished_text = '我的是有底线的'; 后台数据问题先隐掉
-                that.finished_text = '';
+                that.finished_text = '我的是有底线的';
               }
               that.listfinished = true;
             }
@@ -289,6 +296,7 @@ export default {
             that.$toast.clear();
           }else{
             that.$toast(res.data.info);
+            that.listfinished = true;
           }
         });
     },
@@ -354,6 +362,64 @@ export default {
           });
         }
       }
+    },
+    //收藏与取消收藏
+    mycollect(item){
+      let that = this;
+      if(!that.$store.state.user.userid){
+        that.$toast('请先登录');
+      }
+      if(item.isCollection == 1){
+        that.shoucang_type = 2;
+        //关注过 取消关注
+        that.api.personalcenter.shopsshoucang({
+          "type" : that.shoucang_type,
+          "skuId" : item.sku_id,
+          "uid" : that.$store.state.user.userid
+        }).then(res => {
+          //增加关注
+          if(!res.data.code)return;
+          if(res.data.code == 1){
+            item.isCollection = 0;
+            // that.homelistjk(); //刷新列表
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+              throw "取消关注失败";
+          }
+        })
+      }else if(item.isCollection == 0){
+        //未关注 增加关注
+        that.shoucang_type = 1;
+        that.api.personalcenter.shopsshoucang({
+          "type" : that.shoucang_type,
+          "skuId" : item.sku_id,
+          "uid" : that.$store.state.user.userid
+        }).then(res => {
+          //增加关注
+          if(!res.data.code)return;
+          if(res.data.code == 1){
+            item.isCollection = 1;
+            // that.homelistjk(); //刷新列表
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+              throw "关注失败";
+          }
+          
+        })
+      }
+    },
+    //点赞
+    clickPraisePoint(currentIndex){
+      let that = this;
+      //调用点赞组件点赞方法
+      that.$refs.piontPraise.map((each_item,index) => {
+        if(that.$refs.piontPraise[index].index == currentIndex){
+          that.$refs.piontPraise[index].likeClick();
+        }
+      })
+      
     }
   },
   mounted() {
@@ -402,4 +468,5 @@ export default {
 .search .van-list__loading{
   width : 100%;
 }
+
 </style>

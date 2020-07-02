@@ -82,7 +82,9 @@
                       <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
                     </div>
                     <span class="tit">{{item.name}}</span>
-                    <div class="zan"></div>
+                    <div class="zan" @click.stop="clickPraisePoint(index)">
+                      <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
+                    </div>
                     <div class="gd_btm">
                       <span class="zb" v-if="item.state==0"></span>
                       <span class="huifang" v-if="item.state==1"></span>
@@ -152,6 +154,7 @@
 
 <script>
 import nodata from './../../../components/nodata.vue'
+import piontPraise from './../../../components/piontPraise.vue'
 //import x from ''
 import {
     //   AddressEdit,
@@ -189,8 +192,8 @@ export default {
     vanTab : Tab,
     vanTabs : Tabs,
     vanList : List,
-    vanToast : Toast,
-    nodata 
+    nodata,
+    piontPraise 
   },
   data() {
     return {
@@ -535,6 +538,12 @@ export default {
             that.$toast(res.data.info);
           }
         })
+    },
+    //点赞
+    clickPraisePoint(index){
+      let that = this;
+      //调用点赞组件点赞方法
+      that.$refs.piontPraise[index].likeClick();
     }
   },
   created() {

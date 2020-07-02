@@ -228,6 +228,7 @@ export default {
       let that = this;
       that.api.shopmassages
         .getStoreGoodsList({
+          userId :that.userIdss,
           nextpage: that.nxetpageshop,
           // nextpage:"1573721043000",
           pageSize: "",
@@ -267,6 +268,9 @@ export default {
     //收藏与取消收藏
     mycollect(index){
       let that = this;
+      if(!that.$store.state.user.userid){
+        that.$toast('请先登录');
+      }
       if(that.shoplistmassage[index].isCollection == 1){
         that.shoucang_type = 2;
         //关注过 取消关注
@@ -279,7 +283,7 @@ export default {
           if(!res.data.code)return;
           if(res.data.code == 1){
             that.shoplistmassage[index].isCollection = 0;
-            that.shoplist();
+            // that.shoplist();
             that.$forceUpdate();
             that.$toast.clear();
           }else{
@@ -298,7 +302,7 @@ export default {
           if(!res.data.code)return;
           if(res.data.code == 1){
             that.shoplistmassage[index].isCollection = 1;
-            that.shoplist();
+            // that.shoplist();
             that.$forceUpdate();
             that.$toast.clear();
           }else{
@@ -490,9 +494,7 @@ export default {
   // },
   mounted() {
     let that = this;
-    let user = localStorage.getItem("user-info");
-    let userj = JSON.parse(user);
-    that.userIdss = userj.userid;
+    that.userIdss = that.$store.state.user.userid;
     that.shopdzmass();
   },
   beforeCreate() {}, //生命周期 - 创建之前

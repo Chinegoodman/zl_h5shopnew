@@ -311,12 +311,15 @@
                             &>p{
                                 // float: left;
                                 display: inline;
-                                color: #ffbd04;
+                                color: #fff;
                                 font-size: 0.28rem;
                                 line-height: 0.48rem;
                                 &.name{
                                     color:#ffbd04;
                                 }
+                            }
+                            &>p.xitong{
+                                color: #ffbd04;
                             }
                         }
                     }
@@ -529,10 +532,25 @@
                         .chatxinicon {
                             width: 0.8rem;
                             height: 0.8rem;
+                            position: relative;
                             cursor: pointer;
                             img {
                                 width: 100%;
                                 height: 100%;
+                            }
+                            .praise-num{
+                                width: .82rem;
+                                height: .32rem;
+                                line-height: .32rem;
+                                text-align: center;
+                                color: #fff;
+                                border-radius: .2rem;
+                                font-size: .22rem;
+                                background:#ff5b4fff;
+                                position: absolute;
+                                left: 50%;
+                                top: -.6rem;
+                                transform: translateX(-50%);
                             }
                         }
                         .licknum{
@@ -1140,3 +1158,11 @@
     }
 }
 /*complaints css end*/
+
+.like-fx {
+    position: absolute;
+    right: -.1rem;
+    bottom: 1.15rem;
+    z-index: 100000;
+    pointer-events: none;
+}
