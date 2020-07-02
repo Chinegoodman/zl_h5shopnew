@@ -63,7 +63,7 @@ if (process.env.VUE_APP_ENV == 'uat') {
     eruda.init();
 } else if (process.env.VUE_APP_ENV == 'development') {
     // 开发环境
-    eruda.init();
+    // eruda.init();
 }
 
 import api from './api'
