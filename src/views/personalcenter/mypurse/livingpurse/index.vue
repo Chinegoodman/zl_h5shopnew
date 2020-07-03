@@ -6,20 +6,92 @@
       <div class="mydiscount-path"  @click="mydiscountguild">账单</div>
     </div>
     <div class="purseliving-content">
-      <div class="purse_banner">
+      <div class="purse-banner">
         <div class="lis">
-          <span class="up">
-            <span class="ic"><img src="../../../../assets/imgs/personal/jijbi.png" alt="皇冠" class="huang-guan"></span>
-            <span class="t">金币</span>
-          </span>
-          <span class="down">452236</span>
+          <div class="top">
+            <span class="jin">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jijbi.png" alt="金币"></span>
+              <span class="t">金币</span>
+            </span>
+            <span class="num">452236</span>
+          </div>
+          <div class="btm">充值</div>
         </div>
         <div class="lis">
-          <span class="up">
-            <span class="ic"><img src="../../../../assets/imgs/personal/jindou.png" alt="皇冠" class="huang-guan"></span>
-            <span class="t">金豆</span>
-          </span>
-          <span class="down">452236</span>
+          <div class="top">
+            <span class="jin">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jindou.png" alt="皇冠"></span>
+              <span class="t">金豆</span>
+              <span class="turn">豆转币<span class="gd"><img src="../../../../assets/imgs/personal/livingpurse-gd.png" alt="金豆"></span></span>
+            </span>
+            <span class="num">452236</span>
+          </div>
+          <div class="btm btm-color">充值</div>
+        </div>
+      </div>
+      <div class="top-up"> 
+        <h3>金币充值</h3>
+        <div class="list">
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">600</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">50</span>
+            </div>
+          </div>
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">600</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">50</span>
+            </div>
+          </div>
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">5000</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">50</span>
+            </div>
+          </div>
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">9800</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">50</span>
+            </div>
+          </div>
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">28800</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">50</span>
+            </div>
+          </div>
+          <div class="lis">
+            <div class="top">
+              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
+              <span class="pr">58800</span>
+            </div>
+            <div class="btm">
+              <span class="ic">￥</span>
+              <span class="pr">588</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -251,6 +323,7 @@ export default {
 </script>
 <style lang="less">
   .purseliving_wrap {
+    height:100vh;
     .header {
           width: 7.5rem;
           border-bottom: 1px solid #DEDEDE;
@@ -290,45 +363,157 @@ export default {
     }
     
     .purseliving-content{
-      padding-top: 1.35rem;
-      .purse_banner{
+      width: 7.5rem;
+      height: 100vh;
+      padding-top: 1.15rem;
+      position: relative;
+      background:rgba(255,255,255,1);
+      // display: flex;
+      // flex-direction: column;
+      // flex-wrap : wrap;
+      .purse-banner{
           // padding: .3rem;
+          // margin-top: 1.35rem;
           width: 7.5rem;
           height: 3.33rem;
-          background: url('../../../../assets/imgs/personal/cardbg.png') no-repeat center center;
-          background-size: cover;
+          padding: .35rem 0;
+          background: rgba(247,247,247,1) url('../../../../assets/imgs/personal/cardbg.png') no-repeat center .2rem;
+          background-size: 7.29rem 3.33rem;
           display: flex;
           font-family:PingFang SC;
           font-weight:500;
           .lis{
               flex: 1;
-              padding: .65rem .96rem .75rem;
+              padding: .65rem 0 .75rem;
               text-align: center;
               font-size: .28rem;
-              .up{
-                  display: block;
-                  text-align: center;
-                  
-                  color:rgba(255,255,255,1);
-                  .ic{
+              .top{
+                .jin{
+                    display: block;
+                    text-align: center;
+                    color:rgba(255,255,255,1);
+                    .ic{
+                        display: inline-block;
+                        width: .32rem;
+                        height: .32rem;
+                        margin-right: .1rem;
+                        vertical-align: middle;
+                        margin-top: -.04rem;
+                        img{
+                            display: block;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    .turn{
                       display: inline-block;
-                      width: .32rem;
-                      height: .32rem;
-                      margin-right: .1rem;
-                      vertical-align: middle;
-                      img{
+                      width: .93rem;
+                      height: .3rem;
+                      line-height:.3rem;
+                      background:rgba(255,91,79,1);
+                      border-radius: .15rem;
+                      color:rgba(255,254,254,1);
+                      font-size:.2rem;
+                      margin-left : .06rem;
+                      cursor: pointer;
+                      .gd{
+                        display: inline-block;
+                        width : .07rem;
+                        height : .13rem;
+                        vertical-align : middle;
+                        margin: -.04rem 0 0 .02rem;
+                        img{
                           display: block;
-                          width: 100%;
-                          height: 100%;
+                          width : 100%;
+                          height : 100%;
+                        }
                       }
-                  }
+                    }
+                }
+                .num{
+                    display: block;
+                    margin-top: .1rem;
+                    font-size: .4rem;
+                    color:rgba(255,255,255,1);
+                    font-weight:bold;
+                }
+              }  
+              .btm{
+                width : 1.6rem;
+                height : .52rem;
+                line-height: .52rem;
+                background:rgba(255,247,224,1);
+                color:rgba(255,189,4,1);
+                font-size : .24rem;
+                border-radius:.26rem;
+                margin:.42rem auto 0;
+                cursor: pointer;
               }
-              .down{
-                  display: block;
-                  margin-top: .25rem;
-                  font-size: .28rem;
+              .btm-color{
+                color:rgba(255,255,255,1);
+                background:rgba(255,189,4,1);
               }
           }
+      }
+      .top-up{
+        padding: .3rem .2rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        border-radius: .35rem;
+        margin-top: .45rem;
+        background:rgba(255,255,255,1);
+        position: absolute;
+        top: 4.5rem;
+        h3{
+          padding-left: .1rem;
+          font-size: .3rem;
+          color:rgba(31,31,31,1);
+        }
+        .list{
+          padding-top: .3rem;
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: row;
+          flex-grow: 1;
+          .lis{
+            width: 2.08rem;
+            height: 1.3rem;
+            border: .02rem solid rgba(255,189,4,1);
+            border-radius: .06rem;
+            text-align: center;
+            margin-bottom: .3rem;
+            margin-right: .36rem;
+            cursor: pointer;
+            .top{
+              padding-top: .3rem;
+              .ic{
+                display: inline-block;
+                width: .29rem;
+                height: .29rem;
+                margin-right: .1rem;
+                vertical-align: middle;
+                margin-top: -.04rem;
+                img{
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .pr{
+                font-size: .28rem;
+                color:rgba(31,31,31,1);
+              }
+            }
+            .btm{
+              color:rgba(255,189,4,1);
+              font-size: .26rem;
+              margin-top: .12rem;
+            }
+          }
+          .lis:nth-child(3n){
+            margin-right: 0;
+          }
+        }
       }
     }  
   }  

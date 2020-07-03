@@ -78,45 +78,6 @@
             </div>
           </div> -->
         </div>
-        <!-- 直播消息  礼物展示部分-->
-        <div class="giftshowbox">
-          <div class="gift">
-            <span class="im"><img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" /></span>
-            <div class="txt">
-              <h3>爱吃鱼的喵</h3>
-              <span>送出么么哒</span>
-            </div>
-            <span class="giftic">
-              <img src="./../../../assets/logo.png">
-            </span>
-            <span class="giftnum">
-              <span class="cheng">
-                <img src="./../../../assets/imgs/living/details/lift/X.png" alt="抓周" />
-              </span>
-              <span class="num">
-                <img src="./../../../assets/imgs/living/details/lift/9.png" alt="抓周" />
-              </span>
-            </span>
-          </div>
-          <div class="gift gift0">
-            <span class="im"><img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" /></span>
-            <div class="txt">
-              <h3>爱吃鱼的喵</h3>
-              <span>送出么么哒</span>
-            </div>
-            <span class="giftic">
-              <img src="./../../../assets/logo.png">
-            </span>
-            <span class="giftnum">
-              <span class="cheng">
-                <img src="./../../../assets/imgs/living/details/lift/X.png" alt="抓周" />
-              </span>
-              <span class="num">
-                <img src="./../../../assets/imgs/living/details/lift/9.png" alt="抓周" />
-              </span>
-            </span>
-          </div>
-        </div>
         <!-- 直播消息  聊天输入部分-->
         <div class="content-bottom">
           <!-- 消息列表 -->

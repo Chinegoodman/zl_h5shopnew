@@ -34,6 +34,21 @@ export default [{
             }]
         }
     },
+    // 秀场直播 直播详情页
+    {
+        path: 'xiuchangdetails',
+        name: 'xiuchangdetails',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/xiudetails/index.vue'], resolve),
+        meta: {
+            name: 'xiuchangdetails',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/xiuchangdetails',
+            }]
+        }
+    },
     // 直播 直播回放  
     {
         path: 'livingreplay',
