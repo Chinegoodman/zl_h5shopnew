@@ -14,7 +14,7 @@ const login = {
 
     // 获取验证码
     captcha(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/captcha`, qs.stringify(params));
+        return axios.get(`${base.yxf2}/v1/core/user/verification/code?mobile=${params.mobile}&type=${params.type}`);
     },
     // 登录接口 老版本的登录接口
     login_old(params) {
