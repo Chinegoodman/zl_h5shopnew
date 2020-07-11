@@ -15,7 +15,7 @@ import { clearInterval } from 'timers';
             <div class="step1" v-if="step==1">
                 <div class="iptbox">
                     <span class="t">手机号</span>
-                    <input type="text" v-model="phonenum" placeholder="请输入手机号">
+                    <input type="text" v-model="phonenum" @blur="checkPhone" placeholder="请输入手机号">
                 </div>
                 <div class="iptbox">
                     <span class="t">验证码</span>
@@ -23,17 +23,19 @@ import { clearInterval } from 'timers';
                     <span @click="getcode" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
-                <div class="loginbtn" @click="loginstart">开始</div>
+                <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="loginstart">开始</div>
                 <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
             </div>
             <div class="step2" v-if="step==2">
                 <div class="iptbox">
+                    <span class="t">输入密码</span>
                     <input type="password" v-model="setpassword" placeholder="请输入密码">
                 </div>
                 <div class="iptbox">
-                    <input type="password" v-model="setpassword2" placeholder="请输入密码">
+                    <span class="t">确认密码</span>
+                    <input type="password" v-model="setpassword2" placeholder="确认登录密码">
                 </div>
-                <p>密码长度8-32位，须包含数字、字母、符号至少2种或以上元素。</p>
+                <p>密码长度8-32位，须包含数字、字母、符号至少2种</p>
                 <div class="setpassword" @click="setpasswordfn">确认提交</div>
             </div>
             <!-- <div class="bottom">
@@ -54,16 +56,16 @@ import { clearInterval } from 'timers';
             </div> -->
         </div>
         <div class="content content2" v-if="logintype=='密码登录'">
-            <p class="title">密码登录</p>
             <div class="iptbox">
-                <span>+86</span>
-                <input type="text" v-model="phonenum2" placeholder="请输入手机号">
+                <span class="t">手机号</span>
+                <input type="text" v-model="phonenum2" @blur="checkPhone_ii" placeholder="请输入手机号">
             </div>
             <div class="iptbox">
-                <span>密码</span>
+                <span class="t">密码</span>
                 <input type="password" v-model="password" placeholder="请输入登录密码">
             </div>
-            <div class="loginbtn" @click="passwordlogin">登录</div>
+            <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state_ii}" @click="passwordlogin">登录</div>
+            <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
             <!-- <div class="forgetpw" @click="logintypechange">忘记密码? 用验证码登录</div> -->
             <div class="forgetpw" @click="resetpassword">忘记密码?</div>
             <!-- <div class="bottom">
@@ -117,7 +119,7 @@ export default {
       phonenum2: "", //手机号、、账号密码登录的手机号
       phonecode: "", //手机验证码
 
-      logintypechangetxt: "切换密码登录", //登录模式切换按钮的文字
+      logintypechangetxt: "密码登录", //登录模式切换按钮的文字
       logintype: "验证码登录", // 默认为验证码登录，可切换为密码登陆
 
       gettingcodestatus: false, //正在获取验证码的状态
@@ -125,10 +127,48 @@ export default {
       timer: "", //计时器
 
       setpassword: "", //设置密码
-      setpassword2: "" //设置密码2
+      setpassword2: "", //设置密码2
+      loginbtned_state : false,
+      loginbtned_state_ii : false
     };
   },
   computed: {},
+  watch : {
+    phonenum(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonecode != '' && that.checkPhone() == true){
+        this.loginbtned_state = true;
+      }else{
+        this.loginbtned_state = false;
+      }
+    },
+    phonecode(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonenum != ''){
+        this.loginbtned_state = true;
+      }else{
+        this.loginbtned_state = false;
+      }
+    },
+    //mobile: that.phonenum2,
+    // password: that.password,
+    phonenum2(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.password != '' && that.checkPhone() == true){
+        that.loginbtned_state_ii = true;
+      }else{
+        that.loginbtned_state_ii = false;
+      }
+    },
+    password(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonenum2 != ''){
+        that.loginbtned_state_ii = true;
+      }else{
+        that.loginbtned_state_ii = false;
+      }
+    }
+  },
   methods: {
     goback() {
       this.$router.go(-1);
@@ -190,12 +230,38 @@ export default {
       this.setpassword = "";
       this.setpassword2 = "";
     },
+    //手机号验证
+    checkPhone(){ 
+      let that = this;
+      if(!that.phonenum)return;
+      if(!(/^1[3456789]\d{9}$/.test(that.phonenum))){ 
+        that.$toast("手机号码有误，请重填");
+        this.loginbtned_state = false;
+        return false; 
+      }else{
+        this.loginbtned_state = true;
+        return true;
+      } 
+    },
+    //手机号验证-密码登录
+    checkPhone_ii(){ 
+      let that = this;
+      console.log('2999');
+      if(!that.phonenum2)return;
+      if(!(/^1[3456789]\d{9}$/.test(that.phonenum2))){ 
+        that.$toast("手机号码有误，请重填");
+        that.loginbtned_state_ii = false;
+        return false; 
+      }else{
+        that.loginbtned_state_ii = true;
+        return true;
+      } 
+    },
     // 获取验证码事件
     getcode() {
       let that = this;
       this.gettingcodestatus = true;
       clearInterval(that.timer);
-      // debugger;
       that.timer = setInterval(() => {
         if (that.gettingcodestatustime > 1) {
           that.gettingcodestatustime--;
@@ -211,8 +277,6 @@ export default {
           type : 1
         })
         .then(data => {
-          console.log('data');
-          console.log(data);
           that.$toast(data.data.info);
         });
       // this.phonecode='模拟填充';
@@ -223,9 +287,9 @@ export default {
       this.api.login
         .login({
           mobile: that.phonenum,
+          loginType: 2,
           verificationCode: that.phonecode,
-          client:'h5',
-          loginType: 2
+          client:'h5'
         })
         .then(data => {
           that.$toast(data.data.info);
@@ -276,6 +340,7 @@ export default {
           loginType: 1
         })
         .then(data => {
+          console.log(1986);
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
@@ -512,70 +577,79 @@ export default {
         // height: 1em;
         height: 0.37rem;
         line-height: 1em;
-        color: rgba(206, 206, 206, 1);
+        color: 333;
         font-size: 0.28rem;
         padding-left: 0.24rem;
         float: left;
         width:3.85rem;
       }
+
+      input::placeholder {
+        font-size: .24rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(191,191,191,1);
+      }
     }
     .loginbtn {
       width: 5.68rem;
       height: 0.8rem;
-      margin: 0.46rem auto 0;
+      margin: 1.54rem auto 0;
       line-height: 0.8rem;
       text-align: center;
       font-size: 0.32rem;
       color:rgba(117,117,117,1);
       background:rgba(235,235,233,1);
       border-radius: 0.6rem;
+      font-weight:bold;
       cursor: pointer;
+    }
+    .loginbtned{
+      background:rgba(255,189,4,1);
+      color : #fff;
     }
     .step2 {
       .iptbox {
-        background-color: rgba(246, 246, 246, 1);
-        border-radius: 0.089rem;
-        padding: 0.33rem 0.47rem 0.33rem 0.28rem;
-        width: 6.24rem;
-        // height: 0.78rem;
+        padding: 0.2rem 0;
+        width: 5.68rem;
+      // height: 0.78rem;
         box-sizing: border-box;
-        margin: 0 auto 0.24rem;
-        // font-size:0.28rem;
+        margin: 0 0.91rem .52rem 0.91rem;
+        border-bottom :.01rem solid rgba(215,215,215,1);
         font-size: 0.37rem;
         line-height: 1em;
-        height: calc(1em + 0.66rem);
+        height: calc(1em + 0.4rem);
         position: relative;
         input {
           border: none;
           height: 0.37rem;
           line-height: 0.37rem;;
-          background-color: rgba(246, 246, 246, 1);
           color: rgba(206, 206, 206, 1);
           font-size: 0.28rem;
           // padding-left: 0.24rem;
           // float: left;
           // // width:3.65rem;
-          width: 100%;
+          width: 70%;
         }
       }
       .setpassword {
-        width: 6.24rem;
-        height: 0.98rem;
-        margin: 0.46rem auto 0;
-        line-height: 0.98rem;
+        width: 5.68rem;
+        height: 0.8rem;
+        margin: 1.1rem auto 0;
+        line-height: 0.8rem;
         text-align: center;
         font-size: 0.32rem;
-        color: rgba(255, 255, 255, 1);
-        background-color: rgba(219, 49, 42, 1);
-        border-radius: 0.08rem;
+        color:rgba(117,117,117,1);
+        background:rgba(235,235,233,1);
+        border-radius: 0.38rem;
         cursor: pointer;
       }
       & > p {
         width: 6.32rem;
         color: rgba(155, 155, 155, 1);
         line-height: 0.37rem;
-        font-size: 0.28rem;
-        margin: 0.12rem auto 0.4rem;
+        font-size: 0.24rem;
+        margin: 0.12rem auto 0.4rem .91rem;
       }
     }
   }

@@ -22,7 +22,7 @@ const login = {
     },
     // 登录接口 新版本的登录接口
     login(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/stable/login`, qs.stringify(params));
+        return axios.post(`${base.yxf2}/v1/core/user/login`, qs.stringify(params));
     },
     // 新用户设置密码接口
     change(params) {
