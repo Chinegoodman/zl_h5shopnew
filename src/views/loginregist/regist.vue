@@ -3,8 +3,12 @@ import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
         
-        <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/back.png" alt="返回"></div>
-        <div class="loggo_wrap">
+        <div @click="goback" v-if="step ==1" class="topbtn"><img src="@/assets/imgs/icons/back.png" alt="返回"></div>
+        <div class="header" v-if="step ==2">
+          <img class="back" @click="goback" src="../../assets/imgs/follow/xiangqing@2x.png" alt />
+          <span>设置密码</span>
+        </div>
+        <div class="loggo_wrap" v-if="step==1">
           <div class="logo_img">
             <img src="@/assets/imgs/icons/logo.png" alt="返回">
           </div>
@@ -137,6 +141,8 @@ export default {
     phonenum(newName){
       let that = this;
       if(newName != '' && newName != undefined && that.phonecode != '' && that.checkPhone() == true){
+        console.log('that.phonecode');
+        console.log(that.phonecode);
         this.loginbtned_state = true;
       }else{
         this.loginbtned_state = false;
@@ -154,7 +160,7 @@ export default {
     // password: that.password,
     phonenum2(newName){
       let that = this;
-      if(newName != '' && newName != undefined && that.password != '' && that.checkPhone() == true){
+      if(newName != '' && newName != undefined && that.password != '' && that.checkPhone_ii() == true){
         that.loginbtned_state_ii = true;
       }else{
         that.loginbtned_state_ii = false;
@@ -239,7 +245,7 @@ export default {
         this.loginbtned_state = false;
         return false; 
       }else{
-        this.loginbtned_state = true;
+        // this.loginbtned_state = true;
         return true;
       } 
     },
@@ -253,7 +259,7 @@ export default {
         that.loginbtned_state_ii = false;
         return false; 
       }else{
-        that.loginbtned_state_ii = true;
+        // that.loginbtned_state_ii = true;
         return true;
       } 
     },
@@ -295,6 +301,7 @@ export default {
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
+            console.log('data.data.data');
             console.log(data.data.data);
             let userdata = data.data.data;
             if (userdata.isFirstLogin == 0) {
@@ -398,6 +405,7 @@ export default {
               userdata: resdata
             };
             that.$store.commit("saveuserdata", user);
+            //跳转到商城首页或不传routername让step等于2跳转密码设置页
             that.$router.push({ name: routername });
           }
         });
@@ -734,6 +742,35 @@ export default {
   }
 
 
+}
+
+.registwrap{
+  .header {
+      width: 7.5rem;
+      border-bottom: 1px solid #DEDEDE;
+      background: white;
+      text-align: center;
+      position: fixed;
+      z-index: 100;
+
+      img {
+          transform: rotate(180deg);
+          width: 0.2rem;
+          height: 0.35rem;
+          display: block;
+          padding: 0.4rem 0;
+          margin-left: 0.46rem;
+      }
+
+      span {
+          position: absolute;
+          top: 0.4rem;
+          left: 50%;
+          margin-left: -0.55rem;
+          font-size: 0.34rem;
+          color: #333333;
+      }
+  }
 }
 
 

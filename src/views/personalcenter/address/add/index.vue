@@ -124,9 +124,7 @@ import {
       // 保存提交
       btn() {
         let that = this;
-        let user = localStorage.getItem("user-info");
-        let userj = JSON.parse(user);
-        let userid = userj.userid;
+        let userid = that.$store.state.user.userid;
         let adddefault;
         this.checked ? (adddefault = 1) : (adddefault = 2);
         let can = {

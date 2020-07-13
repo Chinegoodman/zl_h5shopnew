@@ -587,9 +587,7 @@ export default {
     // 页面数据初始化
     listtable() {
       let that = this;
-      let user = localStorage.getItem("user-info");
-      let userj = JSON.parse(user);
-      let userid = userj.userid;
+      let userid = that.$store.state.user.userid;
       let gps = JSON.parse(sessionStorage.getItem("checkaddressitem"));
       if (gps) {
         that.gps = gps.province + " " + gps.city;
