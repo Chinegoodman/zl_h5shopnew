@@ -54,9 +54,8 @@ export default {
             var that = this;
             this.api.login
             .captcha({
-                phone: that.phone,
-                sign: "",
-                timeStamp: ""
+                mobile: that.phone,
+                type : 2
             })
             .then(data => {
                 that.$toast(data.data.info);
@@ -86,9 +85,9 @@ export default {
                 return;
             }
             this.api.login
-            .verifycaptcha({
-                phone: that.phone,
-                code: that.code
+            .verifycaptcha_new({
+                mobile: that.phone,
+                verificationCode: that.code
             })
             .then(res => {
                 console.log(res);

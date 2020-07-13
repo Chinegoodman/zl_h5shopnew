@@ -29,8 +29,8 @@ const login = {
         return axios.post(`${base.yxf}/wapi/v1/user/password/change`, qs.stringify(params));
     },
     //绑定手机号验证验证码-验证验证码
-    verifycaptcha(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/verify`, qs.stringify(params));
+    verifycaptcha_new(params) {
+        return axios.post(`${base.yxf2}/v1/core/user/verify/mobile`, qs.stringify(params));
     },
     //修改密码提交
     savepassword(params) {

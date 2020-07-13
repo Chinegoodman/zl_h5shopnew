@@ -41,9 +41,21 @@ const personalcenter = {
     getinfouser(params) {
         return axios.post(`${base.yxf}/wapi/v1/member/getInfo`, qs.stringify(params));
     },
+    // 根据id获取用户信息新接口
+    getinfouser_new(params) {
+        return axios.get(`${base.yxf2}/v1/core/user/info?userId=${params.userId}`);
+    },
     //更新用户信息
-    updateinfouser(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/update`, qs.stringify(params));
+    // updateinfouser(params) {
+    //     return axios.post(`${base.yxf}/wapi/v1/user/update`, qs.stringify(params));
+    // },
+    //更新用户信息新接口
+    updateinfouser_new(params) {
+        return axios.put(`${base.yxf2}/v1/core/user/update/info`, qs.stringify(params));
+    },
+    //更新用户头像
+    updateHeadPortrait(params) {
+        return axios.put(`${base.yxf2}/v1/core/user/update/headPortrait`, qs.stringify(params));
     },
     //确认收货
     affirmGoods(params) {
