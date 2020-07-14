@@ -32,7 +32,7 @@
             </li>
             <li @click="gotosex">
                 <div class="lt">性别</div>
-                <div class="rt">{{baseuserinfo.sex===1?'男':'女'}}</div>
+                <div class="rt">{{baseuserinfo.gender===1?'男':'女'}}</div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li @click="gotobirthday">
@@ -283,8 +283,8 @@ export default {
             that.datatime_show = false; 
             that.post_time = this.timeValue;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
                 birthday :  that.post_time
             }).then(res => {
                 if(res.data.code === 1){
@@ -310,12 +310,12 @@ export default {
             if(val == '男'){
                 that.post_sex = 1;
             }else if(val == '女'){
-                that.post_sex = 0;
+                that.post_sex = 2;
             }
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                sex :  that.post_sex
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
+                gender :  that.post_sex
             }).then(res => {
                 if(res.data.code === 1){
                     this.sex_show = false;

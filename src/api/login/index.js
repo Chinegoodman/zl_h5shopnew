@@ -33,12 +33,12 @@ const login = {
         return axios.post(`${base.yxf2}/v1/core/user/verify/mobile`, qs.stringify(params));
     },
     //修改密码提交
-    savepassword(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/password/change`, qs.stringify(params));
+    savepassword_new(params) {
+        return axios.put(`${base.yxf2}/v1/core/user/modify/password`, qs.stringify(params));
     },
     //修改手机号提交
-    savephone(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/phone/change`, qs.stringify(params));
+    savephone_new(params) {
+        return axios.put(`${base.yxf2}/v1/core/user/alteration/mobile`, qs.stringify(params));
     }
 }
 

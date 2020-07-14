@@ -177,6 +177,7 @@ export default {
                     right : .2rem;
                     top : 50%;
                     transform: translateY(-50%);
+                    cursor: pointer;
                 }
             }
         }
@@ -193,6 +194,7 @@ export default {
             font-family:PingFang SC;
             font-weight:500;
             margin : 1.46rem auto 0;
+            cursor: pointer;
         }
     }
 }    
