@@ -10,7 +10,7 @@ import FlvPlayer from "xgplayer-flv";
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
 export default {
-    name: "livingdetails",
+    name: "livingxiudetails",
     components: {
         complaints
     },
@@ -207,7 +207,7 @@ export default {
         }
     },
     mounted() {
-        this.livinglidata = getsessionStorage("livinglidata");
+        this.livinglidata = getsessionStorage("livinglidata-xiu");
         console.log('this.livinglidata');
         console.log(this.livinglidata);
 
@@ -282,7 +282,8 @@ export default {
                 //解除注释 flv方法
                 id: "videodom",
                 // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                url: that.livinglidata.streamAddrHls + ".flv", //flv
+                url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
+                // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
                 //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
                 //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
                 // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试

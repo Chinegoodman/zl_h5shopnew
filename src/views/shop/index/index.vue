@@ -210,11 +210,11 @@
             :id="item.id"
           >
             <div class="im"> 
-              <img :src="item.liveStreamUrl?item.liveStreamUrl:default_img_small" alt="" />
+              <img :src="item.cover?item.cover:default_img_small" alt="" />
             </div>
             <div class="goodsli_title clearfix">
               <span class="img_w">
-                <img :src="item.cover?item.cover:default_img_head" alt="抓周" />
+                <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
               </span>
               <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
             </div>
@@ -524,12 +524,12 @@ export default {
       listloading_tzj: false,
       finished_text : '',
       finished_text_zb : '',
-      finished_text_xc : '',
+      finished_text_xc : '亲，没有更多啦哟~',
       finished_text_xp : '',
       finished_text_tzj : '',
       vanerror: false,
       vanerror_zb: false,
-       vanerror_xc: false,
+      vanerror_xc: false,
       vanerror_xp: false,
       vanerror_tzj: false,
       gold_type: 101,
@@ -598,7 +598,6 @@ export default {
     //刷新列表
     if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
-      console.log('1997');
       that.titleclick(tab,false);
     }
     //新人专区推广弹层-游客模式直接弹，登录后新人弹 否则不弹
@@ -678,8 +677,8 @@ export default {
     gotoxiuchangdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
-      setsessionStorage("livinglidata", paramsdata);
-      if(paramsdata.state==0){
+      setsessionStorage("livinglidata-xiu", paramsdata);
+      if(paramsdata.state==1){
         this.$router.push({
           path: "/living/xiuchangdetails",
           query : {
@@ -933,6 +932,7 @@ export default {
           if(getsessionStorage('homelistxcstorerange')){
             that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
             that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
+            console.log('1646546');
             // that.listfinished = false;
           }else{
             that.homelistxc();
@@ -1123,6 +1123,14 @@ export default {
           that.$toast.clear();
           that.listloading_xc = false;
           if(res.data.code == 1){
+            that.nextPage_xc = res.data.data.page;
+             if(that.nextPage_xc  == res.data.data.totalPage && that.homelistxcmsg != '') {
+                that.listfinished_xc = true;
+                that.listloading_xc = false;
+                that.finished_text_xc = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
             if (res.data.data.list && res.data.data.list.length > 0) {
               that.nodatashow = false;
               that.hasmorepage = 2;
@@ -1134,11 +1142,10 @@ export default {
               setsessionStorage('homelistxcstorerange',homelistxcstorerange);
             } 
 
-            that.nextPage_xc = res.data.data.page;
-            setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
-            if(that.nextPage_xc  != "") {
+            if(that.nextPage_xc  != res.data.data.totalPage) {
               that.listfinished_xc = false;
               that.listloading_xc = false;
+              that.nextPage_xc ++
             }else {
               if(that.hasmorepage === 1){
                 that.nodatashow = true;
@@ -1148,8 +1155,8 @@ export default {
               }
               that.listfinished_xc = true;
             }
-              that.$forceUpdate();
-              that.$toast.clear();
+            that.$forceUpdate();
+            that.$toast.clear();
           }else{
             that.$toast(res.data.info);
             that.listfinished_xc = true;
