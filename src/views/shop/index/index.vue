@@ -119,7 +119,7 @@
               <span class="img_w">
                 <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
               </span>
-              <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+              <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
             <div class="zan" @click.stop="clickPraisePoint(index)">
@@ -170,7 +170,7 @@
                 <span class="img_w">
                   <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
                 </span>
-                <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+                <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
               <div class="zan" @click.stop="clickPraisePoint(index)">
@@ -210,17 +210,17 @@
             :id="item.id"
           >
             <div class="im"> 
-              <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="" />
+              <img :src="item.liveStreamUrl?item.liveStreamUrl:default_img_small" alt="" />
             </div>
             <div class="goodsli_title clearfix">
               <span class="img_w">
-                <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                <img :src="item.cover?item.cover:default_img_head" alt="抓周" />
               </span>
-              <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+              <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
             <div class="gd_btm">
-               <span class="num">{{item.realcount}}观看</span>
+               <span class="num">{{item.realCount}}观看</span>
             </div>
             <div class="stateflag">
               <span class="zb" v-if="item.state==0"></span>
@@ -470,11 +470,11 @@ export default {
           tabindex: 0  //推荐
         },
         {
-          category_name:"电商直播",
+          category_name:"秀物",
           tabindex: 1  //直播
         },
         {
-          category_name:"秀场直播",
+          category_name:"娱乐",
           tabindex: 2  //直播
         },
         {
@@ -508,6 +508,7 @@ export default {
       goldpricetimer : null,
       nextpage: "",
       nextPage_zb :"",
+      nextPage_xc : 1,
       nextPage_xp :"",
       nextpage_tzj : 1,
       number: 0,
@@ -863,7 +864,7 @@ export default {
       
       this.nextpage= '';
       that.nextPage_zb = '';
-      that.nextPage_xc = '';
+      that.nextPage_xc = 1;
       that.nextPage_xp = '';
       that.nextpage_tzj = '1';
       that.homelistmassage = []; //推荐列表
@@ -1111,10 +1112,14 @@ export default {
         duration: 200000
       }); 
       that.api.homedetails
-        .homelisttjpost({
-          nextpage : that.nextPage_xc
+        .homelistxcpost({
+          type : 2,
+          page : that.nextPage_xc,
+          pageSize : 10
         })
         .then(res => {
+          console.log('res');
+          console.log(res);
           that.$toast.clear();
           that.listloading_xc = false;
           if(res.data.code == 1){
@@ -1129,7 +1134,7 @@ export default {
               setsessionStorage('homelistxcstorerange',homelistxcstorerange);
             } 
 
-            that.nextPage_xc = res.data.data.nextpage;
+            that.nextPage_xc = res.data.data.page;
             setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
             if(that.nextPage_xc  != "") {
               that.listfinished_xc = false;

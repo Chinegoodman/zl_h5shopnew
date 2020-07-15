@@ -61,6 +61,10 @@ const homedetails = {
     homelistfenleizb(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/homepage/goldType`, qs.stringify(params));
     },
+    // 首页秀场列表 ljx
+    homelistxcpost(params) {
+        return axios.get(`${base.yxf2}/v1/show/live/getLiveList?type=${params.type}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
     // 首页新品tab列表 ljx
     homelistxppost(params) {
         return axios.post(`${base.yxf}/wapi/v1/goods/getNewProducts`, qs.stringify(params));
