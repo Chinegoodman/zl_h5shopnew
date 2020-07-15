@@ -54,6 +54,52 @@
                         height:100%;
                     }
                 }
+                .fens-list{
+                    float: right;
+                    margin-right: .2rem;
+                    ul{
+                        zoom: 1;
+                        height: .74rem;
+                        position: relative;
+                        li{
+                            flex: 1;
+                            display: inline-block;
+                            width: .6rem;
+                            height: .74rem;
+                            background-size: cover;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            position: absolute;
+                            top: 0;
+                            span{
+                                display: inline-block;
+                                width: .52rem;
+                                height: .52rem;
+                                padding: 0 .04rem;
+                                margin-top: .18rem;
+                            }
+                            img{
+                                width: 100%;
+                            }
+                        }
+                        li:nth-child(1){
+                            right: 1rem;
+                            z-index: 3;
+                            background-image: url(./../../../../assets/imgs/living/xiudetails/huangguang.png);
+                        }
+                        li:nth-child(2){
+                            right: .5rem;
+                            z-index: 2;
+                            background-image: url(./../../../../assets/imgs/living/xiudetails/silver.png);
+                        }
+
+                        li:nth-child(3){
+                            right: 0;
+                            z-index: 1;
+                            background-image: url(./../../../../assets/imgs/living/xiudetails/qingtong.png);
+                        }
+                    }
+                }
                 .dznameid{
                     float:right;
                     min-width: .8rem;
@@ -62,6 +108,7 @@
                     margin-right: .2rem;
                     background:rgba(0,0,0,.4);
                     border-radius: .3rem;
+                    margin-top: .12rem;
                     cursor: pointer;
                     span{
                         font-weight:500;

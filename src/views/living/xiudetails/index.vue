@@ -37,6 +37,25 @@
             <div class="dznameid" @click.stop="returnfn">
               <span>{{watchcount}}</span>
             </div>
+            <div class="fens-list">
+              <ul>
+                <li>
+                  <span>
+                    <img src="./../../../assets/imgs/living/xiudetails/xiuproduct.png" alt="">
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    <img src="./../../../assets/imgs/living/xiudetails/xiuproduct.png" alt="">
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    <img src="./../../../assets/imgs/living/xiudetails/xiuproduct.png" alt="">
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <!-- 商品与任务 -->
