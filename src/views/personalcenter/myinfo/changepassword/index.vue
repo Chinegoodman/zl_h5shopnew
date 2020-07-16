@@ -12,10 +12,11 @@
             <ul>
                 <li>
                     <input type="text" v-model="code" autocomplete="off" name="input_code" placeholder="获取验证码" />
-                    <span class="code" @click="codeButton" href="code">{{btncodetext}}</span>
+                    <span class="code" @click="dingxiangsdk" href="code">{{btncodetext}}</span>
                 </li>
                 <li><input type="password" name="input_password" v-model="password" autocomplete="off" placeholder="密码长度8-32位，须包含数字、字母、符号于少2种" /></li>
             </ul>
+            <div class="ding-xiang-code" ref="dingxiangcode"></div>
             <span :class="{'save': true,'saved': btncodestatus}" @click="savefrom">确定</span>
         </form>
     </div>
@@ -29,7 +30,8 @@ export default {
             code : '',
             password : '',
             btncodestatus : false,
-            btncodetext : '验证码'
+            btncodetext : '验证码',
+            return_token : ''
         }
     },
     mounted(){
@@ -64,6 +66,29 @@ export default {
         gotoaddresspage() {
             this.$router.push({ name: "personalcenteraddress" });
         },
+        //引入顶象验证sdk
+        dingxiangsdk(){
+            let that = this;
+            let dingxiangcode = that.$refs.dingxiangcode;
+            var myCaptcha = _dx.Captcha(dingxiangcode, {
+                //appId，在控制台中“应用管理”或“应用配置”模块获取
+                appId: '14eb88949244fad2a3da49cab8dd2b9b', 
+                type: 'basic', // <-- 指定为"基础类型"，此参数可省略
+                style: 'popup', // 可省略
+                width: 300, // 可省略
+                success: function (token) {
+                    console.log('token:', token)
+                    that.return_token = token;
+                    setTimeout(function(){
+                    myCaptcha.hide();
+                    //获取验证码
+                    that.codeButton();
+                    },200);
+                }
+            })
+            myCaptcha.reload();
+            myCaptcha.show();
+        },  
         //获取验证码
         getcode(){
             var that = this;
@@ -122,7 +147,8 @@ export default {
             .savepassword_new({
                 userId : that.$store.state.user.userid,
                 verificationCode: that.code,
-                password : that.password
+                password : that.password,
+                token : that.return_token
             }).then(res => {
                 if(res.data.code === 1){
                     that.$toast('修改成功');

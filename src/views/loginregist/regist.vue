@@ -1,4 +1,6 @@
 <!-- 组件说明 -->
+import { setTimeout } from 'timers';
+import func from './vue-temp/vue-editor-bridge';
 import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
@@ -24,9 +26,10 @@ import { clearInterval } from 'timers';
                 <div class="iptbox">
                     <span class="t">验证码</span>
                     <input type="text" v-model="phonecode" placeholder="请输入验证码">
-                    <span @click="getcode" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
+                    <span @click="dingxiangsdk" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
+                <div class="ding-xiang-code" ref="dingxiangcode"></div>
                 <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="loginstart">开始</div>
                 <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
             </div>
@@ -133,7 +136,8 @@ export default {
       setpassword: "", //设置密码
       setpassword2: "", //设置密码2
       loginbtned_state : false,
-      loginbtned_state_ii : false
+      loginbtned_state_ii : false,
+      return_token : ''
     };
   },
   computed: {},
@@ -236,6 +240,29 @@ export default {
       this.setpassword = "";
       this.setpassword2 = "";
     },
+    //引入顶象验证sdk
+    dingxiangsdk(){
+      let that = this;
+      let dingxiangcode = that.$refs.dingxiangcode;
+      var myCaptcha = _dx.Captcha(dingxiangcode, {
+          //appId，在控制台中“应用管理”或“应用配置”模块获取
+          appId: '14eb88949244fad2a3da49cab8dd2b9b', 
+          type: 'basic', // <-- 指定为"基础类型"，此参数可省略
+          style: 'popup', // 可省略
+          width: 300, // 可省略
+          success: function (token) {
+            console.log('token:', token)
+            that.return_token = token;
+            setTimeout(function(){
+              myCaptcha.hide();
+              //获取验证码
+              that.getcode();
+            },200);
+          }
+      })
+      myCaptcha.reload();
+      myCaptcha.show();
+    },
     //手机号验证
     checkPhone(){ 
       let that = this;
@@ -277,24 +304,26 @@ export default {
           that.gettingcodestatustime = 120;
         }
       }, 1000);
+      //获取验证码
       this.api.login
-        .captcha({
-          mobile: that.phonenum,
-          type : 1
-        })
-        .then(data => {
-          that.$toast(data.data.info);
-        });
-      // this.phonecode='模拟填充';
+      .captcha({
+        mobile: that.phonenum,
+        type : 1
+      })
+      .then(data => {
+        that.$toast(data.data.info);
+      });
     },
     // 验证码方式 登录点击事件
     loginstart() {
       let that = this;
+      if(!this.loginbtned_state)return;
       this.api.login
         .login({
           mobile: that.phonenum,
           loginType: 2,
           verificationCode: that.phonecode,
+          // token : that.return_token,
           client:'h5'
         })
         .then(data => {
@@ -304,7 +333,7 @@ export default {
             console.log('data.data.data');
             console.log(data.data.data);
             let userdata = data.data.data;
-            if (userdata.isFirstLogin == 0) {
+            if (userdata.isSetPassword == 0) {
               // 已注册用户
               let user = {
                 isLogin: true,
@@ -317,7 +346,7 @@ export default {
               };
               that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
               // that.$router.push({ name: "shopindex" });
-            } else if (userdata.isFirstLogin == 1) {
+            } else if (userdata.isSetPassword == 1) {
               // 未注册用户  即 新用户
               let user = {
                 isLogin: true,
@@ -617,8 +646,9 @@ export default {
       color : #fff;
     }
     .step2 {
+      margin-top: 1.3rem;
       .iptbox {
-        padding: 0.2rem 0;
+        padding: 0.2rem 0 0.2rem;
         width: 5.68rem;
       // height: 0.78rem;
         box-sizing: border-box;
@@ -772,8 +802,6 @@ export default {
       }
   }
 }
-
-
 .forgetpw {
   float: right;
   margin-right: 0.5rem;
@@ -785,4 +813,8 @@ export default {
 }
 </style>
 
-<style lang='less'>
+<style>  
+  .ding-xiang-code .dx_captcha_basic_link{
+    display: none;
+  }
+</style>

@@ -10,9 +10,10 @@
                 <li><input type="text" name="input_password" v-model="newphone" placeholder="请输入新的手机号" /></li>
                 <li>
                     <input type="text"  v-model="code" name="input_code" value="" placeholder="请输入验证码" />
-                    <span class="code"  @click="codeButton">{{btncodetext}}</span>
+                    <span class="code"  @click="dingxiangsdk">{{btncodetext}}</span>
                 </li>
             </ul>
+            <div class="ding-xiang-code" ref="dingxiangcode"></div>
             <span :class="{'save' : true,'saved' : btnstatusnew==true}" @click="savefrom" >确定</span>
         </form>
     </div>
@@ -27,7 +28,8 @@ export default {
             password : '',
             btncodestatus : true,
             btncodetext : '验证码',
-            btnstatusnew : false
+            btnstatusnew : false,
+            return_token : ''
         }
     },
     mounted(){
@@ -76,6 +78,29 @@ export default {
                 // this.loginbtned_state = true;
                 return true;
             } 
+        },
+        //引入顶象验证sdk
+        dingxiangsdk(){
+            let that = this;
+            let dingxiangcode = that.$refs.dingxiangcode;
+            var myCaptcha = _dx.Captcha(dingxiangcode, {
+                //appId，在控制台中“应用管理”或“应用配置”模块获取
+                appId: '14eb88949244fad2a3da49cab8dd2b9b', 
+                type: 'basic', // <-- 指定为"基础类型"，此参数可省略
+                style: 'popup', // 可省略
+                width: 300, // 可省略
+                success: function (token) {
+                    console.log('token:', token)
+                    that.return_token = token;
+                    setTimeout(function(){
+                    myCaptcha.hide();
+                    //获取验证码
+                    that.codeButton();
+                    },200);
+                }
+            })
+            myCaptcha.reload();
+            myCaptcha.show();
         },
         //获取验证码
         getcode(){
