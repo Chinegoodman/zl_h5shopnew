@@ -326,6 +326,7 @@
         margin:0 auto;
         margin-top:1.93rem;
         border-radius:2rem;
+        cursor: pointer;
     }
     .successtc{
         width: 100%;

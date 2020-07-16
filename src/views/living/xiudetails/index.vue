@@ -30,11 +30,7 @@
               </div>
               <div class="dznamegz" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</div>
             </div>
-            <!-- 投诉建议 -->
-            <!-- <div class="complaints" @click.stop="openComplaintsShell">
-              <img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" />
-            </div> -->
-            <div class="dznameid" @click.stop="returnfn">
+            <div class="dznameid" @click.stop="shellDanChangClick">
               <span>{{watchcount}}</span>
             </div>
             <div class="fens-list">
@@ -146,27 +142,6 @@
                         </li>
                   </ul>
               </div>
-                <!-- <ul class="giftshowbox liStyleGift" v-for="(item,index) in giftmsgList" :key="index">
-                  <li class="gift">
-                    <span class="im"><img :src="item.sendUserInfo.face_url" alt="抓周" /></span>
-                    <div class="txt">
-                      <h3>{{item.sendUserInfo.name}}</h3>
-                      <span>送出{{item.giftContent.giftName}}</span>
-                    </div>
-                    <span class="giftic">
-                      <img :src="item.giftContent.giftIcon">
-                    </span>
-                    <span class="giftnum">
-                      <span class="cheng">
-                        <img src="./../../../assets/imgs/living/details/lift/X.png" alt="抓周" />
-                      </span>
-                      <span class="num">
-                        {{item.giftContent. giftCount}}
-                        <!-- <img :src="item.giftContent. giftCount" alt="抓周" /> 
-                      </span>
-                    </span>
-                  </li>
-                </ul> -->
               <div class="msgboxwrap" v-for="(item,index) in messageList" :key="index">
                 <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
                     <!-- <p class="name" v-if="!item.comename">{{item.name}}：</p> -->
@@ -207,7 +182,7 @@
             <div class="close" @click.stop="returnprevpage">
               <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
             </div>
-            <div class="chatgd">
+            <div class="chatgd" @click.stop="moreClick">
               <img src="./../../../assets/imgs/living/details/gengduo.png" alt />
             </div>
             <div class="chatxin">
@@ -364,6 +339,108 @@
         </div>
     </div>
     <!-- 投诉建议弹层end -->
+    <!-- 更多弹层start -->
+    <div class="moreboxfixed" v-if="moreboxshellstate">
+      <div class="moreboxcover" @click="closeMoreClick"></div>
+      <div class="moreboxcontent">
+        <ul>
+          <li>
+            <img src="./../../../assets/imgs/living/xiudetails/fx.png" alt />
+            <span class="t">分享</span>
+          </li>
+          <li @click.stop="openComplaintsShell">
+            <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+            <span class="t">投诉</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 更多弹层end -->
+    <!-- 单层榜单弹层start -->
+    <div class="shelldanchang" v-if="shelldanchangstate" >
+      <div class="danchangcover" @click="closeDanChangClick"></div>
+      <div class="danchangcontent">
+        <div class="tit">
+          <span>在线用户</span>
+          <span>本场榜</span>
+        </div>
+        <div class="list"> 
+          <ul>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+            <li>
+              <span class="hd">
+                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
+              </span>
+              <div class="rt">
+                <span class="tit">想见你，想见你</span>
+                <span class="lv">01</span>
+                <span class="num">52410</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- 单层榜单end -->
   </div>
 </template>
 

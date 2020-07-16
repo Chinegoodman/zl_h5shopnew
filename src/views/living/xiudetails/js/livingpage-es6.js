@@ -32,6 +32,10 @@ export default {
             confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
 
             goodsList: [], //直播间的商品列表
+            giftList: [], //礼物列表
+            topgiftList: [],
+            moreboxshellstate: false, //更多弹层flag
+            shelldanchangstate: false, //单场榜弹层显示flag
             // currentgood:[],//当前商品【只有一条商品】
 
             controlstatus: false, //管理员权限弹窗
@@ -362,6 +366,8 @@ export default {
         });
 
         this.getgoodsList();
+        this.getgiftList();
+        this.gettopgiftList();
 
         // TIM相关=================================开始
         // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
@@ -486,6 +492,51 @@ export default {
                     })
             }
         },
+        //获取礼物排名
+        gettopgiftList() {
+            let that = this;
+            this.api.xiuchangliving
+                .topgiftList({
+                    liveId: that.livinglidata.id,
+                    page: 1,
+                    pageSize: 3
+                })
+                .then(res => {
+                    console.log('res.data06');
+                    console.log(res.data);
+                    if (res.data.code == 1) {
+                        if (
+                            res.data.data.list != null ||
+                            res.data.data.list != undefined ||
+                            res.data.data.list != ""
+                        ) {
+                            that.topgiftList = res.data.data.list;
+                        } else {
+                            that.topgiftList = [];
+                        }
+                    }
+                })
+        },
+        //获取礼物列表
+        getgiftList() {
+            let that = this;
+            this.api.xiuchangliving
+                .giftList({})
+                .then(res => {
+                    if (res.data.code == 1) {
+                        if (
+                            res.data.data.list != null ||
+                            res.data.data.list != undefined ||
+                            res.data.data.list != ""
+                        ) {
+                            that.goodsList = res.data.data.list;
+                        } else {
+                            that.goodsList = [];
+                        }
+                    }
+                })
+
+        },
         // 直播间商品列表
         getgoodsList() {
             let that = this;
@@ -495,7 +546,6 @@ export default {
                     liveId: that.livinglidata.id
                 })
                 .then(res => {
-                    // console.log(res.data);
                     if (res.data.code == 1) {
                         if (
                             res.data.data.list != null ||
@@ -1239,7 +1289,7 @@ export default {
         },
         closeComplaintsShellShow() {
             this.complaintsShellShow = false;
-            this.complaintsShellShow = '';
+            this.livingToComplaintsFlag = '';
         },
         //投诉建议===============结束===================================
         //以下区间为点赞 start===========================================
@@ -1406,8 +1456,22 @@ export default {
             var c = document.getElementById("bubble");
             var cxt = c.getContext("2d");
             cxt.clearRect(0, 0, that.width, that.height);
-        }
+        },
         //以下区间为点赞 end  
+        //点击弹出更多
+        moreClick() {
+            this.moreboxshellstate = true;
+        },
+        //关闭更多弹层
+        closeMoreClick() {
+            this.moreboxshellstate = false;
+        },
+        shellDanChangClick() {
+            this.shelldanchangstate = true;
+        },
+        closeDanChangClick() {
+            this.shelldanchangstate = false;
+        }
     },
 
     beforeCreate() {

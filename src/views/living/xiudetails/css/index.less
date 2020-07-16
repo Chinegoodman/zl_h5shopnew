@@ -586,7 +586,8 @@
                         width: 0.8rem;
                         height: 0.8rem;
                         margin-left: 0.2rem;
-    
+                        position: relative;
+                        
                         img {
                             width: 100%;
                             height: 100%;
@@ -1205,7 +1206,180 @@
             }
         }
     }
+    .shelldanchang{
+        width: 7.5rem;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        right: 0;
+        top: 0;
+        z-index: 10001;
+        .danchangcover{
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10002;
+            cursor: pointer;
+        }
+        .danchangcontent{
+            width: 7.5rem;
+            background: rgba(255, 255, 255,1);
+            border-radius: .3rem .3rem 0 0;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 10003;
+            .tit{
+                display: flex;
+                height: .88rem;
+                span{
+                    flex: 1;
+                    line-height:.36rem;
+                    padding: .28rem;
+                    font-size: .34rem;
+                    text-align: center;
+                    font-family:PingFang SC;
+                    font-weight:500;
+                    color:rgba(255,189,79,1);
+                    
+                }
+            }
+        }
+    }
+    .list{
+        ul{
+            li{
+                position: relative;
+                min-height: 1.1rem;
+                padding-bottom: .3rem;
+                border-radius: 50%;
+                .hd{
+                    display: inline-block;
+                    width: .8rem;
+                    height: .8rem;
+                    position: absolute;
+                    left: .2rem;
+                    top:  0.05rem;
+                    img{
+                        width: 100%;
+                    }
+                }
+                .rt{
+                    padding-left: 1.2rem;
+                    .tit{
+                        display: inline-block;
+                        height: .8rem;
+                        line-height: .8rem;
+                        font-size: .28rem;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(31,31,31,1);
+                        
+                        }
+                    .lv{
+                        display: inline-block;
+                        width: .94rem;
+                        height: .34rem;
+                        margin-left: .2rem;
+                        text-align: center;
+                        color: #ffffff;
+                        background-image: url(./../../../../assets/imgs/living/xiudetails/lv.png);
+                        background-size: .94rem .34rem;
+                        background-position: left center;
+                        background-repeat: no-repeat;
+                    }
+                    .num{
+                        padding-left: .36rem;
+                        font-size: .28rem;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(31,31,31,1);
+                        background-image: url(./../../../../assets/imgs/living/xiudetails/jbsc.png);
+                        background-size: .26rem .26rem;
+                        background-position: left center;
+                        background-repeat: no-repeat;
+                        position: absolute;
+                        right: .2rem;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                }
+            }
+            li:nth-child(1){
+                background: url(./../../../../assets/imgs/living/xiudetails/huangguang.png) no-repeat left center;
+                background-size: 100% 100%;
+            }
+            li:nth-child(2){
+                background: url(./../../../../assets/imgs/living/xiudetails/silver.png) no-repeat left center;
+                background-size: 100% 100%;
+            }
+            li:nth-child(3){
+                background: url(./../../../../assets/imgs/living/xiudetails/qingtong.png) no-repeat left center;
+                background-size: 100% 100%;
+            }
+        }
+    }
     
+    .moreboxfixed{
+        width: 7.5rem;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        right: 0;
+        top: 0;
+        z-index: 10001;
+        .moreboxcover{
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10002;
+            cursor: pointer;
+        }
+        .moreboxcontent{
+            width: 7.5rem;
+            height: 2.32rem;
+            background: rgba(255, 255, 255,1);
+            border-radius: .3rem .3rem 0 0;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 10003;
+            ul{
+                padding: .75rem 0 0 0;
+                display: flex;
+                li{
+                    width: .8rem;
+                    padding-left: .5rem;
+                    cursor: pointer;
+                    img{
+                        display: block;
+                        width: .8rem;
+                        height: .8rem;
+                    }
+                    .t{
+                        display: block;
+                        font-size: .2rem;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(31,31,31,1);
+                        text-align: center;
+                        margin-top: .1rem;
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*complaints css start*/
@@ -1217,7 +1391,7 @@
     right: 0;
     bottom: 0;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 10005;
     .complaints-cover{
         width: 7.5rem;
         top: 0;
@@ -1226,6 +1400,7 @@
         right: 0;
         bottom: 0;
         background: rgba(0,0,0,.7);
+        cursor: pointer;
     }
     .complaints-content{
         width: 7.5rem;
