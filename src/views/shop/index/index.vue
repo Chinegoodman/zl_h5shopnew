@@ -677,12 +677,13 @@ export default {
     gotoxiuchangdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
-      setsessionStorage("livinglidata-xiu", paramsdata);
+      // setsessionStorage("livinglidata-xiu", paramsdata);
       if(paramsdata.state==1){
         this.$router.push({
           path: "/living/xiuchangdetails",
           query : {
-            tab : that.list_content_show_type
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
           }
         });
       }  

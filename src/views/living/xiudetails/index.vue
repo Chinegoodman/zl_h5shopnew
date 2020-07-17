@@ -361,83 +361,66 @@
       <div class="danchangcover" @click="closeDanChangClick"></div>
       <div class="danchangcontent">
         <div class="tit">
-          <span>在线用户</span>
-          <span>本场榜</span>
+           <van-tabs v-model="active">
+            <van-tab
+              :title="tit.category_name"
+              v-for="(tit, index) in titlist"
+              :key="index"
+            >
+              <div class="tab-title" slot="title" @click="titleclick(tit.tabindex)" >{{tit.category_name}}</div>
+            </van-tab>
+          </van-tabs> 
         </div>
-        <div class="list"> 
-          <ul>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
+          <div class="list-wrap" v-show="list_datatype==0">
+            <van-list
+            class="list"
+            v-model="listloading"
+            :finished="listfinished"
+            :finished-text="finished_text"
+            :error.sync="vanerror"
+            error-text="请求失败，点击重新加载"
+            :offset="10">
+              <div class="li"
+                    v-for="(item,index) in onlinesList"
+                    :key="index"
+                    :id="item.liveId"
+              >
+                <span class="hd">
+                  <img :src="item.avatar" alt />
+                </span>
+                <div class="rt">
+                  <span class="tit">{{item.nickName}}</span>
+                  <span class="lv">{{item.level}}</span>
+                  <span class="num">{{item.level}}</span>
+                </div>
               </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-            <li>
-              <span class="hd">
-                <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
-              </span>
-              <div class="rt">
-                <span class="tit">想见你，想见你</span>
-                <span class="lv">01</span>
-                <span class="num">52410</span>
-              </div>
-            </li>
-          </ul>
-        </div>
+              </van-list>
+            </div>
+            <div class="list-wrap" v-show="list_datatype==1">
+              <van-list
+              class="list"
+              v-model="listloading_ben"
+              :finished="listfinished_ben"
+              :finished-text="finished_text_ben"
+              :error.sync="vanerror_ben"
+              error-text="请求失败，点击重新加载"
+              :offset="10">
+                <div class="li"
+                      v-for="(item,index) in topListByList"
+                      :key="index"
+                      :id="item.userId"
+                >
+                  <span class="hd">
+                    <img :src="item.avatar" alt />
+                  </span>
+                  <div class="rt">
+                    <span class="tit">{{item.nickName}}</span>
+                    <span class="lv">{{item.level}}</span>
+                    <span class="num">{{item.count}}</span>
+                  </div>
+                </div>
+                </van-list>
+            </div>  
       </div>
     </div>
     <!-- 单层榜单end -->
@@ -657,4 +640,26 @@
             transform: scale(.5)
         }
     }
+
+    .danchangcontent .tit .van-tabs{
+      width : 100%;
+    }
+    .danchangcontent .tit .van-tabs--line .van-tabs__wrap{
+      height: .88rem;
+    }
+    .danchangcontent .tit  .van-tab{
+      // height: .5rem;
+      // line-height : .5rem;
+      font-size: .34rem;
+      font-family:PingFang SC;
+      font-weight:500;
+      color:rgba(31,31,31,1);
+    }
+    .danchangcontent .tit .van-tab--active{
+      color:rgba(255,189,79,1);
+    }
+    .danchangcontent .tit .van-tabs__line{
+      background:rgba(255,189,4,1);
+    }
+    
 </style>

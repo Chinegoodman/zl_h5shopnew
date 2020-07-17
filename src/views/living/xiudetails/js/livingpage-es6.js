@@ -9,14 +9,68 @@ import Player from "xgplayer";
 import FlvPlayer from "xgplayer-flv";
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
+import {
+    //   AddressEdit,
+    //   Area,
+    //   Calendar,
+    //   Checkbox,
+    //   CheckboxGroup,
+    //   CountDown,
+    //   DatetimePicker,
+    //   Dialog,
+    //   DropdownItem,
+    //   Form,
+    //   Field,
+    //   ImagePreview,
+    //   Locale,
+    //   Notify,
+    //   Picker,
+    //   Sku,
+    //   SwipeCell,
+    // ====项目中可能用到的===
+    //  Uploader,
+    Tab,
+    Tabs,
+    List,
+    // Lazyload,
+    // ====项目中可能用到的===
+    // Toast,
+    // Loading,
+    // Swipe,
+    // SwipeItem
+} from 'vant'
+
 export default {
     name: "livingxiudetails",
     components: {
-        complaints
+        complaints,
+        vanTab: Tab,
+        vanTabs: Tabs,
+        vanList: List
     },
     data() {
         return {
             livinglidata: "",
+            liveId: '',
+            active: '', //直播间榜单tab切换当前个
+            titlist: [ //直播间榜单tab标题数组
+                {
+                    category_name: "在线用户",
+                    tabindex: 0
+                },
+                {
+                    category_name: "本场榜",
+                    tabindex: 1
+                }
+            ],
+            listloading: false, //在线用户vantlist加载
+            listfinished: false,
+            finished_text: '',
+            vanerror: false,
+            listloading_ben: false, //本场棒vantlist加载
+            listfinished_ben: false,
+            finished_text_ben: '',
+            vanerror_ben: false,
             watchcount: 0, //直播观看人数
             countchangetimer: null,
             // livingurl:'http://liveali.ifeng.com/live/CCTV.m3u8',//直播地址
@@ -33,7 +87,13 @@ export default {
 
             goodsList: [], //直播间的商品列表
             giftList: [], //礼物列表
-            topgiftList: [],
+            topgiftList: [], //前三排列列表
+            onlinesList: [], //在线人数列表
+            list_datatype: 0, //点击在线人数弹出层列表的数据展示列表类型
+            hasmorepage: 1, //是第一页还是多页后无数据区分  1为初始无数据 2为下拉之后无更多
+            nextpage: 1, //在线人数分页
+            nextPage_ben: 1, //本场榜分布
+            topListByList: [], //直播间礼物榜单-本场榜
             moreboxshellstate: false, //更多弹层flag
             shelldanchangstate: false, //单场榜弹层显示flag
             // currentgood:[],//当前商品【只有一条商品】
@@ -211,179 +271,179 @@ export default {
         }
     },
     mounted() {
-        this.livinglidata = getsessionStorage("livinglidata-xiu");
-        console.log('this.livinglidata');
-        console.log(this.livinglidata);
-
-
-        // this.quitGroup();
-        // 0 普通级别，日志量较多，接入时建议使用
-        // 1 release级别，SDK 输出关键信息，生产环境时建议使用
-        // 2 告警级别，SDK 只输出告警和错误级别的日志
-        // 3 错误级别，SDK 只输出错误级别的日志
-        // 4 无日志级别，SDK 将不打印任何日志
-        this.tim.setLogLevel(3); //IM日志级别
-        this.logoutfn();
-        // this.player.destroy(true);
-        this.joinOrLeaveRoom(1); //加入群聊  后台的接口
-
-        //是否关注直播
-        this.follow();
-
-        // 直播相关
+        // this.livinglidata = getsessionStorage("livinglidata-xiu");
+        // console.log('this.livinglidata');
+        // console.log(this.livinglidata);
+        //获取直播间详情
         let that = this;
-        // console.log(that.livinglidata.streamAddrHls);
-        // console.log(checkdevice());
+        that.liveId = that.$route.query.liveId;
+        that.getLiveDetailInfo(that.liveId, function() {
+            // this.quitGroup();
+            // 0 普通级别，日志量较多，接入时建议使用
+            // 1 release级别，SDK 输出关键信息，生产环境时建议使用
+            // 2 告警级别，SDK 只输出告警和错误级别的日志
+            // 3 错误级别，SDK 只输出错误级别的日志
+            // 4 无日志级别，SDK 将不打印任何日志
+            that.tim.setLogLevel(3); //IM日志级别
+            that.logoutfn();
+            // this.player.destroy(true);
+            that.joinOrLeaveRoomXC(1); //加入群聊  后台的接口
 
-        //轮询直播观看人数与点赞数
-        that.getLivingPersonAndpraisePoint();
-        that.countchangetimer = setInterval(function() {
-            that.getLivingPersonAndpraisePoint();
-        }, 5000);
+            //是否关注直播
+            that.follow();
 
-        if (
-            checkdevice() == "weixin" ||
-            checkdevice() == "anzhuo" ||
-            checkdevice() == "ios"
-        ) {
-            that.player = new Player({
-                //解除注释 m3u8方法
-                id: "videodom",
-                // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
-                // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8", //m3u8
-                url: that.livinglidata.streamAddrHls + ".m3u8", //m3u8
-                //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
-                // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
-                //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
-                // url: 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8',//IPHONE测试
-                // url: 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8',//cctv13测试
-                // url: 'http://app.inke.com/inke/v/video.mp4',//MP4视频
-                // cssFullscreen: false,//网页样式全屏
-                playsinline: true,
-                "x5-video-player-type": "h5", //微信同层播放
-                "x5-video-orientation": "portraint",
-                "x5-video-player-fullscreen": true, //微信全屏播放
-                width: that.wdwidth,
-                height: that.wdheight,
-                // autoplay: true,
-                // autoplayMuted: true,
-                // videoInit: true,//初始化显示视频首帧
-                poster: that.livinglidata.cover, //封面图是当播放器初始化后在用户点击播放按钮前显示的图像。
-                ignores: ["fullscreen", "volume", "play"], //volume 量控制  progress 视频进度条  play控制条的播放、暂停按钮  loading加载提示  fullscreen全屏切换 error报错提示  time当前播放时间/视频时长  replay重播交互与提示
-                closeVideoClick: true,
-                closeVideoDblclick: true,
-                closeVideoTouch: true,
+            // 直播相关
 
-                autoplay: true,
-                // autoplayMuted: true,
-                preloadTime: 5, //预加载时长(秒)	30
-                isLive: true,
-                cors: true
-            });
-        } else if (checkdevice() == "pc") {
-            that.player = new FlvPlayer({
-                //解除注释 flv方法
-                id: "videodom",
-                // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
-                // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
-                //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
-                //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
-                // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
-                //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
-                // url: 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8',//IPHONE测试
-                // url: 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8',//cctv13测试
-                // url: 'http://app.inke.com/inke/v/video.mp4',//MP4视频
-                // cssFullscreen: false,//网页样式全屏
-                "x5-video-player-type": "h5", //微信同层播放
-                "x5-video-player-fullscreen": true, //微信全屏播放
-                width: that.wdwidth,
-                height: that.wdheight,
-                // autoplay: true,
-                // autoplayMuted: true,
-                // videoInit: true,//初始化显示视频首帧
-                poster: that.livinglidata.cover, //封面图是当播放器初始化后在用户点击播放按钮前显示的图像。
-                ignores: ["fullscreen", "volume", "play"], //volume 量控制  progress 视频进度条  play控制条的播放、暂停按钮  loading加载提示  fullscreen全屏切换 error报错提示  time当前播放时间/视频时长  replay重播交互与提示
-                closeVideoClick: true,
-                closeVideoDblclick: true,
-                closeVideoTouch: true,
+            //轮询直播观看人数与点赞数
+            that.getXiuChangLivingUserAndPraise();
+            that.countchangetimer = setInterval(function() {
+                that.getXiuChangLivingUserAndPraise();
+            }, 5000);
+            if (
+                checkdevice() == "weixin" ||
+                checkdevice() == "anzhuo" ||
+                checkdevice() == "ios"
+            ) {
+                that.player = new Player({
+                    //解除注释 m3u8方法
+                    id: "videodom",
+                    // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
+                    // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
+                    // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8", //m3u8
+                    url: that.livinglidata.streamAddrHls, //m3u8
+                    //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
+                    // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
+                    //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
+                    // url: 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8',//IPHONE测试
+                    // url: 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8',//cctv13测试
+                    // url: 'http://app.inke.com/inke/v/video.mp4',//MP4视频
+                    // cssFullscreen: false,//网页样式全屏
+                    playsinline: true,
+                    "x5-video-player-type": "h5", //微信同层播放
+                    "x5-video-orientation": "portraint",
+                    "x5-video-player-fullscreen": true, //微信全屏播放
+                    width: that.wdwidth,
+                    height: that.wdheight,
+                    // autoplay: true,
+                    // autoplayMuted: true,
+                    // videoInit: true,//初始化显示视频首帧
+                    poster: that.livinglidata.cover, //封面图是当播放器初始化后在用户点击播放按钮前显示的图像。
+                    ignores: ["fullscreen", "volume", "play"], //volume 量控制  progress 视频进度条  play控制条的播放、暂停按钮  loading加载提示  fullscreen全屏切换 error报错提示  time当前播放时间/视频时长  replay重播交互与提示
+                    closeVideoClick: true,
+                    closeVideoDblclick: true,
+                    closeVideoTouch: true,
 
-                autoplay: true,
-                // autoplayMuted: true,
-                isLive: true,
-                cors: true
-            });
-        }
+                    autoplay: true,
+                    // autoplayMuted: true,
+                    preloadTime: 30, //预加载时长(秒)	30
+                    isLive: true,
+                    cors: true
+                });
+            } else if (checkdevice() == "pc") {
+                that.player = new FlvPlayer({
+                    //解除注释 flv方法
+                    id: "videodom",
+                    // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
+                    url: that.livinglidata.streamAddrFlv, //flv
+                    // url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
+                    // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
+                    //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
+                    //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
+                    // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
+                    //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
+                    // url: 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8',//IPHONE测试
+                    // url: 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8',//cctv13测试
+                    // url: 'http://app.inke.com/inke/v/video.mp4',//MP4视频
+                    // cssFullscreen: false,//网页样式全屏
+                    "x5-video-player-type": "h5", //微信同层播放
+                    "x5-video-player-fullscreen": true, //微信全屏播放
+                    width: that.wdwidth,
+                    height: that.wdheight,
+                    // autoplay: true,
+                    // autoplayMuted: true,
+                    // videoInit: true,//初始化显示视频首帧
+                    poster: that.livinglidata.cover, //封面图是当播放器初始化后在用户点击播放按钮前显示的图像。
+                    ignores: ["fullscreen", "volume", "play"], //volume 量控制  progress 视频进度条  play控制条的播放、暂停按钮  loading加载提示  fullscreen全屏切换 error报错提示  time当前播放时间/视频时长  replay重播交互与提示
+                    closeVideoClick: true,
+                    closeVideoDblclick: true,
+                    closeVideoTouch: true,
 
-        that.$toast.loading("视频正在加载中。。。。");
-        // 播放器异常事件
-        // 直播结束
-        that.player.on("ended", function() {
-            console.log("视频 ended");
-            that.canplaythroughstatus = false;
-            that.livingendstatus = false;
-        });
-        // 直播错误
-        that.player.on("error", function() {
-            console.log("视频 error");
-            that.canplaythroughstatus = false;
-            if (that.reloadtimes <= 15) { //30*2=60秒后
-                setTimeout(() => {
-                    that.reloadtimes = that.reloadtimes + 1;
-                    // that.player.start();
-                    // that.player.play();
-                    that.player.reload();
-                }, 2000);
-            } else {
-                // alert(111);
-                that.player.destroy(true);
-                window.location.reload();
+                    autoplay: true,
+                    // autoplayMuted: true,
+                    preloadTime: 30, //预加载时长(秒)	30
+                    isLive: true,
+                    cors: true
+                });
             }
+
+            that.$toast.loading("视频正在加载中。。。。");
+            // 播放器异常事件
+            // 直播结束
+            that.player.on("ended", function() {
+                console.log("视频 ended");
+                that.canplaythroughstatus = false;
+                that.livingendstatus = false;
+            });
+            // 直播错误
+            that.player.on("error", function() {
+                console.log("视频 error");
+                that.canplaythroughstatus = false;
+                if (that.reloadtimes <= 15) { //30*2=60秒后
+                    setTimeout(() => {
+                        that.reloadtimes = that.reloadtimes + 1;
+                        // that.player.start();
+                        // that.player.play();
+                        that.player.reload();
+                    }, 2000);
+                } else {
+                    // alert(111);
+                    that.player.destroy(true);
+                    window.location.reload();
+                }
+            });
+            // seek播放
+            that.player.on("seeking", function() {
+                // console.log("seek播放");
+            });
+            // seek播放结束
+            that.player.on("seeked", function() {
+                // console.log("seek播放结束");
+            });
+            // 等待加载数据
+            that.player.on("waiting", function() {
+                console.log("等待加载数据");
+                that.canplaythroughstatus = false;
+            });
+            // 视频可以播放
+            that.player.on("canplay", function() {
+                // console.log("视频可以播放");
+            });
+            // 视频可以流畅播放
+            that.player.on("canplaythrough", function() {
+                console.log("视频可以流畅播放");
+                that.$toast.clear();
+                that.canplaythroughstatus = true;
+            });
+
+            that.getgoodsList();
+            // that.getgiftList();
+            that.gettopgiftList();
+
+            // TIM相关=================================开始
+            // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
+            // let tim = Tim.create(options); // SDK 实例通常用 tim 表示
+            // 注册 COS SDK 插件
+            that.tim.registerPlugin({ "cos-js-sdk": COS });
+            that.loginfn();
+
+            // TIM相关=================================结束
+
+            //点赞
+            that.obj_canvas = document.getElementById("bubble");
+            that.obj_ctx = that.obj_canvas.getContext("2d");
+
+
         });
-        // seek播放
-        that.player.on("seeking", function() {
-            // console.log("seek播放");
-        });
-        // seek播放结束
-        that.player.on("seeked", function() {
-            // console.log("seek播放结束");
-        });
-        // 等待加载数据
-        that.player.on("waiting", function() {
-            console.log("等待加载数据");
-            that.canplaythroughstatus = false;
-        });
-        // 视频可以播放
-        that.player.on("canplay", function() {
-            // console.log("视频可以播放");
-        });
-        // 视频可以流畅播放
-        that.player.on("canplaythrough", function() {
-            console.log("视频可以流畅播放");
-            that.$toast.clear();
-            that.canplaythroughstatus = true;
-        });
-
-        this.getgoodsList();
-        this.getgiftList();
-        this.gettopgiftList();
-
-        // TIM相关=================================开始
-        // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
-        // let tim = Tim.create(options); // SDK 实例通常用 tim 表示
-        // 注册 COS SDK 插件
-        this.tim.registerPlugin({ "cos-js-sdk": COS });
-        this.loginfn();
-
-        // TIM相关=================================结束
-
-        //点赞
-        that.obj_canvas = document.getElementById("bubble");
-        that.obj_ctx = that.obj_canvas.getContext("2d");
-
-
-
     },
     methods: {
         // 阻止冒泡
@@ -492,12 +552,159 @@ export default {
                     })
             }
         },
+        //获取直播间详情
+        getLiveDetailInfo(liveId, fn) {
+            let that = this;
+            this.api.xiuchangliving
+                .getXiuChangLiveInfo({
+                    liveId: liveId,
+                })
+                .then(res => {
+                    console.log('res.data08');
+                    console.log(res.data);
+                    if (res.data.code == 1) {
+                        if (
+                            res.data.data != null ||
+                            res.data.data != undefined ||
+                            res.data.data != ""
+                        ) {
+                            setTimeout(fn, 500);
+                            that.livinglidata = res.data.data;
+                        } else {
+                            that.livinglidata = [];
+                        }
+                    }
+                })
+        },
+        //直播间在线用户与本场榜tab切换
+        titleclick(index) {
+            let that = this;
+            that.active = index;
+            console.log(index);
+            that.list_datatype = index;
+            that.finished_text = '';
+            that.finished_text_ben = '';
+            that.onlinesList = [];
+            that.topListByList = [];
+            that.nextpage = 1;
+            that.nextPage_ben = 1;
+            that.hasmorepage = 1;
+            if (index == 0) {
+                that.getOnlines();
+            } else {
+                that.getTopListByLive();
+            }
+        },
+        //在线人数列表
+        getOnlines() {
+            let that = this;
+            that.$toast.loading({
+                message: "加载中...",
+                forbidClick: true,
+                duration: 200000
+            });
+            this.api.xiuchangliving
+                .liveOnLines({
+                    liveId: that.liveId,
+                    page: that.nextpage,
+                    pageSize: 20
+                })
+                .then(res => {
+                    that.$toast.clear();
+                    that.listloading = false;
+                    console.log('res.data06在线人数列表');
+                    console.log(res.data);
+                    if (res.data.code == 1) {
+                        that.nextpage = res.data.data.page;
+                        if (that.nextPage == res.data.data.totalPage && that.onlinesList != []) {
+                            that.listfinished = true;
+                            that.listloading = false;
+                            that.finished_text = '亲~已经到底了';
+                            return;
+                        }
+                        if (res.data.data.list && res.data.data.list.length > 0) {
+                            // that.nodatashow = false;
+                            that.hasmorepage = 2;
+                            res.data.data.list.forEach(e => {
+                                that.onlinesList.push(e);
+                            });
+                        }
+                        if (that.nextpage != res.data.data.totalPage) {
+                            that.listfinished = false;
+                            that.listloading = false;
+                        } else {
+                            if (that.hasmorepage === 1) {
+                                // that.nodatashow = true;
+                            } else {
+                                that.listloading = false;
+                                that.finished_text = '亲~已经到底了';
+                            }
+                            that.listfinished = true;
+                        }
+                        that.$forceUpdate();
+                        that.$toast.clear();
+                    }
+                })
+        },
+        //本场榜列表
+        getTopListByLive() {
+            let that = this;
+            that.$toast.loading({
+                message: "加载中...",
+                forbidClick: true,
+                duration: 200000
+            });
+            this.api.xiuchangliving
+                .topgiftList({
+                    liveId: that.liveId,
+                    page: that.nextPage_ben,
+                    pageSize: 20
+                })
+                .then(res => {
+                    that.$toast.clear();
+                    that.listloading_ben = false;
+                    console.log('res.data06直播间礼物榜单');
+                    console.log(res.data);
+                    that.nextPage_ben = res.data.data.page;
+                    if (that.nextPage_ben == res.data.data.totalPage && that.topListByList != []) {
+                        that.listfinished_ben = true;
+                        that.listloading_ben = false;
+                        that.finished_text_ben = '亲~已经到底了';
+                        console.log(that.topListByList);
+                        return;
+                    }
+                    if (res.data.data.list && res.data.data.list.length > 0) {
+                        // that.nodatashow = false;
+                        that.hasmorepage = 2;
+                        res.data.data.list.forEach(e => {
+                            that.topListByList.push(e);
+                        });
+                    }
+                    if (that.nextPage_ben != res.data.data.totalPage) {
+                        that.listfinished_ben = false;
+                        that.listloading_ben = false;
+                    } else {
+                        if (that.hasmorepage === 1) {
+                            // that.nodatashow = true;
+                            that.listloading_ben = false;
+                            that.finished_text_ben = '暂时没有榜单哦';
+                        } else {
+                            that.listloading_ben = false;
+                            that.finished_text_ben = '亲~已经到底了';
+                        }
+                        that.listfinished_ben = true;
+                    }
+                    that.nextPage_ben++;
+                    that.$forceUpdate();
+                    that.$toast.clear();
+                })
+        },
         //获取礼物排名
         gettopgiftList() {
             let that = this;
             this.api.xiuchangliving
                 .topgiftList({
-                    liveId: that.livinglidata.id,
+                    liveId: that.liveId,
                     page: 1,
                     pageSize: 3
                 })
@@ -520,7 +727,7 @@ export default {
         //获取礼物列表
         getgiftList() {
             let that = this;
-            this.api.xiuchangliving
+            that.api.xiuchangliving
                 .giftList({})
                 .then(res => {
                     if (res.data.code == 1) {
@@ -543,7 +750,7 @@ export default {
             this.api.living
                 .goodsList({
                     operatorId: that.livinglidata.uid,
-                    liveId: that.livinglidata.id
+                    liveId: that.liveId
                 })
                 .then(res => {
                     if (res.data.code == 1) {
@@ -702,12 +909,13 @@ export default {
         },
 
         // 加入或者离开直播间
-        joinOrLeaveRoom(inorout) {
+        joinOrLeaveRoomXC(inorout) {
             let that = this;
-            this.api.living.joinOrLeaveRoom({
-                uid: that.$store.state.user.userid,
-                touid: that.livinglidata.uid,
-                flag: inorout, //0离开 1 加入
+            this.api.xiuchangliving.joinXiuChangOrLeaveRoom({
+                userId: that.$store.state.user.userid,
+                liveId: that.liveId,
+                // touid: that.livinglidata.uid,
+                type: inorout, //0离开 1 加入
             }).then(res => {
                 console.log(res);
             })
@@ -1096,7 +1304,7 @@ export default {
                     console.warn("退出群聊 error:", imError); // 退出群组失败的相关信息
                 });
 
-            // that.joinOrLeaveRoom(0); //加入群聊  后台的接口
+            // that.joinOrLeaveRoomXC(0); //加入群聊  后台的接口
         },
         //礼物相关 start
         getgiftdata(data) {
@@ -1294,18 +1502,17 @@ export default {
         //投诉建议===============结束===================================
         //以下区间为点赞 start===========================================
         //轮询直播观看人数与点赞数
-        getLivingPersonAndpraisePoint() {
+        getXiuChangLivingUserAndPraise() {
             let that = this;
-            this.api.living
-                .getLivingUserAndPraise({
-                    liveId: that.livinglidata.id,
-                    uid: that.livinglidata.uid
+            that.api.xiuchangliving
+                .XiuChangLivingUserAndPraise({
+                    liveId: that.liveId
+                        // uid: that.livinglidata.uid
                 })
                 .then(res => {
-                    // console.log(res.data);
                     if (res.data.code == 1) {
-                        that.watchcount = res.data.data.userNum;
-                        that.praiseCount = res.data.data.continuePraiseNum;
+                        that.watchcount = res.data.data.realCount;
+                        that.praiseCount = res.data.data.praise;
                     }
                 })
         },
@@ -1316,10 +1523,10 @@ export default {
             that.timtxt = '给主播点了赞';
             that.txtpost();
 
-            this.api.living
-                .getLivingPraisePoint({
-                    anchorId: that.livinglidata.uid,
-                    flag: that.isFirst == 1 ? 2 : 1
+            this.api.xiuchangliving
+                .getXiuChuangLivingPraisePoint({
+                    liveId: that.liveId
+                        // flag: that.isFirst == 1 ? 2 : 1
                 })
                 .then(res => {
                     if (res.data.code == 1) {
@@ -1467,7 +1674,9 @@ export default {
             this.moreboxshellstate = false;
         },
         shellDanChangClick() {
-            this.shelldanchangstate = true;
+            let that = this;
+            that.shelldanchangstate = true;
+            // that.getOnlines();
         },
         closeDanChangClick() {
             this.shelldanchangstate = false;
