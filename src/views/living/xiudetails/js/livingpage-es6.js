@@ -9,6 +9,7 @@ import Player from "xgplayer";
 import FlvPlayer from "xgplayer-flv";
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
+import viplevel from '@/components/viplevel.vue'
 import {
     //   AddressEdit,
     //   Area,
@@ -44,6 +45,7 @@ export default {
     name: "livingxiudetails",
     components: {
         complaints,
+        viplevel,
         vanTab: Tab,
         vanTabs: Tabs,
         vanList: List
@@ -666,13 +668,6 @@ export default {
                     console.log('res.data06直播间礼物榜单');
                     console.log(res.data);
                     that.nextPage_ben = res.data.data.page;
-                    if (that.nextPage_ben == res.data.data.totalPage && that.topListByList != []) {
-                        that.listfinished_ben = true;
-                        that.listloading_ben = false;
-                        that.finished_text_ben = '亲~已经到底了';
-                        console.log(that.topListByList);
-                        return;
-                    }
                     if (res.data.data.list && res.data.data.list.length > 0) {
                         // that.nodatashow = false;
                         that.hasmorepage = 2;
@@ -1676,7 +1671,8 @@ export default {
         shellDanChangClick() {
             let that = this;
             that.shelldanchangstate = true;
-            // that.getOnlines();
+            that.onlinesList = [];
+            that.getOnlines();
         },
         closeDanChangClick() {
             this.shelldanchangstate = false;

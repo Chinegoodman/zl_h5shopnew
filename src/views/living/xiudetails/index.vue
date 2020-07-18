@@ -356,7 +356,7 @@
       </div>
     </div>
     <!-- 更多弹层end -->
-    <!-- 单层榜单弹层start -->
+    <!-- 单场榜单弹层start -->
     <div class="shelldanchang" v-if="shelldanchangstate" >
       <div class="danchangcover" @click="closeDanChangClick"></div>
       <div class="danchangcontent">
@@ -390,8 +390,9 @@
                 </span>
                 <div class="rt">
                   <span class="tit">{{item.nickName}}</span>
-                  <span class="lv">{{item.level}}</span>
-                  <span class="num">{{item.level}}</span>
+                  <span class="lv">{{item.level}}
+                    <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+                  </span>
                 </div>
               </div>
               </van-list>
@@ -423,7 +424,54 @@
             </div>  
       </div>
     </div>
-    <!-- 单层榜单end -->
+    <!-- 单场榜单end -->
+    <!-- 主播已静音start -->
+    <div class="mute-box">
+      <span class="im">
+        <img src="./../../../assets/imgs/living/xiudetails/jingyin.png" alt />
+      </span>
+      <span class="t">
+        主播已静音
+      </span>
+    </div>
+    <!-- 主播已静音end -->
+
+    <!-- 主播个人消息弹层start -->
+    <div class="box-anchormsg">
+      <div class="anchormsg-cover"></div>
+      <div class="anchormsg-content">
+        <span class="im">
+          <img src="./../../../assets/imgs/living/xiudetails/jingyin.png" alt />
+        </span>
+        <div class="msg">
+          <span class="t">空白格</span>
+          <span class="lv">{{item.level}}
+            <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+          </span>
+        </div>
+        <div class="msgid">
+          <span class="id">ID:25120341</span>
+          <span class="fz">复制</span>
+        </div>
+        <div class="fs-gz">
+          <div class="fs">
+            <span class="n">141</span>
+            <span class="t">粉丝</span>
+          </div>
+          <div class="gz">
+            <span class="n">1410</span>
+            <span class="t">关注</span>
+          </div>
+        </div>
+        <div class="btm">
+          <span class="g">关注</span>
+          <span class="c">@TA</span>
+          <span class="hm">主页</span>
+        </div>
+      </div>
+    </div>
+    <!-- 主播个人消息弹层end -->
+
   </div>
 </template>
 
