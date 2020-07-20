@@ -43,6 +43,14 @@ const xiuchangliving = {
     //在线人数列表
     liveOnLines(params) {
         return axios.get(`${base.yxf2}/v1/show/live/getOnlines?liveId=${params.liveId}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
+    //直播间点赞数与人数回显
+    anchorMuteState(params) {
+        return axios.get(`${base.yxf2}/v1/show/live/getLiveMute?liveId=${params.liveId}`);
+    },
+    //获取用户角色
+    userRole(params) {
+        return axios.get(`${base.yxf2}/v1/show/live/getUserIdentity?liveId=${params.liveId}&opUserId=${params.opUserId}&userId=${params.userId}`);
     }
 
 

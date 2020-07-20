@@ -9,7 +9,8 @@ import Player from "xgplayer";
 import FlvPlayer from "xgplayer-flv";
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
-import viplevel from '@/components/viplevel.vue'
+import viplevel from '@/components/viplevel.vue';
+import { copy } from "@/utils/copy.js";
 import {
     //   AddressEdit,
     //   Area,
@@ -55,6 +56,9 @@ export default {
             livinglidata: "",
             liveId: '',
             active: '', //直播间榜单tab切换当前个
+            anchormuteflag: false, //主播是否静音标致
+            anchormsgshowstate: false, //主播信息展示
+            isAnchorFlag: 0, //是否是主播
             titlist: [ //直播间榜单tab标题数组
                 {
                     category_name: "在线用户",
@@ -430,6 +434,7 @@ export default {
             that.getgoodsList();
             // that.getgiftList();
             that.gettopgiftList();
+            that.getAnchorMuteState();
 
             // TIM相关=================================开始
             // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
@@ -692,6 +697,50 @@ export default {
                     that.nextPage_ben++;
                     that.$forceUpdate();
                     that.$toast.clear();
+                })
+        },
+        //获取用户角色
+        getUserRole() {
+            let that = this;
+            this.api.xiuchangliving
+                .userRole({
+                    liveId: that.liveId,
+                    userId: that.livinglidata.uid,
+                    opUserId: that.$store.state.user.userid
+                })
+                .then(res => {
+                    if (res.data.code == 1) {
+                        if (res.data.data.otherIdentity == 1) {
+                            that.isAnchorFlag = true;
+                        } else {
+                            that.isAnchorFlag = false;
+                        }
+                    }
+                })
+        },
+        //复制当前主播ID
+        copyCurrentId(id) {
+            let that = this;
+            console.log(id);
+            copy(id);
+            console.log(1111);
+            that.$toast("已复制");
+        },
+        //获取静音模式状态
+        getAnchorMuteState() {
+            let that = this;
+            this.api.xiuchangliving
+                .anchorMuteState({
+                    liveId: that.liveId
+                })
+                .then(res => {
+                    if (res.data.code == 1) {
+                        if (res.data.data == 1) {
+                            that.anchormuteflag = true;
+                        } else {
+                            that.anchormuteflag = false;
+                        }
+                    }
                 })
         },
         //获取礼物排名
@@ -1668,14 +1717,31 @@ export default {
         closeMoreClick() {
             this.moreboxshellstate = false;
         },
+        //在线人数弹层展示
         shellDanChangClick() {
             let that = this;
             that.shelldanchangstate = true;
             that.onlinesList = [];
             that.getOnlines();
         },
+        //单场榜弹层展示
         closeDanChangClick() {
             this.shelldanchangstate = false;
+        },
+        //主播个人资料展示
+        openanchormsgshell() {
+            this.getUserRole();
+            this.anchormsgshowstate = true;
+
+        },
+        //主播个人资料关闭
+        closeAnchormsgshell() {
+            this.anchormsgshowstate = false;
+        },
+        //点击@TA打开IM对话 
+        opentalkchanel() {
+            this.anchormsgshowstate = false;
+            this.imiptshowstatus = true;
         }
     },
 

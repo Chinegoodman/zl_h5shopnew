@@ -27,7 +27,7 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 100;
+            z-index: 10500;
             &.havebgpic{
                 background: url('./../img/livingdtbg.jpg') no-repeat;
                 background-size: cover;
@@ -1214,7 +1214,7 @@
         transform: translateX(-50%);
         right: 0;
         top: 0;
-        z-index: 10001;
+        z-index: 10501;
         .danchangcover{
             position: absolute;
             left: 0;
@@ -1222,7 +1222,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.75);
-            z-index: 10002;
+            z-index: 10502;
             cursor: pointer;
         }
         .danchangcontent{
@@ -1234,7 +1234,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            z-index: 10003;
+            z-index: 10503;
             overflow: hidden;
             .tit{
                 display: flex;
@@ -1348,7 +1348,8 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        z-index: 100050;
+        z-index: 10001;
+        border-radius: .13rem;
         .im{
             display: block;
             width: 1.14rem;
@@ -1370,7 +1371,8 @@
         }
     }
     
-    .moreboxfixed{
+    .moreboxfixed,
+    .box-anchormsg{
         width: 7.5rem;
         position: fixed;
         bottom: 0;
@@ -1378,18 +1380,20 @@
         transform: translateX(-50%);
         right: 0;
         top: 0;
-        z-index: 10001;
-        .moreboxcover{
+        z-index: 11000;
+        .moreboxcover,
+        .anchormsg-cover{
             position: absolute;
             left: 0;
             top: 0;
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.75);
-            z-index: 10002;
+            z-index: 11001;
             cursor: pointer;
         }
-        .moreboxcontent{
+        .moreboxcontent,
+        .anchormsg-content{
             width: 7.5rem;
             height: 2.32rem;
             background: rgba(255, 255, 255,1);
@@ -1398,7 +1402,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            z-index: 10003;
+            z-index: 11003;
             ul{
                 padding: .75rem 0 0 0;
                 display: flex;
@@ -1424,6 +1428,129 @@
             }
         }
     }
+    .box-anchormsg{
+        .anchormsg-content{
+            font-family:PingFang SC;
+            font-weight:500;
+            width: 6.1rem;
+            min-height: 4.72rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius:.12rem;
+            .im{
+                display: block;
+                width: 1rem;
+                height: 1rem;
+                border: 1px solid rgba(255,255,255,.75rem);
+                background: gray;
+                border-radius: 50%;
+                position: absolute;
+                top: -.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                overflow: hidden;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .msg{
+                padding-top: .6rem;
+                margin: 0 auto;
+                text-align: center;
+                .t{
+                    font-size: .3rem;
+                    font-family:PingFang SC;
+                    font-weight:bold;
+                    color:rgba(31,31,31,1);
+                    text-align: center;
+                }
+                .lv{
+                    display: inline-block;
+                    width: 0.94rem;
+                    height: 0.34rem;
+                    margin-left: .15rem;
+                }
+            }
+            .msgid{
+                font-size: .24rem;
+                text-align: center;
+                color:rgba(117,117,117,1);
+                margin-top: .1rem;
+                .fz{
+                    display: inline-block;
+                    width: .2rem;
+                    height: .22rem;
+                    margin-left: .1rem;
+                    cursor: pointer;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+            .instruction{
+                font-size: .24rem;
+                color:rgba(117,117,117,1);
+                margin-top: .15rem;
+                text-align: center;
+            }
+            .fs-gz{
+                display: flex;
+                flex-wrap: nowrap;
+                position: relative;
+                padding-bottom: .49rem;
+                text-align: center;
+                margin-top: .36rem;
+                .fs,.gz{
+                    flex: 1;
+                    .n,.t{
+                        display: block;
+                    }
+                    .n{
+                        font-size: .3rem;
+                        color:rgba(31,31,31,1);
+                    }
+                    .t{
+                        font-size:.22rem;
+                        color:rgba(117,117,117,1);
+                        margin-top: .22rem;
+                    }
+                }
+                .fs::after{
+                    content: ' ';
+                    width: 0.01rem;
+                    height: .55rem;
+                    background:rgba(215,215,215,1);
+                    border-radius: .01rem;
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    top: .62rem;
+                }
+            }
+            .btm{
+                padding: .39rem 0;
+                border-top: 1px solid rgba(215,215,215,.75);
+                display: flex;
+                flex-wrap: nowrap;
+                text-align: center;
+                .c,.g,.hm{
+                    flex: 1;
+                    font-size: .28rem;
+                    color:rgba(31,31,31,1);
+                    border-right: .01rem solid rgba(215,215,215,1);
+                    cursor: pointer;
+                }
+                .g{color:rgba(255,189,4,1);}
+                .hm{
+                    border-right: none;
+                }
+            }
+
+        }
+    }
 }
 
 /*complaints css start*/
@@ -1435,7 +1562,7 @@
     right: 0;
     bottom: 0;
     transform: translateX(-50%);
-    z-index: 10005;
+    z-index: 11510;
     .complaints-cover{
         width: 7.5rem;
         top: 0;
@@ -1445,6 +1572,7 @@
         bottom: 0;
         background: rgba(0,0,0,.7);
         cursor: pointer;
+        z-index: 11511;
     }
     .complaints-content{
         width: 7.5rem;
@@ -1454,6 +1582,7 @@
         bottom: 0;
         border-radius: .3rem .3rem 0 0;
         overflow: hidden;
+        z-index: 11512;
     }
 }
 /*complaints css end*/

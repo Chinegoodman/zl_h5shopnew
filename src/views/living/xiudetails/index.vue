@@ -12,16 +12,16 @@
         <div class="content-top">
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
-              <div class="dznamepic" @click.stop="gotolivingpersonal">
-                <img v-if="livinglidata.face_url" :src="livinglidata.face_url" alt="抓周" />
+              <div class="dznamepic" @click.stop="openanchormsgshell">
+                <img v-if="livinglidata.cover" :src="livinglidata.cover" alt="抓周" />
               </div>
               <!-- <div class="dzguankan">
                 <img src="./../../../assets/imgs/living/details/quite.png" alt />
               </div> -->
               <div class="dznamemass">
-                <div class="nametit _txtov1">{{livinglidata.nickname}}</div>
+                <div class="nametit _txtov1">{{livinglidata.nickName}}</div>
                 <div class="looknum">
-                  <span class="_txtov1" v-if="livinglidata.realcount!=''">ID:{{livinglidata.id}}</span>
+                  <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.id}}</span>
                 </div>
               </div>
               <div :class="{'dznamegz':true,'dznamegzed' : attention_flag==1}" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">
@@ -426,7 +426,7 @@
     </div>
     <!-- 单场榜单end -->
     <!-- 主播已静音start -->
-    <div class="mute-box">
+    <div class="mute-box" v-if="anchormuteflag">
       <span class="im">
         <img src="./../../../assets/imgs/living/xiudetails/jingyin.png" alt />
       </span>
@@ -437,22 +437,23 @@
     <!-- 主播已静音end -->
 
     <!-- 主播个人消息弹层start -->
-    <div class="box-anchormsg">
-      <div class="anchormsg-cover"></div>
+    <div class="box-anchormsg" v-if="anchormsgshowstate">
+      <div class="anchormsg-cover" @click="closeAnchormsgshell"></div>
       <div class="anchormsg-content">
         <span class="im">
-          <img src="./../../../assets/imgs/living/xiudetails/jingyin.png" alt />
+          <img :src="livinglidata.cover" alt />
         </span>
         <div class="msg">
-          <span class="t">空白格</span>
-          <span class="lv">{{item.level}}
-            <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+          <span class="t">{{livinglidata.nickName}}均布荷载</span>
+          <span class="lv">{{livinglidata.level}}
+            <viplevel :lv_num="livinglidata.level?livinglidata.level:'01'"></viplevel>
           </span>
         </div>
         <div class="msgid">
-          <span class="id">ID:25120341</span>
-          <span class="fz">复制</span>
+          <span class="id">ID:{{livinglidata.id}}</span>
+          <span class="fz" @click="copyCurrentId(livinglidata.id)" ><img src="./../../../assets/imgs/living/xiudetails/fz.png" alt /></span>
         </div>
+        <div class="instruction">{{livinglidata.description?livinglidata.description:'这个人很懒，什么也没有写'}}</div>
         <div class="fs-gz">
           <div class="fs">
             <span class="n">141</span>
@@ -463,15 +464,15 @@
             <span class="t">关注</span>
           </div>
         </div>
-        <div class="btm">
-          <span class="g">关注</span>
-          <span class="c">@TA</span>
+        <div class="btm" v-if="isAnchorFlag">
+          <span class="g" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">+关注</span>
+          <span class="g" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</span>
+          <span class="c" @click="opentalkchanel">@TA</span>
           <span class="hm">主页</span>
         </div>
       </div>
     </div>
     <!-- 主播个人消息弹层end -->
-
   </div>
 </template>
 
@@ -708,6 +709,9 @@
     }
     .danchangcontent .tit .van-tabs__line{
       background:rgba(255,189,4,1);
+    }
+    .danchangcontent .van-toast--html, .van-toast--text{
+      z-index: 11000 !important;
     }
     
 </style>
