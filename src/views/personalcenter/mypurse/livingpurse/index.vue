@@ -3,7 +3,7 @@
     <div class="header">
       <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
       <span>我的钱包</span>
-      <div class="mydiscount-path"  @click="mydiscountguild">账单</div>
+      <div class="mydiscount-path" >账单</div>
     </div>
     <div class="purseliving-content">
       <div class="purse-banner">
@@ -15,8 +15,9 @@
             </span>
             <span class="num">452236</span>
           </div>
-          <div class="btm">充值</div>
         </div>
+        <!-- 
+        <div class="btm">充值</div>
         <div class="lis">
           <div class="top">
             <span class="jin">
@@ -27,7 +28,7 @@
             <span class="num">452236</span>
           </div>
           <div class="btm btm-color">充值</div>
-        </div>
+        </div> -->
       </div>
       <div class="top-up"> 
         <h3>金币充值</h3>
@@ -93,6 +94,20 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="box-jin-xiu">
+        <ul>
+          <li>
+            <div class="nm">金豆<span class="ic"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
+            <div class="num">16223458</div>
+            <span class="btn">提现</span>
+          </li>
+          <li>
+            <div class="nm">秀豆<span class="ic"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
+            <div class="num">16223458</div>
+            <span class="btn">提现</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -168,13 +183,8 @@ export default {
     },
     mounted(){
       var that = this;
-      let tabid = Number(this.$route.query.tabid);
-      that.discount_type = tabid - 1;
-      if(!that.discount_type){
-        that.discount_type = 0;
-      }
-      that.isActive = tabid - 1;
-      that.getListInfo();
+      that.getToUpWallet();
+      that.getToUpWwalletBalanceallet();
     },
     methods:{
       // 进入商城首页
@@ -184,137 +194,36 @@ export default {
         goback() {
           this.$router.push({ path: "/personalcenter/index" });
         },
-        use_juan(index){
-          this.$router.push({ name: "shopindex" });
-        },
-        get_juan(item,index){
+        //获取用户余额
+        getToUpWallet(item,index){
           var that = this;
-          that.api.personalcenter.getOneDiscountList({
-            "uid" : that.$store.state.user.userid,
-            "couponGroupId" : item.couponGroupId
+          that.api.personalcenter.toUpWwalletBalanceallet({
+            userId : that.$store.state.user.userid
           }).then(res => {
+              console.log('余额');
               console.log(res);
               if(!res.data.code)return;
               if(res.data.code == 1){
-                item.is_geted = true;
-                that.discountlist.splice(index,1,item);
-                that.getListInfo();
-              }else{
-                that.$toast(res.data.info);
+                
               }
           });
         },
-        rule_show(item,index){
+         //获取充值列表
+        getToUpWwalletBalanceallet(item,index){
           var that = this;
-          item.is_tips = !item.is_tips;
-          that.discountlist.splice(index,1,item);
-        },
-        mydiscountguild(){
-            let that = this;
-            that.$router.push({
-            path : "/personalcenter/discount/mydiscount",
-            query : {
-              tabid :  1
-            }
-          });
-        },
-        changeTab(index){
-          let that = this;
-          that.$router.push({
-            path : "/personalcenter/discount",
-            query : {
-              tabid :  index
-            }
-          });
-          that.discountlist = [];
-          that.finished_text = '';
-          that.ifshow = false;
-          that.discount_type = index - 1;
-          that.isActive = index;
-          that.getListInfo();
-        },
-        getListInfo(){
-          var that = this;
-          if(that.pagechecktype == 1){
-            that.$toast.loading({
-              message: "加载中...",
-              duration: 200000
-            });
-            that.api.personalcenter.getDiscountList({
-              "uid" : that.$store.state.user.userid,
-              "type" : that.discount_type
-            }).then(res => {
-                that.listloading = false;
-                that.pagechecktype = 0;
-                if(!res.data.code || !res.data.data)return;
-                if(res.data.code === 1){
-                  that.$toast.clear();
-                  if(res.data.data.userCounpon && res.data.data.userCounpon.length > 0){
-                    that.discount_class_type = res.data.data.type;
-                    that.discountlist = res.data.data.userCounpon;
-                    that.discountlist.forEach( (item) => {
-                      item.is_tips= false;
-                      item.is_geted= false;
-                    }) 
-                    // that.nextPage = res.data.data.nextPage;
-                    that.ifshow = false;
-                    // if(that.nextPage != ""){
-                    //   that.listfinished = false;
-                    //   that.listloading = false;
-                    // }
-                    that.listfinished = true;
-                    that.finished_text = '';
-                    that.$forceUpdate();
-                  } else{
-                    that.discountlist = [];
-                    that.ifshow = true;
-                    that.$toast.clear();
-                  }
-                }else{
-                  throw "请求错误";
-                }
-            })
-          }else{
-            that.$toast.loading({
-              message: "加载中...",
-              duration: 200000
-            });
-            that.api.personalcenter.getDiscountList({
-              "uid" : that.$store.state.user.userid,
-              "type" : that.discount_type
-            }).then(res => {
-              if(!res.data.code || !res.data.data)return;
-              if(res.data.code === 1){
-                that.$toast.clear();
-                if(res.data.data.userCounpon && res.data.data.userCounpon.length > 0){
-                  that.discount_class_type = res.data.data.type;
-                  that.discountlist = res.data.data.userCounpon;
-                  that.discountlist.forEach( (item) => {
-                    item.is_tips= false;
-                    item.is_geted= false;
-                  }) 
-                  console.log(that.discountlist);
-                  // that.nextPage = res.data.data.nextPage;
-                  that.ifshow = false;
-                  // if(that.nextPage != ""){
-                  //   that.listfinished = false;
-                  //   that.listloading = false;
-                  // }
-                  that.listfinished = true;
-                  that.listloading = false;
-                  that.finished_text = '';
-                  that.$forceUpdate();
-                }else{
-                  that.discountlist = [];
-                  that.ifshow = true;
-                  that.$toast.clear();
-                }
-              }else{
-                that.$toast('请求错误');
+          that.api.personalcenter.toUpWallet({
+            userId : that.$store.state.user.userid,
+            operatingOsType : 1,
+            moduleType : 1
+          }).then(res => {
+              console.log('充值列表');
+              console.log(res);
+              if(!res.data.code)return;
+              if(res.data.code == 1){
+                
               }
-            })
-          }
-        },
+          });
+        }
     },
     beforeCreate () {
       document.querySelector('body').setAttribute('style', 'background:rgba(247,247,247,1)');
@@ -374,11 +283,11 @@ export default {
       .purse-banner{
           // padding: .3rem;
           // margin-top: 1.35rem;
-          width: 7.5rem;
-          height: 3.33rem;
-          padding: .35rem 0;
+          width: 7.1rem;
+          height: 2.72rem;
+          padding: .2rem;
           background: rgba(247,247,247,1) url('../../../../assets/imgs/personal/cardbg.png') no-repeat center .2rem;
-          background-size: 7.29rem 3.33rem;
+          background-size: 7.1rem 2.72rem;
           display: flex;
           font-family:PingFang SC;
           font-weight:500;
@@ -386,7 +295,7 @@ export default {
               flex: 1;
               padding: .65rem 0 .75rem;
               text-align: center;
-              font-size: .28rem;
+              font-size: .24rem;
               .top{
                 .jin{
                     display: block;
@@ -433,7 +342,7 @@ export default {
                 .num{
                     display: block;
                     margin-top: .1rem;
-                    font-size: .4rem;
+                    font-size: .56rem;
                     color:rgba(255,255,255,1);
                     font-weight:bold;
                 }
@@ -462,8 +371,6 @@ export default {
         border-radius: .35rem;
         margin-top: .45rem;
         background:rgba(255,255,255,1);
-        position: absolute;
-        top: 4.5rem;
         h3{
           padding-left: .1rem;
           font-size: .3rem;
@@ -512,6 +419,65 @@ export default {
           }
           .lis:nth-child(3n){
             margin-right: 0;
+          }
+        }
+      }
+      .box-jin-xiu{
+        ul{
+          padding: 0 .2rem;
+          li{
+            width: 6.5rem;
+            min-height: 1.23rem;
+            padding: .35rem .3rem 0;
+            position: relative;
+            font-family:PingFang SC;
+            font-weight:500;
+            margin-bottom: .2rem;
+            .nm{
+              font-size: .3rem;
+              color:rgba(31,31,31,1);
+              .ic{
+                display: inline-block;
+                width: .25rem;
+                height: .25rem;
+                margin-left: .15rem;
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            }
+            .num{
+              font-size: .36rem;
+              font-weight:bold;
+              color:rgba(31,31,31,1);
+              margin-top: .1rem;
+            }
+            .btn{
+              width:1.5rem;
+              height: .64rem;
+              line-height: .64rem;
+              background:rgba(255,189,4,1);
+              border-radius: .32rem;
+              color:rgba(255,255,255,1);
+              font-size: .24rem;
+              text-align: center;
+              position: absolute;
+              top: .47rem;
+              right: .3rem;
+              cursor: pointer;
+            }
+          }
+          li:nth-child(1){
+            background: url('../../../../assets/imgs/personal/bg_purse_jindou.png') no-repeat center 0;
+            background-size: 7.1rem 1.58rem;
+          }
+           li:nth-child(2){
+            background: url('../../../../assets/imgs/personal/bg_purse_xiudou.png') no-repeat center 0;
+            background-size: 7.1rem 1.58rem;
+            .btn{
+              background:rgba(255,91,79,1);
+            }
           }
         }
       }

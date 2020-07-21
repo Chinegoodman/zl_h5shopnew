@@ -92,6 +92,17 @@
             </div>
           </div> -->
         </div>
+        <!-- 大礼物start-->
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}">
+          <span class="_txtov1 nm">开心宝宝</span>
+          赠送给
+          <span class="_txtov1 nm">爱丽少爱</span>
+          么么哒
+          <span class="gf">
+            <img src="./../../../assets/imgs/living/details/like.png" alt />
+          </span> 
+        </div>
+        <!-- 大礼物end-->
         <!-- 直播消息  聊天输入部分-->
         <div class="content-bottom">
           <!-- 消息列表 -->
@@ -107,7 +118,8 @@
                       黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
                 </div>
               </div>
-              <!-- 直播消息  礼物展示部分-->
+              <!-- 直播消息  礼物展示部分start-->
+              <!-- 小礼物start-->
               <div ref="giftwrapbox" class="giftshowbox" >
                   <ul :class="{'gift' : true,'liStyleGift' : liStyleGift_active_one,'liStyleNone' : liStyleNoneone}" v-show="giftmsgone" ref="giftelmentone">
                       <li>
@@ -141,7 +153,9 @@
                           </span>
                         </li>
                   </ul>
+                  <!-- 小礼物end-->
               </div>
+              <!-- 直播消息  礼物展示部分 end-->
               <div class="msgboxwrap" v-for="(item,index) in messageList" :key="index">
                 <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
                     <!-- <p class="name" v-if="!item.comename">{{item.name}}：</p> -->
@@ -390,14 +404,14 @@
                 </span>
                 <div class="rt">
                   <span class="tit">{{item.nickName}}</span>
-                  <span class="lv">{{item.level}}
+                  <span class="lv">
                     <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
                   </span>
                 </div>
               </div>
               </van-list>
             </div>
-            <div class="list-wrap" v-show="list_datatype==1">
+            <div class="list-wrap list-wrap-bang" v-show="list_datatype==1">
               <van-list
               class="list"
               v-model="listloading_ben"
@@ -416,11 +430,28 @@
                   </span>
                   <div class="rt">
                     <span class="tit">{{item.nickName}}</span>
-                    <span class="lv">{{item.level}}</span>
+                     <span class="lv">
+                      <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+                    </span>
                     <span class="num">{{item.count}}</span>
                   </div>
                 </div>
                 </van-list>
+              <div class="mybenbang">
+                <div class="li" v-for="(item,index) in topListByList" :key="index" :id="item.userId" v-if="item.userId == $store.state.user.userid">
+                 <span class="hd">
+                    <img :src="item.avatar" alt />
+                  </span>
+                  <div class="rt">
+                    <span class="tit">{{item.nickName}}</span>
+                     <span class="lv">{{item.level}}
+                      <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+                    </span>
+                    <span class="num">{{item.count}}</span>
+                  </div>
+                  <span class="sendgift" @click="opendownload">送礼</span>
+                </div>  
+              </div>  
             </div>  
       </div>
     </div>
@@ -468,12 +499,14 @@
           <span class="g" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">+关注</span>
           <span class="g" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</span>
           <span class="c" @click="opentalkchanel">@TA</span>
-          <span class="hm">主页</span>
+          <span class="hm" @click="opendownload" >送礼</span>
         </div>
       </div>
     </div>
+    <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
     <!-- 主播个人消息弹层end -->
   </div>
+
 </template>
 
 <script>
@@ -576,7 +609,78 @@
         }
     }
 
-    //礼物动画相关
+    .biggiftnotice{
+      width : 5.3rem;
+      height: 2.02rem;
+      line-height : 2.02rem;
+      display: flex;
+      text-align : center;
+      padding : 0 1.1rem;
+      color: #fff;
+      font-size: .28rem;
+      font-weight:bold;
+      background: url(../../../assets/imgs/living/xiudetails/zt.png) no-repeat left center;
+      background-size: 100% 100%;
+      position: absolute;
+      top : 1.55rem;
+      left: 0;
+      .nm{
+        display : inline-block;
+        color: #FFBD04;
+        padding-left : .05rem;
+        max-width: 1.4rem;
+      }
+      .gf{
+        width : .59rem;
+        height : .59rem;
+        margin: .75rem 0 0 .1rem;
+        img{
+          width : 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    //大礼物动画相关
+    .bigLiStyleGift {
+        transform: none;
+        -webkit-animation: fadeInRightLeft 300ms ease-out 1s 1 both;
+        -webkit-animation-play-state: initial;
+    }
+    
+    @-webkit-keyframes fadeInRightLeft {
+        0% {
+            opacity: 0;
+            top : 1.55rem;
+            left: 7.6rem;
+        }
+        100% {
+            opacity: 1;
+            top : 1.55rem;
+            left: 0;
+        }
+    }
+
+    .bigLiStyleNone {
+        transform: none;
+        -webkit-animation: bigGiftNone 500ms ease-out 0s 1 both;
+        -webkit-animation-play-state: initial;
+    }
+    
+    @-webkit-keyframes bigGiftNone {
+        0% {
+            opacity: 0;
+            top : 1.55rem;
+            left: 0;
+        }
+        100% {
+            opacity: 1;
+            top : 1.55rem;
+            left: -7.6rem;
+        }
+    }
+
+    //小礼物动画相关
     .liStyleGift {
         transform: none;
         -webkit-animation: fadeInRightGift 300ms ease-out 1s 1 both;
@@ -712,6 +816,10 @@
     }
     .danchangcontent .van-toast--html, .van-toast--text{
       z-index: 11000 !important;
+    }
+
+    .videoswrapout .openappbtnsbox{
+      z-index: 10500;
     }
     
 </style>

@@ -126,6 +126,14 @@ const personalcenter = {
     getaftersale(params) {
         return axios.post(`${base.yxf}/wapi/v1/order/pageReturnOrders`, qs.stringify(params));
     },
+    //获取充值列表-秀场
+    toUpWallet(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/topUp/list?operatingOsType=${params.operatingOsType}&moduleType=${params.moduleType}&userId=${params.userId}`);
+    },
+    //获取用户余额-秀场
+    toUpWwalletBalanceallet(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/balance?userId=${params.userId}`);
+    }
 }
 
 export default personalcenter;

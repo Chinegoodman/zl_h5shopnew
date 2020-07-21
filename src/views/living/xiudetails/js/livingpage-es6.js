@@ -10,6 +10,7 @@ import FlvPlayer from "xgplayer-flv";
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
 import viplevel from '@/components/viplevel.vue';
+import downloadandopenapp from '../../../../components/downloadandopenapp.vue'
 import { copy } from "@/utils/copy.js";
 import {
     //   AddressEdit,
@@ -47,6 +48,7 @@ export default {
     components: {
         complaints,
         viplevel,
+        downloadandopenapp,
         vanTab: Tab,
         vanTabs: Tabs,
         vanList: List
@@ -59,6 +61,10 @@ export default {
             anchormuteflag: false, //主播是否静音标致
             anchormsgshowstate: false, //主播信息展示
             isAnchorFlag: 0, //是否是主播
+            covertypedata: 'downloadcovershow', //下载及启动APP组件类别
+            downloadcovershow: false, //下载及启动APP弹层
+            linkurldownload: '', //下载链接
+            linkurlopen: '', //拉起APP的链接
             titlist: [ //直播间榜单tab标题数组
                 {
                     category_name: "在线用户",
@@ -185,12 +191,10 @@ export default {
             giftNumFlag02: false, //礼物数字flag 02
             manygift_timer_one: null,
             manygift_timer_two: null,
-            num_weishu: 1, //最小为一位数
-            idCount: 1000,
-            idGiftCount: 1000,
-            anim_box_id: '',
-            gift_icon_id: '',
-
+            bigLiStyleGiftFlag: false, //大礼物开始动画标致
+            bigLiStyleNoneFlag: false, //大礼物结束动画标致
+            bigGiftMsgone: [], //大礼物全局通道一
+            bigGiftMsgTwo: [], //大礼物全局通道二
             nextReqMessageID: "", //用于续拉，分页续拉时需传入该字段。
             conversationList: [], // 会话列表，用该列表覆盖原有的会话列表,
             isActive: 0, //默认选中第一个,
@@ -1742,6 +1746,26 @@ export default {
         opentalkchanel() {
             this.anchormsgshowstate = false;
             this.imiptshowstatus = true;
+        },
+        //打开下载启动弹层
+        opendownload() {
+            this.downloadcovershow = true;
+            this.downloadandopen();
+            this.closeAnchormsgshell()
+        },
+        //关闭下载启动弹层
+        shutappbtnsbox() {
+            this.downloadcovershow = false;
+        },
+        //下载及拉起APP
+        downloadandopen() {
+            let that = this;
+            that.linkurlopen = "zhuazhouH5://";
+            if (checkdevice() == "anzhuo") {
+                that.linkurldownload = 1;
+            } else {
+                that.linkurldownload = 2;
+            }
         }
     },
 

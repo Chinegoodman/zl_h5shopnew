@@ -1252,13 +1252,30 @@
                     
                 }
             }
+
+            .list-wrap-bang{
+                padding-bottom: 1.19rem;
+                position: relative;
+                .list{
+                    height: 6.98rem;
+                }
+                .mybenbang{
+                    width: 7.5rem;
+                    height: 1.19rem;
+                    border-top: 1px solid rgba(215,215,215,1);
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
         }
     }
-    .list{
+    .list,
+    .mybenbang{
         width: 7.5rem;
         height: 8.17rem;
         overflow-y: scroll;
-        border: .01rem solid rgba(215,215,215,1);
+        border-top: .01rem solid rgba(215,215,215,1);
         padding-top: .3rem;
         .li{
             position: relative;
@@ -1312,6 +1329,18 @@
                     right: .2rem;
                     top: 50%;
                     transform: translateY(-50%);
+                }
+                .sendgift{
+                    display: inline-block;
+                    width: 1.32rem;
+                    height: .54rem;
+                    line-height: .54rem;
+                    text-align: center;
+                    background:rgba(255,189,4,1);
+                    border-radius: .27rem;
+                    font-size: .24rem;
+                    font-weight:500;
+                    color:rgba(255,255,255,1);
                 }
 
             }
