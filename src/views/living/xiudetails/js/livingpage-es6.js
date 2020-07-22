@@ -75,6 +75,7 @@ export default {
                     tabindex: 1
                 }
             ],
+            fensAndAttention: {},
             listloading: false, //在线用户vantlist加载
             listfinished: false,
             finished_text: '',
@@ -298,10 +299,6 @@ export default {
             that.logoutfn();
             // this.player.destroy(true);
             that.joinOrLeaveRoomXC(1); //加入群聊  后台的接口
-
-            //是否关注直播
-            that.follow();
-
             // 直播相关
 
             //轮询直播观看人数与点赞数
@@ -439,6 +436,8 @@ export default {
             // that.getgiftList();
             that.gettopgiftList();
             that.getAnchorMuteState();
+            //获取关注状态
+            that.getRelationOpration();
 
             // TIM相关=================================开始
             // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
@@ -529,6 +528,21 @@ export default {
         },
         // 直播及群聊相关 结束
 
+        //获取关注状态/获取两个用户之间的关系
+        getRelationOpration() {
+            let that = this;
+            that.api.xiuchangliving
+                .userRelationship({
+                    currentUserId: that.$store.state.user.userid,
+                    transferUserId: that.livinglidata.uid
+                })
+                .then(res => {
+                    // console.log(res.data.data);
+                    if (res.data.code == 1) {
+                        that.attention_flag = res.data.data;
+                    }
+                })
+        },
         // 关注 与 取消关注 主播
         follow(currentstatus) {
             let that = this;
@@ -537,28 +551,30 @@ export default {
             }
             if (!currentstatus) {
                 // 当前 为 非关住状态
-                that.api.living
-                    .attentionadd({
-                        uid: that.$store.state.user.userid,
-                        attid: that.livinglidata.uid
-                    })
-                    .then(res => {
-                        // console.log(res.data);
-                        if (res.data.code == 1) {
-                            that.attention_flag = 2;
-                        }
-                    })
-            } else {
-                // 当前 为 关住状态
-                that.api.living
-                    .attentiondelete({
-                        uid: that.$store.state.user.userid,
-                        attid: that.livinglidata.uid
+                that.api.xiuchangliving
+                    .relationOpration({
+                        currentUserId: that.$store.state.user.userid,
+                        transferUserId: that.livinglidata.uid,
+                        relation: 1
                     })
                     .then(res => {
                         // console.log(res.data);
                         if (res.data.code == 1) {
                             that.attention_flag = 1;
+                        }
+                    })
+            } else {
+                // 当前 为 关住状态
+                that.api.xiuchangliving
+                    .relationOpration({
+                        currentUserId: that.$store.state.user.userid,
+                        transferUserId: that.livinglidata.uid,
+                        relation: 0
+                    })
+                    .then(res => {
+                        // console.log(res.data);
+                        if (res.data.code == 1) {
+                            that.attention_flag = 0;
                         }
                     })
             }
@@ -583,6 +599,29 @@ export default {
                             that.livinglidata = res.data.data;
                         } else {
                             that.livinglidata = [];
+                        }
+                    }
+                })
+        },
+        //获取主播详情-粉丝/关注人数
+        getBasicUserInfo(liveId) {
+            let that = this;
+            this.api.xiuchangliving
+                .basicUserInfo({
+                    userId: that.$store.state.user.userid,
+                })
+                .then(res => {
+                    console.log('粉丝数');
+                    console.log(res.data);
+                    if (res.data.code == 1) {
+                        if (
+                            res.data.data != null ||
+                            res.data.data != undefined ||
+                            res.data.data != ""
+                        ) {
+                            that.fensAndAttention = res.data.data;
+                        } else {
+                            that.fensAndAttention = [];
                         }
                     }
                 })
@@ -1735,6 +1774,7 @@ export default {
         //主播个人资料展示
         openanchormsgshell() {
             this.getUserRole();
+            this.getBasicUserInfo();
             this.anchormsgshowstate = true;
 
         },

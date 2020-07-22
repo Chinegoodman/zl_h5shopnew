@@ -24,11 +24,11 @@
                   <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.id}}</span>
                 </div>
               </div>
-              <div :class="{'dznamegz':true,'dznamegzed' : attention_flag==1}" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">
+              <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0" @click.stop="follow(false)">
                 关注
                 <!-- <img src="./../../../assets/imgs/living/details/attention.png"> -->
               </div>
-              <div class="dznamegz" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</div>
+              <div class="dznamegz" v-if="attention_flag && attention_flag===1" @click.stop="follow(true)">取消关注</div>
             </div>
             <div class="dznameid" @click.stop="shellDanChangClick">
               <span>{{watchcount}}</span>
@@ -472,32 +472,32 @@
       <div class="anchormsg-cover" @click="closeAnchormsgshell"></div>
       <div class="anchormsg-content">
         <span class="im">
-          <img :src="livinglidata.cover" alt />
+          <img :src="fensAndAttention.headPortrait" alt />
         </span>
         <div class="msg">
-          <span class="t">{{livinglidata.nickName}}均布荷载</span>
-          <span class="lv">{{livinglidata.level}}
-            <viplevel :lv_num="livinglidata.level?livinglidata.level:'01'"></viplevel>
+          <span class="t">{{fensAndAttention.nickName}}</span>
+          <span class="lv">
+            <viplevel :lv_num="fensAndAttention.level?fensAndAttention.level:'01'"></viplevel>
           </span>
         </div>
         <div class="msgid">
-          <span class="id">ID:{{livinglidata.id}}</span>
-          <span class="fz" @click="copyCurrentId(livinglidata.id)" ><img src="./../../../assets/imgs/living/xiudetails/fz.png" alt /></span>
+          <span class="id">ID:{{fensAndAttention.virtualId}}</span>
+          <span class="fz" @click="copyCurrentId(fensAndAttention.virtualId)" ><img src="./../../../assets/imgs/living/xiudetails/fz.png" alt /></span>
         </div>
-        <div class="instruction">{{livinglidata.description?livinglidata.description:'这个人很懒，什么也没有写'}}</div>
+        <div class="instruction">{{fensAndAttention.introduction}}</div>
         <div class="fs-gz">
           <div class="fs">
-            <span class="n">141</span>
+            <span class="n">{{fensAndAttention.fansTotal}}</span>
             <span class="t">粉丝</span>
           </div>
           <div class="gz">
-            <span class="n">1410</span>
+            <span class="n">{{fensAndAttention.focusTotal}}</span>
             <span class="t">关注</span>
           </div>
-        </div>
+        </div> 
         <div class="btm" v-if="isAnchorFlag">
-          <span class="g" v-if="attention_flag && attention_flag==1" @click.stop="follow(false)">+关注</span>
-          <span class="g" v-if="attention_flag && attention_flag==2" @click.stop="follow(true)">取消关注</span>
+          <span class="g" v-if="attention_flag===0" @click.stop="follow(false)">+关注</span>
+          <span class="g" v-if="attention_flag===1" @click.stop="follow(true)">取消关注</span>
           <span class="c" @click="opentalkchanel">@TA</span>
           <span class="hm" @click="opendownload" >送礼</span>
         </div>

@@ -133,6 +133,10 @@ const personalcenter = {
     //获取用户余额-秀场
     toUpWwalletBalanceallet(params) {
         return axios.get(`${base.yxf2}/v1/user/wallet/balance?userId=${params.userId}`);
+    },
+    //获取账户信息及收益信息-金豆/秀豆
+    userWalletInfo(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/info?userId=${params.userId}`);
     }
 }
 

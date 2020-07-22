@@ -223,8 +223,8 @@
                <span class="num">{{item.realCount}}观看</span>
             </div>
             <div class="stateflag">
-              <span class="zb" v-if="item.state==0"></span>
-              <span class="huifang" v-if="item.state==1"></span>
+              <span class="zb" v-if="item.state===1"></span>
+              <span class="huifang" v-if="item.state===0"></span>
             </div>
           </div>
         </van-list>

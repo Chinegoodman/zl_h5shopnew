@@ -3,7 +3,6 @@
     <div class="header">
       <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
       <span>我的钱包</span>
-      <div class="mydiscount-path" >账单</div>
     </div>
     <div class="purseliving-content">
       <div class="purse-banner">
@@ -13,106 +12,66 @@
               <span class="ic"><img src="../../../../assets/imgs/personal/jijbi.png" alt="金币"></span>
               <span class="t">金币</span>
             </span>
-            <span class="num">452236</span>
+            <span class="num">{{aboutDoulist.virtualAccount}}</span>
           </div>
         </div>
-        <!-- 
-        <div class="btm">充值</div>
-        <div class="lis">
-          <div class="top">
-            <span class="jin">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jindou.png" alt="皇冠"></span>
-              <span class="t">金豆</span>
-              <span class="turn">豆转币<span class="gd"><img src="../../../../assets/imgs/personal/livingpurse-gd.png" alt="金豆"></span></span>
-            </span>
-            <span class="num">452236</span>
-          </div>
-          <div class="btm btm-color">充值</div>
-        </div> -->
       </div>
       <div class="top-up"> 
         <h3>金币充值</h3>
         <div class="list">
-          <div class="lis">
+          <div class="lis" v-for="(item,index) in rechargeList" :key="index" @click="opendownload">
             <div class="top">
               <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">600</span>
+              <span class="pr">{{item.virtualCurrency}}</span>
+              <span class="gave" v-if="item.givingVirtualCurrency">+{{item.givingVirtualCurrency.toFixed(0)}}(赠)</span>
             </div>
             <div class="btm">
               <span class="ic">￥</span>
-              <span class="pr">50</span>
-            </div>
-          </div>
-          <div class="lis">
-            <div class="top">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">600</span>
-            </div>
-            <div class="btm">
-              <span class="ic">￥</span>
-              <span class="pr">50</span>
-            </div>
-          </div>
-          <div class="lis">
-            <div class="top">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">5000</span>
-            </div>
-            <div class="btm">
-              <span class="ic">￥</span>
-              <span class="pr">50</span>
-            </div>
-          </div>
-          <div class="lis">
-            <div class="top">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">9800</span>
-            </div>
-            <div class="btm">
-              <span class="ic">￥</span>
-              <span class="pr">50</span>
-            </div>
-          </div>
-          <div class="lis">
-            <div class="top">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">28800</span>
-            </div>
-            <div class="btm">
-              <span class="ic">￥</span>
-              <span class="pr">50</span>
-            </div>
-          </div>
-          <div class="lis">
-            <div class="top">
-              <span class="ic"><img src="../../../../assets/imgs/personal/jbsc.png" alt="金币"></span>
-              <span class="pr">58800</span>
-            </div>
-            <div class="btm">
-              <span class="ic">￥</span>
-              <span class="pr">588</span>
+              <span class="pr">{{item.price}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="box-jin-xiu">
+        <div class="box-bill-gd">
+          <div class="lt">
+            <span class="im">
+              <img src="../../../../assets/imgs/personal/tixian.png" alt="问号">
+            </span>
+            <span class="t">账单</span>
+          </div>
+          <span class="gd" @click="goToAcountList">立即查看<span><img src="../../../../assets/imgs/personal/livingpurse-gd.png" alt="问号"></span></span>
+        </div>
         <ul>
           <li>
-            <div class="nm">金豆<span class="ic"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
-            <div class="num">16223458</div>
-            <span class="btn">提现</span>
+            <div class="nm">金豆<span class="ic" @click="jinDouQuestionShellShow"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
+            <div class="num" v-if="aboutDoulist.userWalletEarningsPojo">{{aboutDoulist.userWalletEarningsPojo[0].earnings}}</div>
+            <span class="btn" @click="opendownload">提现</span>
+            <div class="question-shell" v-if="jinDouQuestionShell">
+              <p>金豆为</p>
+              <p>娱乐直播时的</p>
+              <p>礼物收益</p>
+            </div>
           </li>
           <li>
-            <div class="nm">秀豆<span class="ic"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
-            <div class="num">16223458</div>
-            <span class="btn">提现</span>
+            <div class="nm">秀豆<span class="ic" @click="xiuDouQuestionShellShow"><img src="../../../../assets/imgs/personal/sygf.png" alt="问号"></span></div>
+            <div class="num" v-if="aboutDoulist.userWalletEarningsPojo">{{aboutDoulist.userWalletEarningsPojo[1].earnings}}</div>
+            <span class="btn" @click="opendownload">提现</span>
+            <div class="question-shell" v-if="xiuDouQuestionShell">
+              <p>秀豆为</p>
+              <p>电台直播时的</p>
+              <p>礼物收益</p>
+            </div>
           </li>
         </ul>
       </div>
     </div>
+    <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
   </div>
 </template>
 <script>
+import downloadandopenapp from '../../../../components/downloadandopenapp.vue';
+import { checkdevice } from "@/utils/checkdevice.js";
 import {
     //   AddressEdit,
     //   Area,
@@ -144,55 +103,74 @@ import {
     // Swipe,
     // SwipeItem
 } from 'vant'
+import { setTimeout } from 'timers';
 export default {
     components :{
       vanTab : Tab,
       vanTabs : Tabs,
       vanList : List,
-      vanToast : Toast 
+      vanToast : Toast ,
+      downloadandopenapp,
     },
     data(){
         return{
-          isActive : '',
-          ifshow : false,
-          listfinished :false,
-          listloading : false,  //默认是加载中
-          vanerror: false,
-          finished_text : '',
-          nextPage: "",
-          pagechecktype: 0, //0表示初始化或下拉加载的  1表示点击事件触发的
-          tab_lists : [
-            {
-               name : '满减券',
-               tabid : 1
-            },
-            {
-               name : '满赠券',
-               tabid : 2
-            },
-             {
-               name : '代金券',
-               tabid : 3
-            }
-          ],
-          discountlist : [], //优惠卷列表,
-          discount_type : 0,
-          discount_class_type : '', //用于li不一样的背景 
-          discount_btn : ''  //判断按钮显示 使用 还是 领取
+          currentWallet : 0,
+          rechargeList : [],
+          aboutDoulist : [],
+          jinDouQuestionShell : false,
+          xiuDouQuestionShell : false,
+          covertypedata: 'downloadcovershow', //下载及启动APP组件类别
+          downloadcovershow: false, //下载及启动APP弹层
+          linkurldownload: '', //下载链接
+          linkurlopen: '' //拉起APP的链接
         }
     },
     mounted(){
       var that = this;
       that.getToUpWallet();
       that.getToUpWwalletBalanceallet();
+      that.getUserWalletInfo();
     },
     methods:{
-      // 进入商城首页
-        gotoshop() {
-          this.$router.push({ name: "shopindex" });
+      // 进入账单列表
+        goToAcountList() {
+          this.$router.push({ name: "personalcenterlivingacountlist" });
         },
         goback() {
           this.$router.push({ path: "/personalcenter/index" });
+        },
+        //打开下载启动弹层
+        opendownload() {
+            this.downloadcovershow = true;
+            this.downloadandopen();
+        },
+        //关闭下载启动弹层
+        shutappbtnsbox() {
+            this.downloadcovershow = false;
+        },
+        //下载及拉起APP
+        downloadandopen() {
+            let that = this;
+            that.linkurlopen = "zhuazhouH5://";
+            if (checkdevice() == "anzhuo") {
+                that.linkurldownload = 1;
+            } else {
+                that.linkurldownload = 2;
+            }
+        },
+        jinDouQuestionShellShow(){
+          let that = this;
+          that.jinDouQuestionShell = true;
+          setTimeout(function(){
+            that.jinDouQuestionShell = false;
+          },1500)
+        },
+        xiuDouQuestionShellShow(){
+          let that = this;
+          that.xiuDouQuestionShell = true;
+          setTimeout(function(){
+            that.xiuDouQuestionShell = false;
+          },1500)
         },
         //获取用户余额
         getToUpWallet(item,index){
@@ -200,11 +178,9 @@ export default {
           that.api.personalcenter.toUpWwalletBalanceallet({
             userId : that.$store.state.user.userid
           }).then(res => {
-              console.log('余额');
-              console.log(res);
               if(!res.data.code)return;
               if(res.data.code == 1){
-                
+                that.currentWallet = res.data.data;
               }
           });
         },
@@ -213,16 +189,26 @@ export default {
           var that = this;
           that.api.personalcenter.toUpWallet({
             userId : that.$store.state.user.userid,
-            operatingOsType : 1,
-            moduleType : 1
+            operatingOsType : 4,
+            appType : 1
           }).then(res => {
-              console.log('充值列表');
-              console.log(res);
               if(!res.data.code)return;
               if(res.data.code == 1){
-                
+                that.rechargeList = res.data.data;
               }
           });
+        },
+        getUserWalletInfo(){
+          var that = this;
+          that.api.personalcenter.userWalletInfo({
+            userId : that.$store.state.user.userid
+          }).then(res => {
+              if(!res.data.code)return;
+              if(res.data.code == 1){
+                that.aboutDoulist = res.data.data;
+              }
+          });
+          
         }
     },
     beforeCreate () {
@@ -233,6 +219,7 @@ export default {
 <style lang="less">
   .purseliving_wrap {
     height:100vh;
+    background:rgba(247,247,247,1);
     .header {
           width: 7.5rem;
           border-bottom: 1px solid #DEDEDE;
@@ -276,7 +263,6 @@ export default {
       height: 100vh;
       padding-top: 1.15rem;
       position: relative;
-      background:rgba(255,255,255,1);
       // display: flex;
       // flex-direction: column;
       // flex-wrap : wrap;
@@ -285,7 +271,7 @@ export default {
           // margin-top: 1.35rem;
           width: 7.1rem;
           height: 2.72rem;
-          padding: .2rem;
+          padding: .2rem .2rem 0;
           background: rgba(247,247,247,1) url('../../../../assets/imgs/personal/cardbg.png') no-repeat center .2rem;
           background-size: 7.1rem 2.72rem;
           display: flex;
@@ -365,14 +351,13 @@ export default {
           }
       }
       .top-up{
-        padding: .3rem .2rem;
+        padding: 0 .2rem;
         font-family:PingFang SC;
         font-weight:500;
-        border-radius: .35rem;
-        margin-top: .45rem;
+        margin: 0 .2rem;
         background:rgba(255,255,255,1);
         h3{
-          padding-left: .1rem;
+          padding: .2rem 0 0  .1rem;
           font-size: .3rem;
           color:rgba(31,31,31,1);
         }
@@ -389,7 +374,7 @@ export default {
             border-radius: .06rem;
             text-align: center;
             margin-bottom: .3rem;
-            margin-right: .36rem;
+            margin-right: .15rem;
             cursor: pointer;
             .top{
               padding-top: .3rem;
@@ -397,7 +382,7 @@ export default {
                 display: inline-block;
                 width: .29rem;
                 height: .29rem;
-                margin-right: .1rem;
+                margin-right: .05rem;
                 vertical-align: middle;
                 margin-top: -.04rem;
                 img{
@@ -409,6 +394,10 @@ export default {
               .pr{
                 font-size: .28rem;
                 color:rgba(31,31,31,1);
+              }
+              .gave{
+                font-size: .20rem;
+                color:#FFBD04;
               }
             }
             .btm{
@@ -423,6 +412,59 @@ export default {
         }
       }
       .box-jin-xiu{
+        .box-bill-gd{
+          display: flex;
+          padding: .3rem 0 .3rem .3rem;
+          margin: .2rem;
+          position: relative;
+          background:rgba(255,255,255,1);
+          border-radius: .12rem;
+          .lt{
+            justify-content: flex-start;
+            display: flex;
+            .im{
+              display: block;
+              width: .68rem;
+              height: .68rem;
+              vertical-align: middle;
+              img{
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .t{
+              font-size:.3rem;
+              font-weight:500;
+              color:rgba(31,31,31,1);
+              padding: .15rem 0 0 .15rem;
+            }
+          }
+          .gd{
+            display: inline-block;
+            justify-content: flex-end;
+            font-size: .24rem;
+            font-family:PingFang SC;
+            font-weight:500;
+            color:rgba(191,191,191,1);
+            position: absolute;
+            right: .3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            span{
+              display: inline-block;
+              width: .12rem;
+              height: .22rem;
+              vertical-align: middle;
+              margin-left: .11rem;
+              img{
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          
+        }
         ul{
           padding: 0 .2rem;
           li{
@@ -441,6 +483,7 @@ export default {
                 width: .25rem;
                 height: .25rem;
                 margin-left: .15rem;
+                cursor: pointer;
                 img{
                   width: 100%;
                   height: 100%;
@@ -466,6 +509,21 @@ export default {
               top: .47rem;
               right: .3rem;
               cursor: pointer;
+            }
+            .question-shell{
+              width: 3.04rem;
+              height: 1.18rem;
+              padding: .2rem 0;
+              background: url('../../../../assets/imgs/personal/questionshell.png') no-repeat center 0;
+              background-size: 3.04rem 1.58rem;
+              position: absolute;
+              left: 1.45rem;
+              top: -0.26rem;
+              p{
+                font-size: .28rem;
+                color:rgba(255,255,255,1);
+                text-align: center;
+              }
             }
           }
           li:nth-child(1){

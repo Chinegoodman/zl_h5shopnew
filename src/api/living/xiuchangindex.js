@@ -20,6 +20,10 @@ const xiuchangliving = {
     getXiuChangLiveInfo(params) {
         return axios.get(`${base.yxf2}/v1/show/live/getLiveInfo?liveId=${params.liveId}`);
     },
+    //获取直播详情-粉丝/关注数
+    basicUserInfo(params) {
+        return axios.get(`${base.yxf2}/v1/user/basic/user/info?userId=${params.userId}`);
+    },
     //直播间点赞数与人数回显
     XiuChangLivingUserAndPraise(params) {
         return axios.get(`${base.yxf2}/v1/show/live/getUserAndPraise?liveId=${params.liveId}`);
@@ -51,6 +55,14 @@ const xiuchangliving = {
     //获取用户角色
     userRole(params) {
         return axios.get(`${base.yxf2}/v1/show/live/getUserIdentity?liveId=${params.liveId}&opUserId=${params.opUserId}&userId=${params.userId}`);
+    },
+    //获取两个用户之间的关系
+    userRelationship(params) {
+        return axios.get(`${base.yxf2}/v1/user/relation/user/Relationship?currentUserId=${params.currentUserId}&transferUserId=${params.transferUserId}`);
+    },
+    //用户关注取关
+    relationOpration(params) {
+        return axios.put(`${base.yxf2}/v1/user/relation/operation?currentUserId=${params.currentUserId}&transferUserId=${params.transferUserId}&relation=${params.relation}`);
     }
 
 
