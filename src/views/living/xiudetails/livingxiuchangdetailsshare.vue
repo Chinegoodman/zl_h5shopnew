@@ -365,9 +365,9 @@
       <div class="moreboxcover" @click="closeMoreClick"></div>
       <div class="moreboxcontent">
         <ul>
-          <li @click.stop="goToXiuChangDetailShare">
+          <li>
             <img src="./../../../assets/imgs/living/xiudetails/fx.png" alt />
-            <span class="t" >分享</span>
+            <span class="t">分享</span>
           </li>
           <li @click.stop="openComplaintsShell">
             <img src="./../../../assets/imgs/living/xiudetails/ts.png" alt />
@@ -512,14 +512,66 @@
     </div>
     <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
     <!-- 主播个人消息弹层end -->
+    <!-- 浏览器下载及拉起 start-->
+     <div class="openappbtnsbox-w" v-if="openappbtns">
+      <div class="openappbtnsbox">
+        <div class="box_con03">
+          <div class="pt_box">
+            <span>
+                <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="抓周">
+            </span>
+            <p>请登录抓周APP操作</p>
+          </div>
+          <div class="btn_box">
+            <a class="openappbtn" :href="downloadappurl" target="_blank">下载APP</a>
+            <a class="openappbtn" :href="lunchupappurl" target="_blank">启动APP</a>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <!-- 浏览器下载及拉起 end-->
+
+    <!-- 微信打开 start-->
+      <div class="openappbtnsbox-w" v-if="wxtipsstatus">
+        <div class="openappbtnsbox openappbtnsbox_zbfx">
+          <span class="jtfx-white"><img src="./img/jtfx-white.png" alt=""></span>
+          <div class="box_con01">
+              <div class="pt_box">
+                <span>
+                    <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="抓周">
+                </span>
+                <div class="con01_in" v-if="guilddownloadtype_show">
+                  <p class="b">链接直播打不开</p>
+                  <p>请点击右上角“···”，选择在“浏览器”中打开</p>
+                  <div class="btn_box btn-box-wx">
+                    <a class="openappbtn" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.shop.zhualive" target="_blank">下载抓周APP</a>
+                    <a class="openappbtn" target="_blank" @click="openappletcode" v-if="false">抓周小程序查看</a>
+                  </div>
+                </div>
+                <div class="con01_code" v-if="appletcode_show">
+                  <div class="applet"><img src="./img/applets-code.png" alt=""></div>
+                  <p class="b">长按识别小程序码</p>
+                  <p>若无法长按扫码</p>
+                  <p>请截屏保存图片微信识别二维码</p>
+                  <span class="close_box_w" @click="close_openappbtnsbox">
+                    <img src="./img/close_box_w.png" alt="">
+                  </span>
+                </div>
+              </div>
+            </div>
+       </div>
+    </div>      
+    <!-- 微信打开 end-->
+
+
   </div>
 
 </template>
 
 <script>
   // import livingdetails from "./../../../../node_modules/yxfh5living/livingpage.js";
-  import livingdetails from "./js/livingpage-es6.js";
-  export default livingdetails;
+  import livingdetailsshare from "./js/livingpage-es6-share.js";
+  export default livingdetailsshare;
 
 </script>
 <style lang='less' scoped>
