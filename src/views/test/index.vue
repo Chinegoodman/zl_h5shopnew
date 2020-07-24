@@ -65,7 +65,11 @@ export default {
         this.api.test.userlevelequities({
             userId
         }).then(res=>{
-            console.log(res);
+          if(res.data.code==1){
+            zs.$toast(res.data.info);
+          }else{
+            zs.$toast(res.data.info);
+          }
         })
     }
   },
