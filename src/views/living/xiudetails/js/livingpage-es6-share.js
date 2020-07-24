@@ -485,7 +485,8 @@ export default {
         //分享相关
         lunchupappurlfn() {
             let that = this;
-            this.lunchupappurl = `zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
+            /// 秀场
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
         },
         open_openappbtnsbox_zbjm() {
             var that = this;
