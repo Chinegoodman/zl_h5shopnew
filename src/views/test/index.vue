@@ -6,6 +6,10 @@
         query{{this.$route.query}} <br>
         params{{this.$route.params}} <br>
         <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile>
+
+        <div class="levelwarp">
+            
+        </div>
     </div>
 </template>
 
