@@ -26,8 +26,8 @@ const test = {
     },
     // ========================↓↓↓↓↓↓↓当前页面的接口↓↓↓↓↓↓↓↓↓↓======================================
     //用户等级权益
-    userlevelquities(params) {
-        return axios.get(`${base.yxf2}/v1/user/level/quities`, { params });
+    userlevelequities(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/equities`, { params });
         // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
     },
 
