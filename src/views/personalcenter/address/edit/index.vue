@@ -147,9 +147,7 @@ import {
       deleted() {
         // let editid = this.$route.params.editid;
         let that = this;
-        let user = localStorage.getItem("user-info");
-        let userj = JSON.parse(user);
-        let userid = userj.userid;
+        let userid = that.$store.state.user.userid;
         this.api.personalcenter
           .postdelete({
             id: that.editid,
@@ -171,9 +169,7 @@ import {
       btn() {
         // let editid = this.editid;
         let that = this;
-        let user = localStorage.getItem("user-info");
-        let userj = JSON.parse(user);
-        let userid = userj.userid;
+        let userid = that.$store.state.user.userid;
         that.checked ? (that.adddefault = 1) : (that.adddefault = 2);
         this.api.personalcenter
           .postupdate({

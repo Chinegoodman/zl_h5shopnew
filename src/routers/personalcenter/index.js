@@ -646,6 +646,38 @@ export default [{
                     }]
                 }
             },
+            //个人中心==我的钱包[秀场] --首页
+            {
+                path: '/personalcenter/mypurse/livingpurse',
+                name: 'personalcentermypurseliving',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingpurse/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingpurse',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==首页',
+                        url: '/personalcenter/livingpurse/index',
+                    }]
+                }
+            },
+            //个人中心==我的钱包[秀场] --账单列表
+            {
+                path: '/personalcenter/mypurse/livingacountlist',
+                name: 'personalcenterlivingacountlist',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingacountlist/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingacountlist',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==首页',
+                        url: '/personalcenter/livingacountlist/index',
+                    }]
+                }
+            },
             {
                 path: '/personalcenter/mypurse/balancedetail',
                 name: 'personalcentermypursebalancedetail',

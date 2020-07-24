@@ -162,6 +162,7 @@ export default {
 
     .balance-list{
       padding-top: 2.9rem;
+      overflow: hidden;
       li{
         padding: .3rem;
         background:rgba(255,255,255,1);

@@ -141,7 +141,7 @@
         padding: 0.1rem 0 0.03rem;
         height: 0.92rem;
         box-sizing: border-box;
-        width: 83%;
+        width: 100%;
     }
 
     .swiper {
@@ -572,6 +572,11 @@
                     font-weight:bold;
                     color:rgba(31,31,31,1);
                     margin-top: .22rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
                     position: absolute;
                     left: .2rem;
                     bottom: .8rem;
@@ -1458,6 +1463,134 @@
             width: 100%;
         }
     }
+
+    .bangdanguild{
+        padding: 0 .2rem;
+        display: flex;
+        flex-wrap: nowrap;
+        margin-top: .4rem;
+        overflow: hidden;
+        .lis{
+            width: 3.45rem;
+            height: .77rem;
+            padding: .3rem 0 0 .31rem;
+            flex: 1;
+            justify-content: space-around;
+            cursor: pointer;
+            .t{
+                font-size: .36rem;
+                font-family:PingFang SC;
+                font-weight:bold;
+                color:rgba(255,255,255,1);
+            }
+            .ic{
+                display: inline-block;
+                width: .12rem;
+                height: .23rem;
+                margin-left: .1rem;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+        .tuhao{
+            background: url("./../../../../assets/imgs/shop/tuhao.png") no-repeat 0 0;
+            background-size: 3.45rem 1.07rem;
+        }
+        .zhubo{
+            margin-left: .2rem;
+            background: url("./../../../../assets/imgs/shop/zhubo.png") no-repeat 0 0;
+            background-size: 3.45rem 1.07rem;
+        }
+    }
+
+
+    
+    .xiuchang{
+        margin-top: 0.4rem;
+        .xclist{
+            .goodslist{
+                .goodsli{
+                    margin-top: 0;
+                    margin-bottom: .2rem;
+                    cursor: pointer;
+                    .im{
+                        border-radius: .24rem .24rem .12rem .12rem;
+                        img{
+                            border-radius: .24rem .24rem .12rem .12rem;
+                        }
+                    }
+                    .tit{
+                        left: .15rem;
+                        color:rgba(255,255,255,1);
+                    }
+                    .goodsli_title{
+                        left: .15rem;
+                        bottom: .23rem;
+                        top: initial;
+                        height: .35rem;
+                        h2{
+                            font-size: .22rem;
+                            height: auto;
+                            line-height: initial;
+                        }
+                        h2.indent{
+                            text-indent: .4rem;
+                            color:rgba(255,255,255,1);
+                            width: 2.1rem;
+                        }
+                        .img_w{
+                            width: .35rem;
+                            height: .35rem;
+                            top: -.02rem;
+                            overflow: hidden;
+                        }
+                    }
+                    .gd_btm{
+                        right: .15rem;
+                        bottom: .23rem;
+                        text-align: right;
+                        .num{
+                            line-height: initial;
+                            color:rgba(255,255,255,1);
+                            font-weight:500;
+                        }
+                    }
+                    .stateflag{
+                        position: absolute;
+                        right: .15rem;
+                        top: .15rem;
+                        span{
+                            display: inline-block;
+                        }
+                        .huifang,
+                        .zb{
+                            width: .96rem;
+                            height: .3rem;
+                            vertical-align: middle;
+                        }
+                        .zb{
+                            background: url("./../../../../assets/imgs/shop/zhibo.png") no-repeat 0 0;
+                            background-size: .96rem .3rem;
+                        }
+                        .huifang{
+                            background: url("./../../../../assets/imgs/shop/huifang.png") no-repeat 0 0;
+                            background-size: .96rem .3rem;
+                        }
+                        .num{
+                            font-size: .2rem;
+                            font-family:PingFang SC;
+                            font-weight:400;
+                            color:rgba(117,117,117,1);
+                            line-height: .4rem;
+                            margin-left: .15rem;
+                        }
+                    }
+                }
+            }  
+        }
+    }    
 }
 /*new commer*/
 .newcomerindexguild{

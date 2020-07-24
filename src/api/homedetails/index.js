@@ -39,7 +39,7 @@ const homedetails = {
     },
     // 实时金价
     goldmassage(params) {
-        return axios.post(`${base.yxf}/mapi/v1/valuation/price/nowGold`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/valuation/price/nowGold`, qs.stringify(params));
     },
     // 首页推荐tab列表 ljx
     homelisttjpost(params) {
@@ -51,7 +51,7 @@ const homedetails = {
     },
     // 首页金钢区-内页列表
     diamondlistpost(params) {
-        return axios.post(`${base.yxf}/mapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
     },
     // 首页直播tab列表 ljx
     homelistzbpost(params) {
@@ -60,6 +60,10 @@ const homedetails = {
     // 直播分类接口 ljx
     homelistfenleizb(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/homepage/goldType`, qs.stringify(params));
+    },
+    // 首页秀场列表 ljx
+    homelistxcpost(params) {
+        return axios.get(`${base.yxf2}/v1/show/live/getLiveList?type=${params.type}&page=${params.page}&pageSize=${params.pageSize}`);
     },
     // 首页新品tab列表 ljx
     homelistxppost(params) {

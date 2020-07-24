@@ -1,43 +1,48 @@
 <!-- 组件说明 -->
+import { setTimeout } from 'timers';
+import func from './vue-temp/vue-editor-bridge';
 import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
         
-        <div @click="goback" class="topbtn"><img src="@/assets/imgs/icons/sp-pic-fanh@2x.png" alt="返回"></div>
-        <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
-
+        <div @click="goback" v-if="step ==1" class="topbtn"><img src="@/assets/imgs/icons/back.png" alt="返回"></div>
+        <div class="header" v-if="step ==2">
+          <img class="back" @click="goback" src="../../assets/imgs/follow/xiangqing@2x.png" alt />
+          <span>设置密码</span>
+        </div>
+        <div class="loggo_wrap" v-if="step==1">
+          <div class="logo_img">
+            <img src="@/assets/imgs/icons/logo.png" alt="返回">
+          </div>
+          <div class="tit">欢迎进入抓周</div>
+          <div class="t">黄金源头市场</div>
+        </div>
         <div class="content" v-if="logintype=='验证码登录'">
-            <p class="title">手机号登录/注册</p>
-            <div class="status">
-                <div class="statusli" :class="{active:step==1}">
-                    <span>1</span>
-                    <p>输入手机号</p>
-                </div>
-                <div class="statusli" :class="{active:step==2}">
-                    <span>2</span>
-                    <p>设置密码</p>
-                </div>
-            </div>
             <div class="step1" v-if="step==1">
                 <div class="iptbox">
-                    <span>+86</span>
-                    <input type="text" v-model="phonenum" placeholder="请输入手机号">
+                    <span class="t">手机号</span>
+                    <input type="text" v-model="phonenum" @blur="checkPhone" placeholder="请输入手机号">
                 </div>
                 <div class="iptbox">
+                    <span class="t">验证码</span>
                     <input type="text" v-model="phonecode" placeholder="请输入验证码">
-                    <span @click="getcode" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
+                    <span @click="dingxiangsdk" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
-                <div class="loginbtn" @click="loginstart">开始</div>
+                <div class="ding-xiang-code" ref="dingxiangcode"></div>
+                <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="loginstart">开始</div>
+                <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
             </div>
             <div class="step2" v-if="step==2">
                 <div class="iptbox">
+                    <span class="t">输入密码</span>
                     <input type="password" v-model="setpassword" placeholder="请输入密码">
                 </div>
                 <div class="iptbox">
-                    <input type="password" v-model="setpassword2" placeholder="请输入密码">
+                    <span class="t">确认密码</span>
+                    <input type="password" v-model="setpassword2" placeholder="确认登录密码">
                 </div>
-                <p>密码长度8-32位，须包含数字、字母、符号至少2种或以上元素。</p>
+                <p>密码长度8-32位，须包含数字、字母、符号至少2种</p>
                 <div class="setpassword" @click="setpasswordfn">确认提交</div>
             </div>
             <!-- <div class="bottom">
@@ -58,16 +63,16 @@ import { clearInterval } from 'timers';
             </div> -->
         </div>
         <div class="content content2" v-if="logintype=='密码登录'">
-            <p class="title">密码登录</p>
             <div class="iptbox">
-                <span>+86</span>
-                <input type="text" v-model="phonenum2" placeholder="请输入手机号">
+                <span class="t">手机号</span>
+                <input type="text" v-model="phonenum2" @blur="checkPhone_ii" placeholder="请输入手机号">
             </div>
             <div class="iptbox">
-                <span>密码</span>
+                <span class="t">密码</span>
                 <input type="password" v-model="password" placeholder="请输入登录密码">
             </div>
-            <div class="loginbtn" @click="passwordlogin">登录</div>
+            <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state_ii}" @click="passwordlogin">登录</div>
+            <div @click="logintypechange" class="toprightbtn">{{logintypechangetxt}}</div>
             <!-- <div class="forgetpw" @click="logintypechange">忘记密码? 用验证码登录</div> -->
             <div class="forgetpw" @click="resetpassword">忘记密码?</div>
             <!-- <div class="bottom">
@@ -121,7 +126,7 @@ export default {
       phonenum2: "", //手机号、、账号密码登录的手机号
       phonecode: "", //手机验证码
 
-      logintypechangetxt: "切换密码登录", //登录模式切换按钮的文字
+      logintypechangetxt: "密码登录", //登录模式切换按钮的文字
       logintype: "验证码登录", // 默认为验证码登录，可切换为密码登陆
 
       gettingcodestatus: false, //正在获取验证码的状态
@@ -129,10 +134,51 @@ export default {
       timer: "", //计时器
 
       setpassword: "", //设置密码
-      setpassword2: "" //设置密码2
+      setpassword2: "", //设置密码2
+      loginbtned_state : false,
+      loginbtned_state_ii : false,
+      return_token : ''
     };
   },
   computed: {},
+  watch : {
+    phonenum(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonecode != '' && that.checkPhone() == true){
+        console.log('that.phonecode');
+        console.log(that.phonecode);
+        this.loginbtned_state = true;
+      }else{
+        this.loginbtned_state = false;
+      }
+    },
+    phonecode(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonenum != ''){
+        this.loginbtned_state = true;
+      }else{
+        this.loginbtned_state = false;
+      }
+    },
+    //mobile: that.phonenum2,
+    // password: that.password,
+    phonenum2(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.password != '' && that.checkPhone_ii() == true){
+        that.loginbtned_state_ii = true;
+      }else{
+        that.loginbtned_state_ii = false;
+      }
+    },
+    password(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.phonenum2 != ''){
+        that.loginbtned_state_ii = true;
+      }else{
+        that.loginbtned_state_ii = false;
+      }
+    }
+  },
   methods: {
     goback() {
       this.$router.go(-1);
@@ -194,12 +240,61 @@ export default {
       this.setpassword = "";
       this.setpassword2 = "";
     },
+    //引入顶象验证sdk
+    dingxiangsdk(){
+      let that = this;
+      let dingxiangcode = that.$refs.dingxiangcode;
+      var myCaptcha = _dx.Captcha(dingxiangcode, {
+          //appId，在控制台中“应用管理”或“应用配置”模块获取
+          appId: '14eb88949244fad2a3da49cab8dd2b9b', 
+          type: 'basic', // <-- 指定为"基础类型"，此参数可省略
+          style: 'popup', // 可省略
+          width: 300, // 可省略
+          success: function (token) {
+            console.log('token:', token)
+            that.return_token = token;
+            setTimeout(function(){
+              myCaptcha.hide();
+              //获取验证码
+              that.getcode();
+            },200);
+          }
+      })
+      myCaptcha.reload();
+      myCaptcha.show();
+    },
+    //手机号验证
+    checkPhone(){ 
+      let that = this;
+      if(!that.phonenum)return;
+      if(!(/^1[3456789]\d{9}$/.test(that.phonenum))){ 
+        that.$toast("手机号码有误，请重填");
+        this.loginbtned_state = false;
+        return false; 
+      }else{
+        // this.loginbtned_state = true;
+        return true;
+      } 
+    },
+    //手机号验证-密码登录
+    checkPhone_ii(){ 
+      let that = this;
+      console.log('2999');
+      if(!that.phonenum2)return;
+      if(!(/^1[3456789]\d{9}$/.test(that.phonenum2))){ 
+        that.$toast("手机号码有误，请重填");
+        that.loginbtned_state_ii = false;
+        return false; 
+      }else{
+        // that.loginbtned_state_ii = true;
+        return true;
+      } 
+    },
     // 获取验证码事件
     getcode() {
       let that = this;
       this.gettingcodestatus = true;
       clearInterval(that.timer);
-      // debugger;
       that.timer = setInterval(() => {
         if (that.gettingcodestatustime > 1) {
           that.gettingcodestatustime--;
@@ -209,35 +304,36 @@ export default {
           that.gettingcodestatustime = 120;
         }
       }, 1000);
+      //获取验证码
       this.api.login
-        .captcha({
-          phone: that.phonenum,
-          sign: "",
-          timeStamp: ""
-        })
-        .then(data => {
-          // console.log(data);
-          that.$toast(data.data.info);
-        });
-      // this.phonecode='模拟填充';
+      .captcha({
+        mobile: that.phonenum,
+        type : 1
+      })
+      .then(data => {
+        that.$toast(data.data.info);
+      });
     },
     // 验证码方式 登录点击事件
     loginstart() {
       let that = this;
+      if(!this.loginbtned_state)return;
       this.api.login
         .login({
           mobile: that.phonenum,
+          loginType: 2,
           verificationCode: that.phonecode,
-          client:'h5',
-          loginType: 2
+          // token : that.return_token,
+          client:'h5'
         })
         .then(data => {
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
+            console.log('data.data.data');
             console.log(data.data.data);
             let userdata = data.data.data;
-            if (userdata.isFirstLogin == 0) {
+            if (userdata.isSetPassword == 0) {
               // 已注册用户
               let user = {
                 isLogin: true,
@@ -250,7 +346,7 @@ export default {
               };
               that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
               // that.$router.push({ name: "shopindex" });
-            } else if (userdata.isFirstLogin == 1) {
+            } else if (userdata.isSetPassword == 1) {
               // 未注册用户  即 新用户
               let user = {
                 isLogin: true,
@@ -280,6 +376,7 @@ export default {
           loginType: 1
         })
         .then(data => {
+          console.log(1986);
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
@@ -337,6 +434,7 @@ export default {
               userdata: resdata
             };
             that.$store.commit("saveuserdata", user);
+            //跳转到商城首页或不传routername让step等于2跳转密码设置页
             that.$router.push({ name: routername });
           }
         });
@@ -410,16 +508,14 @@ export default {
   height: 100vh;
   overflow-y: scroll;
   .toprightbtn {
-    position: absolute;
     height: 0.64rem;
-    right: 0.63rem;
-    top: 0.55rem;
+    margin-top : .2rem;
     color: rgba(136, 136, 136, 1);
-    z-index: 400;
+    text-align : center;
     cursor: pointer;
   }
   .content {
-    padding-top: 2rem;
+    margin-top: .58rem;
     .title {
       text-align: center;
       color: rgba(51, 51, 51, 1);
@@ -476,36 +572,41 @@ export default {
       }
     }
     .iptbox {
-      background-color: rgba(246, 246, 246, 1);
       border-radius: 0.089rem;
-      padding: 0.33rem 0.47rem 0.33rem 0.28rem;
-      width: 6.24rem;
+      padding: 0.2rem 0;
+      width: 5.68rem;
       // height: 0.78rem;
       box-sizing: border-box;
-      margin: 0 auto 0.24rem;
+      margin: 0 0.91rem .52rem 0.91rem;
       // font-size:0.28rem;
       font-size: 0.37rem;
       line-height: 1em;
-      height: calc(1em + 0.66rem);
+      height: calc(1em + 0.4rem);
       position: relative;
+      border-bottom :.01rem solid rgba(215,215,215,1);
+      .t{
+        font-size: .3rem;
+        font-weight:500;
+        color:rgba(31,31,31,1);
+        text-align: left;
+      }
       span {
         float: left;
-        width: 0.77rem;
+        width: 1.2rem;
         height:0.37rem;
-        text-align: left;
+        text-align: right;
         color: rgba(51, 51, 51, 1);
         font-size: 0.32rem;
-        border-right: 1px solid rgba(210, 210, 210, 1);
         &.getcodebtn {
-          color: rgba(83, 136, 172, 1);
-          border-right: none;
-          padding-left: 0.43rem;
-          border-left: 1px solid rgba(210, 210, 210, 1);
           width: 1.6rem;
+          padding-left: 0.43rem;
+          color:rgba(255,189,4,1);
+          border-right: none;
+          font-size: 0.24rem;
           cursor: pointer;
           position: absolute;
-          right: 0.47rem;
-          top: 0.33rem;
+          right: 0.05rem;
+          top: 0.2rem;
         }
       }
       input {
@@ -513,74 +614,80 @@ export default {
         // height: 1em;
         height: 0.37rem;
         line-height: 1em;
-        background-color: rgba(246, 246, 246, 1);
-        color: rgba(206, 206, 206, 1);
+        color: 333;
         font-size: 0.28rem;
         padding-left: 0.24rem;
         float: left;
-        // width:3.65rem;
-        width: 3rem;
+        width:3.85rem;
+      }
+
+      input::placeholder {
+        font-size: .24rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(191,191,191,1);
       }
     }
     .loginbtn {
-      width: 6.24rem;
-      height: 0.94rem;
-      margin: 0.46rem auto 0;
-      line-height: 0.98rem;
+      width: 5.68rem;
+      height: 0.8rem;
+      margin: 1.54rem auto 0;
+      line-height: 0.8rem;
       text-align: center;
       font-size: 0.32rem;
-      color: rgba(255, 255, 255, 1);
-      // background-color: rgba(249,195,193,1);
-      background-image: linear-gradient(to right, #ff2013, #ff5223);
-      box-shadow: 0px 0.02rem 0.16rem 0px rgba(255, 55, 27, 0.36);
+      color:rgba(117,117,117,1);
+      background:rgba(235,235,233,1);
       border-radius: 0.6rem;
+      font-weight:bold;
       cursor: pointer;
     }
+    .loginbtned{
+      background:rgba(255,189,4,1);
+      color : #fff;
+    }
     .step2 {
+      margin-top: 1.3rem;
       .iptbox {
-        background-color: rgba(246, 246, 246, 1);
-        border-radius: 0.089rem;
-        padding: 0.33rem 0.47rem 0.33rem 0.28rem;
-        width: 6.24rem;
-        // height: 0.78rem;
+        padding: 0.2rem 0 0.2rem;
+        width: 5.68rem;
+      // height: 0.78rem;
         box-sizing: border-box;
-        margin: 0 auto 0.24rem;
-        // font-size:0.28rem;
+        margin: 0 0.91rem .52rem 0.91rem;
+        border-bottom :.01rem solid rgba(215,215,215,1);
         font-size: 0.37rem;
         line-height: 1em;
-        height: calc(1em + 0.66rem);
+        height: calc(1em + 0.4rem);
         position: relative;
         input {
           border: none;
           height: 0.37rem;
           line-height: 0.37rem;;
-          background-color: rgba(246, 246, 246, 1);
           color: rgba(206, 206, 206, 1);
           font-size: 0.28rem;
           // padding-left: 0.24rem;
           // float: left;
           // // width:3.65rem;
-          width: 100%;
+          width: 70%;
         }
       }
       .setpassword {
-        width: 6.24rem;
-        height: 0.98rem;
-        margin: 0.46rem auto 0;
-        line-height: 0.98rem;
+        width: 5.68rem;
+        height: 0.8rem;
+        margin: 1.1rem auto 0;
+        line-height: 0.8rem;
         text-align: center;
         font-size: 0.32rem;
-        color: rgba(255, 255, 255, 1);
-        background-color: rgba(219, 49, 42, 1);
-        border-radius: 0.08rem;
+        color:rgba(117,117,117,1);
+        background:rgba(235,235,233,1);
+        border-radius: 0.38rem;
         cursor: pointer;
       }
       & > p {
         width: 6.32rem;
         color: rgba(155, 155, 155, 1);
         line-height: 0.37rem;
-        font-size: 0.28rem;
-        margin: 0.12rem auto 0.4rem;
+        font-size: 0.24rem;
+        margin: 0.12rem auto 0.4rem .91rem;
       }
     }
   }
@@ -624,17 +731,75 @@ export default {
 // 顶部返回按钮
 .topbtn {
   position: absolute;
-  width: 0.64rem;
-  height: 0.64rem;
-  left: 0.23rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  left: 0.17rem;
   top: 0.55rem;
   border-radius: 50%;
   overflow: hidden;
   z-index: 400;
   cursor: pointer;
   img {
-    width: 100%;
+    width: auto;
     height: 100%;
+  }
+}
+
+.loggo_wrap{
+  padding-top : 1.89rem;
+  font-family:PingFang SC;
+  text-align : center;
+  .logo_img{
+    width : 1.24rem;
+    height : 1.24rem;
+    margin : 0 auto;
+    img{
+      width : auto;
+      height : 100%;
+    }
+  }
+  .tit{
+    font-size: .34rem;
+    font-weight:bold;
+    color:rgba(31,31,31,1);
+    margin-top : .55rem;
+  }
+  .t{
+    font-size: .24rem;
+    font-weight:500;
+    color:rgba(191,191,191,1);
+    margin-top : .2rem;
+  }
+
+
+}
+
+.registwrap{
+  .header {
+      width: 7.5rem;
+      border-bottom: 1px solid #DEDEDE;
+      background: white;
+      text-align: center;
+      position: fixed;
+      z-index: 100;
+
+      img {
+          transform: rotate(180deg);
+          width: 0.2rem;
+          height: 0.35rem;
+          display: block;
+          padding: 0.4rem 0;
+          margin-left: 0.46rem;
+      }
+
+      span {
+          position: absolute;
+          top: 0.4rem;
+          left: 50%;
+          margin-left: -0.55rem;
+          font-size: 0.34rem;
+          color: #333333;
+      }
   }
 }
 .forgetpw {
@@ -648,4 +813,8 @@ export default {
 }
 </style>
 
-<style lang='less'>
+<style>  
+  .ding-xiang-code .dx_captcha_basic_link{
+    display: none;
+  }
+</style>

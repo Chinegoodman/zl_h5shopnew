@@ -12,13 +12,13 @@
                 <span class="logined">{{$store.state.user.userdata.userInfo.nickname}}</span>
                 <span class="level_use" @click="go_levelinstruct">
                   <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel1.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==1"  />
-                  <img src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==2" />
-                  <img src="./../../../assets/imgs/personal/vipLevel3.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==3" />
-                  <img src="./../../../assets/imgs/personal/vipLevel4.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==4" />
-                  <img src="./../../../assets/imgs/personal/vipLevel5.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==5" />
-                  <img src="./../../../assets/imgs/personal/vipLevel6.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==6" />
-                  <img src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==7" />
-                  <img src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==8" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==2" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel3.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==3" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel4.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==4" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel5.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==5" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel6.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==6" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==7" />
+                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==8" />
                 </span>
               </div>
               <progress class="mypro" :value="$store.state.user.userdata.integral" :max="$store.state.user.userdata.level"></progress>
@@ -157,29 +157,34 @@ export default {
       ],
       myServeList : [
         {
+          name : "我的钱包",
+          img : require("@/assets/imgs/personal/my-money.png"),
+          list_id : 0
+        },
+        {
           name : "金银财宝",
           img : require("@/assets/imgs/personal/my-serve01.png"),
-          list_id : 0
+          list_id : 1
         },
         {
           name : "优惠中心",
           img : require("@/assets/imgs/personal/my-serve02.png"),
-          list_id : 1
+          list_id : 2
         },
         {
           name : "我的收藏",
           img : require("@/assets/imgs/personal/my-serve03.png"),
-          list_id : 2
+          list_id : 3
         },
         {
           name : "我的浏览",
           img : require("@/assets/imgs/personal/my-serve04.png"),
-          list_id : 3
+          list_id : 4
         },
         {
           name : "我的消息",
           img : require("@/assets/imgs/personal/my-serve05.png"),
-          list_id : 4
+          list_id : 5
         }
       ],
       aboutZhuaZhouList : [
@@ -300,23 +305,25 @@ export default {
     serveGuild(index){
       var that = this;
       switch(index){
-        case 0:
+         case 0:
+            //钱包页面
+            this.$router.push({ path: "/personalcenter/mypurse/livingpurse",query:{
+              userid:this.$store.state.user.userid,
+              webtype:1,//H5
+            }});
+            break;
+        case 1:
             //钱包页面
             this.$router.push({ path: "/personalcenter/mypurse",query:{
               userid:this.$store.state.user.userid,
               webtype:1,//H5
             }});
             break;
-        case 1:
+        case 2:
             that.$router.push({ path: "/personalcenter/discount",query:{
               userid:this.$store.state.user.userid,
               tabid:1 //H5
             }}); 
-            break;
-        case 2:
-            that.$router.push({path : "/mybrowse",query:{
-              tab_id : index
-            }});
             break;
         case 3:
             that.$router.push({path : "/mybrowse",query:{
@@ -324,6 +331,11 @@ export default {
             }});
             break;
         case 4:
+            that.$router.push({path : "/mybrowse",query:{
+              tab_id : index
+            }});
+            break;
+        case 5:
             that.gomyinfo();
             break;    
         default:

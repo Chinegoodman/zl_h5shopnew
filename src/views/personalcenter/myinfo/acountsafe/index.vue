@@ -71,6 +71,7 @@ export default {
         text-align: center;
         position: fixed;
         z-index: 100;
+        cursor: pointer;
 
         img {
             transform: rotate(180deg);
@@ -79,6 +80,7 @@ export default {
             display: block;
             padding: 0.4rem 0;
             margin-left: 0.46rem;
+            cursor: pointer;
         }
 
         span {
@@ -115,6 +117,7 @@ export default {
                 background: #fff;
                 margin-bottom: .2rem;
                 padding-left: .2rem;
+                cursor: pointer; 
                 .lt,
                 .rt{
                     display : inline-block;

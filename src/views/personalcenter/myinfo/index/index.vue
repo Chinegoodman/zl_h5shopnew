@@ -9,7 +9,7 @@
             <li>
                 <div class="lt">头像</div>
                 <div class="rt">
-                    <img v-if="baseuserinfo.face_url" :src="baseuserinfo.face_url?baseuserinfo.face_url:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
+                    <img v-if="baseuserinfo.headPortrait" :src="baseuserinfo.headPortrait?baseuserinfo.headPortrait:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
                 </div>
                 <div class="van-uploader-box">
                    <input type="file" class="upfile" @change="upimgs">
@@ -18,12 +18,12 @@
             </li>
             <li @click="changenickname">
                 <div class="lt">昵称</div>
-                <div class="rt">{{baseuserinfo.nickname}}</div>
+                <div class="rt">{{baseuserinfo.nickName}}</div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li>
                 <div class="lt">ID</div>
-                <div class="rt">{{baseuserinfo.id}}</div>
+                <div class="rt">{{baseuserinfo.userId}}</div>
             </li>
             <li>
                 <div class="lt">所在地</div>
@@ -32,7 +32,7 @@
             </li>
             <li @click="gotosex">
                 <div class="lt">性别</div>
-                <div class="rt">{{baseuserinfo.sex===1?'男':'女'}}</div>
+                <div class="rt">{{baseuserinfo.gender===1?'男':'女'}}</div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li @click="gotobirthday">
@@ -43,6 +43,22 @@
             <li @click="gotointroduction">
                 <div class="lt">我的介绍</div>
                 <div class="rt">{{baseuserinfo.introduction}}</div>
+                <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+            </li>
+        </ul>
+        <ul>
+            <li @click="acountsafe">
+                <div class="lt">主播实名认证</div>
+                <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+            </li>
+            <li>
+                <div class="lt">实休店铺认证</div>
+                <div class="rt">
+                    <span class="hot">
+                        <img  src="../../../../assets/imgs/personal/rm.png" alt />
+                    </span>
+                    线上开店不打洋
+                </div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
         </ul>    
@@ -135,7 +151,7 @@ export default {
             that.$router.push({
                 path : '/personalcenter/myinfo/nickname',
                 query : {
-                    nickname : that.baseuserinfo.nickname
+                    nickname : that.baseuserinfo.nickName
                 }
             });
         },
@@ -145,7 +161,7 @@ export default {
             that.$router.push({
                 path : '/personalcenter/myinfo/acountsafe',
                 query : {
-                    phone : that.baseuserinfo.phone
+                    phone : that.baseuserinfo.mobile
                 }
             });
         },
@@ -165,12 +181,14 @@ export default {
         getuseinfo(){
             let that = this;
             that.api.personalcenter
-            .getinfouser({
+            .getinfouser_new({
                 userId : that.$store.state.user.userid
             })
             .then(res => {
                 if(res.data.code === 1){
-                    that.baseuserinfo = res.data.data.userInfo;
+                    console.log('res');
+                    console.log(res.data.data);
+                    that.baseuserinfo = res.data.data;
                 }
             })
             
@@ -229,9 +247,9 @@ export default {
         changefaceurl(){
             let that = this;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                face_url :  that.upimglist[0]
+            .updateHeadPortrait({
+                userId : that.$store.state.user.userid,
+                headPortraitUrl :  that.upimglist[0]
             }).then(res => {
                 that.getuseinfo();
             })
@@ -265,8 +283,8 @@ export default {
             that.datatime_show = false; 
             that.post_time = this.timeValue;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
                 birthday :  that.post_time
             }).then(res => {
                 if(res.data.code === 1){
@@ -292,12 +310,12 @@ export default {
             if(val == '男'){
                 that.post_sex = 1;
             }else if(val == '女'){
-                that.post_sex = 0;
+                that.post_sex = 2;
             }
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                sex :  that.post_sex
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
+                gender :  that.post_sex
             }).then(res => {
                 if(res.data.code === 1){
                     this.sex_show = false;
@@ -360,6 +378,17 @@ export default {
                 .rt{
                     display : inline-block;
                     line-height: .98rem;
+                    .hot{
+                        display : inline-block;
+                        width : .22rem;
+                        height : .30rem;
+                        img{
+                            width : 100%;
+                            height : 100%;
+                            vertical-align: middle;
+                            margin-top : 0;
+                        }
+                    }
                 }
                 .lt{
                     float: left;

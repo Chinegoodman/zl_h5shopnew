@@ -7,6 +7,7 @@ import productdetails from '@/api/productdetails';
 import login from '@/api/login'
 import living from '@/api/living/index.js'
 // import living from '@/api/living/index.min.js'
+import xiuchangliving from '@/api/living/xiuchangindex.js'
 // ==========================庞世锋============================
 
 // ==========================刘巍============================
@@ -43,6 +44,7 @@ export default {
     shopcart,
     shopmassages,
     living,
+    xiuchangliving,
     returngoods,
     newcomer
     // ……

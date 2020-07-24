@@ -34,6 +34,21 @@ export default [{
             }]
         }
     },
+    // 秀场直播 直播详情页
+    {
+        path: 'xiuchangdetails',
+        name: 'xiuchangdetails',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/xiudetails/index.vue'], resolve),
+        meta: {
+            name: 'xiuchangdetails',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/xiuchangdetails',
+            }]
+        }
+    },
     // 直播 直播回放  
     {
         path: 'livingreplay',
@@ -49,7 +64,7 @@ export default [{
             }]
         }
     },
-    // 直播 直播详情页-----分享
+    // 抓周直播 直播详情页-----分享
     {
         path: 'livingdetailsshare',
         name: 'livingdetailsshare',
@@ -61,6 +76,21 @@ export default [{
             breadnav: [{
                 name: '直播详情',
                 url: '/living/livingdetailsshare',
+            }]
+        }
+    },
+    // 秀场直播 直播详情页-----分享
+    {
+        path: 'livingxiuchangdetailsshare',
+        name: 'livingxiuchangdetailsshare',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/xiudetails/livingxiuchangdetailsshare.vue'], resolve),
+        meta: {
+            name: 'livingxiuchangdetailsshare',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/livingxiuchangdetailsshare',
             }]
         }
     },

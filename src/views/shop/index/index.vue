@@ -43,7 +43,7 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-    <div class="tipsbox">
+    <div class="tipsbox" v-if="list_content_show_type != 2">
       <p>
         <img src="@/assets/imgs/icons/dppz.png" alt="大牌品质，工厂价格，个性定制，创意者秀" />
         <span>大牌品质</span>
@@ -60,6 +60,20 @@
         <img src="@/assets/imgs/icons/cyzx.png" alt="大牌品质，工厂价格，个性定制，创意者秀" />
         <span>创意者秀</span>
       </p>
+    </div>
+    <div class="bangdanguild" v-show="list_content_show_type===2">
+      <div class="lis tuhao">
+        <span class="t">土豪榜</span>
+        <span class="ic">
+          <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
+        </span>
+      </div>
+      <div class="lis zhubo">
+        <span class="t">主播榜</span>
+        <span class="ic">
+          <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
+        </span>
+      </div>
     </div>
     <div class="guild-area" v-show="guildarea.length > 0 && list_content_show_type===0">
       <ul>
@@ -105,7 +119,7 @@
               <span class="img_w">
                 <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
               </span>
-              <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+              <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
             <div class="zan" @click.stop="clickPraisePoint(index)">
@@ -156,7 +170,7 @@
                 <span class="img_w">
                   <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
                 </span>
-                <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+                <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
               <div class="zan" @click.stop="clickPraisePoint(index)">
@@ -173,9 +187,51 @@
           <div class="changesmallsize" v-if="change_big_small_flag_zb===0" @click="changeimgsize_zb()"></div>
       </div>
       <div class="changesize"></div>
-    </div>  
+    </div>
+    <!-- 秀场列表数据展示 -->
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===2">
+       <!-- big_list 为切换到大图的class -->
+      <div class="list xclist">
+        <van-list
+          class="goodslist"
+          v-model="listloading_xc"
+          :finished="listfinished_xc"
+          :finished-text="finished_text_xc"
+          :error.sync="vanerror_xc"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelistxc"
+        >
+          <div
+            @click="gotoxiuchangdetails(item)"
+            class="goodsli"
+            v-for="(item,index) in homelistxcmsg"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="im"> 
+              <img :src="item.cover?item.cover:default_img_small" alt="" />
+            </div>
+            <div class="goodsli_title clearfix">
+              <span class="img_w">
+                <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
+              </span>
+              <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
+            </div>
+            <span class="tit">{{item.name}}</span>
+            <div class="gd_btm">
+               <span class="num">{{item.realCount}}观看</span>
+            </div>
+            <div class="stateflag">
+              <span class="zb" v-if="item.state===1"></span>
+              <span class="huifang" v-if="item.state===0"></span>
+            </div>
+          </div>
+        </van-list>
+      </div>
+    </div>   
     <!-- 新品列表数据展示 --> 
-     <div class="index_list_recommend wang" v-show="list_content_show_type===2">
+     <div class="index_list_recommend wang" v-show="list_content_show_type===3">
         <div class="nav_type">
           <!-- 分类tab -->
           <ul>
@@ -255,7 +311,7 @@
     </div>  
 
     <!-- 投资金列表start -->
-    <div class="rongtongjin-ad" v-if="list_content_show_type===3">
+    <div class="rongtongjin-ad" v-if="list_content_show_type===4">
         <span class="ad-tit">
           <img src="@/assets/imgs/shop/rongtongjin-tit.png" alt="">
         </span>
@@ -281,7 +337,7 @@
           <img src="@/assets/imgs/shop/rongtongjin-jin.png" alt="">
         </span>
     </div>
-    <div class="index_list_recommend tzj" v-show="list_content_show_type===3">
+    <div class="index_list_recommend tzj" v-show="list_content_show_type===4">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'tzj-list' : true,'tzj-big-list' : change_big_small_flag_tzj===0}">
@@ -405,6 +461,7 @@ export default {
       everday:'',
       homelistmassage: [], //推荐列表
       homelistzbmsg: [], //直播列表
+      homelistxcmsg : [], //秀场列表
       homelistxpmsg: [], //新品列表
       homelisttzjmsg: [], //投资金列表
       titlistmassage: [
@@ -413,16 +470,20 @@ export default {
           tabindex: 0  //推荐
         },
         {
-          category_name:"直播",
+          category_name:"秀物",
           tabindex: 1  //直播
         },
         {
+          category_name:"娱乐",
+          tabindex: 2  //直播
+        },
+        {
           category_name:"商城",
-          tabindex: 2  //推荐
+          tabindex: 3  //推荐
         },
         {
           category_name:"投资金",
-          tabindex: 3  //推荐
+          tabindex: 4  //推荐
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
@@ -447,6 +508,7 @@ export default {
       goldpricetimer : null,
       nextpage: "",
       nextPage_zb :"",
+      nextPage_xc : 1,
       nextPage_xp :"",
       nextpage_tzj : 1,
       number: 0,
@@ -454,16 +516,20 @@ export default {
       listfinished: false,
       listfinished_zb: false,
       listloading_zb: false,
+      listfinished_xc: false,
+      listloading_xc: false,
       listfinished_xp: false,
       listloading_xp: false,
       listfinished_tzj: false,
       listloading_tzj: false,
       finished_text : '',
       finished_text_zb : '',
+      finished_text_xc : '亲，没有更多啦哟~',
       finished_text_xp : '',
       finished_text_tzj : '',
       vanerror: false,
       vanerror_zb: false,
+      vanerror_xc: false,
       vanerror_xp: false,
       vanerror_tzj: false,
       gold_type: 101,
@@ -532,7 +598,6 @@ export default {
     //刷新列表
     if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
-      console.log('1997');
       that.titleclick(tab,false);
     }
     //新人专区推广弹层-游客模式直接弹，登录后新人弹 否则不弹
@@ -606,6 +671,22 @@ export default {
           typeId : item.id
         }
       });
+    },
+    //跳转到秀场直播详情
+    // 跳转到直播详情页
+    gotoxiuchangdetails(paramsdata) {
+      let that = this;
+      if(!that.iflogin()){return;}
+      // setsessionStorage("livinglidata-xiu", paramsdata);
+      if(paramsdata.state==1){
+        this.$router.push({
+          path: "/living/xiuchangdetails",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
+          }
+        });
+      }  
     },
     // 跳转到直播详情页
     gotolivingdetails(paramsdata) {
@@ -758,9 +839,12 @@ export default {
           window.sessionStorage.removeItem('homelistzbstorerange');
           break;
         case 2:
+          window.sessionStorage.removeItem('homelistxcstorerange');
+          break;  
+        case 3:
           window.sessionStorage.removeItem('homelistxpstorerange');
           break;
-        case 3:
+        case 4:
           window.sessionStorage.removeItem('homelisttzjstorerange');  
           break;
       }  
@@ -780,14 +864,17 @@ export default {
       
       this.nextpage= '';
       that.nextPage_zb = '';
+      that.nextPage_xc = 1;
       that.nextPage_xp = '';
       that.nextpage_tzj = '1';
       that.homelistmassage = []; //推荐列表
       that.homelistzbmsg = []; //直播列表
+      that.homelistxcmsg = []; //直播列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
       that.finished_text = '';
       that.finished_text_zb = '';
+      that.finished_text_xc = '';
       that.finished_text_xp = '';
       that.finished_text_tzj = '';
       that.hasmorepage = 1;
@@ -840,8 +927,19 @@ export default {
             }
           })
         }
-        break  
-        case 2 :  
+        break 
+        case 2 :
+          //秀场列表
+          if(getsessionStorage('homelistxcstorerange')){
+            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
+            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
+            console.log('1646546');
+            // that.listfinished = false;
+          }else{
+            that.homelistxc();
+          }
+          break 
+        case 3 :  
         //新品列表
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
@@ -865,7 +963,7 @@ export default {
           })
         }
         break
-        case 3 :
+        case 4 :
         //投资金列表 
         clearInterval(that.goldpricetimer);  
         that.goldpricetimer = setInterval(that.goldmass,5000);
@@ -1004,6 +1102,67 @@ export default {
           that.listfinished_zb = true;
         }
       })
+    },
+    //秀场列表
+    homelistxc() {
+      let that = this;
+      // that.listloading = true;
+      that.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
+      that.api.homedetails
+        .homelistxcpost({
+          type : 2,
+          page : that.nextPage_xc,
+          pageSize : 10
+        })
+        .then(res => {
+          console.log('res');
+          console.log(res);
+          that.$toast.clear();
+          that.listloading_xc = false;
+          if(res.data.code == 1){
+            that.nextPage_xc = res.data.data.page;
+             if(that.nextPage_xc  == res.data.data.totalPage && that.homelistxcmsg != '') {
+                that.listfinished_xc = true;
+                that.listloading_xc = false;
+                that.finished_text_xc = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homelistxcmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistxcstorerange = that.homelistxcmsg;
+              setsessionStorage('homelistxcstorerange',homelistxcstorerange);
+            } 
+
+            if(that.nextPage_xc  != res.data.data.totalPage) {
+              that.listfinished_xc = false;
+              that.listloading_xc = false;
+              that.nextPage_xc ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_xc = false;
+                that.finished_text_xc = '亲~已经到底了';
+              }
+              that.listfinished_xc = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_xc = true;
+          }
+        })
     },
     //首页新品列表
     homelistxp(){
@@ -1338,7 +1497,7 @@ export default {
 }
 
 #shopwrap .van-tab {
-  font-size: .34rem;
+  font-size: .26rem;
   font-family:PingFang SC;
   font-weight:500;
   color:rgba(31,31,31,1);
@@ -1355,7 +1514,7 @@ export default {
 }
 #shopwrap .van-tab--active.van-tab {
   color: rgba(51, 51, 51, 1);
-  font-size: .48rem;
+  font-size: .36rem;
   font-weight: bold;
 }
 

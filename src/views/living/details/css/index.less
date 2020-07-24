@@ -286,6 +286,7 @@
                     max-height: 3.6rem;
                     overflow-y: scroll;
                     margin-bottom: 0.15rem;
+                    // box-shadow: inset .05rem .05rem .02rem .01rem rgba(0, 0, 0, .1rem);
                     .msgboxwrap{
                         margin-bottom: 0.08rem;
                         max-width: 99%;
@@ -312,10 +313,34 @@
                                 // float: left;
                                 display: inline;
                                 color: #fff;
-                                font-size: 0.28rem;
+                                font-size: 0.26rem;
                                 line-height: 0.48rem;
                                 &.name{
                                     color:#ffbd04;
+                                }
+                                .vip-pic{
+                                    display: inline-block;
+                                    width: auto;
+                                    height: .32rem;
+                                    border-radius: .26rem;
+                                    vertical-align: middle;
+                                    margin-top: -.04rem;
+                                    margin-right: .2rem;
+                                }
+                                span.user-naem{
+                                    display: inline-block;
+                                    font-size: 0.26rem;
+                                    color:#ffbd04;
+                                    margin-right: .2rem;
+                                }
+                                span.user-naem-zhubo{
+                                    color: #ea185d;
+                                }
+                                span.gift-detail{
+                                    display: inline-block;
+                                    font-size: 0.26rem;
+                                    color:#ffbd04;
+                                    margin-left: .2rem;
                                 }
                             }
                             &>p.xitong{
@@ -1126,6 +1151,7 @@
             }
         }
     }
+    
 }
 
 /*complaints css start*/
@@ -1166,3 +1192,4 @@
     z-index: 100000;
     pointer-events: none;
 }
+

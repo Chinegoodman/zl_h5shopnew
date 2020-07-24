@@ -68,8 +68,8 @@
             </div>  
             <div class="show-flag-living" v-else>
               <div class="im">
-                <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="珠宝商品" v-if="change_big_small_flag_qb===1" />
-                <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="珠宝商品" v-if="change_big_small_flag_qb===0" />
+                <img :src="item.glp && item.glp.smallImage?item.glp.smallImage:default_img_small" alt="珠宝商品" v-if="change_big_small_flag_qb===1" />
+                <img :src="item.glp && item.glp.bigImage?item.glp.bigImage:default_img_big" alt="珠宝商品" v-if="change_big_small_flag_qb===0" />
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
