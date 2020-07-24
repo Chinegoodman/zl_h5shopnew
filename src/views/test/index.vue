@@ -61,7 +61,7 @@ export default {
     },
     getuserlevelquities(){
         let zs = this;
-        let userId = zs.$store.state.user.userid?zs.$store.state.user.userid:111
+        let userId = zs.$store.state.user.userid?zs.$store.state.user.userid:'';
         this.api.test.userlevelequities({
             userId
         }).then(res=>{

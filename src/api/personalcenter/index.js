@@ -1,7 +1,7 @@
 import base from '../base'; // 导入接口域名列表
-import axios from './../../../node_modules/zlapi/http.js'; // 导入http中创建的axios实例
-// import axios2 from './../../../node_modules/zlapi/http.js_postform'; // 导入http中创建的axios实例
-import axios2 from "./../../../node_modules/zlapi/http_postform.js";
+import axios from '@/request/http.js'; // 导入http中创建的axios实例
+// import axios2 from '@/request/http.js_postform'; // 导入http中创建的axios实例
+import axios2 from "@/request/http_postform.js";
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const personalcenter = {
