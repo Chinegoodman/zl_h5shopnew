@@ -716,7 +716,6 @@ export default {
        //存一个到时返回首页用的flag
       let returnflag = 1;
       setsessionStorage("returnflag",returnflag);
-
       that.$router.push({
         name: "productdetails",
         params: {

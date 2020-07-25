@@ -20,6 +20,7 @@
                   <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==7" />
                   <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==8" />
                 </span>
+                <span class="viplevelnew" @click="goToVipLevelPage">会员等级</span>
               </div>
               <progress class="mypro" :value="$store.state.user.userdata.integral" :max="$store.state.user.userdata.level"></progress>
               <div class="info_use">爪爪值<span>{{$store.state.user.userdata.integral}}</span>/<span>{{$store.state.user.userdata.level}}</span>  <span class="edit_info" @click="gomyinfo"><span class="edit"></span>完善资料</span></div>
@@ -210,8 +211,18 @@ export default {
       this.$router.push({ name: "levelinstruct" });
     },
     // 会员福利跳转
-    gotovip() {
+    gotovip() {// /personalcenter/viplevledetails/:levelid/:webtype
       this.$toast("敬请期待");
+    },
+    goToVipLevelPage(){
+      let that = this;
+      that.$router.push({
+        name: "viplevledetails",
+        params: {
+          levelid: '01',
+          webtype : 1
+        }
+      });
     },
     // 关注商品跳转
     gotofollow() {

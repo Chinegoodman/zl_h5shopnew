@@ -146,6 +146,26 @@ const router = new Router({
             },
             children: personalcenter_children
         },
+        //秀场会员等级 vip-levle
+        {
+            path: '/personalcenter/viplevledetails/:levelid/:webtype',
+            name: 'viplevledetails',
+            component: resolve => require(['./views/personalcenter/viplevledetails/index.vue'], resolve),
+            meta: {
+                name: 'viplevledetails',
+                navstatus: false,
+                //面包屑需要的参数
+                breadnav: [{
+                        name: '个人中心首页',
+                        url: '/personalcenter/index',
+                    },
+                    {
+                        name: '个人中心-会员等级页',
+                        url: '/personalcenter/viplevledetails/:levelid/:webtype',
+                    },
+                ]
+            }
+        },
         {
             //登录首页
             path: '/login',
