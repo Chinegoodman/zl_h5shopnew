@@ -1,5 +1,5 @@
 /**
- * apidemo模块接口列表
+ * productdetails模块接口列表
  */
 
 import base from '../base'; // 导入接口域名列表
@@ -7,7 +7,7 @@ import axios from '@/request/http.js'; // 导入http中创建的axios实例
 import axios_json from "@/request/http_postform.js"; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
-const apidemo = {
+const test = {
     // ========================↓↓↓↓↓↓↓demo参考接口格式↓↓↓↓↓↓↓↓↓↓======================================
     // 【get请求】
     //获取所有成员接口
@@ -25,14 +25,12 @@ const apidemo = {
         return axios_json.post(`${base.yxf}/wapi/v1/complaint/complaintLogUpdate`, params);
     },
     // ========================↓↓↓↓↓↓↓当前页面的接口↓↓↓↓↓↓↓↓↓↓======================================
-
-
-
-
-
-
-
+    //用户等级权益
+    userlevelequities(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/equities`, { params });
+        // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
+    },
 
 }
 
-export default apidemo;
+export default test;
