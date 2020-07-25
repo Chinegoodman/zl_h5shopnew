@@ -4,9 +4,9 @@ import {
     setsessionStorage,
     getsessionStorage
 } from "@/utils/index.js";
-import "xgplayer";
 import Player from "xgplayer";
 import FlvPlayer from "xgplayer-flv";
+import HlsJsPlayer from 'xgplayer-hls.js';
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
 import viplevel from '@/components/viplevel.vue';
@@ -333,7 +333,7 @@ export default {
                 checkdevice() == "anzhuo" ||
                 checkdevice() == "ios"
             ) {
-                that.player = new Player({
+                that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",
                     // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
@@ -364,7 +364,7 @@ export default {
 
                     autoplay: true,
                     // autoplayMuted: true,
-                    preloadTime: 30, //预加载时长(秒)	30
+                    preloadTime: 5, //预加载时长(秒)	30
                     isLive: true,
                     cors: true
                 });
