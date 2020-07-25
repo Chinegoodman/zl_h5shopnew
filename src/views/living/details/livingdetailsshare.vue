@@ -4,7 +4,7 @@
     <!-- 直播中、、、 -->
     <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay">
       <div class="video" >
-        <div id="videodom" :style='{background : "url(" + zhibojianaddcode_bg_cover + ") no-repeat center center",backgroundSize: cover}'></div>
+        <div id="videodom" :style='{background : "url(" + zhibojianaddcode_bg_cover + ") no-repeat center center;backgroundSize: cover"}'></div>
       </div>
       <!-- video之外的部分 -->
       <div class="video-content" :class="{havebgpic:!hasStartstatus}">
@@ -346,7 +346,8 @@
 </template>
 
 <script>
-  import livingdetailsshare from "./../../../../node_modules/yxfh5living/livingsharepage.js";
+  // import livingdetailsshare from "./../../../../node_modules/yxfh5living/livingsharepage.js";
+  import livingdetailsshare from "./js/index_share-es6.js";
   export default livingdetailsshare;
 </script>
 
