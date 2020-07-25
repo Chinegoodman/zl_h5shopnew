@@ -8,11 +8,14 @@ if (process.env.NODE_ENV == 'development') {
     baseUrl = '/devapi';
     baseUrl2 = '/xiuchangdevapi2';
 } else if (process.env.NODE_ENV == 'production') {
-    baseUrl2 = baseUrl = process.env.VUE_APP_BASE_API; //生产环境服务器
+    baseUrl = process.env.VUE_APP_BASE_API; //生产环境服务器
+    baseUrl2 = process.env.VUE_APP_BASE_API2;
 } else if (process.env.NODE_ENV == 'uat') {
-    baseUrl2 = baseUrl = process.env.VUE_APP_BASE_API;
+    baseUrl = process.env.VUE_APP_BASE_API;
+    baseUrl2 = process.env.VUE_APP_BASE_API2;
 } else if (process.env.NODE_ENV == 'gray') {
-    baseUrl2 = baseUrl = process.env.VUE_APP_BASE_API;
+    baseUrl = process.env.VUE_APP_BASE_API;
+    baseUrl2 = process.env.VUE_APP_BASE_API2;
 }
 const base = {
     yxf: baseUrl,
