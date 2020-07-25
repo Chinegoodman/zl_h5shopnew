@@ -148,7 +148,7 @@ const router = new Router({
         },
         //秀场会员等级 vip-levle
         {
-            path: '/personalcenter/viplevledetails/:levelid/:webtype',
+            path: '/personalcenter/viplevledetails',
             name: 'viplevledetails',
             component: resolve => require(['./views/personalcenter/viplevledetails/index.vue'], resolve),
             meta: {
@@ -161,7 +161,7 @@ const router = new Router({
                     },
                     {
                         name: '个人中心-会员等级页',
-                        url: '/personalcenter/viplevledetails/:levelid/:webtype',
+                        url: '/personalcenter/viplevledetails',
                     },
                 ]
             }

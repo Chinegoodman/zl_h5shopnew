@@ -218,9 +218,8 @@ export default {
       let that = this;
       that.$router.push({
         name: "viplevledetails",
-        params: {
-          levelid: '01',
-          webtype : 1
+        query: {
+          levelId: '02'
         }
       });
     },
