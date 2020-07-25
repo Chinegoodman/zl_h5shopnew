@@ -171,7 +171,6 @@ export default {
                     let resdata = res.data.data;
                     that.selfsf = resdata.identity;
                     that.targetsf = resdata.otherIdentity;
-                    debugger;
                     if (resdata.password) {
                         //加密弹层展示
                         that.zhibojianaddcode = true;
