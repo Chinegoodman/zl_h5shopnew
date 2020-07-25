@@ -42,7 +42,7 @@ const errorHandle = (status, other) => {
     }
 }
 var instance = axios.create({ timeout: 1000 * 20 });
-instance.defaults.withCredentials = true;
+instance.defaults.withCredentials = false;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 instance.interceptors.request.use(
     config => {
