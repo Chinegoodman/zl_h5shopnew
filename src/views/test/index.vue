@@ -23,6 +23,11 @@
             </div>
             <div class="footer_line"></div>
         </div>
+
+        <div class="scrollintoview_wrap" :ref="'scrollintoviewdom'+item" v-for="(item,index) in totalnumber" :key="index" :style="scrollintoviewstyle">
+          item{{item}}
+        </div>
+        <div class="gotobtn" @click="goto(totalnumberrandom)">{{totalnumberrandom}}</div>
     </div>
 </template>
 
@@ -32,8 +37,23 @@ export default {
   components: {
     uploadfile,
   },
+  computed:{
+    redcolor(){
+      return Math.floor(Math.random()*255);
+    },
+    greencolor(){
+      return Math.floor(Math.random()*255);
+    },
+    bluecolor(){
+      return Math.floor(Math.random()*255);
+    },
+    totalnumberrandom(){
+      return Math.floor(Math.random()*this.totalnumber);
+    },
+  },
   data() {
     return {
+      totalnumber:50,
       uploaddatainit: {
         // upfileslist:[],
         maxnumber: 4,
@@ -51,10 +71,33 @@ export default {
         filetype: "1",
       },
       defaultfileslist: [],
+      scrollintoviewstyle:{
+        background: '',
+        color:'#fff',
+        lineHeight:'30px'
+      }
     };
   },
-  computed: {},
   methods: {
+    goto(targetnumber){
+      let refname = 'scrollintoviewdom'+targetnumber;
+      let targetdom='';
+      let arrobj = this.$refs;
+      for (const key in arrobj) {
+        if(key == refname){
+          targetdom = arrobj[key][0];
+          targetdom.scrollIntoView({
+            behavior: "smooth", block: "center", inline: "nearest"
+          });
+          return;
+        }
+      }
+      
+      
+    },
+    colorset(){
+      this.scrollintoviewstyle.background='rgb('+this.redcolor+','+this.greencolor+','+this.bluecolor+')';
+    },
     upfileslistchange(listdata) {
       console.log(listdata);
       // this.uploaddatainit.upfileslist = listdata;
@@ -74,7 +117,9 @@ export default {
     }
   },
   mounted() {
-      this.getuserlevelquities();
+      // this.getuserlevelquities();
+
+      this.colorset();
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -88,6 +133,15 @@ export default {
 
 <style lang='less' scoped>
 //@import url()
+.gotobtn{
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  position: fixed;
+  padding: 10px;
+  right: 5px;
+  top: 45%;
+}
 </style>
 
 <style lang='less'>
