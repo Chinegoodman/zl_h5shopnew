@@ -12,7 +12,7 @@
         <div class="content-top">
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
-              <div class="dznamepic" @click.stop="openanchormsgshell">
+              <div class="dznamepic"  @click.stop="openappfn">
                 <img v-if="livinglidata.cover" :src="livinglidata.cover" alt="抓周" />
               </div>
               <!-- <div class="dzguankan">
@@ -24,11 +24,11 @@
                   <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.id}}</span>
                 </div>
               </div>
-              <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0" @click.stop="follow(false)">
+              <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0"  @click.stop="openappfn">
                 关注
                 <!-- <img src="./../../../assets/imgs/living/details/attention.png"> -->
               </div>
-              <div class="dznamegz" v-if="attention_flag && attention_flag===1" @click.stop="follow(true)">取消关注</div>
+              <div class="dznamegz" v-if="attention_flag && attention_flag===1"  @click.stop="openappfn">取消关注</div>
             </div>
             <div class="dznameid" @click.stop="shellDanChangClick">
               <span>{{watchcount}}</span>
@@ -188,7 +188,7 @@
           </div>
           <!-- 聊天输入部分 -->
           <div class="chattalk clearfix">
-            <p class="chatinp" @click="imiptshowstatus=true">说点啥</p>
+            <p class="chatinp"  @click.stop="openappfn">说点啥</p>
             <!-- <div class="service">
               <div class="servicepic">
                 <img src="./../../../assets/logo.png">
@@ -200,21 +200,21 @@
            
             
             
-            <div class="close" @click.stop="returnprevpage">
+            <div class="close"  @click.stop="returnfn">
               <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
             </div>
-            <div class="chatgd" @click.stop="moreClick">
+            <div class="chatgd"  @click.stop="openappfn">
               <img src="./../../../assets/imgs/living/details/gengduo.png" alt />
             </div>
             <div class="chatxin">
               <!-- <div class="licknum">666</div> -->
-              <div class="chatxinicon" @click.stop="likeClick">
+              <div class="chatxinicon"  @click.stop="openappfn">
                 <span class="praise-num" v-if="praiseCount">{{praiseCount}}</span>
                 <img src="./../../../assets/imgs/living/details/like.png" alt />
                 <canvas id="bubble"  width="90" height="300" class="like-fx" ></canvas>
               </div>
             </div>
-            <div class="chatsp"  @click.stop="goodschoosestatus=true">
+            <div class="chatsp"  @click.stop="openappfn">
               <!-- <div class="chatsptxt">商品</div> -->
             </div>
           </div>
@@ -512,28 +512,9 @@
     </div>
     <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
     <!-- 主播个人消息弹层end -->
-    <!-- 浏览器下载及拉起 start-->
-     <div class="openappbtnsbox-w" v-if="openappbtns">
-      <div class="openappbtnsbox">
-        <div class="box_con03">
-          <div class="pt_box">
-            <span>
-                <img src="./../../../assets/imgs/living/controls/zhuzhou_logo.png" alt="抓周">
-            </span>
-            <p>请登录抓周APP操作</p>
-          </div>
-          <div class="btn_box">
-            <a class="openappbtn" :href="downloadappurl" target="_blank">下载APP</a>
-            <a class="openappbtn" :href="lunchupappurl" target="_blank">启动APP</a>
-          </div>
-        </div>  
-      </div>
-    </div>
-    <!-- 浏览器下载及拉起 end-->
-
     <!-- 微信打开 start-->
-      <div class="openappbtnsbox-w" v-if="wxtipsstatus">
-        <div class="openappbtnsbox openappbtnsbox_zbfx">
+      <div class="openappbtnsbox-wx" v-if="wxtipsstatus">
+        <div class="openappbtnsbox-in openappbtnsbox_zbfx">
           <span class="jtfx-white"><img src="./img/jtfx-white.png" alt=""></span>
           <div class="box_con01">
               <div class="pt_box">
@@ -880,5 +861,145 @@
     .videoswrapout .openappbtnsbox{
       z-index: 10500;
     }
+
+    .openappbtnsbox-wx{
+      position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: calc(100%);
+          background-color: rgba(0, 0, 0, 0.7);
+          z-index: 105010;
+    }
+  .openappbtnsbox-in{
+      position: fixed;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:6.06rem;
+      padding:0.5rem 0.2rem;
+      text-align:center;
+      color:#000;
+      background-color:#fff;
+      border-radius:0.2rem;
+      display:flex;
+      justify-content: space-around;
+      box-shadow:0 0 0 0.02rem #fff;
+      z-index: 10502;
+      flex-wrap:wrap;
+  }
+  .openappbtnsbox-wx p{
+    width:100%;
+    padding-bottom:0.4rem;
+    font-size:0.28rem;
+  }
+  .openappbtnsbox-wx .openappbtn{
+    cursor: pointer;
+  }
+
+  .openappbtnsbox_zbfx{
+    background: none;
+    box-shadow:none;
+    width :7.5rem;
+    top : 0rem;
+    transform: translate(-50%, 0);
+    .jtfx-white{
+      display: block;
+      width : 1.88rem;
+      height : 1.27rem;
+      position: absolute;
+      right: .56rem;
+      top : .23rem;
+      img{
+        width : 100%;
+      }
+    }
+    .con01_in{
+      margin-top : .61rem;
+    }
+    .pt_box{
+      margin-top : 1.41rem;
+      span{
+        display: block;
+        width : 1.1rem;
+        height :1.1rem;
+        margin : 0 auto;
+        img{
+          width : 100%;
+        }
+      }
+    }
+    .pt_box p{
+      font-family:PingFang SC;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+    }
+    .pt_box p.b{
+      font-size : .3rem;
+      font-weight:800;
+    }
+
+    .btn-box-wx{
+      padding-top : 1.41rem;
+      a{
+        display: block;
+        width : 3rem;
+        height: .7rem;
+        line-height : .7rem;
+        margin :  0 auto;
+        background:rgba(255,215,59,1);
+        border-radius: .35rem;
+        font-size : .26rem;
+        color:rgba(31,31,31,1);
+      }
+      a:nth-child(2){
+        background:rgba(255,255,255,1);
+      }
+      
+    }
+
+    .con01_code{
+      width : 5.5rem;
+      background:rgba(255,255,255,1);
+      margin : .43rem auto 0;
+      border-radius: .2rem;
+      padding-bottom : .5rem;
+      .applet{
+        width :3.12rem;
+        height : 3.12rem;
+        margin : 0 auto;
+        padding: .5rem 0 .45rem;
+        img{
+          width : 100%;
+        }
+      }
+      p{
+        ont-size: .26rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(117,117,117,1);
+        margin-top : .15rem;
+      }
+      p.b{
+        font-size: .32rem;
+        font-weight:bold;
+      }
+
+      .close_box_w{
+        display: block;
+        width: .76rem;
+        height : .76rem;
+        position: absolute;
+        bottom : -.66rem;
+        left: 50%;;
+        transform: translate(-50%, 0);
+        img{
+          width :100%;
+        }
+      }
+    }
+
+  }
+  
     
 </style>

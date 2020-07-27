@@ -305,7 +305,7 @@ export default {
             that.downloadappurl = 'https://apps.apple.com/cn/app/id1487579824';
             if (checkdevice() == "weixinios") {
                 // that.openappfn();
-                that.wxtipsstatus = true;
+                // that.wxtipsstatus = true;
             }
         }
 
@@ -488,6 +488,7 @@ export default {
             /// 秀场
             this.lunchupappurl = `zhuazhouH5://show?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
         },
+        //直播间加密
         open_openappbtnsbox_zbjm() {
             var that = this;
             if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
@@ -504,91 +505,10 @@ export default {
         openappfn() {
             let that = this;
             let hj = checkdevice();
-            console.log(hj);
-            if (hj == "weixin") {
+            if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
                 that.wxtipsstatus = true;
             } else {
-                that.openappbtns = true;
-            }
-        },
-        // 下载app
-        downloadapp() {
-            let that = this;
-            let hj = checkdevice();
-            console.log(hj);
-            if (hj == "weixin") {
-                that.wxtipsstatus = true;
-            } else if (hj == "anzhuo") {
-                // that.$toast.loading("正在拉起本地APP、、、");
-                // that.openapptips = true;
-                // window.open(`zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`);
-                // setTimeout(() => {
-                that.wxtipsstatus = false;
-                that.$toast.clear();
-                // window.location.href = "http://secr.baidu.com/";
-                window.open("https://apk.izhuazhou.cn/zsapk/zz_zs.apk");
-                // }, 1800);
-            } else if (hj == "ios") {
-                // that.$toast.loading("正在拉起本地APP、、、");
-                // that.openapptips = true;
-                // window.open(`zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`);
-                // setTimeout(() => {
-                that.wxtipsstatus = false;
-                that.$toast.clear();
-                // window.location.href =
-                //   "https://apps.apple.com/cn/app/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2-%E6%9E%81%E7%AE%80%E6%9E%81%E9%80%9F%E6%97%A0%E5%B9%BF%E5%91%8A/id1250762367";
-                window.open("https://apps.apple.com/cn/app/id1487579824");
-                // }, 1800);
-            } else if (hj == "pc") {
-                that.$toast("请在手机浏览器打开此页面");
-                // that.openapptips = true;
-                // setTimeout(() => {
-                //   that.wxtipsstatus = false;
-                //   that.$toast.clear();
-                //   window.location.href =
-                //     "https://apps.apple.com/cn/app/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2-%E6%9E%81%E7%AE%80%E6%9E%81%E9%80%9F%E6%97%A0%E5%B9%BF%E5%91%8A/id1250762367";
-                // }, 1800);
-            }
-        },
-        // 启动本地app
-        lunchupapp() {
-            let that = this;
-            let hj = checkdevice();
-            console.log(hj);
-            if (hj == "weixin") {
-                that.wxtipsstatus = true;
-            } else if (hj == "anzhuo") {
-                that.$toast.loading("正在拉起本地APP...");
-                that.openapptips = true;
-                window.open(`zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`);
-
-                // that.lunchupappurl = `zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
-                // setTimeout(() => {
-                //   that.wxtipsstatus = false;
-                //   that.$toast.clear();
-                //   window.location.href = "http://secr.baidu.com/";
-                // }, 1800);
-            } else if (hj == "ios") {
-                that.$toast.loading("正在拉起本地APP...");
-                that.openapptips = true;
-                window.open(`zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`);
-
-                // that.lunchupappurl = `zhuazhouH5://live?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
-                // setTimeout(() => {
-                //   that.wxtipsstatus = false;
-                //   that.$toast.clear();
-                //   window.location.href =
-                //     "https://apps.apple.com/cn/app/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2-%E6%9E%81%E7%AE%80%E6%9E%81%E9%80%9F%E6%97%A0%E5%B9%BF%E5%91%8A/id1250762367";
-                // }, 1800);
-            } else if (hj == "pc") {
-                that.$toast("请在手机浏览器打开此页面");
-                // that.openapptips = true;
-                // setTimeout(() => {
-                //   that.wxtipsstatus = false;
-                //   that.$toast.clear();
-                //   window.location.href =
-                //     "https://apps.apple.com/cn/app/%E7%AE%80%E5%8D%95%E6%90%9C%E7%B4%A2-%E6%9E%81%E7%AE%80%E6%9E%81%E9%80%9F%E6%97%A0%E5%B9%BF%E5%91%8A/id1250762367";
-                // }, 1800);
+                that.opendownload();
             }
         },
         // 阻止冒泡
