@@ -486,7 +486,7 @@ export default {
         lunchupappurlfn() {
             let that = this;
             /// 秀场
-            this.lunchupappurl = `zhuazhouH5://show?uid=${that.livinglidata.uid}&liveId=${that.livinglidata.liveId}&anchorId=${that.livinglidata.anchorId}`;
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.user.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
         },
         //直播间加密
         open_openappbtnsbox_zbjm() {
@@ -1871,7 +1871,6 @@ export default {
         //下载及拉起APP
         downloadandopen() {
             let that = this;
-            that.linkurlopen = "zhuazhouH5://";
             if (checkdevice() == "anzhuo") {
                 that.linkurldownload = 1;
             } else {

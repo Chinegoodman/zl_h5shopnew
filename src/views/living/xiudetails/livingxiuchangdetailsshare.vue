@@ -510,7 +510,7 @@
         </div>
       </div>
     </div>
-    <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="linkurlopen" v-if="downloadcovershow"></downloadandopenapp>
+    <downloadandopenapp :covertype="covertypedata" @closeappbtnsboxclick="shutappbtnsbox"  :link_url_download="linkurldownload"  :link_url_open="lunchupappurl" v-if="downloadcovershow"></downloadandopenapp>
     <!-- 主播个人消息弹层end -->
     <!-- 微信打开 start-->
       <div class="openappbtnsbox-wx" v-if="wxtipsstatus">
