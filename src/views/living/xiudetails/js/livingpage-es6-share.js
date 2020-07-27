@@ -88,7 +88,7 @@ export default {
             countchangetimer: null,
             // livingurl:'http://liveali.ifeng.com/live/CCTV.m3u8',//直播地址
             goodschoosestatus: false, //商品选择模块 默认隐藏
-            attention_flag: '',
+            attention_flag: 0,
             //直播相关
             player: "", //player实例
             canplaythroughstatus: false,
@@ -220,10 +220,11 @@ export default {
             isFirst: 1,
             //点赞====================end
             //分享==================start
-            wxtipsstatus: false,
-            openapptips: false,
-            openappbtns: false,
-            lunchupappurl: '',
+            wxtipsstatus: false, //微信弹层引导下载
+            videoInChat: false, //在微信里的背景标致
+            openapptips: false, //拉起下载相关
+            openappbtns: false, //拉起下载相关
+            lunchupappurl: '', //拉起下载相关
             guilddownloadtype_show: true, //下载类型显示
             appletcode_show: false, //小程序二维码显示
             zhibojianaddcode: false, //直播加密弹层
@@ -233,6 +234,10 @@ export default {
         };
     },
     computed: {
+        //全屏高度
+        windowInnerHeight() {
+            return window.innerHeight + 'px';
+        },
         // 直播相关
         wdwidth() {
             return document.documentElement.clientWidth;
@@ -305,7 +310,8 @@ export default {
             that.downloadappurl = 'https://apps.apple.com/cn/app/id1487579824';
             if (checkdevice() == "weixinios") {
                 // that.openappfn();
-                // that.wxtipsstatus = true;
+                that.videoInChat = true;
+                that.wxtipsstatus = true;
             }
         }
 
@@ -320,14 +326,15 @@ export default {
             that.tim.setLogLevel(3); //IM日志级别
             that.logoutfn();
             // this.player.destroy(true);
-            that.joinOrLeaveRoomXC(1); //加入群聊  后台的接口
+            //加入群聊  后台的接口
+            // that.joinOrLeaveRoomXC(1);
             // 直播相关
 
             //轮询直播观看人数与点赞数
-            that.getXiuChangLivingUserAndPraise();
-            that.countchangetimer = setInterval(function() {
-                that.getXiuChangLivingUserAndPraise();
-            }, 5000);
+            // that.getXiuChangLivingUserAndPraise();
+            // that.countchangetimer = setInterval(function() {
+            //     that.getXiuChangLivingUserAndPraise();
+            // }, 5000);
             if (
                 checkdevice() == "weixin" ||
                 checkdevice() == "anzhuo" ||
@@ -456,21 +463,24 @@ export default {
 
             //分享
             that.lunchupappurlfn();
+            //获取关注状态
+            // that.getRelationOpration();
 
             //商品
-            that.getgoodsList();
+            // that.getgoodsList();
             // that.getgiftList();
-            that.gettopgiftList();
+            // that.gettopgiftList();
+            //静音
             that.getAnchorMuteState();
-            //获取关注状态
-            that.getRelationOpration();
+
 
             // TIM相关=================================开始
             // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
             // let tim = Tim.create(options); // SDK 实例通常用 tim 表示
             // 注册 COS SDK 插件
             that.tim.registerPlugin({ "cos-js-sdk": COS });
-            that.loginfn();
+            //登录
+            // that.loginfn();
 
             // TIM相关=================================结束
 
@@ -592,7 +602,8 @@ export default {
                     transferUserId: that.livinglidata.uid
                 })
                 .then(res => {
-                    // console.log(res.data.data);
+                    console.log('关注');
+                    console.log(res.data.data);
                     if (res.data.code == 1) {
                         that.attention_flag = res.data.data;
                     }
@@ -642,8 +653,8 @@ export default {
                     liveId: liveId,
                 })
                 .then(res => {
-                    console.log('res.data08');
-                    console.log(res.data);
+                    // console.log('res.data08');
+                    // console.log(res.data);
                     if (res.data.code == 1) {
                         if (
                             res.data.data != null ||

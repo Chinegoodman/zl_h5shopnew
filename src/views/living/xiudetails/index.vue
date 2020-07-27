@@ -2,12 +2,12 @@
 <template>
   <div class="videoswrapout">
     <!-- 直播中、、、 -->
-    <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay">
-      <div class="video">
+    <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay" :style="{height:windowInnerHeight}">
+      <div class="video" :style="{height:windowInnerHeight}">
         <div id="videodom"></div>
       </div>
       <!-- video之外的部分 -->
-      <div class="video-content">
+      <div class="video-content" :style="{height:windowInnerHeight}">
         <!-- 店主名称与关闭 -->
         <div class="content-top">
           <div class="clearfix">
@@ -221,7 +221,7 @@
         </div>
 
         
-        <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus">
+        <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus" :style="{height:windowInnerHeight}">
           <div class="imiptshow" @click.stop="returnfn">
             <input type="text" autofocus="autofocus" v-model="timtxt" @keyup.enter="txtpost" />
             <p @click.stop="txtpost" style="cursor:pointer;">发送</p>
@@ -229,7 +229,7 @@
         </div>
 
         <!-- 主播上架的商品 -->
-        <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
+        <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus" :style="{height:windowInnerHeight}">
           <div class="goodsbox" @click.stop="returnfn">
             <p><span class="ic"></span>全部商品<span v-if="goodsList.length">({{goodsList.length}})</span></p>
             <ul>

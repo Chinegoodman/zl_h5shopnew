@@ -42,8 +42,8 @@ module.exports = {
             '/devapi': {
                 // target: 'http://192.168.1.75:8080', //刘哥测试地址
                 // target: 'http://47.103.198.168', //抓周 测试服
-                target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
-                // target: 'https://shop.zhulihr.com', //生产222
+                // target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
+                target: 'https://shop.zhulihr.com', //生产222
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
@@ -53,6 +53,7 @@ module.exports = {
             '/xiuchangdevapi2': {
                 // target: 'http://192.168.1.75:8080', //刘哥测试地址
                 target: 'http://47.100.12.152:8100', //新架构 测试服
+                // target: 'xc.premapi.zhulihr.cn', //新架构 测试服
                 // target: 'http://xc.testmapi.zhulihr.cn', //新架构 测试服
                 // target: 'http://47.103.198.168', //抓周 测试服
                 // target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
