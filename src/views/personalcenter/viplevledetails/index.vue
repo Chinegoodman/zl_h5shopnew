@@ -112,9 +112,8 @@ export default {
     },
     mounted(){
         var that = this;
+        document.title = '会员等级';
         that.userId = that.$route.query.userId;
-        console.log('that.userId');
-        console.log(that.userId);
         // this.getUserLevelConfig();
         this.getUserLevelEquities();
     },
