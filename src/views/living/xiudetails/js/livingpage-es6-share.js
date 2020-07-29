@@ -311,7 +311,7 @@ export default {
             if (checkdevice() == "weixinios") {
                 // that.openappfn();
                 that.videoInChat = true;
-                // that.wxtipsstatus = true;
+                that.wxtipsstatus = true;
             }
         }
 
@@ -335,14 +335,12 @@ export default {
             // that.countchangetimer = setInterval(function() {
             //     that.getXiuChangLivingUserAndPraise();
             // }, 5000);
-            console.log(checkdevice());
             if (
                 checkdevice() == "weixinios" ||
                 checkdevice() == "weixin" ||
                 checkdevice() == "anzhuo" ||
                 checkdevice() == "ios"
             ) {
-                console.log('9998');
                 that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",
