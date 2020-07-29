@@ -102,6 +102,7 @@ Vue.use(Picker);
 export default {
     data(){
        return {
+           userId : '',
            levelMsg : {},
            default_img_head : require('../../../assets/imgs/icons/default-head.png')
        }
@@ -111,6 +112,9 @@ export default {
     },
     mounted(){
         var that = this;
+        that.userId = that.$route.query.userId;
+        console.log('that.userId');
+        console.log(that.userId);
         // this.getUserLevelConfig();
         this.getUserLevelEquities();
     },
@@ -138,10 +142,10 @@ export default {
             let that = this;
             that.api.personalcenter
             .userLevelEquities({
-                userId : that.$store.state.user.userid,
+                userId : that.userId,
             }).then(res => {
-               console.log('用户等级权益');
-               console.log(res);
+            //    console.log('用户等级权益');
+            //    console.log(res);
                if(res.data.code == 1){
                  that.levelMsg = res.data.data;
                }

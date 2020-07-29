@@ -219,7 +219,7 @@ export default {
       that.$router.push({
         name: "viplevledetails",
         query: {
-          levelId: '02'
+         userId : that.$store.state.user.userid
         }
       });
     },
