@@ -128,7 +128,7 @@ const personalcenter = {
     },
     //获取充值列表-秀场
     toUpWallet(params) {
-        return axios.get(`${base.yxf2}/v1/user/wallet/topUp/list?operatingOsType=${params.operatingOsType}&moduleType=${params.moduleType}&userId=${params.userId}`);
+        return axios.get(`${base.yxf2}/v1/user/wallet/topUp/list?operatingOsType=${params.operatingOsType}&appType=${params.appType}&userId=${params.userId}`);
     },
     //获取用户余额-秀场
     toUpWwalletBalanceallet(params) {

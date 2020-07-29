@@ -403,7 +403,7 @@ export default {
     getinfousermass() {
       let that = this;
       that.api.personalcenter
-        .getinfouser_new({
+        .getinfouser({
           userId : that.$store.state.user.userid
         })
         .then(res => {
