@@ -31,8 +31,8 @@
           </div>
         </div>
         <div class="login-banner">
-           <img src="./../../../assets/imgs/personal/huang-guan.png" alt="皇冠" class="huang-guan">
-           <span class="zhua_vip">爪爪会员</span>
+           <img src="./../../../assets/imgs/personal/vipicon.png" alt="皇冠" class="huang-guan">
+           <span class="zhua_vip">尊享会员</span>
            <span class="txt">7大超值权益，省钱又省心</span>
            <router-link class="look_guild" to="member" tag="a"></router-link>
         </div>
@@ -403,7 +403,7 @@ export default {
     getinfousermass() {
       let that = this;
       that.api.personalcenter
-        .getinfouser({
+        .getinfouser_new({
           userId : that.$store.state.user.userid
         })
         .then(res => {

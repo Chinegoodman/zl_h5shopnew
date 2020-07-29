@@ -8,7 +8,7 @@
             <img v-if="Number(lv_num)>6 && Number(lv_num) <= 10"  src="../assets/imgs/living/xiudetails/diamond.png" alt="">
             <img v-if="Number(lv_num)<=5 || Number(lv_num) >= 11"  src="../assets/imgs/living/xiudetails/star.png" alt="">
         </span>
-        <span class="lv_num">{{lv_num}}</span>
+        <span class="lv_num">{{lv_num<10?'0'+lv_num:lv_num}}</span>
     </span>
 </template>
 

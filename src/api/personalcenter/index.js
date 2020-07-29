@@ -137,6 +137,14 @@ const personalcenter = {
     //获取账户信息及收益信息-金豆/秀豆
     userWalletInfo(params) {
         return axios.get(`${base.yxf2}/v1/user/wallet/info?userId=${params.userId}`);
+    },
+    //获取等级配置信息
+    userLevelConfig(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/config?level=${params.level}`);
+    },
+    //用户等级权益
+    userLevelEquities(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/equities?userId=${params.userId}`);
     }
 }
 
