@@ -406,6 +406,7 @@ export default {
                     closeVideoTouch: true,
                     autoplay: true,
                     // autoplayMuted: true,
+                    preloadTime: 5, //预加载时长(秒)	30
                     isLive: true,
                     cors: true
                 });
