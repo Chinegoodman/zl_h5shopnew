@@ -311,7 +311,7 @@ export default {
             if (checkdevice() == "weixinios") {
                 // that.openappfn();
                 that.videoInChat = true;
-                that.wxtipsstatus = true;
+                // that.wxtipsstatus = true;
             }
         }
 
@@ -335,11 +335,14 @@ export default {
             // that.countchangetimer = setInterval(function() {
             //     that.getXiuChangLivingUserAndPraise();
             // }, 5000);
+            console.log(checkdevice());
             if (
+                checkdevice() == "weixinios" ||
                 checkdevice() == "weixin" ||
                 checkdevice() == "anzhuo" ||
                 checkdevice() == "ios"
             ) {
+                console.log('9998');
                 that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",
@@ -403,10 +406,8 @@ export default {
                     closeVideoClick: true,
                     closeVideoDblclick: true,
                     closeVideoTouch: true,
-
                     autoplay: true,
                     // autoplayMuted: true,
-                    preloadTime: 30, //预加载时长(秒)	30
                     isLive: true,
                     cors: true
                 });
@@ -573,6 +574,8 @@ export default {
         // 播放直播、视频 事件
         videopaly() {
             let that = this;
+            // console.log('that.canplaythroughstatus')
+            // console.log(that.canplaythroughstatus)
             if (that.canplaythroughstatus) {
                 setTimeout(() => {
                     that.player.start();
@@ -582,6 +585,7 @@ export default {
         },
         videoplay() {
             if (this.hasStartstatus) {
+                this.videopaly();
                 // console.log('正在播放');
             } else {
                 this.videopaly();
@@ -653,16 +657,17 @@ export default {
                     liveId: liveId,
                 })
                 .then(res => {
-                    // console.log('res.data08');
-                    // console.log(res.data);
+                    console.log('res.data08-that.livinglidata秀场');
+                    console.log(res.data);
                     if (res.data.code == 1) {
                         if (
                             res.data.data != null ||
                             res.data.data != undefined ||
                             res.data.data != ""
                         ) {
-                            setTimeout(fn, 500);
                             that.livinglidata = res.data.data;
+                            setTimeout(fn, 0);
+
                         } else {
                             that.livinglidata = [];
                         }
