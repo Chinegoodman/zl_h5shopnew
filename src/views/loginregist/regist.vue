@@ -257,7 +257,7 @@ export default {
               myCaptcha.hide();
               //获取验证码
               that.getcode();
-            },200);
+            },0);
           }
       })
       myCaptcha.reload();
@@ -304,11 +304,14 @@ export default {
           that.gettingcodestatustime = 120;
         }
       }, 1000);
+      console.log('that.return_token1986');
+      console.log(that.return_token);
       //获取验证码
       this.api.login
       .captcha({
         mobile: that.phonenum,
-        type : 1
+        type : 1,
+        token : that.return_token
       })
       .then(data => {
         that.$toast(data.data.info);
@@ -323,14 +326,13 @@ export default {
           mobile: that.phonenum,
           loginType: 2,
           verificationCode: that.phonecode,
-          // token : that.return_token,
           client:'h5'
         })
         .then(data => {
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
-            console.log('data.data.data');
+            console.log('data.data.data登录开始');
             console.log(data.data.data);
             let userdata = data.data.data;
             if (userdata.isSetPassword == 0) {
