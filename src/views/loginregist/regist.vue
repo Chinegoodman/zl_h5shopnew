@@ -340,12 +340,14 @@ export default {
               let user = {
                 isLogin: true,
                 username: '',
-                token: userdata.tokenSecret,
+                token: userdata.zhouResultPojo.tokenSecret,
                 userid: userdata.id,
                 sig: userdata.imSign,
                 phone: that.phonenum,
                 userdata: ''
               };
+              console.log('user');
+              console.log(user);
               that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
               // that.$router.push({ name: "shopindex" });
             } else if (userdata.isSetPassword == 1) {
@@ -353,12 +355,14 @@ export default {
               let user = {
                 isLogin: true,
                 username: '',
-                token: userdata.tokenSecret,
+                token: userdata.zhouResultPojo.tokenSecret,
                 userid: userdata.id,
                 sig: userdata.imSign,
                 phone: that.phonenum,
                 userdata: ''
               };
+              console.log('user');
+              console.log(user);
               that.getinfousermass(userdata.id,userdata.imSign);
               that.step = 2;
             }
@@ -420,7 +424,7 @@ export default {
     getinfousermass(userId,sig,routername) {
       let that = this;
       that.api.personalcenter
-        .getinfouser({
+        .getinfouser_new({
           userId : userId
         })
         .then(res => {
