@@ -3,6 +3,7 @@
   <div class="videoswrapout">
     <!-- 直播中、、、 -->
     <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay" :style="{height:windowInnerHeight}">
+    <!-- <div v-if="0" class="videoswrap"  @click.capture="videoplay" :style="{height:windowInnerHeight}"> -->
       <div :class="{'video':true,'video-in-wx': videoInChat}" :style="{height:windowInnerHeight}">
         <div id="videodom"></div>
       </div>
@@ -291,18 +292,18 @@
 
     </div>
     <!-- 直播结束、、 -->
-    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.face_url+')'}">
-      <div class="close" @click.stop="$router.go(-1);">
+    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}">
+      <div class="close" @click.stop="$router.go(-1);" v-if="false" >
         <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
       </div>
-      <img class="faceurl" :src="livinglidata.face_url" alt="抓周">
-      <p class="name">{{livinglidata.nickname}}</p>
+      <img class="faceurl" :src="livinglidata.cover" alt="抓周">
+      <p class="name">{{livinglidata.nickName}}</p>
       <div class="enddata">
         <p>直播已结束</p>
-        <span class="number">{{livinglidata.nickname}}</span>
-        <span class="title">总观看人数</span>
+        <span class="number">{{livinglidata.nickName}}</span>
+        <span class="title" v-if="false">总观看人数</span>
       </div>
-      <p class="followbtn" @click.stop="follow(false)">关注主播</p>
+      <p class="followbtn" @click.stop="openappfn">关注主播</p>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">

@@ -347,7 +347,8 @@ export default {
                     // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8", //m3u8
-                    url: that.livinglidata.streamAddrHls, //m3u8
+                    // url: that.livinglidata.streamAddrHls, //m3u8
+                    url: that.livinglidata.streamAddrHls720p, //m3u8
                     //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
                     // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
                     //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
@@ -381,7 +382,7 @@ export default {
                     //解除注释 flv方法
                     id: "videodom",
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                    url: that.livinglidata.streamAddrFlv, //flv
+                    url: that.livinglidata.streamAddrFlv480p, //flv
                     // url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
                     //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
@@ -419,23 +420,48 @@ export default {
                 console.log("视频 ended");
                 that.canplaythroughstatus = false;
                 that.livingendstatus = false;
+                that.player.destroy(true);
             });
             // 直播错误
             that.player.on("error", function() {
                 console.log("视频 error");
                 that.canplaythroughstatus = false;
-                if (that.reloadtimes <= 15) { //30*2=60秒后
-                    setTimeout(() => {
-                        that.reloadtimes = that.reloadtimes + 1;
-                        // that.player.start();
-                        // that.player.play();
-                        that.player.reload();
-                    }, 2000);
-                } else {
-                    // alert(111);
-                    that.player.destroy(true);
-                    window.location.reload();
-                }
+                that.api.xiuchangliving
+                    .getXiuChangLiveInfo({
+                        liveId: that.liveId,
+                    })
+                    .then(res => {
+                        console.log('res.data08-that.livinglidata秀场777');
+                        console.log(res.data);
+                        if (res.data.code == 1) {
+                            if (
+                                res.data.data != null ||
+                                res.data.data != undefined ||
+                                res.data.data != ""
+                            ) {
+                                if (res.data.data.state === 1) {
+                                    that.player.reload();
+                                } else {
+                                    that.livingendstatus = false;
+                                    that.player.destroy(true);
+                                }
+
+                            }
+                        }
+                    })
+
+                // if (that.reloadtimes <= 15) { //30*2=60秒后
+                //     setTimeout(() => {
+                //         that.reloadtimes = that.reloadtimes + 1;
+                //         // that.player.start();
+                //         // that.player.play();
+                //         that.player.reload();
+                //     }, 2000);
+                // } else {
+                //     // alert(111);
+                //     that.player.destroy(true);
+                //     window.location.reload();
+                // }
             });
             // seek播放
             that.player.on("seeking", function() {
@@ -443,7 +469,7 @@ export default {
             });
             // seek播放结束
             that.player.on("seeked", function() {
-                // console.log("seek播放结束");
+                console.log("seek播放结束");
             });
             // 等待加载数据
             that.player.on("waiting", function() {
@@ -471,7 +497,7 @@ export default {
             // that.getgiftList();
             // that.gettopgiftList();
             //静音
-            that.getAnchorMuteState();
+            // that.getAnchorMuteState();
 
 
             // TIM相关=================================开始
@@ -665,7 +691,12 @@ export default {
                             res.data.data != ""
                         ) {
                             that.livinglidata = res.data.data;
-                            setTimeout(fn, 0);
+                            if (res.data.data.state === 0) {
+                                that.livingendstatus = false;
+                                that.player.destroy(true);
+                            } else {
+                                setTimeout(fn, 0);
+                            }
 
                         } else {
                             that.livinglidata = [];
@@ -1901,8 +1932,8 @@ export default {
     beforeUpdate() {}, //生命周期 - 更新之前
     updated() {}, //生命周期 - 更新之后
     beforeDestroy() {
-        this.quitGroup();
-        this.logoutfn();
+        // this.quitGroup();
+        // this.logoutfn();
         this.player.destroy(true);
         clearInterval(this.countchangetimer);
     }, //生命周期 - 销毁之前
