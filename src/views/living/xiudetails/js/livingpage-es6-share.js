@@ -306,14 +306,9 @@ export default {
         //分享相关
         if (checkdevice() == "anzhuo") {
             that.downloadappurl = 'https://apk.izhuazhou.cn/zsapk/zz_zs.apk';
-            if (checkdevice() == "weixinios") {
-                // that.openappfn();
-                that.videoInChat = true;
-                that.wxtipsstatus = true;
-            }
         } else {
             that.downloadappurl = 'https://apps.apple.com/cn/app/id1487579824';
-            if (checkdevice() == "weixinios") {
+            if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
                 // that.openappfn();
                 that.videoInChat = true;
                 that.wxtipsstatus = true;
@@ -687,8 +682,6 @@ export default {
                     liveId: liveId,
                 })
                 .then(res => {
-                    console.log('res.data08-that.livinglidata秀场');
-                    console.log(res.data);
                     if (res.data.code == 1) {
                         if (
                             res.data.data != null ||
@@ -712,8 +705,6 @@ export default {
         //获取主播详情-粉丝/关注人数
         getBasicUserInfo(liveId, anchorID, useID) {
             let that = this;
-            console.log('liveId');
-            console.log(liveId);
             that.fensAndAttention = [];
             that.isAnchorFlag = false;
             that.anchormsgshowstate = true;
@@ -726,8 +717,6 @@ export default {
                         userId: useID,
                     })
                     .then(res => {
-                        console.log('粉丝数');
-                        console.log(res.data);
                         if (res.data.code == 1) {
                             if (
                                 res.data.data != null ||
@@ -779,8 +768,6 @@ export default {
                 .then(res => {
                     that.$toast.clear();
                     that.listloading = false;
-                    console.log('res.data06在线人数列表');
-                    console.log(res.data);
                     if (res.data.code == 1) {
                         that.nextpage = res.data.data.page;
                         if (that.nextPage == res.data.data.totalPage && that.onlinesList != []) {
@@ -830,8 +817,6 @@ export default {
                 .then(res => {
                     that.$toast.clear();
                     that.listloading_ben = false;
-                    console.log('res.data06直播间礼物榜单');
-                    console.log(res.data);
                     that.nextPage_ben = res.data.data.page;
                     if (res.data.data.list && res.data.data.list.length > 0) {
                         // that.nodatashow = false;
@@ -883,7 +868,6 @@ export default {
             let that = this;
             console.log(id);
             copy(id);
-            console.log(1111);
             that.$toast("已复制");
         },
         //获取静音模式状态
@@ -920,8 +904,6 @@ export default {
                             res.data.data.list != ""
                         ) {
                             that.topgiftList = res.data.data.list;
-                            console.log('res.data06');
-                            console.log(that.topgiftList);
                         } else {
                             that.topgiftList = [];
                         }
