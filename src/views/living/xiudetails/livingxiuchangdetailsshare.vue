@@ -32,7 +32,7 @@
               <div class="dznamegz" v-if="attention_flag && attention_flag===1"  @click.stop="openappfn">取消关注</div>
             </div>
             <div class="dznameid" @click.stop="shellDanChangClick">
-              <span>{{watchcount}}</span>
+              <span>{{livinglidata.realCount}}</span>
             </div>
             <div class="fens-list">
               <ul v-if="topgiftList && topgiftList.length > 0">
@@ -101,7 +101,7 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}">
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false">
           <span class="_txtov1 nm">开心宝宝</span>
           赠送给
           <span class="_txtov1 nm">爱丽少爱</span>
