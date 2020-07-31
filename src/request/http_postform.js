@@ -47,7 +47,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 instance.interceptors.request.use(
     config => {
         const token = store.state.user.token;
-        token && (config.headers.Authorization = token);
+        // token && (config.headers.Authorization = token);//TODO: 临时不需要token校验 暂时注释
         return config;
     },
     error => Promise.error(error))

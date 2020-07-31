@@ -52,7 +52,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 instance.interceptors.request.use(
     config => {
         const token = store.state.user.token;
-        token && (config.headers.Authorization = token);
+        // token && (config.headers.Authorization = token);//TODO: 临时不需要token校验 暂时注释
         // config.params = {
         //     version: '0.0.1',
         //     client: 'h5',
