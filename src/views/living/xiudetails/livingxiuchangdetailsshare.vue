@@ -14,7 +14,7 @@
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
               <div class="dznamepic"  @click.stop="openappfn">
-                <img v-if="livinglidata.cover" :src="livinglidata.cover" alt="抓周" />
+                <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="抓周" />
               </div>
               <!-- <div class="dzguankan">
                 <img src="./../../../assets/imgs/living/details/quite.png" alt />
@@ -200,7 +200,7 @@
            
             
             
-            <div class="close"  @click.stop="returnfn">
+            <div class="close"  @click.stop="returnfn" v-if="false">
               <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
             </div>
             <div class="chatgd"  @click.stop="openappfn">
@@ -296,7 +296,7 @@
       <div class="close" @click.stop="$router.go(-1);" v-if="false" >
         <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
       </div>
-      <img class="faceurl" :src="livinglidata.cover" alt="抓周">
+      <img class="faceurl" :src="livinglidata.faceUrl" alt="抓周">
       <p class="name">{{livinglidata.nickName}}</p>
       <div class="enddata">
         <p>直播已结束</p>
