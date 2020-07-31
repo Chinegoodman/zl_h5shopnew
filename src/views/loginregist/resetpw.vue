@@ -19,7 +19,7 @@ import { clearInterval } from 'timers';
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
                 <div class="ding-xiang-code" ref="dingxiangcode"></div>
-                <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="loginstart">开始</div>
+                <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="checkPhoneClick">开始</div>
 
 
 
@@ -235,73 +235,31 @@ import { clearInterval } from 'timers';
                 })
                 // this.phonecode='模拟填充';
             },
-            // 重置密码提交
-            loginstart(){
+            // 重校验手机号提交
+            checkPhoneClick(){
                 let that = this;
-                this.api.login.login({
+                this.api.login.verifycaptcha_new({
                     mobile: that.phonenum,
-                    verificationCode: that.phonecode,
-                    loginType: 2,
-                    client:'h5'
+                    verificationCode: that.phonecode
                 }).then(data=>{
                     // debugger;
                     if(data.data.info=="登陆成功"){
                         that.$toast('验证成功，请输入密码');
-                        // console.log(data.data.data);
-                        let userdata =data.data.data;
-                        // 已注册用户
-                        let user={
-                            isLogin: true,
-                            username: userdata.nickname,
-                            token: userdata.tokenSecret,
-                            userid: userdata.id,
-                            sig: userdata.sig,
-                            phone: userdata.phone,
-                        }
-                        that.$store.commit('saveuserdata',user);
+                        console.log('data.data.data验正手机');
+                        console.log(data.data.data);
+                        // let userdata =data.data.data;
+                        // // 已注册用户
+                        // let user={
+                        //     isLogin: true,
+                        //     username: userdata.nickname,
+                        //     token: userdata.tokenSecret,
+                        //     userid: userdata.id,
+                        //     sig: userdata.sig,
+                        //     phone: userdata.phone,
+                        // }
+                        // that.$store.commit('saveuserdata',user);
                         // that.$router.push({ name: "shopindex" });
                         that.step =2;
-                    }
-                })
-            },
-            //账号密码方式 登陆点击事件
-            passwordlogin(){
-                let that = this;
-                this.api.login.login({
-                    phone:that.phonenum2,
-                    password:that.password,
-                    third_type:5,
-                }).then(data=>{
-                    that.$toast(data.data.info);
-                    // debugger;
-                    if(data.data.info=="登陆成功"){
-                        console.log(data.data.data);
-                        let userdata =data.data.data;
-                        if(userdata.is_register ==2){
-                            // 已注册用户
-                            let user={
-                                isLogin: true,
-                                username: userdata.nickname,
-                                token: userdata.tokenSecret,
-                                userid: userdata.id,
-                                sig: userdata.sig,
-                                phone: userdata.phone,
-                            }
-                            that.$store.commit('saveuserdata',user);
-                            that.$router.push({ name: "shopindex" });
-                        }else if(userdata.is_register ==1){
-                            let user={
-                                isLogin: true,
-                                username: userdata.nickname,
-                                token: userdata.tokenSecret,
-                                userid: userdata.id,
-                                sig: userdata.sig,
-                                phone: userdata.phone,
-                            }
-                            that.$store.commit('saveuserdata',user);
-                            // 未注册用户  即 新用户
-                            that.step=2;
-                        }
                     }
                 })
             },
@@ -309,11 +267,10 @@ import { clearInterval } from 'timers';
             //如果为新用户时的设置密码事件
             setpasswordfn(){
                 let that = this;
-                this.api.login.change({
-                    uid:that.$store.state.user.userid,
-                    phone:that.$store.state.user.phone,
-                    newPwd:that.setpassword,
-                    confimPwd:that.setpassword2,
+                this.api.login.userResetAccount({
+                    mobile : that.phonenum,
+                    password: that.setpassword,
+                    verificationCode : that.setpassword2,
                     // confimPwd:11,
                 }).then(data=>{
                     that.$toast(data.data.info);

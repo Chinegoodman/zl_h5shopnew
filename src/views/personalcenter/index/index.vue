@@ -6,10 +6,10 @@
       <div class="backgd">
         <div class="header_tou">
           <div class="logined-box" v-if="$store.state.user.isLogin">
-              <img v-if="$store.state.user.userdata.userInfo.face_url" :src="$store.state.user.userdata.userInfo.face_url" class="hd-face" />
+              <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" class="hd-face" />
               <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
               <div class="use_top">
-                <span class="logined">{{$store.state.user.userdata.userInfo.nickname}}</span>
+                <span class="logined">{{$store.state.user.userdata.nickName}}</span>
                 <span class="level_use" @click="go_levelinstruct">
                   <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel1.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==1"  />
                   <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==2" />
@@ -403,19 +403,21 @@ export default {
     getinfousermass() {
       let that = this;
       that.api.personalcenter
-        .getinfouser({
+        .getinfouser_new({
           userId : that.$store.state.user.userid
         })
         .then(res => {
           if(res.data.code==1){
             let resdata = res.data.data;
+            console.log('resdata')
+            console.log(resdata)
             let user = {
               isLogin: true,
-              username: resdata.userInfo.nickname,
-              token: resdata.userInfo.accessToken,
-              userid: resdata.userInfo.id,
+              username: resdata.nickName,
+              token: that.$store.state.user.token,
+              userid: resdata.userId,
               sig: that.$store.state.user.sig,
-              phone: resdata.userInfo.phone,
+              phone: that.$store.state.user.mobile,
               userdata: resdata
             };
             that.$store.commit("saveuserdata", user);
