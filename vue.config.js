@@ -57,7 +57,7 @@ module.exports = {
                 // target: 'http://xc.testmapi.zhulihr.cn', //新架构 测试服-A
                 // target: 'http://47.103.198.168', //抓周 测试服
                 // target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
-                // target: 'https://xc.h5.zhulihr.cn', //生产222-A
+                // target: 'https://xc.mobile.zhulihr.cn', //生产222-A
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
