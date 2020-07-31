@@ -466,11 +466,11 @@ export default {
             let resdata = res.data.data;
             let user = {
               isLogin: true,
-              username: resdata.userInfo.nickname,
-              token: resdata.userInfo.accessToken,
-              userid: resdata.userInfo.id,
+              username: resdata.nickName,
+              // token: resdata.userInfo.accessToken,
+              userid: resdata.userId,
               sig: sig,
-              phone: resdata.userInfo.phone,
+              phone: resdata.mobile,
               userdata: resdata
             };
             that.$store.commit("saveuserdata", user);
