@@ -8,7 +8,7 @@
         <div class="section-top">
             <div class="top">
                 <span class="im">
-                    <img :src="faceUrl?faceUrl:default_img_head" alt />
+                    <img :src="levelMsg.headPortrait?levelMsg.headPortrait:default_img_head" alt />
                 </span>
                 <span class="sunshine"></span>
                 <div class="msg">

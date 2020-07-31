@@ -14,7 +14,7 @@ const login = {
 
     // 获取验证码
     captcha(params) {
-        return axios.get(`${base.yxf2}/v1/user/verification/code?mobile=${params.mobile}&type=${params.type}`);
+        return axios.get(`${base.yxf2}/v1/user/verification/code?mobile=${params.mobile}&type=${params.type}&token=${params.token}`);
     },
     // 登录接口 老版本的登录接口
     login_old(params) {
@@ -25,8 +25,8 @@ const login = {
         return axios.post(`${base.yxf2}/v1/user/login`, qs.stringify(params));
     },
     // 新用户设置密码接口
-    change(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/password/change`, qs.stringify(params));
+    userSetPassword(params) {
+        return axios.post(`${base.yxf2}/v1/user/set/password`, qs.stringify(params));
     },
     //绑定手机号验证验证码-验证验证码
     verifycaptcha_new(params) {
@@ -39,7 +39,11 @@ const login = {
     //修改手机号提交
     savephone_new(params) {
         return axios.put(`${base.yxf2}/v1/user/alteration/mobile`, qs.stringify(params));
-    }
+    },
+    //重置密码提交
+    userResetAccount(params) {
+        return axios.put(`${base.yxf2}/v1/user/reset/account`, qs.stringify(params));
+    },
 }
 
 export default login;
