@@ -306,6 +306,11 @@ export default {
         //分享相关
         if (checkdevice() == "anzhuo") {
             that.downloadappurl = 'https://apk.izhuazhou.cn/zsapk/zz_zs.apk';
+            if (checkdevice() == "weixinios") {
+                // that.openappfn();
+                that.videoInChat = true;
+                that.wxtipsstatus = true;
+            }
         } else {
             that.downloadappurl = 'https://apps.apple.com/cn/app/id1487579824';
             if (checkdevice() == "weixinios") {
