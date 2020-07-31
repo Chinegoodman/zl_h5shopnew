@@ -25,8 +25,8 @@ const login = {
         return axios.post(`${base.yxf2}/v1/user/login`, qs.stringify(params));
     },
     // 新用户设置密码接口
-    change(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/password/change`, qs.stringify(params));
+    userSetPassword(params) {
+        return axios.post(`${base.yxf2}/v1/user/set/password`, qs.stringify(params));
     },
     //绑定手机号验证验证码-验证验证码
     verifycaptcha_new(params) {

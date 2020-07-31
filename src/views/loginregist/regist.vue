@@ -43,7 +43,7 @@ import { clearInterval } from 'timers';
                     <input type="password" v-model="setpassword2" placeholder="确认登录密码">
                 </div>
                 <p>密码长度8-32位，须包含数字、字母、符号至少2种</p>
-                <div class="setpassword" @click="setpasswordfn">确认提交</div>
+                <div :class="{'setpassword':true,'setpassworded' : setpasswordBtnState }" @click="setpasswordfn">确认提交</div>
             </div>
             <!-- <div class="bottom">
                 <div class="threelogin">
@@ -93,8 +93,8 @@ import { clearInterval } from 'timers';
             </div> -->
         </div>
         <!-- 第三方登录 -->
-        <div class="bottom">
-            <div class="threelogin" v-if="false">
+        <div class="bottom" v-if="false">
+            <div class="threelogin" >
                 <ul>
                     <li @click="threelogin('微信')">
                         <img src="http://playback.17biyi.com/df523c64f873156a5b4433390c5458bb" alt="">
@@ -137,7 +137,8 @@ export default {
       setpassword2: "", //设置密码2
       loginbtned_state : false,
       loginbtned_state_ii : false,
-      return_token : ''
+      return_token : '', //顶象token存
+      setpasswordBtnState : false //设置密码按钮状态
     };
   },
   computed: {},
@@ -162,6 +163,7 @@ export default {
     },
     //mobile: that.phonenum2,
     // password: that.password,
+    //密码登录手机号jianting
     phonenum2(newName){
       let that = this;
       if(newName != '' && newName != undefined && that.password != '' && that.checkPhone_ii() == true){
@@ -170,12 +172,30 @@ export default {
         that.loginbtned_state_ii = false;
       }
     },
+    //密码登录密码监听
     password(newName){
       let that = this;
       if(newName != '' && newName != undefined && that.phonenum2 != ''){
         that.loginbtned_state_ii = true;
       }else{
         that.loginbtned_state_ii = false;
+      }
+    },
+    //设置密码密码监听
+    setpassword(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.setpassword2 != ''){
+        that.setpasswordBtnState = true;
+      }else{
+        that.setpasswordBtnState = false;
+      }
+    },
+    setpassword2(newName){
+      let that = this;
+      if(newName != '' && newName != undefined && that.setpassword != ''){
+        that.setpasswordBtnState = true;
+      }else{
+        that.setpasswordBtnState = false;
       }
     }
   },
@@ -243,6 +263,10 @@ export default {
     //引入顶象验证sdk
     dingxiangsdk(){
       let that = this;
+      if(!that.phonenum || that.checkPhone() != true){
+        that.$toast("手机未填写或手机填写不正确，请重填");
+        return;
+      }
       let dingxiangcode = that.$refs.dingxiangcode;
       var myCaptcha = _dx.Captcha(dingxiangcode, {
           //appId，在控制台中“应用管理”或“应用配置”模块获取
@@ -289,6 +313,16 @@ export default {
         // that.loginbtned_state_ii = true;
         return true;
       } 
+    },
+    //密码组合验证
+    checkPassword(value){
+      let that = this;
+      if(!(/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/.test(value))){
+        that.$toast("密码组合不正确");
+        return false; 
+      }else{
+         return true; 
+      }
     },
     // 获取验证码事件
     getcode() {
@@ -477,12 +511,18 @@ export default {
     setpasswordfn() {
       let that = this;
       // debugger;
+      if(that.setpassword2 != that.setpassword){
+         that.$toast("两次输入密码不一致，请重新输入!");
+         return;
+      }
+      if(!that.checkPassword(that.setpassword) || !that.checkPassword(that.setpassword2)){
+        that.$toast("密码组合不正确");
+        return;
+      }
       this.api.login
-        .login({
-          uid: that.$store.state.user.userid,
-          phone: that.$store.state.user.phone,
-          newPwd: that.setpassword,
-          confimPwd: that.setpassword2
+        .userSetPassword({
+          userId: that.$store.state.user.userid,
+          password: that.setpassword,
         })
         .then(data => {
           // debugger;
@@ -676,7 +716,9 @@ export default {
           width: 70%;
         }
       }
-      .setpassword {
+
+      .setpassword,
+      .setpassworded{
         width: 5.68rem;
         height: 0.8rem;
         margin: 1.1rem auto 0;
@@ -694,6 +736,10 @@ export default {
         line-height: 0.37rem;
         font-size: 0.24rem;
         margin: 0.12rem auto 0.4rem .91rem;
+      }
+      .setpassworded{
+        background:rgba(255,189,4,1);
+        color:rgba(255,255,255,1);
       }
     }
   }
