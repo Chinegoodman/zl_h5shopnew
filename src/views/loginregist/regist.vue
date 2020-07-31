@@ -1,7 +1,4 @@
 <!-- 组件说明 -->
-import { setTimeout } from 'timers';
-import func from './vue-temp/vue-editor-bridge';
-import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
         
@@ -369,7 +366,7 @@ export default {
             console.log('data.data.data登录开始');
             console.log(data.data.data);
             let userdata = data.data.data;
-            if (userdata.isSetPassword == 0) {
+            if (userdata.isSetPassword == 1) {
               // 已注册用户
               let user = {
                 isLogin: true,
@@ -382,9 +379,10 @@ export default {
               };
               console.log('user');
               console.log(user);
-              that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
+              that.$store.commit("saveuserdata", user);
+              that.getinfousermass(userdata.id,userdata.imSign,'shopindex',userdata.zhouResultPojo.accessToken);
               // that.$router.push({ name: "shopindex" });
-            } else if (userdata.isSetPassword == 1) {
+            } else if (userdata.isSetPassword == 0) {
               // 未注册用户  即 新用户
               let user = {
                 isLogin: true,
@@ -397,7 +395,8 @@ export default {
               };
               console.log('user');
               console.log(user);
-              that.getinfousermass(userdata.id,userdata.imSign);
+              that.$store.commit("saveuserdata", user);
+              that.getinfousermass(userdata.id,userdata.imSign,null,userdata.zhouResultPojo.accessToken);
               that.step = 2;
             }
             that.getsetaddressitem(userdata.id);
@@ -420,42 +419,26 @@ export default {
           that.$toast(data.data.info);
           // debugger;
           if (data.data.code == 1) {
-            // console.log(data.data.data);
+            console.log(data.data.data);
             let userdata = data.data.data;
-            if (userdata.isFirstLogin == 0) {
-              // 已注册用户
               let user = {
                 isLogin: true,
                 username: '',
-                token: userdata.tokenSecret,
+                token: userdata.zhouResultPojo.tokenSecret,
                 userid: userdata.id,
                 sig: userdata.imSign,
                 phone: that.phonenum2,
                 userdata: ''
               };
-              that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
-              // that.$router.push({ name: "shopindex" });
-            } else if (userdata.isFirstLogin == 1) {
-              // 未注册用户  即 新用户
-              let user = {
-                isLogin: true,
-                username: '',
-                token: userdata.tokenSecret,
-                userid: userdata.id,
-                sig: userdata.imSign,
-                phone: that.phonenum2,
-                userdata: ''
-              };
-              that.getinfousermass(userdata.id,userdata.imSign);
-              that.step = 2;
-            }
-            that.getsetaddressitem(userdata.id);
+              that.$store.commit("saveuserdata", user);
+              that.getinfousermass(userdata.id,userdata.imSign,'shopindex',userdata.zhouResultPojo.accessToken);
+              that.getsetaddressitem(userdata.id);
           }
         });
     },
     
     //根据id获取用户信息
-    getinfousermass(userId,sig,routername) {
+    getinfousermass(userId,sig,routername,token) {
       let that = this;
       that.api.personalcenter
         .getinfouser_new({
@@ -467,7 +450,7 @@ export default {
             let user = {
               isLogin: true,
               username: resdata.nickName,
-              // token: resdata.userInfo.accessToken,
+              token: token,
               userid: resdata.userId,
               sig: sig,
               phone: resdata.mobile,
@@ -475,7 +458,9 @@ export default {
             };
             that.$store.commit("saveuserdata", user);
             //跳转到商城首页或不传routername让step等于2跳转密码设置页
-            that.$router.push({ name: routername });
+            if(routername){
+              that.$router.push({ name: routername });
+            }
           }
         });
     },
