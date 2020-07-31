@@ -39,7 +39,11 @@ const login = {
     //修改手机号提交
     savephone_new(params) {
         return axios.put(`${base.yxf2}/v1/user/alteration/mobile`, qs.stringify(params));
-    }
+    },
+    //重置密码提交
+    userResetAccount(params) {
+        return axios.put(`${base.yxf2}/v1/user/reset/account`, qs.stringify(params));
+    },
 }
 
 export default login;

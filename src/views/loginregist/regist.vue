@@ -382,7 +382,8 @@ export default {
               };
               console.log('user');
               console.log(user);
-              that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
+              that.$store.commit("saveuserdata", user);
+              that.getinfousermass(userdata.id,userdata.imSign,'shopindex',userdata.zhouResultPojo.accessToken);
               // that.$router.push({ name: "shopindex" });
             } else if (userdata.isSetPassword == 1) {
               // 未注册用户  即 新用户
@@ -397,7 +398,8 @@ export default {
               };
               console.log('user');
               console.log(user);
-              that.getinfousermass(userdata.id,userdata.imSign);
+              that.$store.commit("saveuserdata", user);
+              that.getinfousermass(userdata.id,userdata.imSign,null,userdata.zhouResultPojo.accessToken);
               that.step = 2;
             }
             that.getsetaddressitem(userdata.id);
@@ -433,6 +435,7 @@ export default {
                 phone: that.phonenum2,
                 userdata: ''
               };
+              that.$store.commit("saveuserdata", user);
               that.getinfousermass(userdata.id,userdata.imSign,'shopindex');
               // that.$router.push({ name: "shopindex" });
             } else if (userdata.isFirstLogin == 1) {
@@ -446,6 +449,7 @@ export default {
                 phone: that.phonenum2,
                 userdata: ''
               };
+              that.$store.commit("saveuserdata", user);
               that.getinfousermass(userdata.id,userdata.imSign);
               that.step = 2;
             }
@@ -455,7 +459,7 @@ export default {
     },
     
     //根据id获取用户信息
-    getinfousermass(userId,sig,routername) {
+    getinfousermass(userId,sig,routername,token) {
       let that = this;
       that.api.personalcenter
         .getinfouser_new({
@@ -467,7 +471,7 @@ export default {
             let user = {
               isLogin: true,
               username: resdata.nickName,
-              // token: resdata.userInfo.accessToken,
+              token: token,
               userid: resdata.userId,
               sig: sig,
               phone: resdata.mobile,
@@ -475,7 +479,9 @@ export default {
             };
             that.$store.commit("saveuserdata", user);
             //跳转到商城首页或不传routername让step等于2跳转密码设置页
-            that.$router.push({ name: routername });
+            if(routername){
+              that.$router.push({ name: routername });
+            }
           }
         });
     },
