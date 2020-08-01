@@ -141,8 +141,6 @@ export default {
         // console.log(that.livinglidata.liveId);
         // that.livinglidata.url = that.livinglidata.url.replace('http://', 'https://');
         that.livinglidata.url = that.livinglidata.url.replace('.m3u8', '');
-        console.log('');
-        console.log(that.livinglidata.url);
 
         if (checkdevice() == "anzhuo") {
             that.downloadappurl = 'https://apk.izhuazhou.cn/zsapk/zz_zs.apk';
