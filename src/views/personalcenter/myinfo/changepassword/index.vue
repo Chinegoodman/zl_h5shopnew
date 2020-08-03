@@ -11,7 +11,7 @@
         <form name="ofrom" autocomplete="off">
             <ul>
                 <li>
-                    <input type="text" v-model="code" autocomplete="off" name="input_code" placeholder="获取验证码" />
+                    <input type="text" v-model="code" :disabled="isAble"  autocomplete="off" name="input_code" placeholder="获取验证码" />
                     <span class="code" @click="dingxiangsdk" href="code">{{btncodetext}}</span>
                 </li>
                 <li><input type="password" name="input_password" v-model="password" autocomplete="off" placeholder="密码长度8-32位，须包含数字、字母、符号于少2种" /></li>
@@ -31,7 +31,8 @@ export default {
             password : '',
             btncodestatus : false,
             btncodetext : '验证码',
-            return_token : ''
+            return_token : '',
+            isAble : true
         }
     },
     mounted(){
@@ -49,11 +50,9 @@ export default {
         },
         password(newName){
             let that = this;
-            if(newName != '' && newName != undefined && that.code != '' && that.checkpassword() == true){
-                console.log(1645);
+            if(newName != '' && newName != undefined && that.code != ''){
                 that.btncodestatus = true;
             }else{
-                console.log(1112);
                 that.btncodestatus = false;
             }
         }
@@ -77,7 +76,6 @@ export default {
                 style: 'popup', // 可省略
                 width: 300, // 可省略
                 success: function (token) {
-                    console.log('token:', token)
                     that.return_token = token;
                     setTimeout(function(){
                     myCaptcha.hide();
@@ -95,7 +93,8 @@ export default {
             this.api.login
             .captcha({
                 mobile: that.phone,
-                type : 5
+                type : 5,
+                token : that.return_token
             })
             .then(data => {
             // console.log(data);
@@ -107,11 +106,13 @@ export default {
             that.getcode(); 
             let time = 60;
             let settimer = setInterval(function(){
-                    that.btncodetext = "重新获取("+--time+")"
+                    that.btncodetext = "重新获取("+--time+")";
+                    that.isAble = false;
                 }, 1000);
                 setTimeout(function(){
                     that.btncodetext = "重新获取验证码"
                     that.btncodestatus = true; 
+                    that.isAble = true;
                     clearInterval(settimer);
                 }, 60000);
             
@@ -237,6 +238,7 @@ export default {
                     top : 50%;
                     transform: translateY(-50%);
                     cursor: pointer;
+                    color: rgba(255,189,4,1);
                 }
             }
         }
