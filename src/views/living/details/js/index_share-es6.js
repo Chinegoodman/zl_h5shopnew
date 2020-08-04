@@ -477,6 +477,7 @@ export default {
         videoplay() {
             if (this.hasStartstatus) {
                 // console.log('正在播放');
+                this.videopaly();
             } else {
                 this.videopaly();
             }
