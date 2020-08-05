@@ -662,6 +662,22 @@ export default [{
                     }]
                 }
             },
+            //个人中心==我的钱包[秀场] --账单类型
+            {
+                path: '/personalcenter/mypurse/livingacounttypes',
+                name: 'personalcenterlivingacounttypes',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingacounttypes/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingacounttypes',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==账单类型',
+                        url: '/personalcenter/livingacounttypes/index',
+                    }]
+                }
+            },
             //个人中心==我的钱包[秀场] --账单列表
             {
                 path: '/personalcenter/mypurse/livingacountlist',
@@ -673,7 +689,7 @@ export default [{
                     navstatus: false,
                     //面包屑需要的参数
                     breadnav: [{
-                        name: '个人中心==我的秀场钱包==首页',
+                        name: '个人中心==我的秀场钱包==账单',
                         url: '/personalcenter/livingacountlist/index',
                     }]
                 }

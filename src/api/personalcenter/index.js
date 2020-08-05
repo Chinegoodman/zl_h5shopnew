@@ -145,6 +145,18 @@ const personalcenter = {
     //用户等级权益
     userLevelEquities(params) {
         return axios.get(`${base.yxf2}/v1/user/level/equities?userId=${params.userId}`);
+    },
+    //账单类型
+    walletBillType(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/bill/type`);
+    },
+    //秀场账单列表
+    userWalletBill(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
+    },
+    //秀场账单列表提现及豆转币
+    userWalletExchangeOrWithdrawalBill(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/exchange/or/withdrawal/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
     }
 }
 

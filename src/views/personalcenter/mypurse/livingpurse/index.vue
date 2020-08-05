@@ -134,7 +134,7 @@ export default {
     methods:{
       // 进入账单列表
         goToAcountList() {
-          this.$router.push({ name: "personalcenterlivingacountlist" });
+          this.$router.push({ name: "personalcenterlivingacounttypes" });
         },
         goback() {
           this.$router.push({ path: "/personalcenter/index" });

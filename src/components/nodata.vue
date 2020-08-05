@@ -37,6 +37,15 @@
                 哎呀，您暂时还没有当前类型的商品呦~~
             </div>
         </div>
+        <!-- 秀场充值账单列表无数据 -->
+        <div class="discountshopnodata" v-if="pagetype=='mypurseacountlistshop'">
+            <div class="nodataimg">
+                <img src="../assets/imgs/icons/ddkby.png" alt="">
+            </div>
+            <div class="nodatatext">
+                暂无记录
+            </div>
+        </div>
         <!-- 优惠券搜索无数据-->
         <div class="discountuindexnodata" v-if="pagetype=='discountindex'">
             <div class="nodataimg">
