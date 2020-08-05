@@ -189,8 +189,8 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.userWalletBill({
-            // userId : that.$store.state.user.userid,
-            userId : 2714,
+            userId : that.$store.state.user.userid,
+            // userId : 2714,
             type : that.posttype,
             page : that.nextpage,
             item : 20
@@ -235,8 +235,8 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.userWalletExchangeOrWithdrawalBill({
-            // userId : that.$store.state.user.userid,
-            userId : 2714,
+            userId : that.$store.state.user.userid,
+            // userId : 2714,
             type : that.posttype,
             page : that.nextpage_ii,
             item : 20
