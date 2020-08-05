@@ -13,7 +13,7 @@
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
               <div class="dznamepic" @click.stop="openanchormsgshell">
-                <img v-if="livinglidata.cover" :src="livinglidata.cover" alt="抓周" />
+                <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="抓周" />
               </div>
               <!-- <div class="dzguankan">
                 <img src="./../../../assets/imgs/living/details/quite.png" alt />
@@ -291,18 +291,20 @@
 
     </div>
     <!-- 直播结束、、 -->
-    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.face_url+')'}">
-      <div class="close" @click.stop="$router.go(-1);">
-        <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
+    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}">
+      <div class="livingendinner">
+         <div class="close" @click.stop="$router.go(-1)">
+          <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
+        </div>
+        <img class="faceurl" :src="livinglidata.faceUrl" alt="抓周">
+        <p class="name">{{livinglidata.nickName}}</p>
+        <div class="enddata">
+          <p>直播已结束</p>
+          <span class="number">{{watchcount}}</span>
+          <span class="title">总观看人数</span>
+        </div>
+        <p class="followbtn" @click.stop="follow(false)">关注主播</p>
       </div>
-      <img class="faceurl" :src="livinglidata.face_url" alt="抓周">
-      <p class="name">{{livinglidata.nickname}}</p>
-      <div class="enddata">
-        <p>直播已结束</p>
-        <span class="number">{{livinglidata.nickname}}</span>
-        <span class="title">总观看人数</span>
-      </div>
-      <p class="followbtn" @click.stop="follow(false)">关注主播</p>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
