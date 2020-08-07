@@ -304,6 +304,8 @@ export default {
             // this.player.destroy(true);
             that.joinOrLeaveRoomXC(1); //加入群聊  后台的接口
             // 直播相关
+            that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
+            that.livinglidata.streamAddrFlv = that.livinglidata.streamAddrFlv.replace('http://', 'https://');
 
             //轮询直播观看人数与点赞数
             that.getXiuChangLivingUserAndPraise();
@@ -351,6 +353,8 @@ export default {
                     cors: true
                 });
             } else if (checkdevice() == "pc") {
+                console.log('that.livinglidata.streamAddrFlv99999999999999');
+                console.log(that.livinglidata.streamAddrFlv);
                 that.player = new FlvPlayer({
                     //解除注释 flv方法
                     id: "videodom",
@@ -591,8 +595,8 @@ export default {
                     liveId: liveId,
                 })
                 .then(res => {
-                    console.log('res.data08');
-                    console.log(res.data);
+                    // console.log('res.data08');
+                    // console.log(res.data);
                     if (res.data.code == 1) {
                         if (
                             res.data.data != null ||
@@ -601,6 +605,8 @@ export default {
                         ) {
                             setTimeout(fn, 500);
                             that.livinglidata = res.data.data;
+                            console.log('that.livinglidata秀场直播请求回来的数据');
+                            console.log(res.data);
                         } else {
                             that.livinglidata = [];
                         }
@@ -1019,6 +1025,7 @@ export default {
                 // touid: that.livinglidata.uid,
                 type: inorout, //0离开 1 加入
             }).then(res => {
+                console.log('res加入或者离开直播间');
                 console.log(res);
             })
         },
@@ -1060,13 +1067,17 @@ export default {
             console.log(event.data.type); // mutipleAccount(同一设备，同一帐号，多页面登录被踢)
         },
         // 发送消息
-        txtpost() {
+        txtpost(sendMsgType) {
             let that = this;
             if (that.timtxt == '') { return; }
+            console.log('that.$store.state.user.userdata');
+            console.log(that.$store.state.user.userdata);
 
             let timestamp = parseInt(new Date().getTime() / 1000);
             // 发送文本消息，Web 端与小程序端相同
             // 1. 创建消息实例，接口返回的实例可以上屏
+            console.log('that.$store.state.user');
+            console.log(that.$store.state.user);
             let message = that.tim.createCustomMessage({
                 //自定义消息
                 to: that.livinglidata.gid.toString(),
@@ -1077,11 +1088,14 @@ export default {
                     data: JSON.stringify({
                         conversationId: that.livinglidata.gid,
                         chatType: "group",
-                        msgType: "text",
+                        msgType: sendMsgType || "text",
                         sendUserInfo: {
-                            id: that.$store.state.user.userid,
-                            name: that.$store.state.user.userdata.userInfo.nickname,
-                            isVip: that.$store.state.user.userdata.userInfo.is_vip
+                            id: that.$store.state.user.userid.toString(),
+                            name: that.$store.state.user.userdata.nickName.toString(),
+                            isMermber: false,
+                            isVip: 1,
+                            level: that.$store.state.user.userdata.level.toString(),
+                            icon: that.$store.state.user.userdata.headPortrait
                         },
                         msgContent: {
                             text: that.timtxt,
@@ -1099,6 +1113,8 @@ export default {
                     extension: ""
                 }
             });
+            console.log('message');
+            console.log(message);
             // 2. 发送消息
             let promise = that.tim.sendMessage(message);
             that.$toast.loading("发送中...");
@@ -1106,12 +1122,12 @@ export default {
                 .then(function(imResponse) {
                     // 发送成功
                     // console.log(imResponse + "发送成功了");
-
                     let msgtxt = that.timtxt;
-                    let name = that.$store.state.user.userdata.userInfo.nickname;
-                    let isvip = that.$store.state.user.userdata.userInfo.is_vip;
+                    let comename = that.$store.state.user.userdata.nickName.toString();
+                    let level = that.$store.state.user.userdata.level.toString();
+                    let isVip = 1;
                     let talkinguid = 'noid';
-                    that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                    that.messageList.push({ level, comename, msgtxt, talkinguid });
                     setTimeout(() => {
                         that.imscrollbottom();
                     }, 0);
@@ -1189,22 +1205,22 @@ export default {
                         // 收到用户发送的消息
                         let msgtxt = msgdata.msgContent.text;
                         let comename = msgdata.sendUserInfo.name;
-                        let isvip = msgdata.sendUserInfo.isVip;
+                        let level = msgdata.sendUserInfo.level;
                         // console.log(msgdata.sendUserInfo);
                         talkinguid = msgdata.sendUserInfo.id;
                         if (that.livinglidata.uid == msgdata.sendUserInfo.id) {
                             //主播isvip为-2
-                            let isvip = -2;
-                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                            let level = -2;
+                            that.messageList.push({ level, comename, msgtxt, talkinguid });
                         } else {
-                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                            that.messageList.push({ level, comename, msgtxt, talkinguid });
                         }
                     } else if (msgdata.msgType == "hello") {
                         // 收到用户进入群聊时的 系统消息
                         let comename = msgdata.sendUserInfo.name;
                         let msgtxt = `来了`;
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
+                        let level = msgdata.sendUserInfo.level;
+                        that.messageList.push({ comename, level, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "endLive") {
                         // 收到 直播间结束 关闭的消息
                         that.livingendstatus = false;
@@ -1226,8 +1242,8 @@ export default {
                         let msgtxt = '你被踢出了直播间！';
                         if (that.receivemsgdata.msgContent.text == that.$store.state.user.userid) {
                             let comename = "系统公告";
-                            let isvip = -1;
-                            that.messageList.push({ comename, isvip: isvip, msgtxt, talkinguid });
+                            let level = -1;
+                            that.messageList.push({ comename, level: level, msgtxt, talkinguid });
                             that.$router.go(-1);
                         }
                     } else if (msgdata.msgType == "like") {
@@ -1237,15 +1253,15 @@ export default {
                         let msgtxt = `给主播点了赞`;
                         let comename = msgdata.sendUserInfo.name;
                         // let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
+                        let level = msgdata.sendUserInfo.level;
+                        that.messageList.push({ comename, level, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "announcement") {
                         // 收到 公告消息 的消息
                         let msgtxt = that.receivemsgdata.msgContent.text;
                         let name = '系统公告';
                         let comename = `${name}：${msgdata.sendUserInfo.name}`;
-                        let isvip = -1;
-                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
+                        let level = -1;
+                        that.messageList.push({ comename, level, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "shopCat") {
                         // 收到 用户把商品加入购物车消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1253,8 +1269,8 @@ export default {
                         let name = '系统公告';
                         let comename = `${name}：${msgdata.sendUserInfo.name}`;
                         let msgtxt = `把商品加入购物车`;
-                        let isvip = -1;
-                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
+                        let level = -1;
+                        that.messageList.push({ comename, level, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_buySuccess") {
                         // 收到 用户成功购买商品消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1262,8 +1278,8 @@ export default {
                         let name = '系统公告';
                         let comename = `${name}：${msgdata.sendUserInfo.name}`;
                         let msgtxt = `成功购买商品`;
-                        let isvip = -1;
-                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        let level = -1;
+                        that.messageList.push({ level, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_seeGoods") {
                         // 收到 用户查看了商品详情消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1271,16 +1287,16 @@ export default {
                         let name = '系统公告';
                         let comename = `${name}：${msgdata.sendUserInfo.name}`;
                         let msgtxt = `查看了商品详情`;
-                        let isvip = -1;
-                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        let level = -1;
+                        that.messageList.push({ level, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_userFollow") {
                         // 收到 用户关注了主播消息 的消息
                         let name = '系统公告';
                         let comename = `${name}：${msgdata.sendUserInfo.name}`;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         let msgtxt = `关注了主播`;
-                        let isvip = -1;
-                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        let level = -1;
+                        that.messageList.push({ level, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_sendPayOrder") {
                         // 收到 主播给用户发送创建订单成功的消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1290,8 +1306,8 @@ export default {
                         } else {
                             let msgtxt = that.receivemsgdata.msgContent.text;
                             let comename = "系统公告sendPayOrder";
-                            let isvip = msgdata.sendUserInfo.isVip;
-                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                            let level = msgdata.sendUserInfo.level;
+                            that.messageList.push({ level, comename, msgtxt, talkinguid });
                         }
                     } else if (msgdata.msgType == "system_sendPayUrl") {
                         // 收到 主播给用户发送支付信息消息 的消息 //主播端生成商品后发送给用户时发送
@@ -1320,8 +1336,8 @@ export default {
                         } else {
                             let msgtxt = that.receivemsgdata.msgContent.text;
                             let comename = "系统公告sendPayUrl";
-                            let isvip = msgdata.sendUserInfo.isVip;
-                            that.messageList.push({ isvip, comename, msgtxt, skuIDString, talkinguid });
+                            let level = msgdata.sendUserInfo.level;
+                            that.messageList.push({ level, comename, msgtxt, skuIDString, talkinguid });
                         }
                     } else if (msgdata.msgType == "system_buyGoods") {
                         // 收到 用户请求购买消息 的消息
@@ -1329,8 +1345,8 @@ export default {
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         let msgtxt = `用户请求购买消息`;
                         let comename = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        let level = msgdata.sendUserInfo.level;
+                        that.messageList.push({ level, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "gift") {
                         // console.log(11111111);
                         // 收到 用户请求购买消息 的消息
@@ -1341,8 +1357,8 @@ export default {
                         let giftdetail = `${msgdata.giftContent.giftName}x${msgdata.giftContent.giftCount}`;
                         let msgtxt = `向主播送上礼物`;
                         // let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, comename, msgtxt, talkinguid, giftdetail });
+                        let level = msgdata.sendUserInfo.level;
+                        that.messageList.push({ level, comename, msgtxt, talkinguid, giftdetail });
                         // that.giftmsgList.push(msgdata);
                         // console.log('that.messageList');
                         // console.log(that.messageList);
@@ -1381,6 +1397,8 @@ export default {
             promise
                 .then(function(imResponse) {
                     that.receiveMsg(); //接受消息
+                    that.timtxt = '来了';
+                    that.txtpost('hello');
                 })
                 .catch(function(imError) {
                     // console.warn("joinGroup error:", imError); // 申请加群失败的相关信息
@@ -1482,7 +1500,7 @@ export default {
 
             //礼物展示通道 1
             if (that.time_state) {
-                console.log(888888888);
+                // console.log(888888888);
                 that.giftcountall_one = received_msg.giftContent.giftCount;
                 that.time_state = false;
                 that.giftmsgone = received_msg;
@@ -1499,7 +1517,7 @@ export default {
             }
             //礼物展示通道 2
             else if (that.time_state_ii) {
-                console.log(99999999);
+                // console.log(99999999);
                 that.giftcountall_two = received_msg.giftContent.giftCount;
                 that.time_state_ii = false;
                 that.giftmsgtwo = received_msg;

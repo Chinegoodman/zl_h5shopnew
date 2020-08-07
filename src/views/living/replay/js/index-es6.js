@@ -99,6 +99,8 @@ export default {
             // this.quitGroup();
             // this.logoutfn();
             // this.player.destroy(true);
+            that.livinglidata.livestreamurl = that.livinglidata.livestreamurl.replace('http://', 'https://');
+            that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
 
             if (
                 checkdevice() == "weixin" ||
@@ -106,8 +108,6 @@ export default {
                 checkdevice() == "ios" ||
                 checkdevice() == "pc"
             ) {
-                console.log('走的这');
-                console.log(that.livinglidata.livestreamurl);
                 that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",

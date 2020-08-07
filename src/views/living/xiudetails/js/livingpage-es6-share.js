@@ -330,6 +330,14 @@ export default {
             // that.joinOrLeaveRoomXC(1);
             // 直播相关
 
+            that.livinglidata.streamAddrHls720p = that.livinglidata.streamAddrHls720p.replace('http://', 'https://');
+            // console.log('that.livinglidata.streamAddrHls720p');
+            // console.log(that.livinglidata.streamAddrHls720p);
+            that.livinglidata.streamAddrFlv480p = that.livinglidata.streamAddrFlv480p.replace('http://', 'https://');
+            // console.log('that.livinglidata.streamAddrFlv480p');
+            // console.log(that.livinglidata.streamAddrFlv480p);
+
+
             //轮询直播观看人数与点赞数
             // that.getXiuChangLivingUserAndPraise();
             // that.countchangetimer = setInterval(function() {

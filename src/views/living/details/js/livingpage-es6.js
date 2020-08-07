@@ -208,7 +208,7 @@ export default {
     },
     mounted() {
         this.livinglidata = getsessionStorage("livinglidata");
-        console.log('this.livinglidata');
+        console.log('this.livinglidata7');
         console.log(this.livinglidata);
 
 
@@ -230,6 +230,9 @@ export default {
         let that = this;
         // console.log(that.livinglidata.streamAddrHls);
         // console.log(checkdevice());
+        // that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
+        console.log('that.livinglidata.streamAddrHls888');
+        console.log(that.livinglidata.streamAddrHls);
 
         //轮询直播观看人数与点赞数
         that.getLivingPersonAndpraisePoint();
@@ -303,7 +306,7 @@ export default {
                 closeVideoClick: true,
                 closeVideoDblclick: true,
                 closeVideoTouch: true,
-
+                preloadTime: 5, //预加载时长(秒)	30
                 autoplay: true,
                 // autoplayMuted: true,
                 isLive: true,
@@ -670,7 +673,7 @@ export default {
                 return;
             }
             let promiselogin = this.tim.login({
-                userID: that.$store.state.user.userid,
+                userID: that.$store.state.user.userid.toString(),
                 userSig: that.$store.state.user.sig
                     // "eJxFkF1PgzAUhv8LtzPS0pbBkl2wreoM82sa2RUp0LmTASWloNP434fNiJfneXJy3vf8OK-x9lo0DRSpMCnRhTNzkHNlsfxqQMtU7I3UA8aMMQ*h0fZSt6DqQXgIM*wRhP4lFLI2sAe7SOiFtvAxjBv*vFzfZA*h*333BhGfLuikFEmmJiEXu-jUdisXynaZHMKsY7GKYFFy6G9fnhR5rz29eXT1Z5ms3VUeVXTrHo6Bj-t7jnd51Ufz*XisOKa22F90OkTzA*SP*QxU0laaMsoYCfCFizxXXW1Sc2qk-cTvGbkGVU0_"
             });
