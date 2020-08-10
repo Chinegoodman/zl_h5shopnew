@@ -162,20 +162,20 @@
                   <!-- 小礼物end-->
               </div>
               <!-- 直播消息 会员进入动画 start-->
-              <div class="vip-level-anim-box" v-if="false">
-                <div class="anim-box-one liStyleLevelone">
+              <div class="vip-level-anim-box" v-if="levelMsgobj.sendUserInfo.level">
+                <div :class="{'anim-box-one': true,'liStyleLevelone' : liStyleLevel_active_one,'liStyleLevelOneNone' : liStyleLevelOneNone}" ref="levelElementanim">
                   <span class="lv">
-                    <viplevel :lv_num="'01'"></viplevel>
+                    <viplevel :lv_num="levelMsgobj.sendUserInfo.level?levelMsgobj.sendUserInfo.level:'01'"></viplevel>
                   </span>
-                  <span class="vipicon">
-                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                  <span class="vipicon" v-if="levelMsgobj.sendUserInfo.isVip">
+                    <img class="vip-pic" :src="levelMsgobj.sendUserInfo.icon" alt="等级" v-if="1" />
                   </span>
-                  <span class="nickname">爱吃鱼的大黄鱼</span>
+                  <span class="nickname">{{levelMsgobj.sendUserInfo.name}}</span>
                   <span>开着</span>
-                  <span class="zoujia-text">奥迪</span>
+                  <span class="zoujia-text">{{levelMsgobj.sendUserInfo.carname}}</span>
                   <span>进入直播间</span>
                   <span class="zoujia-icon">
-                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/levelcars.png" alt="等级" v-if="1" />
                   </span>
                 </div>
               </div>

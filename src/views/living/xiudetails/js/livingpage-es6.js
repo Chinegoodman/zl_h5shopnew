@@ -185,7 +185,7 @@ export default {
             gift_timer_one: null, //礼物定时器通道01
             gift_timer_two: null, //礼物定时器通道02
             samegiftflag: 0, //同一用户同一礼物 1为同一用户 0反之
-            dataStore: [], //队列里的数组
+            dataStore: [], //礼物队列里的数组
             giftcountall_one: 0,
             giftcountall_two: 0,
             giftNumFlag01: false, //礼物数字flag 01
@@ -196,6 +196,25 @@ export default {
             bigLiStyleNoneFlag: false, //大礼物结束动画标致
             bigGiftMsgone: [], //大礼物全局通道一
             bigGiftMsgTwo: [], //大礼物全局通道二
+            levelDataStroe: [], //会员等级队列里的数组
+            level_time_state: true, //会员等级是否完成数据全程走完的标致 控制动画滑出占用轨道
+            liStyleLevel_active_one: false, //会员等经动画开始动画class条件
+            liStyleLevelOneNone: false, //会员等经动画结束动画class条件
+            level_timer_one: null, //会员待级三秒结束定时器
+            levelMsgobj: {
+                chatType: "",
+                conversationId: "",
+                sendUserInfo: {
+                    icon: '',
+                    id: '',
+                    isMember: '',
+                    isVip: '',
+                    level: '',
+                    name: '',
+                    carname: '',
+                    carurl: ''
+                }
+            }, //会员等级信息
             nextReqMessageID: "", //用于续拉，分页续拉时需传入该字段。
             conversationList: [], // 会话列表，用该列表覆盖原有的会话列表,
             isActive: 0, //默认选中第一个,
@@ -1093,7 +1112,7 @@ export default {
                             id: that.$store.state.user.userid.toString(),
                             name: that.$store.state.user.userdata.nickName.toString(),
                             isMermber: false,
-                            isVip: 1,
+                            isVip: that.$store.state.user.userdata.payMember.type ? that.$store.state.user.userdata.payMember.type : 0,
                             level: that.$store.state.user.userdata.level.toString(),
                             icon: that.$store.state.user.userdata.headPortrait
                         },
@@ -1125,7 +1144,7 @@ export default {
                     let msgtxt = that.timtxt;
                     let comename = that.$store.state.user.userdata.nickName.toString();
                     let level = that.$store.state.user.userdata.level.toString();
-                    let isVip = 1;
+                    let isVip = that.$store.state.user.userdata.payMember.type ? that.$store.state.user.userdata.payMember.type : 0;
                     let talkinguid = 'noid';
                     that.messageList.push({ level, comename, msgtxt, talkinguid });
                     setTimeout(() => {
@@ -1220,7 +1239,17 @@ export default {
                         let comename = msgdata.sendUserInfo.name;
                         let msgtxt = `来了`;
                         let level = msgdata.sendUserInfo.level;
-                        that.messageList.push({ comename, level, msgtxt, talkinguid });
+                        let isVip = that.$store.state.user.userdata.payMember.type ? that.$store.state.user.userdata.payMember.type : 0;
+                        if (isVip) {
+                            //会员动画通道
+                        } else {
+                            if (level > 20) {
+                                //会员动画展示
+                                that.getLevelData(msgdata);
+                            } else {
+                                that.messageList.push({ comename, level, msgtxt, talkinguid });
+                            }
+                        }
                     } else if (msgdata.msgType == "endLive") {
                         // 收到 直播间结束 关闭的消息
                         that.livingendstatus = false;
@@ -1575,6 +1604,7 @@ export default {
             clearTimeout(that.gift_timer_two);
             that.$refs.giftelmenttow.removeEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
         },
+        //小礼物动画相关队列数据
         //向队尾添加一个元素
         enqueue(element) {
             this.dataStore.push(element);
@@ -1585,15 +1615,21 @@ export default {
         dequeue() {
             return this.dataStore.shift();
         },
-        //  读取队首元素
+        /*
+        读取队首元素
+        */
         front() {
             return this.dataStore[0]
         },
-        //  读取队尾元素
+        /*
+        读取队尾元素
+        */
         back() {
             return this.dataStore[this.dataStore.length - 1];
         },
-        //  显示队列内所有的元素
+        /*
+        显示队列内所有的元素
+        */
         toArrayData() {
             var result = [];
             for (var i = 0; i < this.dataStore.length; i++) {
@@ -1601,7 +1637,9 @@ export default {
             }
             return result;
         },
-        //  判断队列是否为空
+        /*
+        判断队列是否为空
+        */
         empty() {
             if (this.dataStore.length == 0) {
                 return true;
@@ -1609,7 +1647,122 @@ export default {
                 return false;
             }
         },
-        //礼物相关 end
+        /*
+        礼物相关 end========================
+        */
+        /*
+        会员等级相关 start=============
+        */
+        //礼物相关 start
+        getLevelData(data) {
+            let that = this;
+            that.levelEnqueue(data);
+            that.levelFirtGo(0);
+        },
+        /*
+        队列数据中转  
+        */
+        levelFirtGo(l) {
+            let that = this;
+            var allLevelData = that.levelToArrayData();
+            if (!allLevelData.length) return;
+            for (var k = l, level_lens = allLevelData.length; k < level_lens; k++) {
+                if (that.level_time_state) {
+                    if (that.level_time_state) {
+                        that.createLevelanim(allLevelData[k]);
+                    }
+                    //delete dui blie firt
+                    that.levelDequeue();
+                    // go second time
+                    var timer_inner_level = setInterval(function() {
+                        if (that.level_time_state) {
+                            clearInterval(timer_inner_level);
+                            that.levelFirtGo(k);
+                        }
+                    }, 300);
+                    break;
+                }
+            }
+        },
+        /*创建会员等级动画*/
+        createLevelanim(received_msg) {
+            let that = this;
+            let levelElementCurrent;
+            //礼物展示通道 1
+            if (that.level_time_state) {
+                // console.log(888888888);
+                that.level_time_state = false;
+                that.levelMsgobj = received_msg;
+                that.levelMsgobj.sendUserInfo.carname = '哈哈';
+                console.log('that.levelMsgobj');
+                console.log(that.levelMsgobj);
+                console.log((25 - 1) / 10 - 2);
+                that.liStyleLevel_active_one = true;
+                that.level_timer_one = setTimeout(function() {
+                    levelElementCurrent = that.$refs.levelElementanim;
+                    that.liStyleLevelOneNone = true;
+                    that.liStyleLevel_active_one = false;
+                    console.log('levelElementCurrent');
+                    console.log(levelElementCurrent);
+                    levelElementCurrent.addEventListener('webkitAnimationEnd', that.resetLevelCondition, false);
+                }, 3000);
+                // return;
+            }
+        },
+        resetLevelCondition() {
+            let that = this;
+            that.liStyleLevelOneNone = false;
+            clearInterval(that.level_timer_one);
+            that.level_time_state = true;
+            that.$refs.levelElementanim.removeEventListener('webkitAnimationEnd', that.resetLevelCondition, false);
+        },
+        /*
+        向队尾添加一个元素  
+        */
+        levelEnqueue(element) {
+            this.levelDataStroe.push(element);
+        },
+        /*
+        删除队首的元素
+        */
+        levelDequeue() {
+            return this.levelDataStroe.shift();
+        },
+        /*
+        读取队首元素
+        */
+        levelFront() {
+            return this.levelDataStroe[0]
+        },
+        /*
+        读取队尾元素
+        */
+        levelBack() {
+            return this.levelDataStroe[this.levelDataStroe.length - 1];
+        },
+        /*
+        显示队列内所有的元素
+        */
+        levelToArrayData() {
+            var result = [];
+            for (var i = 0; i < this.levelDataStroe.length; i++) {
+                result.push(this.levelDataStroe[i]);
+            }
+            return result;
+        },
+        /*
+        判断队列是否为空
+        */
+        levelEmpty() {
+            if (this.levelDataStroe.length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        /*
+        会员等级相关 end=====================
+        */
         // IM相关==============结束=========================================================
         //投诉建议=========================== 开始
         openComplaintsShell() {
