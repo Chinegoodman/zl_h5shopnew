@@ -100,7 +100,7 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}">
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false">
           <span class="_txtov1 nm">开心宝宝</span>
           赠送给
           <span class="_txtov1 nm">爱丽少爱</span>
@@ -162,7 +162,7 @@
                   <!-- 小礼物end-->
               </div>
               <!-- 直播消息 会员进入动画 start-->
-              <div class="vip-level-anim-box">
+              <div class="vip-level-anim-box" v-if="false">
                 <div class="anim-box-one liStyleLevelone">
                   <span class="lv">
                     <viplevel :lv_num="'01'"></viplevel>
