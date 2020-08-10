@@ -4,7 +4,7 @@ import { clearInterval } from 'timers';
     <div class="registwrap">
         <div class="header">
         <img class="back" @click="goback" src="@/assets/imgs/follow/xiangqing@2x.png" alt />
-        <span>重置密码</span>
+        <span>{{pagetitle}}</span>
     </div>
         <div class="content">
             <div class="step1" v-if="step==1">
@@ -14,26 +14,12 @@ import { clearInterval } from 'timers';
                 </div>
                 <div class="iptbox">
                     <span class="t">验证码</span>
-                    <input type="text" v-model="phonecode" placeholder="请输入验证码">
+                    <input type="text" v-model="phonecode" :disabled="isAble" placeholder="请输入验证码9">
                     <span @click="dingxiangsdk" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
                 <div class="ding-xiang-code" ref="dingxiangcode"></div>
                 <div :class="{'loginbtn' : true, 'loginbtned' : loginbtned_state}" @click="checkPhoneClick">开始</div>
-
-
-
-                <!-- <div class="iptbox">
-                    <span>+86</span>
-                    <input type="text" v-if="resetpassword" disabled v-model="phonenum" placeholder="请输入手机号">
-                    <input type="text" v-if="!resetpassword" v-model="phonenum" placeholder="请输入手机号">
-                </div>
-                <div class="iptbox">
-                    <input type="text" v-model="phonecode" placeholder="请输入验证码">
-                    <span @click="getcode" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
-                    <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
-                </div> -->
-                <!-- <div class="loginbtn" @click="loginstart">开始</div> -->
             </div>
             <div class="step2" v-if="step==2">
                 <div class="iptbox">
@@ -46,16 +32,6 @@ import { clearInterval } from 'timers';
                 </div>
                 <p>密码长度8-32位，须包含数字、字母、符号至少2种</p>
                 <div :class="{'setpassword':true,'setpassworded' : setpasswordBtnState }" @click="setpasswordfn">确认提交</div>
-
-<!-- 
-                <div class="iptbox">
-                    <input type="password" v-model="setpassword" placeholder="请输入密码">
-                </div>
-                <div class="iptbox">
-                    <input type="password" v-model="setpassword2" placeholder="请输入密码">
-                </div>
-                <p>密码长度8-32位，须包含数字、字母、符号至少2种或以上元素。</p>
-                <div class="setpassword" @click="setpasswordfn">确认提交</div> -->
             </div>
             <div class="bottom" v-if="false">
                 <p class="powerby">Power by 助力文化 co.,Ltd</p>
@@ -73,8 +49,8 @@ import { clearInterval } from 'timers';
         data () {
             return {
                 // username:'',//帐号
+                pagetitle : '忘记密码',
                 password:'',//密码
-
                 step:1,//验证码登录默认为第一步===若为第一次登录即注册用户则会变为1让用户录入密码
                 // phonenum:'',//手机号
                 phonenum:'',//手机号 读取登录信息保存的手机号
@@ -89,7 +65,8 @@ import { clearInterval } from 'timers';
                 resetpassword:true,//默认页面为重置密码页
 
                 loginbtned_state : false, //登录按钮样式状态
-                setpasswordBtnState : false //设置密码按钮样式状态
+                setpasswordBtnState : false, //设置密码按钮样式状态,
+                isAble : true
             };
         },
         computed: {
@@ -140,7 +117,7 @@ import { clearInterval } from 'timers';
             checkPhone(){ 
                 let that = this;
                 if(!that.phonenum)return;
-                if(!(/^1[3456789]\d{9}$/.test(that.phonenum))){ 
+                if(!(/^1[3456789]\d{9}$/.test(that.phonenum))){
                     that.$toast("手机号码有误，请重填");
                     this.loginbtned_state = false;
                     return false; 
@@ -149,24 +126,10 @@ import { clearInterval } from 'timers';
                     return true;
                 } 
             },
-            //手机号验证-密码登录
-            checkPhone_ii(){ 
-                let that = this;
-                console.log('2999');
-                if(!that.phonenum2)return;
-                if(!(/^1[3456789]\d{9}$/.test(that.phonenum2))){ 
-                    that.$toast("手机号码有误，请重填");
-                    that.loginbtned_state_ii = false;
-                    return false; 
-                }else{
-                    // that.loginbtned_state_ii = true;
-                    return true;
-                } 
-            },
             //密码组合验证
             checkPassword(value){
                 let that = this;
-                if(!(/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/.test(value))){
+                if(!(/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{8,32}$/.test(value))){
                     that.$toast("密码组合不正确");
                     return false; 
                 }else{
@@ -219,10 +182,12 @@ import { clearInterval } from 'timers';
                 that.timer = setInterval(() => {
                     if(that.gettingcodestatustime>1){
                         that.gettingcodestatustime--;
+                        that.isAble = false;
                     }else{
                         clearInterval(that.timer);
                         that.gettingcodestatus=false;
-                        that.gettingcodestatustime=120;
+                        that.gettingcodestatustime=60;
+                        that.isAble = true;
                     }
                 }, 1000);
                 this.api.login.captcha({
@@ -237,47 +202,36 @@ import { clearInterval } from 'timers';
             },
             // 重校验手机号提交
             checkPhoneClick(){
-                let that = this;
-                this.api.login.verifycaptcha_new({
-                    mobile: that.phonenum,
-                    verificationCode: that.phonecode
-                }).then(data=>{
-                    // debugger;
-                    if(data.data.info=="登陆成功"){
-                        that.$toast('验证成功，请输入密码');
-                        console.log('data.data.data验正手机');
-                        console.log(data.data.data);
-                        // let userdata =data.data.data;
-                        // // 已注册用户
-                        // let user={
-                        //     isLogin: true,
-                        //     username: userdata.nickname,
-                        //     token: userdata.tokenSecret,
-                        //     userid: userdata.id,
-                        //     sig: userdata.sig,
-                        //     phone: userdata.phone,
-                        // }
-                        // that.$store.commit('saveuserdata',user);
-                        // that.$router.push({ name: "shopindex" });
-                        that.step =2;
-                    }
-                })
+                this.step = 2;
+                this.pagetitle = '重置密码';
             },
 
-            //如果为新用户时的设置密码事件
+            //设置密码事件
             setpasswordfn(){
-                let that = this;
-                this.api.login.userResetAccount({
-                    mobile : that.phonenum,
-                    password: that.setpassword,
-                    verificationCode : that.setpassword2,
-                    // confimPwd:11,
-                }).then(data=>{
-                    that.$toast(data.data.info);
-                    if(data.data.info == "修改成功"){
-                        that.$router.push({ name: "shopindex" });
-                    }
-                })
+              let that = this;
+
+              if(that.setpassword2 != that.setpassword){
+                that.$toast('两次密码不一致,请重新输入');
+                return;
+              }
+              if(!this.checkPassword(that.setpassword)){
+                return;
+              }
+              if(!this.checkPassword(that.setpassword2)){
+                return;
+              }
+              this.api.login.userResetAccount({
+                  mobile : that.phonenum,
+                  password: that.setpassword,
+                  verificationCode: that.phonecode
+              }).then(data=>{
+                  console.log('data.data.info重置密码');
+                  console.log(data.data.info);
+                  that.$toast(data.data.info);
+                  if(data.data.info == "修改成功"){
+                    that.$router.push({ name: "shopindex" });
+                  }
+              })
             }
         },
         mounted() {
@@ -410,15 +364,16 @@ import { clearInterval } from 'timers';
         }
       }
       input {
+        width:3.85rem;
         border: none;
-        // height: 1em;
         height: 0.37rem;
         line-height: 1em;
-        color: 333;
+        color: #333;
         font-size: 0.28rem;
         padding-left: 0.24rem;
         float: left;
-        width:3.85rem;
+        background: transparent;
+        
       }
 
       input::placeholder {

@@ -7,7 +7,7 @@
     <div class="w-password">
         <form name="ofrom">
             <ul>
-                <li><input type="text" name="input_password" v-model="newphone" placeholder="请输入新的手机号" /></li>
+                <li><input type="text" name="input_password" :disabled="isAble" v-model="newphone" placeholder="请输入新的手机号" /></li>
                 <li>
                     <input type="text"  v-model="code" name="input_code" value="" placeholder="请输入验证码" />
                     <span class="code"  @click="dingxiangsdk">{{btncodetext}}</span>
@@ -29,7 +29,8 @@ export default {
             btncodestatus : true,
             btncodetext : '验证码',
             btnstatusnew : false,
-            return_token : ''
+            return_token : '',
+            isAble : true
         }
     },
     mounted(){
@@ -90,7 +91,6 @@ export default {
                 style: 'popup', // 可省略
                 width: 300, // 可省略
                 success: function (token) {
-                    console.log('token:', token)
                     that.return_token = token;
                     setTimeout(function(){
                     myCaptcha.hide();
@@ -108,7 +108,8 @@ export default {
             this.api.login
             .captcha({
                 mobile: that.newphone,
-                type : 3
+                type : 3,
+                token : that.return_token
             })
             .then(data => {
                 that.$toast(data.data.info);
@@ -121,11 +122,14 @@ export default {
                 that.btncodestatus = false; 
                 let time = 60;
                 let settimer = setInterval(function(){
-                        that.btncodetext = "重新获取("+--time+")"
+                        that.btncodetext = "重新获取("+--time+")";
+                        that.isAble = false;
+
                     }, 1000);
                     setTimeout(function(){
                         that.btncodetext = "重新获取验证码"
-                        that.btncodestatus = true; 
+                        that.btncodestatus = true;
+                        that.isAble = true; 
                         clearInterval(settimer);
                     }, 60000);
             }

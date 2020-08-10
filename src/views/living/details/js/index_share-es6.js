@@ -139,7 +139,7 @@ export default {
         // console.log('this.livinglidata');
         // console.log(this.livinglidata);
         // console.log(that.livinglidata.liveId);
-        // that.livinglidata.url = that.livinglidata.url.replace('http://', 'https://');
+        that.livinglidata.url = that.livinglidata.url.replace('http://', 'https://');
         that.livinglidata.url = that.livinglidata.url.replace('.m3u8', '');
 
         if (checkdevice() == "anzhuo") {
@@ -202,6 +202,10 @@ export default {
                 checkdevice() == "anzhuo" ||
                 checkdevice() == "ios"
             ) {
+
+                console.log('that.livinglidata.url8888');
+                console.log(that.livinglidata.url);
+
                 that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",
@@ -239,6 +243,8 @@ export default {
                 });
 
             } else if (checkdevice() == "pc") {
+                console.log('that.livinglidata.url9999');
+                console.log(that.livinglidata.url);
                 that.player = new FlvPlayer({
                     //解除注释 flv方法
                     id: "videodom",

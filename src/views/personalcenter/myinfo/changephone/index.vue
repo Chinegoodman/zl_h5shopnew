@@ -1,5 +1,5 @@
 <template>
-  <div class="password">
+  <div class="verifi-old-phone">
     <div class="header">
       <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
       <span>输入旧手机号码验证</span> 
@@ -11,7 +11,7 @@
         <form name="ofrom" autocomplete="off">
             <ul>
                 <li>
-                    <input type="text"  v-model="code" autocomplete="off" name="input_code" value="" placeholder="请输入验证码" />
+                    <input type="text"  v-model="code"  :disabled="isAble" autocomplete="off" name="input_code" value="" placeholder="请输入验证码" />
                     <span class="code"  @click="dingxiangsdk">{{btncodetext}}</span>
                 </li>
             </ul>
@@ -29,8 +29,9 @@ export default {
             code : '',
             password : '',
             btncodestatus : true,
-            btncodetext : '验证码',
-            return_token : ''
+            btncodetext : ' 验证码',
+            return_token : '',
+            isAble : true
         }
     },
     mounted(){
@@ -80,7 +81,8 @@ export default {
             this.api.login
             .captcha({
                 mobile: that.phone,
-                type : 2
+                type : 2,
+                token : that.return_token
             })
             .then(data => {
                 that.$toast(data.data.info);
@@ -92,11 +94,13 @@ export default {
                 that.btncodestatus = false; 
                 let time = 60;
                 let settimer = setInterval(function(){
-                        that.btncodetext = "重新获取("+--time+")"
+                        that.btncodetext = "重新获取("+--time+")";
+                        that.isAble = false;
                     }, 1000);
                     setTimeout(function(){
                         that.btncodetext = "重新获取验证码"
-                        that.btncodestatus = true; 
+                        that.btncodestatus = true;
+                        that.isAble = true; 
                         clearInterval(settimer);
                     }, 60000);
                 that.getcode();     
@@ -134,7 +138,7 @@ export default {
 }
 </script>
 <style lang="less" scope>
-.password{
+.verifi-old-phone{
     .header {
         width: 7.5rem;
         background: white;
@@ -202,6 +206,7 @@ export default {
                     right : .2rem;
                     top : 50%;
                     transform: translateY(-50%);
+                    color: rgba(255,189,4,1);
                     cursor: pointer;
                 }
             }

@@ -330,6 +330,14 @@ export default {
             // that.joinOrLeaveRoomXC(1);
             // 直播相关
 
+            that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
+            // console.log('that.livinglidata.streamAddrHls');
+            // console.log(that.livinglidata.streamAddrHls);
+            that.livinglidata.streamAddrFlv = that.livinglidata.streamAddrFlv.replace('http://', 'https://');
+            // console.log('that.livinglidata.streamAddrFlv');
+            // console.log(that.livinglidata.streamAddrFlv);
+
+
             //轮询直播观看人数与点赞数
             // that.getXiuChangLivingUserAndPraise();
             // that.countchangetimer = setInterval(function() {
@@ -347,8 +355,8 @@ export default {
                     // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8", //m3u8
-                    // url: that.livinglidata.streamAddrHls, //m3u8
-                    url: that.livinglidata.streamAddrHls720p, //m3u8
+                    url: that.livinglidata.streamAddrHls, //m3u8
+                    // url: that.livinglidata.streamAddrHls720p, //m3u8
                     //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
                     // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
                     //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
@@ -382,7 +390,8 @@ export default {
                     //解除注释 flv方法
                     id: "videodom",
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                    url: that.livinglidata.streamAddrFlv480p, //flv
+                    url: that.livinglidata.streamAddrFlv, //flv
+                    // url: that.livinglidata.streamAddrFlv480p, //flv
                     // url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
                     //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8

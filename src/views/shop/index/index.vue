@@ -1142,7 +1142,7 @@ export default {
               setsessionStorage('homelistxcstorerange',homelistxcstorerange);
             } 
 
-            if(that.nextPage_xc  != res.data.data.totalPage) {
+            if(that.nextPage_xc  != res.data.data.totalPage && res.data.data.totalPage != 0) {
               that.listfinished_xc = false;
               that.listloading_xc = false;
               that.nextPage_xc ++
@@ -1535,6 +1535,12 @@ export default {
   margin: 0 auto;
   line-height: 3em;
   width: 100%;
+}
+#shopwrap .nodata .discountshopnodata{
+  padding-bottom : 1rem;
+}  
+#shopwrap .nodata .discountshopnodata .nodataimg{
+  padding-top: 0;
 }
 
 </style>

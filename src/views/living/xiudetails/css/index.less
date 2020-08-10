@@ -367,6 +367,16 @@
                                 &.name{
                                     color:#ffbd04;
                                 }
+
+                                .lv{
+                                    display: inline-block;
+                                    width: 0.94rem;
+                                    height: 0.34rem;
+                                    vertical-align: middle;
+                                    margin-top: -0.04rem;
+                                    margin-right: .2rem;
+                                    overflow: hidden;
+                                }
                                 .vip-pic{
                                     display: inline-block;
                                     width: auto;
@@ -996,73 +1006,98 @@
         background-color:rgba(0,0,0,0.6);
         background-size: cover;
         background-position: center;
+            .close {
+                position: absolute;
+                right: 0.2rem;
+                // top: 0.2rem;
+                top: 0.44rem;
+                width: 0.3rem;
+                height: 0.3rem;
+                z-index: 12; 
+                cursor: pointer;
+                // background-color: #000;
+                // padding: 0.1rem;
     
-        .close {
-            position: absolute;
-            right: 0.2rem;
-            // top: 0.2rem;
-            top: 0.44rem;
-            width: 0.3rem;
-            height: 0.3rem;
-            // background-color: #000;
-            // padding: 0.1rem;
-
-            img {
-                width: 100%;
-                height: 100%
+                img {
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+                }
             }
-        }
-        .faceurl{
-            width: 1.72rem;
-            height: 1.72rem;
-            border-radius: 50%;
-            margin: 1.2rem auto 0.23rem;
-        }
-        .name{
-            font-size: 0.228rem;
-            color: rgba(255, 255, 255, 1);
-            text-align: center;
-        }
-        .enddata{
-            margin:1.02rem auto 0;
-            p{
-                font-size: 0.48rem;
+            .innercom{
+                width: 7.5rem;
+                position: fixed;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%);
+                z-index: 2; 
+            }
+            .faceurl{
+                width: 1.72rem;
+                height: 1.72rem;
+                border-radius: 50%;
+                margin: 1.2rem auto 0.3rem;
+                z-index: 2; 
+            }
+            .name{
+                font-size: 0.28rem;
                 color: rgba(255, 255, 255, 1);
-                padding: 0 0.42rem 0.24rem;
+                text-align: center;
+                z-index: 2; 
+            }
+            .enddata{
+                margin:1.12rem auto 0;
+                p{
+                    font-size: 0.48rem;
+                    color: rgba(255, 255, 255, 1);
+                    padding: 0 0.42rem 0.24rem;
+                    width: 3.2rem;
+                    border-bottom: 2px solid rgba(199, 198, 198, 1);
+                    margin: 0 auto 0.24rem;
+                    text-align: center;
+                }
+                span{
+                    color: rgba(199, 198, 198, 1);
+                    display: block;
+                    text-align: center;
+                    margin-bottom: 0.14rem;
+                    &.number{
+                        font-size: 0.36rem;
+                    }
+                    &.title{
+                        font-size: 0.28rem;
+                    }
+                }
+                z-index: 2; 
+            }
+            .followbtn{
+                position: fixed;
+                // bottom: 3rem;
+                top: 61.11%;
+                left: 50%;
+                transform: translateX(-50%);
                 width: 3.2rem;
-                border-bottom: 2px solid rgba(199, 198, 198, 1);
-                margin: 0 auto 0.24rem;
+                height: 0.8rem;
+                border-radius: 0.38rem;
                 text-align: center;
+                line-height: 0.8rem;
+                color: #333;
+                background:rgba(255,189,4,1);
+                font-weight: 500;
+                cursor: pointer;
+                font-size: 0.32rem;
+                z-index: 2;  
             }
-            span{
-                color: rgba(199, 198, 198, 1);
-                display: block;
-                text-align: center;
-                margin-bottom: 0.14rem;
-                &.number{
-                    font-size: 0.36rem;
-                }
-                &.title{
-                    font-size: 0.24rem;
-                }
-            }
-        }
-        .followbtn{
-            position: fixed;
-            // bottom: 3rem;
-            top: 74.11%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3.2rem;
-            height: 0.72rem;
-            border-radius: 0.36rem;
-            text-align: center;
-            line-height: 0.72rem;
-            color: #fff;
-            background: linear-gradient(to right, #FF2013, #FF5223);
-            cursor: pointer;
-            font-size: 0.26rem;
-        }
+    }
+    .livingendinner{
+            width: 7.5rem;
+            position: absolute;
+            left: 0 ;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color:rgba(0,0,0,0.75);
+            z-index: 1;    
     }
     .confirmordermb{
         position: fixed;
@@ -1629,5 +1664,385 @@
     bottom: 1.15rem;
     z-index: 100000;
     pointer-events: none;
+}
+
+
+
+/* gift start */
+
+.giftshowbox{
+    width: 7.5rem;
+    height: 6rem;
+    position: absolute;
+    left : 0;
+    bottom : 6.05rem;
+    overflow-x: hidden;
+
+    .gift{
+        width: 3.4rem;
+        height: .9rem;
+        background:rgba(0,0,0,0.5);
+        border-radius: .45rem;
+        position: absolute;
+        left : -6rem;
+        bottom : 0.3rem;
+        .im{
+            width: .75rem;
+            height: .75rem;
+            border-radius : 50%;
+            position: absolute;
+            left: .07rem;
+            top: .08rem;
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius : 50%;
+            }
+        }
+        .txt{
+            padding: .1rem 0 0 1.03rem;
+            h3{
+                font-size: .28rem;
+                font-family:PingFang SC;
+                font-weight:bold;
+                color:rgba(255,255,255,1);
+                width: 1.75rem;
+            }
+            span{
+                display: block;
+                font-size: .24rem;
+                font-family:PingFang SC;
+                font-weight:500;
+                color:rgba(255,189,4,1);
+                margin-top: .02rem;
+            }
+        }
+        .giftic{
+            display: block;
+            width: 1.63rem;
+            height: 1.42rem;
+            position: absolute;
+            right: -.9rem;
+            top: -.1rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .giftnum{
+            position: absolute;
+            right: -1.6rem;
+            bottom: -.1rem;
+            .cheng,
+            .numflag,
+            .num{
+                display: inline-block;
+                width: .51rem;
+                height: .51rem;
+                font-size: .52rem;
+                color: #ffbd04;
+                font-weight : 400;
+            }
+            .numflag{
+                width: auto;
+                font-size: .48rem;
+            }
+            img{
+                display: block;
+                width: auto;
+                height: 100%;
+            }
+        }
+    }
+    .gift2{
+        bottom: 1.66rem;
+    }
+}
+
+.biggiftnotice{
+  width : 5.3rem;
+  height: 2.02rem;
+  line-height : 2.02rem;
+  display: flex;
+  text-align : center;
+  padding : 0 1.1rem;
+  color: #fff;
+  font-size: .28rem;
+  font-weight:bold;
+  background: url(../../../../assets/imgs/living/xiudetails/zt.png) no-repeat left center;
+  background-size: 100% 100%;
+  position: absolute;
+  top : 1.55rem;
+  left: 0;
+  .nm{
+    display : inline-block;
+    color: #FFBD04;
+    padding-left : .05rem;
+    max-width: 1.4rem;
+  }
+  .gf{
+    width : .59rem;
+    height : .59rem;
+    margin: .75rem 0 0 .1rem;
+    img{
+      width : 100%;
+      height: 100%;
+    }
+  }
+}
+
+//大礼物动画相关
+.bigLiStyleGift {
+    transform: none;
+    -webkit-animation: fadeInRightLeft 300ms ease-out 1s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes fadeInRightLeft {
+    0% {
+        opacity: 0;
+        top : 1.55rem;
+        left: 7.6rem;
+    }
+    100% {
+        opacity: 1;
+        top : 1.55rem;
+        left: 0;
+    }
+}
+
+.bigLiStyleNone {
+    transform: none;
+    -webkit-animation: bigGiftNone 500ms ease-out 0s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes bigGiftNone {
+    0% {
+        opacity: 0;
+        top : 1.55rem;
+        left: 0;
+    }
+    100% {
+        opacity: 1;
+        top : 1.55rem;
+        left: -7.6rem;
+    }
+}
+
+//小礼物动画相关
+.liStyleGift {
+    transform: none;
+    -webkit-animation: fadeInRightGift 300ms ease-out 1s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes fadeInRightGift {
+    0% {
+        opacity: 0;
+        left : -6rem;
+        bottom : 0.3rem;
+    }
+    100% {
+        opacity: 1;
+        left : 0.2rem;
+        bottom : 0.3rem;
+    }
+}
+
+.liStyleNone {
+    transform: none;
+    -webkit-animation: GiftNone 500ms ease-out 0s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes GiftNone {
+    0% {
+        opacity: 1;
+        left : 0;
+        bottom : 0.3rem;
+    }
+    100% {
+        opacity: 0;
+        left : -6rem;
+        bottom : 0.3rem;
+    }
+}
+
+.gift_icon {
+    transform: none;
+    -webkit-animation: GiftScale01 300ms ease-in infinite both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes GiftScale01 {
+    0%{
+        transform: scale(.5)
+    }
+    80%{
+      transform: scale(1.8)
+    }
+    100% {
+        transform: scale(.5)
+    }
+}
+
+ /*礼物动画02*/
+ .liStyleGift02 {
+    transform: none;
+    -webkit-animation: fadeInRightGift02 300ms ease-out 1s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes fadeInRightGift02 {
+    0% {
+        opacity: 0;
+        left : -4rem;
+        bottom : 2.35rem;
+    }
+    100% {
+        opacity: 1;
+        left : 0.2rem;
+        bottom : 2.35rem;
+    }
+}
+
+.liStyleNone02 {
+    transform: none;
+    -webkit-animation: GiftNone02 500ms ease-out 0s 1 both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes GiftNone02 {
+    0% {
+        opacity: 1;
+        left : 0;
+        bottom : 2.35rem;
+    }
+    100% {
+        opacity: 0;
+        left : -6rem;
+        bottom : 2.35rem;
+    }
+}
+
+.gift_icon02 {
+    transform: none;
+    -webkit-animation: GiftScale02 300ms ease-in infinite both;
+    -webkit-animation-play-state: initial;
+}
+
+@-webkit-keyframes GiftScale02 {
+    0%{
+        transform: scale(.5)
+    }
+    80%{
+      transform: scale(1.8)
+    }
+    100% {
+        transform: scale(.5)
+    }
+}
+
+/*vip level anim start*/
+.vip-level-anim-box{
+    width: 7.5rem;
+    height: 6rem;
+    position: absolute;
+    left : 0;
+    bottom : 5.05rem;
+    overflow-x: hidden;
+   
+    .anim-box-one{
+        padding: 1.06rem 0 .52rem;
+        height: .7rem;
+        line-height: .7rem;
+        background: url(../../../../assets/imgs/living/xiudetails/level-pcbj.png) no-repeat left center;
+        background-size: 6.21rem 2.23rem;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        font-size: .3rem;
+        color: rgba(255,255,255,1);
+        .lv{
+            display: inline-block ;
+            width: .94rem;
+            height: .34rem;
+            padding: .2rem 0 0 .36rem;
+            overflow: hidden;
+        }
+        .vipicon{
+            display: inline-block ;
+            width: .5rem;
+            height: .5rem;
+            overflow: hidden;
+            padding-top: .12rem;
+            margin: 0 .1rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .nickname,
+        .zoujia-text{
+            color: #79DC7A;
+        }
+        .nickname{
+            max-width: 1.45rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .zoujia-icon{
+            display: inline-block;
+            width: .83rem;
+            height: .52rem;
+            margin: .05rem 0 0 .1rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    //小礼物动画相关
+    .liStyleLevelone{
+        transform: none;
+        -webkit-animation: fadeInLeftLevelOne 300ms ease-out 1s 1 both;
+        -webkit-animation-play-state: initial;
+    }
+
+    @-webkit-keyframes fadeInLeftLevelOne {
+        0% {
+            opacity: 0;
+            left : -6rem;
+            bottom : 0.3rem;
+        }
+        100% {
+            opacity: 1;
+            left : 0;
+            bottom : 0.3rem;
+        }
+    }
+
+    .liStyleLevelOneNone {
+        transform: none;
+        -webkit-animation: fadeOutLevelOne 500ms ease-out 0s 1 both;
+        -webkit-animation-play-state: initial;
+    }
+
+    @-webkit-keyframes fadeOutLevelOne {
+        0% {
+            opacity: 1;
+            left : 0;
+            bottom : 0.3rem;
+        }
+        100% {
+            opacity: 0;
+            left : -6rem;
+            bottom : 0.3rem;
+        }
+    }
 }
 

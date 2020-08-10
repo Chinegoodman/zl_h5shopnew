@@ -99,6 +99,8 @@ export default {
             // this.quitGroup();
             // this.logoutfn();
             // this.player.destroy(true);
+            that.livinglidata.livestreamurl = that.livinglidata.livestreamurl.replace('http://', 'https://');
+            that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
 
             if (
                 checkdevice() == "weixin" ||
@@ -150,13 +152,13 @@ export default {
                     //解除注释 flv方法
                     id: "videodom",
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                    // url: that.livinglidata.streamAddrHls + ".flv", //flv
+                    url: that.livinglidata.streamAddrHls + ".flv", //flv
                     //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
                     //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
                     // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
                     //   url: "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8", //湖南卫视测试
                     // url: 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8',//IPHONE测试
-                    url: 'https://youku.iqiyi-yongjiu.com/ppvod/500812EF1F1A0FFE46202D529ED6C2DB.m3u8', //IPHONE测试
+                    // url: 'https://youku.iqiyi-yongjiu.com/ppvod/500812EF1F1A0FFE46202D529ED6C2DB.m3u8', //IPHONE测试
                     // url: 'http://ivi.bupt.edu.cn/hls/cctv13.m3u8',//cctv13测试
                     // url: 'http://app.inke.com/inke/v/video.mp4',//MP4视频
                     // cssFullscreen: false,//网页样式全屏

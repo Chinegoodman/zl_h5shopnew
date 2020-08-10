@@ -13,7 +13,7 @@
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
               <div class="dznamepic" @click.stop="openanchormsgshell">
-                <img v-if="livinglidata.cover" :src="livinglidata.cover" alt="抓周" />
+                <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="抓周" />
               </div>
               <!-- <div class="dzguankan">
                 <img src="./../../../assets/imgs/living/details/quite.png" alt />
@@ -100,7 +100,7 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}">
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false">
           <span class="_txtov1 nm">开心宝宝</span>
           赠送给
           <span class="_txtov1 nm">爱丽少爱</span>
@@ -161,23 +161,37 @@
                   </ul>
                   <!-- 小礼物end-->
               </div>
+              <!-- 直播消息 会员进入动画 start-->
+              <div class="vip-level-anim-box" v-if="false">
+                <div class="anim-box-one liStyleLevelone">
+                  <span class="lv">
+                    <viplevel :lv_num="'01'"></viplevel>
+                  </span>
+                  <span class="vipicon">
+                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                  </span>
+                  <span class="nickname">爱吃鱼的大黄鱼</span>
+                  <span>开着</span>
+                  <span class="zoujia-text">奥迪</span>
+                  <span>进入直播间</span>
+                  <span class="zoujia-icon">
+                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                  </span>
+                </div>
+              </div>
+              <!-- 直播消息 会员进入动画 end-->
               <!-- 直播消息  礼物展示部分 end-->
               <div class="msgboxwrap" v-for="(item,index) in messageList" :key="index">
                 <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
                     <!-- <p class="name" v-if="!item.comename">{{item.name}}：</p> -->
                     <p>
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel1.png" alt="等级" v-if="item.isvip==0"  />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="item.isvip==1" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel3.png" alt="等级" v-if="item.isvip==2" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel4.png" alt="等级" v-if="item.isvip==3" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel5.png" alt="等级" v-if="item.isvip==4" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel6.png" alt="等级" v-if="item.isvip==5" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="item.isvip==6" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="item.isvip==7" />
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/zhubo.png" alt="等级" v-if="item.isvip==-2" />
-                      <span v-if="item.isvip==-1"></span>
-                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="item.isvip==-1" />
-                      <span :class="{'user-naem':true,'user-naem-zhubo': item.isvip==-2 || item.isvip==-1}" v-else>{{item.comename}}</span>
+                      <span class="lv">
+                        <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+                      </span>
+                      <img class="vip-pic" src="./../../../assets/imgs/personal/zhubo.png" alt="等级" v-if="item.level==-2" />
+                      <span v-if="item.level==-1"></span>
+                      <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="item.level==-1" />
+                      <span :class="{'user-naem':true,'user-naem-zhubo': item.level==-2 || item.level==-1}" v-else>{{item.comename}}</span>
                       {{item.msgtxt}}
                       <span class="gift-detail" v-if="item.giftdetail">{{item.giftdetail}}</span>
                     </p>
@@ -291,18 +305,21 @@
 
     </div>
     <!-- 直播结束、、 -->
-    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.face_url+')'}">
-      <div class="close" @click.stop="$router.go(-1);">
-        <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
-      </div>
-      <img class="faceurl" :src="livinglidata.face_url" alt="抓周">
-      <p class="name">{{livinglidata.nickname}}</p>
-      <div class="enddata">
-        <p>直播已结束</p>
-        <span class="number">{{livinglidata.nickname}}</span>
-        <span class="title">总观看人数</span>
-      </div>
-      <p class="followbtn" @click.stop="follow(false)">关注主播</p>
+    <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}">
+       <div class="livingendinner"> </div>
+        <div class="close" @click.stop="$router.go(-1)">
+          <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
+        </div>
+        <div class="innercom">
+          <img class="faceurl" :src="livinglidata.faceUrl" alt="抓周">
+          <p class="name">{{livinglidata.nickName}}</p>
+          <div class="enddata">
+            <p>直播已结束</p>
+            <span class="number">{{watchcount}}</span>
+            <span class="title">总观看人数</span>
+          </div>
+        </div>
+        <p class="followbtn" @click.stop="follow(false)">关注主播</p>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
@@ -526,279 +543,6 @@
 </style>
 
 <style lang='less'>
-  .giftshowbox{
-        width: 7.5rem;
-        height: 6rem;
-        position: absolute;
-        left : 0;
-        bottom : 6.05rem;
-        overflow-x: hidden;
-    
-        .gift{
-            width: 3.4rem;
-            height: .9rem;
-            background:rgba(0,0,0,0.5);
-            border-radius: .45rem;
-            position: absolute;
-            left : -6rem;
-            bottom : 0.3rem;
-            .im{
-                width: .75rem;
-                height: .75rem;
-                border-radius : 50%;
-                position: absolute;
-                left: .07rem;
-                top: .08rem;
-                img{
-                    width: 100%;
-                    height: 100%;
-                    border-radius : 50%;
-                }
-            }
-            .txt{
-                padding: .1rem 0 0 1.03rem;
-                h3{
-                    font-size: .28rem;
-                    font-family:PingFang SC;
-                    font-weight:bold;
-                    color:rgba(255,255,255,1);
-                    width: 1.75rem;
-                }
-                span{
-                    display: block;
-                    font-size: .24rem;
-                    font-family:PingFang SC;
-                    font-weight:500;
-                    color:rgba(255,189,4,1);
-                    margin-top: .02rem;
-                }
-            }
-            .giftic{
-                display: block;
-                width: 1.63rem;
-                height: 1.42rem;
-                position: absolute;
-                right: -.9rem;
-                top: -.1rem;
-                img{
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-            .giftnum{
-                position: absolute;
-                right: -1.6rem;
-                bottom: -.1rem;
-                .cheng,
-                .numflag,
-                .num{
-                    display: inline-block;
-                    width: .51rem;
-                    height: .51rem;
-                    font-size: .52rem;
-                    color: #ffbd04;
-                    font-weight : 400;
-                }
-                .numflag{
-                    width: auto;
-                    font-size: .48rem;
-                }
-                img{
-                    display: block;
-                    width: auto;
-                    height: 100%;
-                }
-            }
-        }
-        .gift2{
-            bottom: 1.66rem;
-        }
-    }
-
-    .biggiftnotice{
-      width : 5.3rem;
-      height: 2.02rem;
-      line-height : 2.02rem;
-      display: flex;
-      text-align : center;
-      padding : 0 1.1rem;
-      color: #fff;
-      font-size: .28rem;
-      font-weight:bold;
-      background: url(../../../assets/imgs/living/xiudetails/zt.png) no-repeat left center;
-      background-size: 100% 100%;
-      position: absolute;
-      top : 1.55rem;
-      left: 0;
-      .nm{
-        display : inline-block;
-        color: #FFBD04;
-        padding-left : .05rem;
-        max-width: 1.4rem;
-      }
-      .gf{
-        width : .59rem;
-        height : .59rem;
-        margin: .75rem 0 0 .1rem;
-        img{
-          width : 100%;
-          height: 100%;
-        }
-      }
-    }
-
-    //大礼物动画相关
-    .bigLiStyleGift {
-        transform: none;
-        -webkit-animation: fadeInRightLeft 300ms ease-out 1s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes fadeInRightLeft {
-        0% {
-            opacity: 0;
-            top : 1.55rem;
-            left: 7.6rem;
-        }
-        100% {
-            opacity: 1;
-            top : 1.55rem;
-            left: 0;
-        }
-    }
-
-    .bigLiStyleNone {
-        transform: none;
-        -webkit-animation: bigGiftNone 500ms ease-out 0s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes bigGiftNone {
-        0% {
-            opacity: 0;
-            top : 1.55rem;
-            left: 0;
-        }
-        100% {
-            opacity: 1;
-            top : 1.55rem;
-            left: -7.6rem;
-        }
-    }
-
-    //小礼物动画相关
-    .liStyleGift {
-        transform: none;
-        -webkit-animation: fadeInRightGift 300ms ease-out 1s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes fadeInRightGift {
-        0% {
-            opacity: 0;
-            left : -6rem;
-            bottom : 0.3rem;
-        }
-        100% {
-            opacity: 1;
-            left : 0.2rem;
-            bottom : 0.3rem;
-        }
-    }
-
-    .liStyleNone {
-        transform: none;
-        -webkit-animation: GiftNone 500ms ease-out 0s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes GiftNone {
-        0% {
-            opacity: 1;
-            left : 0;
-            bottom : 0.3rem;
-        }
-        100% {
-            opacity: 0;
-            left : -6rem;
-            bottom : 0.3rem;
-        }
-    }
-    
-    .gift_icon {
-        transform: none;
-        -webkit-animation: GiftScale01 300ms ease-in infinite both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes GiftScale01 {
-        0%{
-            transform: scale(.5)
-        }
-        80%{
-          transform: scale(1.8)
-        }
-        100% {
-            transform: scale(.5)
-        }
-    }
-
-     /*礼物动画02*/
-     .liStyleGift02 {
-        transform: none;
-        -webkit-animation: fadeInRightGift02 300ms ease-out 1s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes fadeInRightGift02 {
-        0% {
-            opacity: 0;
-            left : -4rem;
-            bottom : 2.35rem;
-        }
-        100% {
-            opacity: 1;
-            left : 0.2rem;
-            bottom : 2.35rem;
-        }
-    }
-
-    .liStyleNone02 {
-        transform: none;
-        -webkit-animation: GiftNone02 500ms ease-out 0s 1 both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes GiftNone02 {
-        0% {
-            opacity: 1;
-            left : 0;
-            bottom : 2.35rem;
-        }
-        100% {
-            opacity: 0;
-            left : -6rem;
-            bottom : 2.35rem;
-        }
-    }
-    
-    .gift_icon02 {
-        transform: none;
-        -webkit-animation: GiftScale02 300ms ease-in infinite both;
-        -webkit-animation-play-state: initial;
-    }
-    
-    @-webkit-keyframes GiftScale02 {
-        0%{
-            transform: scale(.5)
-        }
-        80%{
-          transform: scale(1.8)
-        }
-        100% {
-            transform: scale(.5)
-        }
-    }
 
     .danchangcontent .tit .van-tabs{
       width : 100%;
@@ -828,4 +572,6 @@
       z-index: 10500;
     }
     
+
+
 </style>

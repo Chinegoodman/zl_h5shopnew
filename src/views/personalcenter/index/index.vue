@@ -10,20 +10,12 @@
               <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
               <div class="use_top">
                 <span class="logined">{{$store.state.user.userdata.nickName}}</span>
-                <span class="level_use" @click="go_levelinstruct">
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel1.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==1"  />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==2" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel3.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==3" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel4.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==4" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel5.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==5" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel6.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==6" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==7" />
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==8" />
+                <span class="level_use" @click="goToVipLevelPage">
+                  <span class="levelbox"><viplevel :lv_num="$store.state.user.userdata.level?$store.state.user.userdata.level:1"></viplevel></span>
                 </span>
-                <span class="viplevelnew" @click="goToVipLevelPage">会员等级</span>
               </div>
-              <progress class="mypro" :value="$store.state.user.userdata.integral" :max="$store.state.user.userdata.level"></progress>
-              <div class="info_use">爪爪值<span>{{$store.state.user.userdata.integral}}</span>/<span>{{$store.state.user.userdata.level}}</span>  <span class="edit_info" @click="gomyinfo"><span class="edit"></span>完善资料</span></div>
+              <div class="info_use">抓周ID：<span>{{$store.state.user.userdata.integral}}</span><span>{{$store.state.user.userdata.virtualId}}</span><span class="ic-fz" @click="copy_kuaidi_msg($store.state.user.userdata.virtualId)"><img src="../../../assets/imgs/personal/orderfz.png" alt /></span></div>
+              <div class="guild-info"  @click="gomyinfo"></div>
           </div>
           <div v-else @click="gotologin" style="cursor:pointer;">
               <img  src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
@@ -110,8 +102,12 @@
 </template>
 
 <script>
+import { copy } from "@/utils/copy.js";
+import viplevel from '@/components/viplevel.vue';
 export default {
-  components: {},
+  components: {
+    viplevel
+  },
   data() {
     return {
       imgsrc: "",
@@ -222,6 +218,11 @@ export default {
          userId : that.$store.state.user.userid
         }
       });
+    },
+    //复制ID：
+    copy_kuaidi_msg(item){
+      copy(item);
+      this.$toast("已复制");
     },
     // 关注商品跳转
     gotofollow() {
