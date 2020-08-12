@@ -1227,12 +1227,18 @@ export default {
             let onMessageReceived = function(event) {
                 let msgdata = JSON.parse(event.data[0].payload.data);
                 let msgcontent = msgdata.msgContent;
+                console.log('msgdata');
+                console.log(msgdata);
+                console.log('msgdata.timestamp');
+                console.log(msgdata.timestamp);
+                console.log('that.IMtanchuang_currentdata.timestamp');
+                console.log(that.IMtanchuang_currentdata.timestamp);
                 if (msgdata.timestamp == that.IMtanchuang_currentdata.timestamp) {
                     return;
                 }
                 that.IMtanchuang_currentdata = msgdata;
-                console.log('msgdata');
-                console.log(msgdata);
+                console.log('通智');
+
                 // 获取当前群消息
                 if (msgdata.conversationId == that.livinglidata.gid) {
                     // console.log(msgdata.msgContent);
@@ -1260,16 +1266,17 @@ export default {
                         let comename = msgdata.sendUserInfo.name;
                         let msgtxt = `来了`;
                         let level = msgdata.sendUserInfo.level;
-                        let isVip = that.$store.state.user.userdata.payMember.type ? that.$store.state.user.userdata.payMember.type : 0;
-                        if (isVip) {
+                        let is_member = msgdata.sendUserInfo.isMember;
+                        if (is_member) {
                             //会员动画通道
+                            that.getLevelData(msgdata);
                         } else {
                             if (level > 20) {
                                 //会员动画展示
                                 that.getLevelData(msgdata);
                             }
-                            that.messageList.push({ comename, level, msgtxt, talkinguid });
                         }
+                        that.messageList.push({ comename, level, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "endLive") {
                         // 收到 直播间结束 关闭的消息
                         that.livingendstatus = false;
@@ -1411,10 +1418,17 @@ export default {
                         // that.giftmsgList.push(msgdata);
                         // console.log('that.messageList');
                         // console.log(that.messageList);
-                        console.log(msgdata);
-                        that.getgiftdata(msgdata);
-                        /*大礼物*/
-                        that.getBigGiftdata(msgdata);
+                        console.log('msgdata.giftContent.giftType');
+                        console.log(msgdata.giftContent.giftType);
+                        if (msgdata.giftContent.giftType == 1) {
+                            /*大礼物*/
+                            that.getBigGiftdata(msgdata);
+                        } else {
+                            /*小礼物及幸运礼物*/
+                            that.getgiftdata(msgdata);
+                        }
+
+
                     }
                 }
                 setTimeout(() => {
@@ -1713,15 +1727,15 @@ export default {
         /*大礼物创建动画 */
         createEleBigGift(received_msg) {
             let that = this;
-            let bigGiftBoxElement = that.$refs.bigGiftBoxElement;
             that.big_gift_time_state = false;
+            console.log('received_msg');
+            console.log(received_msg);
             that.bigGiftMsgone = received_msg;
             that.bigLiStyleGiftFlag = true;
             that.big_gift_timer_one = setTimeout(function() {
                 that.bigLiStyleGiftFlag = false;
                 that.bigLiStyleNoneFlag = true;
-                bigGiftBoxElement.addEventListener('webkitAnimationEnd', that.resetBigGiftCondition, false);
-
+                that.$refs.bigGiftBoxElement.addEventListener('webkitAnimationEnd', that.resetBigGiftCondition, false);
             }, 3000);
         },
         /*重置大礼物动画相关条件及状态*/
@@ -1816,22 +1830,26 @@ export default {
         /*创建会员等级动画*/
         createLevelanim(received_msg) {
             let that = this;
-            let levelElementCurrent;
             //等级展示通道 1
             if (that.level_time_state) {
                 that.level_time_state = false;
                 that.levelMsgobj = received_msg;
-                that.levelMsgobj.sendUserInfo.carname = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).carName;
-                that.levelMsgobj.sendUserInfo.carurl = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).imageName;
+                if (that.levelMsgobj.sendUserInfo.isMember) {
+                    that.levelMsgobj.sendUserInfo.carname = that.getMemberCarNameAndIcon().carName;
+                    that.levelMsgobj.sendUserInfo.carurl = that.getMemberCarNameAndIcon().imageName;
+                } else {
+                    that.levelMsgobj.sendUserInfo.carname = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).carName;
+                    that.levelMsgobj.sendUserInfo.carurl = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).imageName;
+                }
                 that.liStyleLevel_active_one = true;
                 that.level_timer_one = setTimeout(function() {
-                    levelElementCurrent = that.$refs.levelElementanim;
                     that.liStyleLevelOneNone = true;
                     that.liStyleLevel_active_one = false;
-                    levelElementCurrent.addEventListener('webkitAnimationEnd', that.resetLevelCondition, false);
+                    that.$refs.levelElementanim.addEventListener('webkitAnimationEnd', that.resetLevelCondition, false);
                 }, 3000);
             }
         },
+        /*用户等级汔车及车icon*/
         getCarNameWidthLevel(level) {
             if (level <= 20) {
                 return;
@@ -1853,6 +1871,11 @@ export default {
                     return carNames[count]
                 }
             }
+        },
+        /*会员汔车及车icon*/
+        getMemberCarNameAndIcon() {
+            let carNames = { carName: '奇瑞QQ', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") };
+            return carNames;
         },
         resetLevelCondition() {
             let that = this;

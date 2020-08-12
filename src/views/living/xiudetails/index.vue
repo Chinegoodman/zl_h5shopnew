@@ -100,13 +100,13 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false" ref="bigGiftBoxElement">
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" ref="bigGiftBoxElement">
           <span class="_txtov1 nm">{{bigGiftMsgone.sendUserInfo.name}}</span>
           赠送给
-          <span class="_txtov1 nm">爱丽少爱</span>
-          么么哒
+          <span class="_txtov1 nm">{{bigGiftMsgone.giftContent.receiveName}}</span>
+          {{bigGiftMsgone.giftContent.giftName}}
           <span class="gf">
-            <img src="./../../../assets/imgs/living/details/like.png" alt />
+            <img :src="bigGiftMsgone.giftContent.giftIcon" alt />
           </span> 
         </div>
         <!-- 大礼物end-->

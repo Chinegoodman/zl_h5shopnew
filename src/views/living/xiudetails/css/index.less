@@ -33,6 +33,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 10500;
+            overflow: hidden;
             &.havebgpic{
                 background: url('./../img/livingdtbg.jpg') no-repeat;
                 background-size: cover;
@@ -1773,7 +1774,7 @@
   background-size: 100% 100%;
   position: absolute;
   top : 1.55rem;
-  left: 0;
+  left: -7.6rem;
   .nm{
     display : inline-block;
     color: #FFBD04;
@@ -1784,6 +1785,8 @@
     width : .59rem;
     height : .59rem;
     margin: .75rem 0 0 .1rem;
+    position: absolute;
+    right: 1.5rem;
     img{
       width : 100%;
       height: 100%;
@@ -1802,7 +1805,7 @@
     0% {
         opacity: 0;
         top : 1.55rem;
-        left: 7.6rem;
+        left: -7.6rem;
     }
     100% {
         opacity: 1;
@@ -1960,10 +1963,10 @@
         background: url(../../../../assets/imgs/living/xiudetails/level-pcbj.png) no-repeat left center;
         background-size: 6.21rem 2.23rem;
         position: absolute;
-        left : -6.5rem;
+        left : -7.5rem;
         bottom : 0.3rem;
         display: flex;
-        font-size: .3rem;
+        font-size: .26rem;
         color: rgba(255,255,255,1);
         .lv{
             display: inline-block ;
@@ -1990,6 +1993,7 @@
         }
         .nickname{
             max-width: 1.45rem;
+            margin-left: 0.06rem;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -2017,7 +2021,7 @@
     @-webkit-keyframes fadeInLeftLevelOne {
         0% {
             opacity: 0;
-            left : -6.5rem;
+            left : -7.5rem;
             bottom : 0.3rem;
         }
         100% {
@@ -2041,7 +2045,7 @@
         }
         100% {
             opacity: 0;
-            left : -6.5rem;
+            left : -7.5rem;
             bottom : 0.3rem;
         }
     }
