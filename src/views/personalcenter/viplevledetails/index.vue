@@ -18,7 +18,12 @@
             </div>
             <div class="centers-sec">当前尊享值：<span>{{levelMsg.experience}}</span></div>
             <div class="progress" v-for="(item,index) in levelMsg.allLevel" :key="index" v-if="item.level ==levelMsg.level">
-                <progress class="mypro" :value="levelMsg.experience" :max="item.endGrowthValue"></progress>
+                <div class="mypro_floor01" v-if="levelMsg.experience > 0"></div>
+                <div class="mypro_floor02">
+                    <div class="mypro_floor03">
+                        <span class="floor_persent" :style="{'width' : widthPercent + '%'}"></span>
+                    </div>
+                </div>
                 <div class="proint-lt">
                     <div class="proint">
                         <span></span>
@@ -104,7 +109,12 @@ export default {
        return {
            userId : '',
            levelMsg : {},
-           default_img_head : require('../../../assets/imgs/icons/default-head.png')
+           default_img_head : require('../../../assets/imgs/icons/default-head.png'),
+           experience_num : 0, //经验值 
+           endGrowthValue : 0, //级值
+           currentLevel : 0,
+           allLevel : [] 
+
        }
     },
     components:{
@@ -116,6 +126,23 @@ export default {
         that.userId = that.$route.query.userId;
         // this.getUserLevelConfig();
         this.getUserLevelEquities();
+    },
+    computed : {
+        widthPercent(){
+            let that = this;
+            let percent_num = 0;
+            that.experience_num = that.levelMsg.experience;
+            that.currentLevel = that.levelMsg.level;
+            that.allLevel = that.levelMsg.allLevel;
+            
+            that.allLevel.filter((item,index) => {
+                if(item.level == that.currentLevel){
+                    percent_num = ((that.experience_num - item.startGrowthValue) / (item.endGrowthValue - item.startGrowthValue)) * 100;
+                }
+               
+            });
+            return percent_num;
+        }
     },
     methods:{
         //返回个人中心首页
@@ -129,8 +156,6 @@ export default {
             .userLevelConfig({
                 level : 1,
             }).then(res => {
-               console.log('res');
-               console.log(res);
                if(res.data.code == 1){
                 //  that.levelMsg = res.data.data;
                }
@@ -264,7 +289,18 @@ export default {
                 min-height: .5rem;
                 position: relative;
                 z-index: 5;
-                .mypro{
+                .mypro_floor01{
+                    display: block;
+                    width: .7rem;
+                    height: .05rem;
+                    position: absolute;
+                    left: 0.3rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 9;
+                    background : rgba(255,255,255,1);
+                }
+                .mypro_floor02{
                     display: block;
                     width: 6.5rem;
                     height: .05rem;
@@ -273,15 +309,33 @@ export default {
                     top: 50%;
                     transform: translate(-50%,-50%);
                     z-index: 8;
-                    background : navajowhite;
-                }
-
-                .mypro::-webkit-progress-bar{
+                    // background : navajowhite;
                     background:rgba(255,255,255,.2)
                 }
-                .mypro::-webkit-progress-value {
-                    background:rgba(255,255,255,1)
+                .mypro_floor03{
+                    display: block;
+                    width: 5.35rem;
+                    height: .05rem;
+                    position: absolute;
+                    left: 0.7rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background:rgba(255,255,255,.2);
+                    z-index: 9;
+                    .floor_persent{
+                        display: block;
+                        width: 20%;
+                        height: .05rem;
+                        background:rgba(255,255,255,1);
+                    }
                 }
+
+                // .mypro::-webkit-progress-bar{
+                //     background:rgba(255,255,255,.2)
+                // }
+                // .mypro::-webkit-progress-value {
+                //     background:rgba(255,255,255,1)
+                // }
                 
                 .proint-lt,
                 .proint-rt{
@@ -298,6 +352,11 @@ export default {
                 .proint-rt{
                     left: auto;
                     right: .5rem;
+                    .proint{
+                        span{
+                            background:rgba(255,255,255,.5);
+                        }
+                    }
                 }
                 .proint span{
                     display: block;
@@ -307,6 +366,7 @@ export default {
                     background:rgba(255,255,255,1);
                     border-radius:50%;
                 }
+
                 .num{
                     display: block;
                     font-size: .24rem;

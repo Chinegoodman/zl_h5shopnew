@@ -185,17 +185,38 @@ export default {
             gift_timer_one: null, //礼物定时器通道01
             gift_timer_two: null, //礼物定时器通道02
             samegiftflag: 0, //同一用户同一礼物 1为同一用户 0反之
-            dataStore: [], //礼物队列里的数组
+            dataStore: [], //小礼物队列里的数组
             giftcountall_one: 0,
             giftcountall_two: 0,
             giftNumFlag01: false, //礼物数字flag 01
             giftNumFlag02: false, //礼物数字flag 02
             manygift_timer_one: null,
             manygift_timer_two: null,
-            bigLiStyleGiftFlag: false, //大礼物开始动画标致
-            bigLiStyleNoneFlag: false, //大礼物结束动画标致
-            bigGiftMsgone: [], //大礼物全局通道一
-            bigGiftMsgTwo: [], //大礼物全局通道二
+            bigLiStyleGiftFlag: false, //大礼物开始动画标致class条件
+            bigLiStyleNoneFlag: false, //大礼物结束动画标致class条件
+            big_gift_time_state: true, //是否完成数据全程走完的标致 控制礼物滑出占用轨道
+            bigGiftDataStore: [], //大礼物队列里的数组
+            /*大礼物全局通道内容*/
+            bigGiftMsgone: {
+                chatType: "",
+                conversationId: "",
+                giftContent: {
+                    giftCount: "",
+                    giftIcon: "",
+                    giftId: "",
+                    giftName: "",
+                    giftType: "",
+                    giftUrl: "",
+                    receiveId: "",
+                    receiveName: "",
+                    msgType: "",
+                },
+                sendUserInfo: {
+                    face_url: "",
+                    id: "",
+                    name: ""
+                }
+            },
             levelDataStroe: [], //会员等级队列里的数组
             level_time_state: true, //会员等级是否完成数据全程走完的标致 控制动画滑出占用轨道
             liStyleLevel_active_one: false, //会员等经动画开始动画class条件
@@ -1246,9 +1267,8 @@ export default {
                             if (level > 20) {
                                 //会员动画展示
                                 that.getLevelData(msgdata);
-                            } else {
-                                that.messageList.push({ comename, level, msgtxt, talkinguid });
                             }
+                            that.messageList.push({ comename, level, msgtxt, talkinguid });
                         }
                     } else if (msgdata.msgType == "endLive") {
                         // 收到 直播间结束 关闭的消息
@@ -1393,6 +1413,8 @@ export default {
                         // console.log(that.messageList);
                         console.log(msgdata);
                         that.getgiftdata(msgdata);
+                        /*大礼物*/
+                        that.getBigGiftdata(msgdata);
                     }
                 }
                 setTimeout(() => {
@@ -1456,13 +1478,13 @@ export default {
 
             // that.joinOrLeaveRoomXC(0); //加入群聊  后台的接口
         },
-        //礼物相关 start
+        /*小礼物相关 ================= start*/
         getgiftdata(data) {
             let that = this;
             that.enqueue(data);
             that.firtGo(0);
         },
-        //队列数据中转
+        //小礼物队列数据中转
         firtGo(l) {
             let that = this;
             var allgiftData = that.toArrayData();
@@ -1487,6 +1509,9 @@ export default {
                 }
             }
         },
+        /*
+        小礼物创建动画相关
+        */
         createElegift: function(received_msg) {
             let that = this;
             let giftelmentone = that.$refs.giftelmentone;
@@ -1527,7 +1552,7 @@ export default {
                 return;
             }
 
-            //礼物展示通道 1
+            /*礼物展示通道 1*/
             if (that.time_state) {
                 // console.log(888888888);
                 that.giftcountall_one = received_msg.giftContent.giftCount;
@@ -1544,7 +1569,7 @@ export default {
                 }, 3000);
                 // return;
             }
-            //礼物展示通道 2
+            /*礼物展示通道 2*/
             else if (that.time_state_ii) {
                 // console.log(99999999);
                 that.giftcountall_two = received_msg.giftContent.giftCount;
@@ -1562,6 +1587,9 @@ export default {
             }
 
         },
+        /*
+        小礼物第一通道 3秒定时器加一次重置一次重新算一次
+        */
         turntimer() {
             let that = this;
             clearTimeout(that.manygift_timer_one);
@@ -1572,6 +1600,9 @@ export default {
                 that.$refs.giftelmentone.addEventListener('webkitAnimationEnd', that.resetgiftcondition_i, false);
             }, 3000);
         },
+        /*
+        小礼物第二通道 3秒定时器加一次重置一次重新算一次
+        */
         turntimer_ii() {
             let that = this;
             clearTimeout(that.manygift_timer_two);
@@ -1582,6 +1613,7 @@ export default {
                 that.$refs.giftelmenttow.addEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
             }, 3000);
         },
+        /*重置礼物第一通道相关条件及状态*/
         resetgiftcondition_i() {
             let that = this;
             that.liStyleGift_active_one = false;
@@ -1593,6 +1625,7 @@ export default {
             clearTimeout(that.gift_timer_one);
             that.$refs.giftelmentone.removeEventListener('webkitAnimationEnd', that.resetgiftcondition_i, false);
         },
+        /*重置礼物第二通道相关条件及状态*/
         resetgiftcondition_ii() {
             let that = this;
             that.liStyleGift_active_tow = false;
@@ -1604,8 +1637,8 @@ export default {
             clearTimeout(that.gift_timer_two);
             that.$refs.giftelmenttow.removeEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
         },
-        //小礼物动画相关队列数据
-        //向队尾添加一个元素
+        /*小礼物动画相关队列数据 start */
+        /*向队尾添加一个元素*/
         enqueue(element) {
             this.dataStore.push(element);
         },
@@ -1647,13 +1680,109 @@ export default {
                 return false;
             }
         },
+        /*小礼物动画相关队列数据 end */
+        /*大礼物动画相关队列数据 start */
+        getBigGiftdata(data) {
+            let that = this;
+            that.bigGiftEnqueue(data);
+            that.bigGiftFirtGo(0);
+        },
+        //小礼物队列数据中转
+        bigGiftFirtGo(l) {
+            let that = this;
+            var allbigGiftData = that.bigGiftToArrayData();
+            if (!allbigGiftData.length) return;
+            for (var k = l, lens_big = allbigGiftData.length; k < lens_big; k++) {
+
+                if (that.big_gift_time_state) {
+                    that.createEleBigGift(allbigGiftData[k]);
+                }
+                //delete dui blie firt
+                that.bigGiftDequeue();
+                // go second time
+                var big_gift_timer_inner = setInterval(function() {
+                    if (that.big_gift_time_state) {
+                        clearInterval(big_gift_timer_inner);
+                        that.bigGiftFirtGo(k);
+                    }
+                }, 300); //这个时间设置最好与 后面数字跳面的时间一致
+                break;
+
+            }
+        },
+        /*大礼物创建动画 */
+        createEleBigGift(received_msg) {
+            let that = this;
+            let bigGiftBoxElement = that.$refs.bigGiftBoxElement;
+            that.big_gift_time_state = false;
+            that.bigGiftMsgone = received_msg;
+            that.bigLiStyleGiftFlag = true;
+            that.big_gift_timer_one = setTimeout(function() {
+                that.bigLiStyleGiftFlag = false;
+                that.bigLiStyleNoneFlag = true;
+                bigGiftBoxElement.addEventListener('webkitAnimationEnd', that.resetBigGiftCondition, false);
+
+            }, 3000);
+        },
+        /*重置大礼物动画相关条件及状态*/
+        resetBigGiftCondition() {
+            let that = this;
+            that.big_gift_time_state = true;
+            that.bigLiStyleGiftFlag = false;
+            that.bigLiStyleNoneFlag = false;
+            clearTimeout(that.big_gift_timer_one);
+            that.$refs.bigGiftBoxElement.removeEventListener('webkitAnimationEnd', that.resetBigGiftCondition, false);
+        },
+        /*向队尾添加一个元素*/
+        bigGiftEnqueue(element) {
+            this.bigGiftDataStore.push(element);
+        },
+        /*
+        删除队首的元素
+        */
+        bigGiftDequeue() {
+            return this.bigGiftDataStore.shift();
+        },
+        /*
+        读取队首元素
+        */
+        bigGiftFront() {
+            return this.bigGiftDataStore[0]
+        },
+        /*
+        读取队尾元素
+        */
+        bigGiftBack() {
+            return this.bigGiftDataStore[this.bigGiftDataStore.length - 1];
+        },
+        /*
+        显示队列内所有的元素
+        */
+        bigGiftToArrayData() {
+            var result = [];
+            for (var i = 0; i < this.bigGiftDataStore.length; i++) {
+                result.push(this.bigGiftDataStore[i]);
+            }
+            return result;
+        },
+        /*
+        判断队列是否为空
+        */
+        bigGiftEmpty() {
+            if (this.bigGiftDataStore.length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        /* 大礼物动画相关队列数据 end */
         /*
         礼物相关 end========================
         */
         /*
         会员等级相关 start=============
         */
-        //礼物相关 start
+        //会员等级相关 start
         getLevelData(data) {
             let that = this;
             that.levelEnqueue(data);
@@ -1688,25 +1817,41 @@ export default {
         createLevelanim(received_msg) {
             let that = this;
             let levelElementCurrent;
-            //礼物展示通道 1
+            //等级展示通道 1
             if (that.level_time_state) {
-                // console.log(888888888);
                 that.level_time_state = false;
                 that.levelMsgobj = received_msg;
-                that.levelMsgobj.sendUserInfo.carname = '哈哈';
-                console.log('that.levelMsgobj');
-                console.log(that.levelMsgobj);
-                console.log((25 - 1) / 10 - 2);
+                that.levelMsgobj.sendUserInfo.carname = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).carName;
+                that.levelMsgobj.sendUserInfo.carurl = that.getCarNameWidthLevel(that.levelMsgobj.sendUserInfo.level).imageName;
                 that.liStyleLevel_active_one = true;
                 that.level_timer_one = setTimeout(function() {
                     levelElementCurrent = that.$refs.levelElementanim;
                     that.liStyleLevelOneNone = true;
                     that.liStyleLevel_active_one = false;
-                    console.log('levelElementCurrent');
-                    console.log(levelElementCurrent);
                     levelElementCurrent.addEventListener('webkitAnimationEnd', that.resetLevelCondition, false);
                 }, 3000);
-                // return;
+            }
+        },
+        getCarNameWidthLevel(level) {
+            if (level <= 20) {
+                return;
+            } else {
+                let count = Math.floor((level - 1) / 10 - 2);
+                console.log('count');
+                console.log(count);
+                let carNames = [
+                    { carName: '奥迪', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
+                    { carName: '宝马', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
+                    { carName: '奔驰', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
+                    { carName: '玛莎拉蒂', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
+                    { carName: '劳斯莱斯', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
+                    { carName: '私人飞机', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") }
+                ]
+                if (count > carNames.length - 1) {
+                    return carNames.length;
+                } else {
+                    return carNames[count]
+                }
             }
         },
         resetLevelCondition() {

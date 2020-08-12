@@ -100,8 +100,8 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false">
-          <span class="_txtov1 nm">开心宝宝</span>
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false" ref="bigGiftBoxElement">
+          <span class="_txtov1 nm">{{bigGiftMsgone.sendUserInfo.name}}</span>
           赠送给
           <span class="_txtov1 nm">爱丽少爱</span>
           么么哒
@@ -175,7 +175,7 @@
                   <span class="zoujia-text">{{levelMsgobj.sendUserInfo.carname}}</span>
                   <span>进入直播间</span>
                   <span class="zoujia-icon">
-                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/levelcars.png" alt="等级" v-if="1" />
+                    <img class="vip-pic" :src="levelMsgobj.sendUserInfo.carurl" alt="等级" v-if="1" />
                   </span>
                 </div>
               </div>
