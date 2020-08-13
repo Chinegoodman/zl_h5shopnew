@@ -185,7 +185,7 @@
                 <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
                     <!-- <p class="name" v-if="!item.comename">{{item.name}}：</p> -->
                     <p>
-                      <span class="lv">
+                      <span class="lv" v-if="item.level > 0">
                         <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
                       </span>
                       <img class="vip-pic" src="./../../../assets/imgs/personal/zhubo.png" alt="等级" v-if="item.level==-2" />

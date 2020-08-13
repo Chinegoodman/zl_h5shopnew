@@ -244,6 +244,7 @@ export default {
 
             IMtanchuangTimer: '', //im弹窗
             IMtanchuang_currentdata: '', //im弹窗 历史数据保存并判断是否为同一条数据
+            IMmsgTimesFlag: true,
             // IM TIM 相关参数====================结束
             //投诉建议====================start
             complaintsShellShow: false,
@@ -398,7 +399,7 @@ export default {
                 that.player = new FlvPlayer({
                     //解除注释 flv方法
                     id: "videodom",
-                    // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
+                    // url: "http://test.wspull.zhulihr.cn/live/1001.flv", //flv
                     url: that.livinglidata.streamAddrFlv, //flv
                     // url: (that.livinglidata.streamAddrHls).replace(/m3u8/, "flv"), //flv
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/6000116.flv", //flv
@@ -1227,18 +1228,12 @@ export default {
             let onMessageReceived = function(event) {
                 let msgdata = JSON.parse(event.data[0].payload.data);
                 let msgcontent = msgdata.msgContent;
-                console.log('msgdata');
-                console.log(msgdata);
-                console.log('msgdata.timestamp');
-                console.log(msgdata.timestamp);
-                console.log('that.IMtanchuang_currentdata.timestamp');
-                console.log(that.IMtanchuang_currentdata.timestamp);
+                // console.log('msgdata');
+                // console.log(msgdata);
                 if (msgdata.timestamp == that.IMtanchuang_currentdata.timestamp) {
                     return;
                 }
                 that.IMtanchuang_currentdata = msgdata;
-                console.log('通智');
-
                 // 获取当前群消息
                 if (msgdata.conversationId == that.livinglidata.gid) {
                     // console.log(msgdata.msgContent);
@@ -1418,8 +1413,6 @@ export default {
                         // that.giftmsgList.push(msgdata);
                         // console.log('that.messageList');
                         // console.log(that.messageList);
-                        console.log('msgdata.giftContent.giftType');
-                        console.log(msgdata.giftContent.giftType);
                         if (msgdata.giftContent.giftType == 1) {
                             /*大礼物*/
                             that.getBigGiftdata(msgdata);
@@ -1427,8 +1420,6 @@ export default {
                             /*小礼物及幸运礼物*/
                             that.getgiftdata(msgdata);
                         }
-
-
                     }
                 }
                 setTimeout(() => {
@@ -1534,7 +1525,7 @@ export default {
 
             if (that.userid_old == received_msg.sendUserInfo.id && that.giftId_old == received_msg.giftContent.giftId) {
                 if (!that.time_state) {
-                    console.log(999);
+                    // console.log(999);
                     that.liStyleNoneone = false;
                     clearTimeout(that.gift_timer_one);
                     setTimeout(function() {
@@ -1551,7 +1542,7 @@ export default {
 
             if (that.userid_old_ii == received_msg.sendUserInfo.id && that.giftId_old_ii == received_msg.giftContent.giftId) {
                 if (!that.time_state_ii) {
-                    console.log(10001);
+                    // console.log(10001);
                     that.liStyleNonetow = false;
                     clearTimeout(that.gift_timer_two);
                     setTimeout(function() {
@@ -1728,8 +1719,6 @@ export default {
         createEleBigGift(received_msg) {
             let that = this;
             that.big_gift_time_state = false;
-            console.log('received_msg');
-            console.log(received_msg);
             that.bigGiftMsgone = received_msg;
             that.bigLiStyleGiftFlag = true;
             that.big_gift_timer_one = setTimeout(function() {
@@ -1855,8 +1844,6 @@ export default {
                 return;
             } else {
                 let count = Math.floor((level - 1) / 10 - 2);
-                console.log('count');
-                console.log(count);
                 let carNames = [
                     { carName: '奥迪', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },
                     { carName: '宝马', imageName: require("@/assets/imgs/living/xiudetails/car_icon.png") },

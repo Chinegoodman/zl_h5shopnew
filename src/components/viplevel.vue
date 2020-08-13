@@ -1,6 +1,6 @@
 <!-- 组件说明 -->
 <template>
-    <span :class="{'levlein' :true,'.levlein6-10': Number(lv_num)>5 && Number(lv_num)<= 10,'levlein10-15': Number(lv_num)>=11 && Number(lv_num)<= 15,'levlein16-20':Number(lv_num)>=16 && Number(lv_num)<= 20,'levlein21-25':Number(lv_num)>=21 && Number(lv_num)<= 25,'levlein26-30':Number(lv_num)>=26 && Number(lv_num)<= 30,'levlein31-35':Number(lv_num)>=31 && Number(lv_num)<= 35,'levlein36-40':Number(lv_num)>=36 && Number(lv_num)<= 40,'levlein41-45':Number(lv_num)>=41 && Number(lv_num)<= 45,'levlein46-50':Number(lv_num)>=46 && Number(lv_num)<= 50,'levlein51-55':Number(lv_num)>=51 && Number(lv_num)<= 55,'levlein56-60':Number(lv_num)>=56 && Number(lv_num)<= 60,'levlein61-65':Number(lv_num)>=61 && Number(lv_num)<= 65,'levlein66-70':Number(lv_num)>=66 && Number(lv_num)<= 70,'levlein71-72':Number(lv_num)>=71 && Number(lv_num)<= 72}">
+    <span :class="{'levlein' :true,'levlein6-10': Number(lv_num)>5 && Number(lv_num)<= 10,'levlein10-15': Number(lv_num)>=11 && Number(lv_num)<= 15,'levlein16-20':Number(lv_num)>=16 && Number(lv_num)<= 20,'levlein21-25':Number(lv_num)>=21 && Number(lv_num)<= 25,'levlein26-30':Number(lv_num)>=26 && Number(lv_num)<= 30,'levlein31-35':Number(lv_num)>=31 && Number(lv_num)<= 35,'levlein36-40':Number(lv_num)>=36 && Number(lv_num)<= 40,'levlein41-45':Number(lv_num)>=41 && Number(lv_num)<= 45,'levlein46-50':Number(lv_num)>=46 && Number(lv_num)<= 50,'levlein51-55':Number(lv_num)>=51 && Number(lv_num)<= 55,'levlein56-60':Number(lv_num)>=56 && Number(lv_num)<= 60,'levlein61-65':Number(lv_num)>=61 && Number(lv_num)<= 65,'levlein66-70':Number(lv_num)>=66 && Number(lv_num)<= 70,'levlein71-72':Number(lv_num)>=71 && Number(lv_num)<= 72}">
         <!-- <span class="praise-num">{{praiseCount}}</span> -->
         <!-- <img src="../assets/imgs/living/details/like.png" alt /> -->
         <!-- <canvas :id="'bubble' + livingId"  width="90" :index="index" height="200" class="like-fx" ></canvas> -->
@@ -82,6 +82,7 @@
         color:rgba(255,255,255,1);
     }
 }
+
 .levlein6-10{
     background-image: url(../assets/imgs/living/xiudetails/vips6-10.png);
 }
