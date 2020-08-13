@@ -1,0 +1,1076 @@
+.videoswrapout{
+    font-family:PingFang SC;
+    .videoswrap {
+        position: relative;
+        width: 7.5rem;
+        height: 100vh;
+        // min-height: 100vh;
+        .video{
+            width: 7.5rem;
+            height: 100vh;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            overflow:hidden;
+            #videodom{
+                position: fixed;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0;
+            }
+        }
+        .video-content {
+            position: fixed;
+            width: 7.5rem;
+            height: 100vh;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            &.havebgpic{
+                background: url('./../img/livingdtbg.jpg') no-repeat;
+                background-size: cover;
+            }
+    
+            .content-top {
+                position: fixed;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0;
+                z-index: 110;
+                box-sizing: border-box;
+                width: 100%;
+                padding: 0.3rem 0.2rem 0;
+
+                .complaints{
+                    float:left;
+                    width:0.86rem;
+                    height:0.86rem;
+                    margin-left:0.2rem;
+                    img{
+                        width:100%;
+                        height:100%;
+                    }
+                }
+                .dznameid{
+                    float:left;
+                    width:1.14rem;
+                    height:0.66rem;
+                    margin-left:0.1rem;
+                    background-image: url(./../../../../assets/imgs/living/details/label.png);
+                    background-size:100%;
+                    background-repeat:no-repeat;
+                    margin-top:0.1rem;
+                    span{
+                        color:#BFBFBF;
+                        text-align:center;
+                        padding-top:0.32rem;
+                        font-size:0.22rem;
+                        display:block;
+                        width:100%;
+                    }
+                }
+    
+                .close {
+                    float: right;
+                    width: 0.56rem;
+                    height: 0.56rem;
+                    margin-top: 0.14rem;
+                    // background-color: #000;
+                    // padding: 0.1rem;
+    
+                    img {
+                        width: 100%;
+                        height: 100%
+                    }
+                }
+    
+                .dzname {
+                    float: left;
+                    // min-width: 4.17rem;
+                    width: 4.17rem;
+                    height: 0.86rem;
+                    background-color: rgba(31,31,31, 0.35);
+                    border-radius: 0.5rem;
+                    //padding-right: 0.1rem;
+                    position:relative;
+                    .dznamepic,
+                    .dznamemass,
+                    .dznamegz {
+                        float: left;
+                    }
+                    
+                    .dznamepic {
+                        width: 0.72rem;
+                        height: 0.72rem;
+                        border-radius: 50%;
+                        margin: 0.06rem;
+                        background-color: rgba(255, 255, 255, 0.6);
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                        }
+                    }
+                    .dzguankan {
+                        width: 0.34rem;
+                        height: 0.34rem;
+                        float: left;
+                        position:absolute;
+                        left:0.5rem;
+                        top:0.46rem;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    .dznamemass {
+                        margin-top: 0.08rem;
+                        ;
+                        padding-left:0.2rem;
+                        .nametit {
+                            color: #fff;
+                            font-size: 0.3rem;
+                            font-weight:bold;
+                            // max-width: 13em;
+                            width: 1.9rem;
+                            line-height:0.36rem;
+                        }
+    
+                        .looknum {
+                            color: #fff;
+                            font-size: 0.24rem;
+                            width: 1.9rem;
+                            margin-top: 0.0.5rem;
+                            span{
+                                display: block;
+                                width: 100%;
+                                overflow: hidden;
+                            }    
+                        }
+    
+                    }
+    
+                    .dznamegz {
+                        width: 1.17rem;
+                        height: 0.44rem;
+                        //background-image: linear-gradient(to right, #FF2013, #FF5223);
+                        color: #fff;
+                        text-align: center;
+                        line-height: 0.6rem;
+                        border-radius: 6rem;
+                        font-size: 0.26rem;
+                        // margin: 0.2rem;
+                        margin:0.22rem 0 0rem;
+                        float: right;
+                        cursor: pointer;
+                        img{
+                            width:100%;
+                            height:100%;
+                        }
+                    }
+                }
+            }
+    
+            .content-main {
+                position: fixed;
+                right: 0.26rem;
+                top: 3.09rem;
+                z-index: 110;
+                box-sizing: border-box;
+    
+                max-height: 5.5rem;
+                overflow-y: scroll;
+                // padding: 0rem 0.3rem;
+                // width: 100%;
+    
+                .main-left {
+                    // width: 1.53rem;
+                    // height: 1.84rem;
+                    // border-radius: 0.1rem;
+                    // background-color: #fff;
+                    position: relative;
+                    margin-bottom: 0.2rem;
+                    height: 1.56rem;
+                    width: 1.56rem;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+    
+                    .videosp {
+                        width: 1.43rem;
+                        height: 1.43rem;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        margin-left: 0.06rem;
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            // border-top-left-radius: 0.1rem;
+                            // border-top-right-radius: 0.1rem;
+                            border-radius: 50%;
+                        }
+                    }
+    
+                    .videospj {
+                        position: absolute;
+                        top: 1.08rem;
+                        left: 50%;
+                        transform: translate(-50%,0);
+                        width: 1.56rem;
+                        height: 0.48rem;
+                        z-index:999;
+                        img{
+                            width:100%;
+                            height:100%;
+                        }
+                    }
+    
+                }
+    
+                .main-right {
+                    float: right;
+    
+                    .renwbox {
+                        padding-bottom: 0.28rem;
+    
+                        .videorwpic {
+                            width: 1rem;
+                            margin: 0 auto;
+    
+                            img {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+    
+                    .renwutxt {
+                        font-size: 0.2rem;
+                        text-align: center;
+                        padding-top: 0.02rem;
+                    }
+                }
+            }
+    
+            .content-bottom {
+                padding: 0.35rem 0.2rem 0.2rem;
+                width: 100%;
+                box-sizing: border-box;
+                position: absolute;
+                bottom: 0;
+                // background-color: #fff;
+                background-color: transparent;
+                // background-color: #fff;
+                z-index: 50;
+                .bottomchat{
+                    max-height: 3.6rem;
+                    overflow-y: scroll;
+                    margin-bottom: 0.15rem;
+                    .msgboxwrap{
+                        margin-bottom: 0.08rem;
+                        max-width: 99%;
+                        &:last-child{
+                            margin-bottom: 0.2rem;
+                        }
+                        .msgbox{
+                            min-height: 0.48rem;
+                            border-radius: 0.24rem;
+                            display: inline-block;
+                            padding: 0.11rem 0.17rem 0.14rem 0.13rem;
+                            background-color: rgba(0, 0, 0, 0.4);
+                            box-sizing: border-box;
+                            width: 5.36rem;
+                            &>img{
+                                border-radius: 0.14rem;
+                                float: left;
+                                // height: 0.28rem;
+                                height: 0.44rem;
+                                padding: 0.06rem 0.12rem;
+                                box-sizing: border-box;
+                            }
+                            &>p{
+                                // float: left;
+                                display: inline;
+                                color: rgba(255, 189, 4, 1);
+                                font-size: 0.28rem;
+                                line-height: 0.48rem;
+                                &.name{
+                                    color: rgba(255, 189, 4, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+                .chatlbts {
+                    padding: 0rem 0.2rem;
+                    background-image: linear-gradient(right, #FF2013 100%, rgba(255, 255, 255, 0) 40%);
+                    border-radius: 2px;
+    
+                    .chattzpic,
+                    .chattxt,
+                    .chatlh {
+                        float: left;
+                    }
+    
+                    .chattzpic {
+                        width: 0.24rem;
+                        height: 0.24rem;
+                        margin-top: 0.15rem;
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+    
+                    .chattxt {
+                        font-size: 0.32rem;
+                        color: #fff;
+                        line-height: 0.54rem;
+                        padding: 0rem 0.08rem;
+                    }
+    
+                    .chatlh {
+                        width: 0.5rem;
+                        height: 0.54rem;
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+    
+                .chatxr {
+                    padding: 0rem 0.2rem;
+                    background-color: #F4C008;
+                    width: 3.5rem;
+                    margin-top: 0.15rem;
+                    border-radius: 2px;
+    
+                    .chatxrpic,
+                    .chatxrtxt {
+                        float: left;
+                    }
+    
+                    .chatxrpic {
+                        width: 0.21rem;
+                        height: 0.26rem;
+                        margin-top: 0.15rem;
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+    
+                    .chatxrtxt {
+                        font-size: 0.32rem;
+                        color: #fff;
+                        padding-left: 0.08rem;
+                        line-height: 0.54rem;
+                    }
+                }
+    
+                .chatby4 {
+                    margin-top: 0.12rem;
+                    overflow: hidden;
+    
+                    .chatby4icon,
+                    .chatby4txt {
+                        float: left;
+                    }
+    
+                    .chatby4icon {
+                        font-size: 0.2rem;
+                        color: #fff;
+                        line-height: 0.38rem;
+                        padding: 0rem 0.13rem;
+                        background-color: #FF6600;
+                        border-radius: 15px;
+                        margin-right: 0.1rem;
+                    }
+    
+                    .chatby4txt {
+                        font-size: 0.32rem;
+    
+                        span {
+                            color: #FF6600
+                        }
+                    }
+                }
+    
+                .chatby7 {
+                    margin-top: 0.12rem;
+                    overflow: hidden;
+    
+                    .chatby7icon,
+                    .chatby7txt {
+                        float: left;
+                    }
+    
+                    .chatby7icon {
+                        font-size: 0.2rem;
+                        color: #fff;
+                        line-height: 0.38rem;
+                        padding: 0rem 0.13rem;
+                        background-color: #FF2314;
+                        border-radius: 15px;
+                        margin-right: 0.1rem;
+                    }
+    
+                    .chatby7txt {
+                        font-size: 0.32rem;
+    
+                        span {
+                            color: #FF2314
+                        }
+                    }
+                }
+    
+                .chatby {
+                    margin-top: 0.12rem;
+    
+                    .chatbytxt {
+                        font-size: 0.32rem;
+    
+                        span {
+                            color: #ffffff
+                        }
+                    }
+                }
+    
+                .chatby1 {
+                    margin-top: 0.12rem;
+                    overflow: hidden;
+    
+                    .chatby1icon,
+                    .chatby1txt {
+                        float: left;
+                    }
+    
+                    .chatby1icon {
+                        font-size: 0.2rem;
+                        color: #fff;
+                        line-height: 0.38rem;
+                        padding: 0rem 0.13rem;
+                        background-color: #F4C008;
+                        border-radius: 15px;
+                        margin-right: 0.1rem;
+                    }
+    
+                    .chatby1txt {
+                        font-size: 0.32rem;
+    
+                        span {
+                            color: #F4C008
+                        }
+                    }
+                }
+    
+                .chattalk {
+    
+                    .chatinp,
+                    .chatsp,
+                    .chatgd,
+                    .service,
+                    .chatxin {
+                        float: left;
+                        cursor: pointer;
+                    }
+    
+                    .chatinp {
+                        // width: 4.1rem;
+                        width: 2.72rem;
+                        height: 0.8rem;
+                        background-color: rgba(31, 31, 31, 0.35);
+                        color: #FFFFFF;
+                        font-size: 0.28rem;
+                        line-height: 0.8rem;
+                        border-radius: 0.4rem;
+                        padding-left: 0.35rem;
+                    }
+    
+                    .chatgd {
+                        width: 0.8rem;
+                        height: 0.8rem;
+                        margin-left: 0.2rem;
+    
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+    
+                    .chatxin {
+                        margin-left: 0.2rem;
+                        position: relative;
+    
+                        .chatxinicon {
+                            width: 0.8rem;
+                            height: 0.8rem;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .licknum{
+                            position:absolute;
+                            top:-0.25rem;
+                            left:-0.02rem;
+                            width:0.45rem;
+                            background-color:#FF5B4F;
+                            color:#FFFFFF;
+                            border: 2px solid #FFFFFF;
+                            font-size:0.22rem;
+                            text-align:center;
+                            line-heihgt:0.82rem;
+                            padding:0rem 0.16rem;
+                            border-radius:0.16rem;
+                        }
+                    }
+
+                    .service{
+                        position:relative;
+                        margin-left:0.14rem;
+                        .servicepic{
+                            width:0.8rem;
+                            height:0.75rem;
+                            border:1px solid #FFBD04;
+                            border-radius:50%;
+                            img{
+                                width:100%;
+                                height:100%;
+                                border-radius:50%;
+                            }
+                        }
+                        .servicebtn{
+                            position:absolute;
+                            bottom:-0.08rem;
+                            width:0.91rem;
+                            height:0.24rem;
+                            left:-0.03rem;
+                            img{
+                                width:100%;
+                                height:100%;
+                            }
+                        }
+                    }
+    
+                    .chatsp {
+                        margin-top: -0.13rem;
+                        background-image: url(./../../../../assets/imgs/living/details/product.png);
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        width: 0.8rem;
+                        height: 0.94rem;
+                        // float: right;
+                        // margin-top: -0.3rem;
+                        margin-left: 0.2rem;
+    
+                        .chatsptxt {
+                            color: #fff;
+                            padding-top: 0.63rem;
+                            text-align: center;
+                            font-size: 0.26rem;
+                        }
+    
+                    }
+                    .imiptbox{
+                        position: absolute;
+                        left: 10000px;
+                        top: -10000px;
+                    }
+                }
+    
+            }
+    
+            // 直播商品
+            .goodsboxmb{
+                position: fixed;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0;
+                width: 7.5rem;
+                height: 100vh;
+                // z-index: 100;
+                z-index: 500;
+                background-color: rgba(0, 0, 0, 0.1);
+                .goodsbox{
+                    border-top: 1px solid rgba(0, 0, 0, 0.1);
+                    // border-radius: 0.1rem;
+                    border-top-left-radius: 0.1rem;
+                    border-top-right-radius: 0.1rem;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    padding-bottom: 0.3rem;
+                    overflow-y: scroll;
+                    // height: 8.37rem;
+                    max-height: 62.74%;
+                    min-height: 40%;
+                    box-sizing: border-box;
+                    width: 100%;
+                    z-index: 500;
+                    background-color: #fff;
+                    &>p{
+                        line-height: 0.8rem;
+                        height: 0.8rem;
+                        font-size: 0.3rem;
+                        color: rgba(51, 51, 51, 1);
+                        text-align: center;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                        font-weight: bold;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        z-index: 500;
+                        width: 100%;
+                        background-color: #fff;
+                    }
+                    &>ul{
+                        padding: 0.81rem 0 0.4rem;
+                        padding: 0.81rem 0 0rem;
+                        height: calc(100% - 0.81rem);
+                        overflow-y: scroll;
+                        // padding-bottom: 0.26rem;
+                        // padding-bottom: 0.4rem;
+                        li{
+                            padding: 0.2rem 0.3rem 0;
+                            // padding-right: 0.2rem;
+                            padding-right: 0.05rem;
+                            &.nogood{
+                                padding: 0.6rem 0.3rem 0.8rem;
+                                text-align: center;
+                                color: rgba(51, 51, 51, 1);
+                            }
+                            &>img{
+                                width: 1.68rem;
+                                height: 1.68rem;
+                                border-radius: 0.08rem;
+                                float: left;
+                                // margin-right: 0.18rem;
+                                margin-right: 0.1rem;
+                                // background-color: #ccc;
+                                border:1px solid rgba(0, 0, 0, 0.1);
+                                box-sizing: border-box;
+                            }
+                            .details{
+                                float: left;
+                                position: relative;
+                                // width: 5.04rem;
+                                width: 5.0rem;
+                                .name{
+                                    color: rgba(51, 51, 51, 1);
+                                    font-size: 0.32rem;
+                                    line-height: 0.4rem;
+                                    margin-bottom: 0.14rem;
+                                }
+                                .guige{
+                                    color: rgba(153, 153, 153, 1);
+                                    font-size: 0.22rem;
+                                    line-height: 0.4rem;
+                                    margin-bottom: 0.3rem;
+                                }
+                                .shop{
+                                    img{
+                                        float: left;
+                                        width: 0.38rem;
+                                        height: 0.38rem;
+                                        border-radius: 50%;
+                                        margin-right: 0.15rem;
+                                    }
+                                    p{
+                                        float: left;
+                                        font-size: 0.24rem;
+                                        color: rgba(102, 102, 102, 1);
+                                        line-height: 0.38rem;
+                                    }
+                                }
+                                .btn{
+                                    position: absolute;
+                                    right: 0;
+                                    bottom: 0;
+                                    // width: 1.6rem;
+                                    padding: 0 0.2rem;
+                                    height: 0.6rem;
+                                    font-size: 0.24rem;
+                                    line-height:0.6rem;
+                                    text-align: center;
+                                    border-radius: 0.3rem;
+                                    color: #fff;
+                                    &.red{
+                                        background: linear-gradient(rgba(255, 32, 19, 1),rgba(255, 82, 35, 1));
+                                        // color: #fff;
+                                        box-shadow: 0 0 0 1px rgba(255, 55, 27, 0.36);
+                                    }
+                                    &.gray{
+                                        background: rgba(178, 178, 178, 1);
+                                        // color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    
+            // 直播输入部分
+            .imiptshowmb{
+                position: fixed;
+                z-index: 520;
+                left: 0;
+                top: 0;
+                width: 7.5rem;
+                height: 100vh;
+                .imiptshow{
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 0.68rem;
+                    line-height: 0.68rem;
+                    padding: 0.1rem 0.2rem;
+                    background-color: #fff;
+                    input{
+                        float: left;
+                        width: 6rem;
+                        padding: 0 0.2rem;
+                        border-radius: 0.34rem;
+                        border: none;
+                        height: 0.68rem;
+                        line-height: 0.68rem;
+                        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.75);
+                    }
+                    p{
+                        float: left;
+                        color: #000;
+                        font-size: 0.25rem;
+                        margin-left: 0.2rem;
+                    }
+                }
+            }
+        }
+
+        .hlrtipsbtn{
+            position: absolute;
+            right: 0;
+            top: 1.47rem;
+            width:1.76rem;
+            height:0.56rem;
+            cursor: pointer;
+            z-index: 110;
+            img{
+                width:100%;
+                height:100%;
+            }
+        }
+        .member{
+            top: 2.23rem;
+        }
+        .hlrtipsmb{
+            position: fixed;
+            left: 50%;
+            top:0;
+            transform: translateX(-50%);
+            width: 7.5rem;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 550;
+            .hlrtipscontainer{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 5.42rem;
+                background-color: #fff;
+                transform: translate(-50%,-50%);
+                border-radius: 0.1rem;
+                // overflow-x: hidden;
+                &>img{
+                    position: absolute;
+                    right: 0;
+                    top: -0.71rem;
+                    width: 0.5rem;
+                    height: 0.5rem;
+                    cursor: pointer;
+                }
+                &>.titlebox{
+                    width: 100%;
+                    height: 1.26rem;
+                    overflow:hidden;
+                    position: relative;
+                    border-top-left-radius: 0.1rem;
+                    border-top-right-radius: 0.1rem;
+                    p{
+                        height: 1.26rem;
+                        width: 120%;
+                        position: absolute;
+                        left: 50%;
+                        top: 0;
+                        transform: translateX(-50%);
+                        line-height: 1.26rem;
+                        font-size: 0.32rem;
+                        text-align: center;
+                        color: #fff;
+                        background: linear-gradient(83deg,rgba(235,61,43,1),rgba(236,94,55,1));
+                        border-bottom-right-radius: 50%;
+                        border-bottom-left-radius: 50%;
+                    }
+                }
+                &>ul{
+                    padding: 0.31rem 0.22rem 0.22rem;
+                    li{
+                        color: rgba(102, 102, 102, 1);
+                        font-size: 0.24rem;
+                        font-size: 0.2rem;
+                        margin-bottom: 0.3rem;
+                        &:last-child{
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    
+        ::-webkit-scrollbar-track{
+            background-color: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            // background: transparent;
+            background: rgba(255, 255, 255, 0.15);
+        }
+    }
+    .livingendwrap{
+        width: 7.5rem;
+        height: 100vh;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        background-color:rgba(0,0,0,0.6);
+        background-size: cover;
+        background-position: center;
+    
+        .close {
+            position: absolute;
+            right: 0.2rem;
+            // top: 0.2rem;
+            top: 0.44rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            // background-color: #000;
+            // padding: 0.1rem;
+
+            img {
+                width: 100%;
+                height: 100%
+            }
+        }
+        .faceurl{
+            width: 1.72rem;
+            height: 1.72rem;
+            border-radius: 50%;
+            margin: 1.2rem auto 0.23rem;
+        }
+        .name{
+            font-size: 0.228rem;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+        }
+        .enddata{
+            margin:1.02rem auto 0;
+            p{
+                font-size: 0.48rem;
+                color: rgba(255, 255, 255, 1);
+                padding: 0 0.42rem 0.24rem;
+                width: 3.2rem;
+                border-bottom: 2px solid rgba(199, 198, 198, 1);
+                margin: 0 auto 0.24rem;
+                text-align: center;
+            }
+            span{
+                color: rgba(199, 198, 198, 1);
+                display: block;
+                text-align: center;
+                margin-bottom: 0.14rem;
+                &.number{
+                    font-size: 0.36rem;
+                }
+                &.title{
+                    font-size: 0.24rem;
+                }
+            }
+        }
+        .followbtn{
+            position: fixed;
+            // bottom: 3rem;
+            top: 74.11%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3.2rem;
+            height: 0.72rem;
+            border-radius: 0.36rem;
+            text-align: center;
+            line-height: 0.72rem;
+            color: #fff;
+            background: linear-gradient(to right, #FF2013, #FF5223);
+            cursor: pointer;
+            font-size: 0.26rem;
+        }
+    }
+    .confirmordermb{
+        position: fixed;
+        left: 50%;
+        top:0;
+        transform: translateX(-50%);
+        width: 7.5rem;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 550;
+        .confirmorder{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            width: 5.42rem;
+            height: 7.48rem;
+            border-radius: 0.12rem;
+            border: 1px solid rgba(255, 255, 255, 1);
+            background-color: #fff;
+            &>img{
+                width: 100%;
+                height: 4.16rem;
+            }
+            .name{
+                color: rgba(23, 23, 23, 1);
+                font-size: 0.28rem;
+                line-height: 0.26rem;
+                padding: 0.4rem 0.25rem 0.21rem;
+            }
+            .tips{
+                color: rgba(155, 155, 155, 1);
+                font-size: 0.24rem;
+                line-height: 0.23rem;
+                padding: 0 0.25rem 0.4rem;
+                display: block;
+            }
+            .price_number{
+                padding: 0 0.25rem;
+                .price{
+                    float: left;
+                    color: rgba(239, 71, 58, 1);
+                    line-height: 0.3rem;
+                    font-size: 0.4rem;
+                    margin-right: 0.21rem;
+                    span{
+                        font-size: 0.28rem;
+                    }
+                }
+                .number{
+                    float: left;
+                    color: rgba(155, 155, 155, 1);
+                    line-height: 0.3rem;
+                    font-size: 0.24rem;
+                }
+            }
+            .btn{
+                margin: 0.4rem auto 0;
+                font-size: 0.28rem;
+                line-height:0.72rem;
+                text-align: center;
+                color: #fff;
+                width:3.60rem;
+                height:0.72rem;
+                background:linear-gradient(215deg,rgba(203,45,62,1),rgba(239,71,58,1));
+                border-radius:0.36rem;
+                cursor: pointer;
+            }
+            .confirmordermbclosebtn{
+                position: absolute;
+                width: 0.76rem;
+                height: 0.76rem;
+                left: 50%;
+                bottom:-1.12rem;
+                box-sizing: border-box;
+                padding: 0.1rem;
+                border: 1px solid #fff;
+                border-radius: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+    .controlmb{
+        position: fixed;
+        left: 50%;
+        top:0;
+        transform: translateX(-50%);
+        width: 7.5rem;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.8);
+        z-index: 550;
+        .control{
+            position: absolute;
+            left: 0%;
+            bottom: 0%;
+            width: 7.5rem;
+            padding-bottom: 0.7rem;
+            &>p{
+                font-weight: bold;
+                font-size: 0.3rem;
+                margin-bottom: 0.34rem;
+                color: rgba(255, 255, 255, 1);
+                text-align: center;
+                padding: 0 0.1rem;
+            }
+            .btn{
+                width: 3rem;
+                cursor: pointer;
+                margin: 0rem auto 0.3rem;
+                border-radius: 0.35rem;
+                display: flex;
+                justify-content: center;
+                border: 1px solid rgba(255, 255, 255, 1);
+                &:last-child{
+                    margin-bottom: 0;
+                }
+                img{
+                    width: 0.29rem;
+                    height: 0.36rem;
+                    padding: 0.17rem 0;
+                    margin-right: 0.19rem;
+                }
+                span{
+                    color: rgba(255, 255, 255, 1);
+                    font-size: 0.3rem;
+                    line-height: 0.7rem;
+                }
+            }
+        }
+        .control2{
+        }
+        
+        .close {
+            position: absolute;
+            // right: 0.2rem;
+            // top: 0.2rem;
+            right: 0.3rem;
+            // top: 0.64rem;
+            top: 0.44rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            // background-color: #000;
+            // padding: 0.1rem;
+
+            img {
+                width: 100%;
+                height: 100%
+            }
+        }
+    }
+}

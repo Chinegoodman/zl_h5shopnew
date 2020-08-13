@@ -64,6 +64,21 @@ export default [{
             }]
         }
     },
+    // 秀场-直播-直播回放  
+    {
+        path: 'livingxiureplay',
+        name: 'livingxiureplay',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/xiureplay/index.vue'], resolve),
+        meta: {
+            name: 'livingxiureplay',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/livingxiureplay',
+            }]
+        }
+    },
     // 抓周直播 直播详情页-----分享
     {
         path: 'livingdetailsshare',

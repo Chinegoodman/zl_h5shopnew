@@ -672,8 +672,7 @@ export default {
         }
       });
     },
-    //跳转到秀场直播详情
-    // 跳转到直播详情页
+    /*跳转到秀场直播详情*/
     gotoxiuchangdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
@@ -681,6 +680,14 @@ export default {
       if(paramsdata.state==1){
         this.$router.push({
           path: "/living/xiuchangdetails",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
+          }
+        });
+      }else if(paramsdata.state==0){
+        this.$router.push({
+          path: "/living/livingxiureplay",
           query : {
             tab : that.list_content_show_type,
             liveId : paramsdata.id
