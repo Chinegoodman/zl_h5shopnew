@@ -8,9 +8,12 @@ import FlvPlayer from "xgplayer-flv";
 // import HlsPlayer from 'xgplayer-hls';
 import HlsJsPlayer from 'xgplayer-hls.js';
 import { checkdevice } from "@/utils/checkdevice.js";
+import downloadandopenapp from '../../../../components/downloadandopenapp.vue'
 export default {
     name: "livingdetails",
-    components: {},
+    components: {
+        downloadandopenapp
+    },
     data() {
         return {
             livingtimer: null,
@@ -39,9 +42,31 @@ export default {
 
             selfsf: 0, //自己的 身份标识  0 普通用户， 1 房间主播， 2 房间内管理员
             targetsf: 0, // 被查看用户 身份标识 0 普通用户， 1 房间主播， 2 房间内管理员
+            attention_flag: 0, //关注
+            moreboxshellstate: false, //更多弹层
+            videoInChat: false, //在微信里的背景标致
+            covertypedata: 'downloadcovershow', //下载及启动APP组件类别
+            downloadcovershow: false, //下载及启动APP弹层
+            linkurldownload: '', //下载链接
+            lunchupappurl: '', //拉起下载相关
+            //点赞====================start
+            obj_canvas: {},
+            obj_ctx: {},
+            praiseCount: 0,
+            height: 300, //点赞
+            width: 90, //点赞
+            queue: {}, //点赞
+            anima_timer: null, //点赞定时器    
+            isFirst: 1
+                //点赞====================end
+
         };
     },
     computed: {
+        //全屏高度
+        windowInnerHeight() {
+            return window.innerHeight + 'px';
+        },
         // 直播相关
         wdwidth() {
             return document.documentElement.clientWidth;
@@ -94,15 +119,30 @@ export default {
     mounted() {
         let that = this;
         let liveId = that.$route.query.liveId;
+
+        //分享相关
+        if (checkdevice() == "anzhuo") {
+            that.downloadappurl = 'https://apk.izhuazhou.cn/zsapk/zz_zs.apk';
+        } else {
+            that.downloadappurl = 'https://apps.apple.com/cn/app/id1487579824';
+            if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
+                // that.openappfn();
+                that.videoInChat = true;
+                that.wxtipsstatus = true;
+            }
+        }
+
         that.getLiveDetailInfo(liveId, function() {
             // that.livinglidata = getsessionStorage("livinglidata");
             // this.quitGroup();
             // this.logoutfn();
             // this.player.destroy(true);
-            // that.livinglidata.playbackAddr = that.livinglidata.playbackAddr.replace('http://', 'https://');
+            // that.livinglidata.livestreamurl = that.livinglidata.livestreamurl.replace('http://', 'https://');
             // that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
+            that.lunchupappurlfn();
 
             if (
+                checkdevice() == "weixinios" ||
                 checkdevice() == "weixin" ||
                 checkdevice() == "anzhuo" ||
                 checkdevice() == "ios" ||
@@ -152,8 +192,7 @@ export default {
                     //解除注释 flv方法
                     id: "videodom",
                     // url: "http://pili-publish.test.zhulihr.com/izhuazhoutest/59.flv", //flv
-                    // url: that.livinglidata.streamAddrHls + ".flv", //flv
-                    url: that.livinglidata.streamAddrFlv, //flv
+                    url: that.livinglidata.streamAddrHls + ".flv", //flv
                     //   url: 'http://pili-publish.test.zhulihr.com/izhuazhoutest/59.m3u8',//m3u8
                     //   url: 'rtmp://pili-publish.test.zhulihr.com/izhuazhoutest/59',//rtmp
                     // url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',//cctv6测试
@@ -232,13 +271,50 @@ export default {
                 that.canplaythroughstatus = true;
             });
 
-            that.getgoodsList();
+            // that.getgoodsList();
+            //点赞
+            that.obj_canvas = document.getElementById("bubble");
+            that.obj_ctx = that.obj_canvas.getContext("2d");
         });
     },
     methods: {
         // 阻止冒泡
         returnfn() {
             return false;
+        },
+        //拉起APP相关
+        lunchupappurlfn() {
+            let that = this;
+            /// 秀场
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.user.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+        },
+        //打开下载启动弹层
+        opendownload() {
+            this.downloadcovershow = true;
+            this.downloadandopen();
+        },
+        //关闭下载启动弹层
+        shutappbtnsbox() {
+            this.downloadcovershow = false;
+        },
+        //下载及拉起APP
+        downloadandopen() {
+            let that = this;
+            if (checkdevice() == "anzhuo") {
+                that.linkurldownload = 1;
+            } else {
+                that.linkurldownload = 2;
+            }
+        },
+        //返回上一页
+        returnprevpage() {
+            let that = this;
+            that.$router.push({
+                path: `/shop/index`,
+                query: {
+                    tab: this.$route.query.tab
+                }
+            });
         },
         //获取直播间详情
         getLiveDetailInfo(liveId, fn) {
@@ -266,38 +342,217 @@ export default {
                     }
                 })
         },
-        //获取回放信息
-        getreplayinfo(liveId, fn) {
+        // 关注 与 取消关注 主播
+        follow(currentstatus) {
             let that = this;
-            that.$toast.loading({
-                message: "加载中...",
-                forbidClick: true,
-                duration: 200000
-            });
-            this.api.living.getLiveInfo({
-                // liveId: that.livinglidata.liveId,
-                liveId: liveId,
-                operterId: '',
-                userId: ''
-            }).then(res => {
-                if (res.data.code == 1) {
-                    let resdata = res.data.data;
-                    that.livinglidata = resdata;
-                    setTimeout(fn, 500);
-                    // if (that.livinglidata.livestreamurl) {
-                    //     clearInterval(that.livingtimer);
-                    //     console.log(111);
-                    //     fn();
-                    // } else {
-                    //     that.livingtimer = setInterval(1000, fn);
-                    //     console.log(222);
-                    // }
-                    console.log('that.livinglidata');
-                    console.log(that.livinglidata);
-                    // that.selfsf = resdata.identity;
-                    // that.targetsf = resdata.otherIdentity;
+
+            if (!that.iflogin()) {
+                return;
+            }
+            if (!currentstatus) {
+                // 当前 为 非关住状态
+                that.api.xiuchangliving
+                    .relationOpration({
+                        currentUserId: that.$store.state.user.userid,
+                        transferUserId: that.livinglidata.uid,
+                        relation: 1
+                    })
+                    .then(res => {
+                        // console.log(res.data);
+                        if (res.data.code == 1) {
+                            that.attention_flag = 1;
+                        }
+                    })
+            } else {
+                // 当前 为 关住状态
+                that.api.xiuchangliving
+                    .relationOpration({
+                        currentUserId: that.$store.state.user.userid,
+                        transferUserId: that.livinglidata.uid,
+                        relation: 0
+                    })
+                    .then(res => {
+                        // console.log(res.data);
+                        if (res.data.code == 1) {
+                            that.attention_flag = 0;
+                        }
+                    })
+            }
+        },
+        getXiuChangLivingUserAndPraise() {
+            let that = this;
+            that.api.xiuchangliving
+                .XiuChangLivingUserAndPraise({
+                    liveId: that.liveId
+                        // uid: that.livinglidata.uid
+                })
+                .then(res => {
+                    if (res.data.code == 1) {
+                        that.watchcount = res.data.data.realCount;
+                        that.praiseCount = res.data.data.praise;
+                    }
+                })
+        },
+        //点赞提交后台
+        postPraisePoint() {
+            let that = this;
+            //发送IM消息
+            // that.timtxt = '给主播点了赞';
+            // that.txtpost();
+
+            this.api.xiuchangliving
+                .getXiuChuangLivingPraisePoint({
+                    liveId: that.liveId
+                        // flag: that.isFirst == 1 ? 2 : 1
+                })
+                .then(res => {
+                    if (res.data.code == 1) {
+                        console.log(res.data);
+                    }
+                })
+        },
+        /**点赞 */
+        likeClick() {
+            let that = this;
+            let arrs = [];
+            arrs.push("../../../../assets/imgs/icons/animation/1.png", "../../../../assets/imgs/icons/animation/2.png", "../../../../assets/imgs/icons/animation/3.png", "../../../../assets/imgs/icons/animation/4.png", "../../../../assets/imgs/icons/animation/5.png", "../../../../assets/imgs/icons/animation/6.png")
+            const image = new Image(60, 45);
+            image.onload = that.bubbleAnimate();
+            image.src = 'http://www.piaoyouni.com/images/zan/' + that.getRandomInt(1, 6) + '.png';
+            const anmationData = {
+                id: new Date().getTime(),
+                timer: 0,
+                opacity: 0.5,
+                pathData: that.generatePathData(),
+                image: image,
+                factor: {
+                    speed: 0.004, // 运动速度，值越小越慢
+                    t: 0 //  贝塞尔函数系数
                 }
-            })
+            };
+            if (Object.keys(that.queue).length > 0) {
+                that.queue[anmationData.id] = anmationData;
+            } else {
+                that.queue[anmationData.id] = anmationData;
+                that.bubbleAnimate();
+            }
+
+            that.praiseCount = that.praiseCount + 1;
+            that.isFirst = that.isFirst + 1;
+            that.postPraisePoint();
+        },
+        /**获取最大最小随机值 */
+        getRandom(min, max) {
+            return Math.random() * (max - min) + min;
+        },
+        /**获取最大最小之前随机值的整数 */
+        getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        /**获取图片路径 */
+        generatePathData() {
+            let that = this;
+            const p0 = {
+                x: 0.65 * that.width,
+                y: that.height
+            };
+            const p1 = {
+                x: that.getRandom(0.22 * that.width, 0.33 * that.width),
+                y: that.getRandom(0.5 * that.height, 0.75 * that.height)
+            };
+            const p2 = {
+                x: that.getRandom(0, 0.88 * that.width),
+                y: that.getRandom(0.25 * that.height, 0.5 * that.height)
+            };
+            const p3 = {
+                x: that.getRandom(0, 0.88 * that.width),
+                y: that.getRandom(0, 0.125 * that.height)
+            };
+            return [p0, p1, p2, p3];
+        },
+        /**更新图片的最新运动路径 */
+        updatePath(data, factor) {
+            const p0 = data[0];
+            const p1 = data[1];
+            const p2 = data[2];
+            const p3 = data[3];
+            const t = factor.t;
+            /*计算多项式系数 （下同）*/
+            const cx1 = 3 * (p1.x - p0.x);
+            const bx1 = 3 * (p2.x - p1.x) - cx1;
+            const ax1 = p3.x - p0.x - cx1 - bx1;
+
+            const cy1 = 3 * (p1.y - p0.y);
+            const by1 = 3 * (p2.y - p1.y) - cy1;
+            const ay1 = p3.y - p0.y - cy1 - by1;
+
+            const x = ax1 * (t * t * t) + bx1 * (t * t) + cx1 * t + p0.x;
+            const y = ay1 * (t * t * t) + by1 * (t * t) + cy1 * t + p0.y;
+            return {
+                x,
+                y
+            };
+        },
+        /**点赞动画 */
+        bubbleAnimate() {
+            let that = this;
+
+            Object.keys(that.queue).forEach(key => {
+                that.clearCanvas();
+                const anmationData = that.queue[+key];
+                const {
+                    x,
+                    y
+                } = that.updatePath(
+                    anmationData.pathData,
+                    anmationData.factor
+                );
+                const speed = anmationData.factor.speed;
+                anmationData.factor.t += speed;
+                var curWidth = 30;
+                curWidth = (that.height - y) / 1.5;
+                curWidth = Math.min(30, curWidth);
+                var curAlpha = anmationData.opacity;
+                curAlpha = y / that.height;
+                curAlpha = Math.min(1, curAlpha);
+                that.obj_ctx.globalAlpha = curAlpha;
+                that.obj_ctx.drawImage(anmationData.image, x - curWidth / 2, y, curWidth, curWidth);
+                if (anmationData.factor.t > 1) {
+                    delete that.queue[anmationData.id];
+                }
+                if (y > that.height) {
+                    delete that.queue[anmationData.id];
+                }
+            });
+
+            if (Object.keys(that.queue).length > 0) {
+                that.anima_timer = setTimeout(() => {
+                    that.bubbleAnimate();
+                }, 5);
+            } else {
+                clearTimeout(that.anima_timer);
+                that.clearCanvas();
+            }
+        },
+        /**清空画布**/
+        clearCanvas() {
+            let that = this;
+            var c = document.getElementById("bubble");
+            var cxt = c.getContext("2d");
+            cxt.clearRect(0, 0, that.width, that.height);
+        },
+        //以下区间为点赞 end  
+        //点击弹出更多
+        moreClick() {
+            this.moreboxshellstate = true;
+        },
+        //关闭更多弹层
+        closeMoreClick() {
+            this.moreboxshellstate = false;
+        },
+        openComplaintsShell() {
+            let that = this;
+            that.$toast('举报成功');
         },
         // 跳转到商品详情
         gotodetails(skuid) {
@@ -319,7 +574,12 @@ export default {
         // 播放直播、视频 事件
         videopaly() {
             let that = this;
-            if (that.canplaythroughstatus) {
+            console.log('that.canplaythroughstatus');
+            console.log(that.canplaythroughstatus);
+            if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
+                that.player.start();
+                that.player.play();
+            } else if (that.canplaythroughstatus) {
                 setTimeout(() => {
                     that.player.start();
                     that.player.play();
@@ -328,48 +588,12 @@ export default {
         },
         videoplay() {
             // if (this.hasStartstatus) {
-            //     // console.log('正在播放');
+            //     console.log('正在播放');
+            //     console.log(1);
             // } else {
-            //     alert(2);
-            //     this.videopaly();
-            // }
+            //     console.log(2);
             this.videopaly();
-        },
-        // 关注 与 取消关注 主播
-        follow(currentstatus) {
-            let that = this;
-            if (!that.iflogin()) {
-                return;
-            }
-            if (!currentstatus) {
-                // 当前 为 非关住状态
-                that.api.living
-                    .attentionadd({
-                        uid: that.$store.state.user.userid,
-                        attid: that.livinglidata.uid
-                    })
-                    .then(res => {
-                        // console.log(res.data);
-                        if (res.data.code == 1) {
-                            that.$toast("关注成功！");
-                            that.livinglidata.is_attention = 1;
-                        }
-                    })
-            } else {
-                // 当前 为 关住状态
-                that.api.living
-                    .attentiondelete({
-                        uid: that.$store.state.user.userid,
-                        attid: that.livinglidata.uid
-                    })
-                    .then(res => {
-                        // console.log(res.data);
-                        if (res.data.code == 1) {
-                            that.$toast("取消关注成功！");
-                            that.livinglidata.is_attention = 3;
-                        }
-                    })
-            }
+            // }
         },
         // 直播间商品列表
         getgoodsList() {

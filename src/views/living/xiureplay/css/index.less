@@ -20,6 +20,10 @@
                 top: 0;
             }
         }
+        .video-in-wx{
+            background: url('./../img/livingdtbg.jpg') no-repeat;
+            background-size: cover;
+        }
         .video-content {
             position: fixed;
             width: 7.5rem;
@@ -77,6 +81,7 @@
                     width: 0.56rem;
                     height: 0.56rem;
                     margin-top: 0.14rem;
+                    cursor: pointer;
                     // background-color: #000;
                     // padding: 0.1rem;
     
@@ -156,21 +161,28 @@
     
                     .dznamegz {
                         width: 1.17rem;
-                        height: 0.44rem;
-                        //background-image: linear-gradient(to right, #FF2013, #FF5223);
-                        color: #fff;
+                        height: 0.56rem;
+                        color:#757575;
                         text-align: center;
-                        line-height: 0.6rem;
-                        border-radius: 6rem;
-                        font-size: 0.26rem;
+                        line-height: 0.56rem;
+                        border-radius: .42rem;
+                        font-size: 0.24rem;
+                        font-weight:500;
+                        color:rgba(31,31,31,1);
+                        background: #ebebe9;
                         // margin: 0.2rem;
-                        margin:0.22rem 0 0rem;
-                        float: right;
+                        position: absolute;
+                        right: .14rem;
+                        top: .14rem;
                         cursor: pointer;
                         img{
-                            width:100%;
+                            width:auto;
                             height:100%;
                         }
+                    }
+                
+                    .dznamegzed{
+                        background:linear-gradient(0deg,rgba(255,189,4,1),rgba(255,215,103,1));
                     }
                 }
             }
@@ -268,9 +280,9 @@
                 // background-color: #fff;
                 z-index: 50;
                 .bottomchat{
-                    max-height: 3.6rem;
+                    max-height: 3.95rem;
                     overflow-y: scroll;
-                    margin-bottom: 0.15rem;
+                    margin-bottom: 0.35rem;
                     .msgboxwrap{
                         margin-bottom: 0.08rem;
                         max-width: 99%;
@@ -474,33 +486,35 @@
                 }
     
                 .chattalk {
-    
-                    .chatinp,
                     .chatsp,
                     .chatgd,
                     .service,
                     .chatxin {
-                        float: left;
+                        float: right;
                         cursor: pointer;
                     }
     
                     .chatinp {
                         // width: 4.1rem;
-                        width: 2.72rem;
+                        float: left;
+                        width: 1.5rem;
                         height: 0.8rem;
-                        background-color: rgba(31, 31, 31, 0.35);
+                        background-color: rgba(0, 0, 0, 0.4);
                         color: #FFFFFF;
                         font-size: 0.28rem;
+                        font-weight:500;
+                        text-align: center;
                         line-height: 0.8rem;
                         border-radius: 0.4rem;
-                        padding-left: 0.35rem;
+                        cursor: pointer;
                     }
     
                     .chatgd {
                         width: 0.8rem;
                         height: 0.8rem;
                         margin-left: 0.2rem;
-    
+                        position: relative;
+                        
                         img {
                             width: 100%;
                             height: 100%;
@@ -514,9 +528,26 @@
                         .chatxinicon {
                             width: 0.8rem;
                             height: 0.8rem;
+                            position: relative;
+                            cursor: pointer;
                             img {
                                 width: 100%;
                                 height: 100%;
+                            }
+                            .praise-num{
+                                width: .82rem;
+                                height: .32rem;
+                                line-height: .32rem;
+                                text-align: center;
+                                color: #fff;
+                                border-radius: .16rem;
+                                font-size: .22rem;
+                                background:#ff5b4fff;
+                                position: absolute;
+                                border:0.02rem solid rgba(255, 255, 255, 1);
+                                left: 50%;
+                                top: -.25rem;
+                                transform: translateX(-50%);
                             }
                         }
                         .licknum{
@@ -563,13 +594,12 @@
                     }
     
                     .chatsp {
-                        margin-top: -0.13rem;
-                        background-image: url(./../../../../assets/imgs/living/details/product.png);
+                        background-image: url(./../../../../assets/imgs/living/xiudetails/xiuproduct.png);
                         background-size: cover;
                         background-position: center;
                         background-repeat: no-repeat;
                         width: 0.8rem;
-                        height: 0.94rem;
+                        height: 0.8rem;
                         // float: right;
                         // margin-top: -0.3rem;
                         margin-left: 0.2rem;
@@ -586,6 +616,17 @@
                         position: absolute;
                         left: 10000px;
                         top: -10000px;
+                    }
+                    .close {
+                        float: right;
+                        width: 0.8rem;
+                        height: 0.8rem;
+                        margin-left: 0.2rem;
+                        cursor: pointer;
+                        img {
+                            width: 100%;
+                            height: 100%
+                        }
                     }
                 }
     
@@ -1072,5 +1113,64 @@
                 height: 100%
             }
         }
+
     }
 }
+
+.moreboxfixed,
+    .box-anchormsg{
+        width: 7.5rem;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        right: 0;
+        top: 0;
+        z-index: 11000;
+        .moreboxcover,
+        .anchormsg-cover{
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 11001;
+            cursor: pointer;
+        }
+        .moreboxcontent,
+        .anchormsg-content{
+            width: 7.5rem;
+            height: 2.32rem;
+            background: rgba(255, 255, 255,1);
+            border-radius: .3rem .3rem 0 0;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 11003;
+            ul{
+                padding: .75rem 0 0 0;
+                display: flex;
+                li{
+                    width: .8rem;
+                    padding-left: .5rem;
+                    cursor: pointer;
+                    img{
+                        display: block;
+                        width: .8rem;
+                        height: .8rem;
+                    }
+                    .t{
+                        display: block;
+                        font-size: .2rem;
+                        font-family:PingFang SC;
+                        font-weight:500;
+                        color:rgba(31,31,31,1);
+                        text-align: center;
+                        margin-top: .1rem;
+                    }
+                }
+            }
+        }
+    }
