@@ -100,13 +100,13 @@
           </div> -->
         </div>
         <!-- 大礼物start-->
-        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" v-if="false">
-          <span class="_txtov1 nm">开心宝宝</span>
+        <div :class="{'biggiftnotice' : true, 'bigLiStyleGift' : bigLiStyleGiftFlag,'bigLiStyleNone' : bigLiStyleNoneFlag}" ref="bigGiftBoxElement">
+          <span class="_txtov1 nm">{{bigGiftMsgone.sendUserInfo.name}}</span>
           赠送给
-          <span class="_txtov1 nm">爱丽少爱</span>
-          么么哒
+          <span class="_txtov1 nm">{{bigGiftMsgone.giftContent.receiveName}}</span>
+          {{bigGiftMsgone.giftContent.giftName}}
           <span class="gf">
-            <img src="./../../../assets/imgs/living/details/like.png" alt />
+            <img :src="bigGiftMsgone.giftContent.giftIcon" alt />
           </span> 
         </div>
         <!-- 大礼物end-->
@@ -162,20 +162,20 @@
                   <!-- 小礼物end-->
               </div>
               <!-- 直播消息 会员进入动画 start-->
-              <div class="vip-level-anim-box" v-if="false">
-                <div class="anim-box-one liStyleLevelone">
+              <div class="vip-level-anim-box" v-if="levelMsgobj.sendUserInfo.level">
+                <div :class="{'anim-box-one': true,'liStyleLevelone' : liStyleLevel_active_one,'liStyleLevelOneNone' : liStyleLevelOneNone}" ref="levelElementanim">
                   <span class="lv">
-                    <viplevel :lv_num="'01'"></viplevel>
+                    <viplevel :lv_num="levelMsgobj.sendUserInfo.level?levelMsgobj.sendUserInfo.level:'01'"></viplevel>
                   </span>
-                  <span class="vipicon">
-                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                  <span class="vipicon" v-if="levelMsgobj.sendUserInfo.isVip">
+                    <img class="vip-pic" :src="levelMsgobj.sendUserInfo.icon" alt="等级" v-if="1" />
                   </span>
-                  <span class="nickname">爱吃鱼的大黄鱼</span>
+                  <span class="nickname">{{levelMsgobj.sendUserInfo.name}}</span>
                   <span>开着</span>
-                  <span class="zoujia-text">奥迪</span>
+                  <span class="zoujia-text">{{levelMsgobj.sendUserInfo.carname}}</span>
                   <span>进入直播间</span>
                   <span class="zoujia-icon">
-                    <img class="vip-pic" src="./../../../assets/imgs/living/xiudetails/vip-hy.png" alt="等级" v-if="1" />
+                    <img class="vip-pic" :src="levelMsgobj.sendUserInfo.carurl" alt="等级" v-if="1" />
                   </span>
                 </div>
               </div>
@@ -185,7 +185,7 @@
                 <div class="msgbox clearfix" @click="shutUp_Kickout(item.talkinguid)">
                     <!-- <p class="name" v-if="!item.comename">{{item.name}}：</p> -->
                     <p>
-                      <span class="lv">
+                      <span class="lv" v-if="item.level > 0">
                         <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
                       </span>
                       <img class="vip-pic" src="./../../../assets/imgs/personal/zhubo.png" alt="等级" v-if="item.level==-2" />
