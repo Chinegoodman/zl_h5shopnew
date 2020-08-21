@@ -50,7 +50,13 @@
     <!-- 上传凭证部分 -->
     <div class="bottom">
       <div class="bottomtit">上传凭证：</div>
-      <uploadfile :uploaddatainit="uploaddatainit" @_upimglistchange="upimglistchange"></uploadfile>
+      <!-- <uploadfile :uploaddatainit="uploaddatainit" @_upimglistchange="upimglistchange"></uploadfile> -->
+      <uploadfile
+          :canedit="true"
+          :uploaddatainit="uploaddatainit"
+          :defaultfileslist="fileList"
+          @_upfileslistchange="upimglistchange"
+      ></uploadfile>
     </div>
     <!-- 提交按钮 -->
     <div class="returnbtnbox">
@@ -107,9 +113,26 @@ export default {
       becauseList: [
       ],
       fileList: [],
-      uploaddatainit:{
-        upimglist:[],
-        maxnumber: 6
+      uploaddatainit: {
+        upfileslist: [],
+        maxnumber: 5,
+        issingle: false, //除了图片之外的资源设置为true(单文件上传模式)
+        imgSize: [
+          {
+            w: "",
+            h: "",
+          },
+        ],
+        // filetype
+        //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
+        //'1.all':图片 (所有)
+        // '2':音频
+        // '3':视频
+        // '4':zip文件
+        // '5':办公文件 MS 及 wps
+        // '6':html css js相关
+        filetype: "1",
+        getwangsu_token_prams: 1, //云存储的存储目录
       },
       subOk:false,
       skuId:'',
