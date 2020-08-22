@@ -33,12 +33,12 @@
 import Vue from "vue";
 import { Uploader } from "vant";
 import base from "@/api/base.js"; // 导入接口域名列表
-import uploadfile from '@/components/uploadfile.vue'
+// import uploadfile from '@/components/uploadfile.vue'
 Vue.use(Uploader);
 
 export default {
   components: {
-    uploadfile
+    // uploadfile
   },
   data() {
     return {

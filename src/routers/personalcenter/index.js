@@ -346,7 +346,7 @@ export default [{
                     name: 'personalcentermyinfochangeintroduction',
                     navstatus: false,
                     breadnav: [{
-                        name: '个人中心-完善资料-修改昵称',
+                        name: '个人中心-完善资料-修改个人描述',
                         url: '/personalcenter/myinfo/changeintroduction'
                     }]
                 }
