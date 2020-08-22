@@ -1,13 +1,17 @@
 <!-- 组件说明 -->
 <template>
   <div class="videoswrapout">
-    <!-- 直播中、、、 -->
-    <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay" :style="{height:windowInnerHeight}">
+    <!-- 直播中、、、 @click.capture="videoplay" -->
+    <div v-if="livingendstatus" class="videoswrap"  @click.stop="follow(false)" :style='{height:windowInnerHeight}'>
       <div class="video" :style="{height:windowInnerHeight}">
         <div id="videodom" :style='{background : "url(" + zhibojianaddcode_bg_cover + ") no-repeat center center;backgroundSize: cover"}'></div>
+        
       </div>
       <!-- video之外的部分 -->
       <div class="video-content" :class="{havebgpic:!hasStartstatus}" :style="{height:windowInnerHeight}">
+        <!-- 临时加来处理抓周分享不能播放 start-->
+        <div class="cantwideomethod"></div>
+        <!-- 临时加来处理抓周分享不能播放 end-->
         <!-- 店主名称与关闭 -->
         
         <div class="content-top">
@@ -259,7 +263,8 @@
 
     <!-- <div class="loading" v-if="openapptips">正在拉起本地app</div> -->
 
-    <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes==0">
+    <!-- <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes==0"> -->
+    <div class="videoerrdom" v-if="false">
       直播正在加载中。。。
     </div>
     <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes>=1">
