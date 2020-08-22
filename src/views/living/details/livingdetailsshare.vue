@@ -1,19 +1,23 @@
 <!-- 组件说明 -->
 <template>
   <div class="videoswrapout">
-    <!-- 直播中、、、 -->
-    <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay">
-      <div class="video" >
+    <!-- 直播中、、、 @click.capture="videoplay" -->
+    <div v-if="livingendstatus" class="videoswrap"  @click.stop="follow(false)" :style='{height:windowInnerHeight}'>
+      <div class="video" :style="{height:windowInnerHeight}">
         <div id="videodom" :style='{background : "url(" + zhibojianaddcode_bg_cover + ") no-repeat center center;backgroundSize: cover"}'></div>
+        
       </div>
       <!-- video之外的部分 -->
-      <div class="video-content" :class="{havebgpic:!hasStartstatus}">
+      <div class="video-content" :class="{havebgpic:!hasStartstatus}" :style="{height:windowInnerHeight}">
+        <!-- 临时加来处理抓周分享不能播放 start-->
+        <div class="cantwideomethod"></div>
+        <!-- 临时加来处理抓周分享不能播放 end-->
         <!-- 店主名称与关闭 -->
         
         <div class="content-top">
           <div class="clearfix">
             <div class="dzname clearfix" @click.stop="returnfn">
-              <div class="dznamepic">
+              <div class="dznamepic" @click.stop="follow(false)">
                 <img v-if="livinglidata.faceUrl" :src="livinglidata.faceUrl" alt="抓周" />
               </div>
               <div class="dznamemass">
@@ -89,10 +93,9 @@
               <div class="msgboxwrap">
                 <div class="msgbox clearfix">
                     <!-- <img src="./../../../assets/imgs/living/details/tongzhi.png" alt /> -->
-                    <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt />
+                    <!-- <img src="./../../../assets/imgs/living/details/living_gonggao.png" alt /> -->
                     <p class="name">系统公告：</p>
-                    <p>抓周是一个传递正能量的平台，请文明聊天，网警24小时在线巡查；禁止传播
-                      黄、赌、毒、暴力、邪教、反党性质的内容产生，违者将封号处理。</p>
+                    <p class="notice">请文明发言，禁止发布违法违规内容；购买直播推荐产品请确认您拍下的链接描述与实际商品一致；切勿相信线下直接转账等非通过本平台结算的交易方式，谨防上当受骗！</p>
                 </div>
               </div>
               <div class="msgboxwrap" v-for="(item,index) in messageList" :key="index">
@@ -134,7 +137,7 @@
         </div>
 
         
-        <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus">
+        <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus" :style="{height:windowInnerHeight}">
           <div class="imiptshow" @click.stop="returnfn">
             <input type="text" autofocus="autofocus" v-model="timtxt" @keyup.enter="txtpost" />
             <p @click.stop="txtpost" style="cursor:pointer;">发送</p>
@@ -142,7 +145,7 @@
         </div>
 
         <!-- 主播上架的商品 -->
-        <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
+        <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus" :style="{height:windowInnerHeight}">
           <div class="goodsbox" @click.stop="returnfn">
             <p>直播界面</p>
             <ul>
@@ -260,7 +263,8 @@
 
     <!-- <div class="loading" v-if="openapptips">正在拉起本地app</div> -->
 
-    <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes==0">
+    <!-- <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes==0"> -->
+    <div class="videoerrdom" v-if="false">
       直播正在加载中。。。
     </div>
     <div class="videoerrdom" v-if="!canplaythroughstatus&&reloadtimes>=1">
@@ -268,7 +272,7 @@
     </div>
 
     <!-- 浏览器下载及拉起 start-->
-     <div class="openappbtnsbox-w" v-if="openappbtns">
+     <div class="openappbtnsbox-w" v-if="openappbtns" @click="openappbtns=false">
       <div class="openappbtnsbox">
         <div class="box_con03">
           <div class="pt_box">

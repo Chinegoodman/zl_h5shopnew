@@ -20,6 +20,7 @@
                 top: 0;
             }
         }
+        
         .video-content {
             position: fixed;
             width: 7.5rem;
@@ -32,6 +33,19 @@
                 background: url('./../img/livingdtbg.jpg') no-repeat;
                 background-size: cover;
             }
+
+            .cantwideomethod{
+                width: 1.35rem;
+                height: 1.35rem;
+                position: fixed;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                top: 50%;
+                background: url('./../img/btnvedio.png') no-repeat;
+                background-size: 1.35rem 1.35rem;
+                z-index: 10501;
+            }
+            
     
             .content-top {
                 position: fixed;
@@ -316,6 +330,9 @@
                                 font-size: 0.26rem;
                                 line-height: 0.48rem;
                                 &.name{
+                                    color:#ffbd04;
+                                }
+                                &.notice{
                                     color:#ffbd04;
                                 }
                                 .vip-pic{
@@ -1192,4 +1209,3 @@
     z-index: 100000;
     pointer-events: none;
 }
-

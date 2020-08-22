@@ -72,6 +72,10 @@ export default {
         };
     },
     computed: {
+        //全屏高度
+        windowInnerHeight() {
+            return window.innerHeight + 'px';
+        },
         // 直播相关
         wdwidth() {
             return document.documentElement.clientWidth;
