@@ -78,7 +78,7 @@
             <div class="changefaceurl">
                 <span>点击上传头像</span>
                 <div class="faceurl-in">
-                   <img v-if="baseuserinfo.headPortrait" :src="baseuserinfo.headPortrait?baseuserinfo.headPortrait:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
+                   <img :src="theShellfaceUrl?theShellfaceUrl: defaultFaceUrl" alt="抓周" class="hd-face"/>
                    <div class="upload-tool">
                        <uploadfile
                     :canedit="true"
@@ -170,7 +170,9 @@ export default {
             faceurl_show : false, //修改头像弹层显示
             post_time : '', //发给后台的修改出生日期
             columns : ['男','女'], //性别选择器数据
-            post_sex : '' //发给后台的修改性别数据
+            post_sex : '', //发给后台的修改性别数据
+            theShellfaceUrl : '',
+            defaultFaceUrl : require('../../../../assets/imgs/personal/mine_default.png')
         }
     },
     mounted(){
@@ -237,12 +239,20 @@ export default {
         /*点击出修改头像弹层 */
         faceurlshowclick(){
             this.faceurl_show = true;
+            this.theShellfaceUrl = this.baseuserinfo.headPortrait;
+            this.upimglist[0] = this.baseuserinfo.headPortrait;
+            
         },
         // 上传图片
         upfileslistchange(listdata, file_lasttag, e,wh){
-            this.upimglist=listdata;
-            console.log('listdata');
-            console.log(listdata);
+            this.upimglist = listdata;
+            // console.log('listdata');
+            // console.log(listdata.length);
+            if(listdata.length === 0){
+                this.upimglist = [];
+                this.theShellfaceUrl = '';
+                return;
+            }
             this.changefaceurl();
         },
         //修改上传头像
