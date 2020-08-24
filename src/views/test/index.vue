@@ -5,7 +5,13 @@
         <hr>
         query{{this.$route.query}} <br>
         params{{this.$route.params}} <br>
-        <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile>
+        <!-- <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile> -->
+        <uploadfile
+            :canedit="true"
+            :uploaddatainit="uploaddatainit"
+            :defaultfileslist="defaultfileslist"
+            @_upfileslistchange="upfileslistchange"
+        ></uploadfile>  
 
         <div class="levelwarp">
             <div class="herder_line"></div>
@@ -35,11 +41,15 @@ export default {
   data() {
     return {
       uploaddatainit: {
-        // upfileslist:[],
-        maxnumber: 4,
-        issingle: false, //除了图片之外的资源建议设置为true(单文件上传模式)
-        w: "",
-        h: "",
+        upfileslist: [],
+        maxnumber: 5,
+        issingle: false, //除了图片之外的资源设置为true(单文件上传模式)
+        imgSize: [
+          {
+            w: "",
+            h: "",
+          },
+        ],
         // filetype
         //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
         //'1.all':图片 (所有)
@@ -49,6 +59,7 @@ export default {
         // '5':办公文件 MS 及 wps
         // '6':html css js相关
         filetype: "1",
+        getwangsu_token_prams: 1, //云存储的存储目录
       },
       defaultfileslist: [],
     };
@@ -57,7 +68,7 @@ export default {
   methods: {
     upfileslistchange(listdata) {
       console.log(listdata);
-      // this.uploaddatainit.upfileslist = listdata;
+      this.defaultfileslist = listdata;
     },
     getuserlevelquities(){
         let zs = this;
