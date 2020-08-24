@@ -16,8 +16,13 @@
         <input type="text" placeholder="请输入运单号" v-model="yudannum" @input="infoText">
       </div>
       <div class="bottomtit">上传凭证：</div>
-      <uploadfile :uploaddatainit="uploaddatainit" @_upimglistchange="upimglistchange"></uploadfile> 
-      <!-- <van-uploader v-model="fileList" multiple :after-read="afterRead"  :max-count="6" />       -->
+      <!-- <uploadfile :uploaddatainit="uploaddatainit" @_upimglistchange="upimglistchange"></uploadfile>  -->
+      <uploadfile
+          :canedit="true"
+          :uploaddatainit="uploaddatainit"
+          :defaultfileslist="fileList"
+          @_upfileslistchange="upimglistchange"
+      ></uploadfile>  
     </div>
     <div class="return_sbu_btu" v-if="isShow">提交</div>
     <div class="return_sbu_btu red" v-if="!isShow" @click="subText(details)">提交</div>
@@ -28,10 +33,10 @@ import Vue from "vue";
 import { Uploader } from "vant";
 import base from "@/api/base.js"; // 导入接口域名列表
 Vue.use(Uploader);
-import uploadfile from '@/components/uploadfile.vue'
+// import uploadfile from '@/components/uploadfile.vue'
 export default {
   components: {
-    uploadfile
+    // uploadfile
   },
   data() {
     return {
@@ -39,9 +44,26 @@ export default {
       url: "",
       yudannum: "",
       fileList: [],
-      uploaddatainit:{ //图片上传
-        upimglist:[],
-        maxnumber:6
+      uploaddatainit: {
+        upfileslist: [],
+        maxnumber: 5,
+        issingle: false, //除了图片之外的资源设置为true(单文件上传模式)
+        imgSize: [
+          {
+            w: "",
+            h: "",
+          },
+        ],
+        // filetype
+        //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
+        //'1.all':图片 (所有)
+        // '2':音频
+        // '3':视频
+        // '4':zip文件
+        // '5':办公文件 MS 及 wps
+        // '6':html css js相关
+        filetype: "1",
+        getwangsu_token_prams: 1, //云存储的存储目录
       },
       deliveType : '', //物流类型
       details : '',
