@@ -55,6 +55,10 @@ export default {
     },
     data() {
         return {
+            titlistmassage: [{
+                category_name: "返回首页",
+                tabindex: 0 //推荐
+            }], //头部导航数据
             livinglidata: "",
             liveId: '',
             active: '', //直播间榜单tab切换当前个
@@ -302,14 +306,14 @@ export default {
     computed: {
         //全屏高度
         windowInnerHeight() {
-            return window.innerHeight + 'px';
+            return window.innerHeight - 85 + 'px';
         },
         // 直播相关
         wdwidth() {
-            return document.documentElement.clientWidth;
+            // return document.documentElement.clientWidth;
         },
         wdheight() {
-            return document.documentElement.clientHeight;
+            // return document.documentElement.clientHeight;
         },
         hasStartstatus: function() {
             return this.player.hasStart;
@@ -541,6 +545,19 @@ export default {
         });
     },
     methods: {
+        // 获取头部导航数据
+        titlelistmass() {
+            let that = this;
+            that.api.homedetails
+                .titlelist({})
+                .then(res => {
+                    // console.log(res.data);
+                    that.titlistmassage = res.data.data;
+                })
+                .catch(() => {
+                    that.vanerror = true;
+                });
+        },
         // 阻止冒泡
         returnfn() {
             return false;
@@ -996,26 +1013,26 @@ export default {
             setsessionStorage("orderListdata", orderListdatanew);
             this.$router.push({ name: 'confirmorder' });
         },
-        // 是否登录
-        iflogin() {
-            let that = this;
-            // H5端
-            if (!that.$store.state.user.userid ||
-                that.$store.state.user.userid == 0
-            ) {
-                that.$toast({
-                    message: "暂未登录，请先登录",
-                    duration: 810,
-                    forbidClick: true
-                });
-                setTimeout(() => {
-                    that.gotologin();
-                }, 810);
-                return false;
-            } else {
-                return true;
-            }
-        },
+        // // 是否登录
+        // iflogin() {
+        //     let that = this;
+        //     // H5端
+        //     if (!that.$store.state.user.userid ||
+        //         that.$store.state.user.userid == 0
+        //     ) {
+        //         that.$toast({
+        //             message: "暂未登录，请先登录",
+        //             duration: 810,
+        //             forbidClick: true
+        //         });
+        //         setTimeout(() => {
+        //             that.gotologin();
+        //         }, 810);
+        //         return false;
+        //     } else {
+        //         return true;
+        //     }
+        // },
 
         // postmsg IM聊天
         postmsg() {
@@ -2184,10 +2201,10 @@ export default {
     beforeUpdate() {}, //生命周期 - 更新之前
     updated() {}, //生命周期 - 更新之后
     beforeDestroy() {
-        this.quitGroup();
-        this.logoutfn();
-        this.player.destroy(true);
-        clearInterval(this.countchangetimer);
+        // this.quitGroup();
+        // this.logoutfn();
+        // this.player.destroy(true);
+        // clearInterval(this.countchangetimer);
     }, //生命周期 - 销毁之前
     destroyed() {}, //生命周期 - 销毁完成
     // activated() {} //如果页面有keep-alive缓存功能，这个函数会触发

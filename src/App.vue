@@ -3,7 +3,7 @@
   <div id="app">
     <router-view/>
 
-    <div class="bottomnav" v-show="bottomnavifshow">
+    <div class="bottomnav" v-show="bottomnavifshow && false">
       <router-link :to="{name:'shopindex'}">
         <div class="default">
           <img src="@/assets/imgs/bottomnav/shopactivenew.png" alt="" srcset="">
@@ -173,7 +173,7 @@
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width:7.5rem;
+  width:1200px;
   min-height: 100vh;
   margin: 0 auto;
   box-shadow: 0 0 5px #ccc;
@@ -183,7 +183,7 @@
     bottom: 0px;
     transform: translateX(-50%);
     height: 0.98rem;
-    width: 7.5rem;
+    width:1200px;
     background-color: #fff;
     z-index: 100;
     display: flex;

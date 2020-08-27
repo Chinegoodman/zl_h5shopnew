@@ -110,7 +110,7 @@
         }
         .name{
             font-size: 0.38rem;
-            color: rgba(219,49,42,1);
+            color: rgba(255,255,255,0.75);
             line-height: 0.53rem;
             text-align: center;
         }
@@ -125,9 +125,9 @@
                     width: 6.24rem;
                     height: 0.94rem;
                     line-height: calc(0.94rem - 2px);
-                    color: rgba(219,49,42,1);
+                    color: rgba(255,255,255,0.75);
                     box-sizing: border-box;
-                    border: 1px solid rgba(219,49,42,1);
+                    border: 1px solid rgba(255,255,255,0.75);
                     font-size: 0.32rem;
                     border-radius: 0.08rem;
                     text-align: center;

@@ -1,23 +1,31 @@
 .videoswrapout{
     font-family:PingFang SC;
+    .navbar {
+        padding: 0.1rem 0 0.03rem;
+        height: 65px;
+        box-sizing: border-box;
+        width: 1200px;
+        background: #FFBD03;
+    }
     .videoswrap {
         position: relative;
-        width: 7.5rem;
-        height: 100vh;
+        width: 1158px;
         // min-height: 100vh;
+        padding: 20px 20px 0 20px;
+        border : 1px solid #dadada;
         .video{
-            width: 7.5rem;
-            height: 100vh;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 0;
-            overflow:hidden;
+            width: 800px;
+            height: 620px;
+            // position: fixed;
+            // left: 50%;
+            // transform: translateX(-50%);
+            // top: 0;
+            // overflow:hidden;
             #videodom{
-                position: fixed;
-                left: 50%;
-                transform: translateX(-50%);
-                top: 0;
+                // position: fixed;
+                // left: 50%;
+                // transform: translateX(-50%);
+                // top: 0;
             }
         }
         .video-in-wx{
@@ -26,29 +34,27 @@
         }
 
         .video-content {
-            position: fixed;
-            width: 7.5rem;
-            height: 100vh;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            position: absolute;
+            width: 360px;
+            height: 620px;
+            top: 20px;
+            right: 20px;
             z-index: 10500;
             overflow: hidden;
+            background: rgba(0, 0, 0, 0.75);
             &.havebgpic{
                 background: url('./../img/livingdtbg.jpg') no-repeat;
                 background-size: cover;
             }
     
             .content-top {
-                position: fixed;
-                left: 50%;
-                transform: translateX(-50%);
-                top: 0;
+                width: 350px;
+                position: absolute;
+                left: 10px;
+                right: 0;
+                top: 10px;
                 z-index: 110;
                 box-sizing: border-box;
-                width: 100%;
-                padding: 0.3rem 0.2rem 0;
-
                 .complaints{
                     float:left;
                     width:0.86rem;
@@ -335,10 +341,10 @@
                 .bottomchat{
                     max-height: 3.6rem;
                     overflow-y: scroll;
-                    margin-bottom: 0.15rem;
+                    margin-bottom: 0.5rem;
                     // box-shadow: inset .05rem .05rem .02rem .01rem rgba(0, 0, 0, .1rem);
                     .msgboxwrap{
-                        margin-bottom: 0.08rem;
+                        margin-bottom: 0.18rem;
                         max-width: 99%;
                         &:last-child{
                             margin-bottom: 0.2rem;
@@ -603,7 +609,7 @@
                     .chatgd {
                         width: 0.8rem;
                         height: 0.8rem;
-                        margin-left: 0.2rem;
+                        margin-left: 5px;
                         position: relative;
                         
                         img {
@@ -932,6 +938,45 @@
                         margin-left: 0.2rem;
                     }
                 }
+            }
+        }
+
+        .about-instruction{
+            margin-top: 20px;
+            color: #fff;
+            h2 {
+                font-size: .34rem;
+                padding: .15rem 0 .35rem;
+            }
+            .zu {
+                padding-bottom: .5rem;
+            }
+            
+            .instruction {
+                line-height: .38rem;
+                font-size: .28rem;
+                text-align: justify;
+                padding-bottom: .5rem;
+            }
+
+            .tit {
+                line-height: .38rem;
+                font-size: .32rem;
+            }
+            
+            p {
+                padding: 0 .1rem;
+                line-height: .5rem;
+                font-size: .26rem;
+            }
+            
+            p.t {
+                margin-top: .36rem;
+            }
+            
+            p.in {
+                text-indent: 2em;
+                padding: 0;
             }
         }
 

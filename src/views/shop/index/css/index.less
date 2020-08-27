@@ -1,7 +1,5 @@
 @import url('./../../../../assets/css/common.less');
 #shopwrap {
-    background: #fff url("./../../../../assets/imgs/shop/bg_hd_top.png") no-repeat 0 0;
-    background-size: 7.5rem 3.39rem;
     .test {
         opacity: 1;
         position: fixed;
@@ -139,15 +137,17 @@
 
     .navbar {
         padding: 0.1rem 0 0.03rem;
-        height: 0.92rem;
+        height: 65px;
         box-sizing: border-box;
-        width: 100%;
+        background: #FFBD03;
     }
 
     .swiper {
-        margin:.2rem .2rem 0;
+        width: 1200px;
+        margin: 15px 0 0;
         .swiperdom {
-            height: 3.12rem;
+            width: 1200px;
+            height: 420px;
             .van-swipe-item{
                 border-radius: .12rem;
             }
@@ -210,7 +210,7 @@
     }
 
     .index_list_recommend{
-        padding: .3rem .2rem 1rem;
+        padding: .3rem 0 1rem;
         background:rgba(247,247,247,1);
         margin-top: .56rem;
         border-radius: .3rem .3rem 0 0;
@@ -506,20 +506,24 @@
 
     /*tuijian and zhibo list css*/
     .list {
+        width: 1300px;
         .goodslist {
             min-height: 1rem;
-            padding: 0 0 0;
-            display: flex;
-            justify-content: space-between;
+            padding: 0 20px;
+            // display: flex;
+            // justify-content: space-between;
+            overflow: hidden;
             flex-wrap: wrap;
             .goodsli {
-                width: 3.45rem;
+                width: 3.63rem;
                 min-height: 5.16rem;
                 overflow: hidden;
                 margin-top: 0.25rem;
                 border-radius: .12rem;
                 background:rgba(255,255,255,1);
                 position: relative;
+                float: left;
+                margin-right: 20px;
                 .im{
                     width: 3.45rem;
                     height: 5.16rem;
@@ -1508,7 +1512,9 @@
 
     
     .xiuchang{
-        margin-top: 0.4rem;
+        width: 1200px;
+        overflow: hidden;
+        margin-top: 0.25rem;
         .xclist{
             .goodslist{
                 .goodsli{

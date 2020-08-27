@@ -17,11 +17,11 @@
         <div class="content" v-if="logintype=='验证码登录'">
             <div class="step1" v-if="step==1">
                 <div class="iptbox">
-                    <span class="t">手机号</span>
+                    <span class="t">手机号：</span>
                     <input type="text" v-model="phonenum" @blur="checkPhone" placeholder="请输入手机号">
                 </div>
                 <div class="iptbox">
-                    <span class="t">验证码</span>
+                    <span class="t">验证码：</span>
                     <input type="text" v-model="phonecode" placeholder="请输入验证码">
                     <span @click="dingxiangsdk" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
@@ -32,11 +32,11 @@
             </div>
             <div class="step2" v-if="step==2">
                 <div class="iptbox">
-                    <span class="t">输入密码</span>
+                    <span class="t">输入密码：</span>
                     <input type="password" v-model="setpassword" placeholder="请输入密码">
                 </div>
                 <div class="iptbox">
-                    <span class="t">确认密码</span>
+                    <span class="t">确认密码：</span>
                     <input type="password" v-model="setpassword2" placeholder="确认登录密码">
                 </div>
                 <p>密码长度8-32位，须包含数字、字母、符号至少2种</p>
@@ -534,14 +534,13 @@ export default {
 <style lang='less' scoped>
 .registwrap {
   position: relative;
-  width: 7.5rem;
+  width: 1200;
   margin: 0 auto;
   height: 100vh;
-  overflow-y: scroll;
   .toprightbtn {
     height: 0.64rem;
     margin-top : .2rem;
-    color: rgba(136, 136, 136, 1);
+    color: rgba(255, 255, 255,.75);
     text-align : center;
     cursor: pointer;
   }
@@ -549,7 +548,7 @@ export default {
     margin-top: .58rem;
     .title {
       text-align: center;
-      color: rgba(51, 51, 51, 1);
+      color: rgba(255, 255, 255,.75);
       font-size: 0.56rem;
       line-height: 0.74rem;
       height: auto;
@@ -604,29 +603,29 @@ export default {
     }
     .iptbox {
       border-radius: 0.089rem;
-      padding: 0.2rem 0;
-      width: 5.68rem;
+      padding: 1rem 2.2rem 1.5rem;
       // height: 0.78rem;
       box-sizing: border-box;
-      margin: 0 0.91rem .52rem 0.91rem;
+      margin: 0.5rem 1.8rem;
       // font-size:0.28rem;
       font-size: 0.37rem;
       line-height: 1em;
-      height: calc(1em + 0.4rem);
+      // height: calc(1em + 0.4rem);
       position: relative;
       border-bottom :.01rem solid rgba(215,215,215,1);
       .t{
         font-size: .3rem;
         font-weight:500;
-        color:rgba(31,31,31,1);
+        color: rgba(250, 250, 250,.75);
         text-align: left;
       }
       span {
         float: left;
-        width: 1.2rem;
-        height:0.37rem;
+        width: 2rem;
+        height:0.8rem;
+        line-height: .8rem;
         text-align: right;
-        color: rgba(51, 51, 51, 1);
+        color: rgba(250, 250, 250,.75);
         font-size: 0.32rem;
         &.getcodebtn {
           width: 1.6rem;
@@ -643,13 +642,13 @@ export default {
       input {
         border: none;
         // height: 1em;
-        height: 0.37rem;
+        height: 0.8rem;
         line-height: 1em;
         color: 333;
         font-size: 0.28rem;
         padding-left: 0.24rem;
         float: left;
-        width:3.85rem;
+        width: 6.8rem;
       }
 
       input::placeholder {
@@ -693,7 +692,7 @@ export default {
           border: none;
           height: 0.37rem;
           line-height: 0.37rem;;
-          color: rgba(206, 206, 206, 1);
+          color: rgba(250, 250, 250,.75);
           font-size: 0.28rem;
           // padding-left: 0.24rem;
           // float: left;
@@ -717,7 +716,7 @@ export default {
       }
       & > p {
         width: 6.32rem;
-        color: rgba(155, 155, 155, 1);
+        color: rgba(250, 250, 250,.75);
         line-height: 0.37rem;
         font-size: 0.24rem;
         margin: 0.12rem auto 0.4rem .91rem;
@@ -798,13 +797,13 @@ export default {
   .tit{
     font-size: .34rem;
     font-weight:bold;
-    color:rgba(31,31,31,1);
+    color: rgba(250, 250, 250,.75);
     margin-top : .55rem;
   }
   .t{
     font-size: .24rem;
     font-weight:500;
-    color:rgba(191,191,191,1);
+    color:rgba(255,255,255,.75);
     margin-top : .2rem;
   }
 
@@ -813,7 +812,7 @@ export default {
 
 .registwrap{
   .header {
-      width: 7.5rem;
+      width: 1200px;
       border-bottom: 1px solid #DEDEDE;
       background: white;
       text-align: center;
