@@ -685,7 +685,7 @@
                     }
     
                     .chatsp {
-                        background-image: url(./../../../../assets/imgs/living/xiudetails/xiuproduct.png);
+                        background-image: url(./../../../../assets/imgs/living/xiudetails/guowudai.png);
                         background-size: cover;
                         background-position: center;
                         background-repeat: no-repeat;
@@ -737,8 +737,8 @@
                 .goodsbox{
                     border-top: 1px solid rgba(0, 0, 0, 0.1);
                     // border-radius: 0.1rem;
-                    border-top-left-radius: 0.1rem;
-                    border-top-right-radius: 0.1rem;
+                    border-top-left-radius: 0.3rem;
+                    border-top-right-radius: 0.3rem;
                     position: absolute;
                     left: 0;
                     bottom: 0;
@@ -773,6 +773,12 @@
                             vertical-align: middle;
                         }
                     }
+                    &>p.headtitle{
+                        text-align: center;
+                        color:rgba(31,31,31,1);
+                        font-size: 0.3rem;
+                        font-weight:500;
+                    }
                     &>ul{
                         width: 6.9rem;
                         padding: 0.81rem .3rem 0rem;
@@ -792,8 +798,8 @@
                                 color: rgba(51, 51, 51, 1);
                             }
                             &>img{
-                                width: 1.68rem;
-                                height: 1.68rem;
+                                width: 1.7rem;
+                                height: 1.7rem;
                                 border-radius: 0.08rem;
                                 position: absolute;
                                 left: 0;
@@ -801,22 +807,36 @@
 
                             }
                             .details{
-                                padding-left: 1.83rem;
+                                padding-left: 1.9rem;
                                 width: 5.07rem;
                                 position: relative;
-                                min-height: 1.68rem;
+                                min-height: 1.7rem;
                                 .name{
                                     color: rgba(51, 51, 51, 1);
                                     font-size: 0.28rem;
                                     line-height: 0.4rem;
                                     margin-bottom: 0.14rem;
+                                    overflow:hidden;
+                                    display:-webkit-box;
+                                    text-overflow:ellipsis;
+                                    -webkit-line-clamp:2;
+                                    -webkit-box-orient:vertical; 
+                                    white-space:normal;
                                 }
                                 .guige{
                                     color:rgba(239,71,58,1);
                                     font-weight:400;
                                     font-size: 0.28rem;
                                     line-height: 0.4rem;
-                                    margin-bottom: 0.3rem;
+                                    display: flex;
+                                    position: absolute;
+                                    bottom: 0;
+                                    .sale-num{
+                                        color:rgba(117,117,117,1);
+                                        font-size: 0.22rem;
+                                        vertical-align: middle;
+                                        margin-left: .21rem;
+                                    }
                                 }
                                 .shop{
                                     img{
@@ -837,15 +857,21 @@
                                 .btn{
                                     position: absolute;
                                     right: 0;
-                                    bottom: 0;
-                                    width: .6rem;
-                                    height: .6rem;
+                                    bottom: .06rem;
+                                    width: 1.25rem;
+                                    height: .5rem;
+                                    line-height: .5rem;
+                                    text-align: center;
+                                    color:rgba(255,255,255,1);
+                                    font-size: .26rem;
                                     cursor: pointer;
                                     &.red{
-                                        background-image: url(./../../../../assets/imgs/icons/shopcart.png);
-                                        background-repeat: no-repeat;
-                                        background-position: center center;
-                                        background-size: .6rem .6rem;
+                                        // background-image: url(./../../../../assets/imgs/icons/shopcart.png);
+                                        // background-repeat: no-repeat;
+                                        // background-position: center center;
+                                        // background-size: .6rem .6rem;
+                                        background:rgba(255,189,3,1);
+                                        border-radius: 0.05rem;
                                     }
                                     &.gray{
                                         background: rgba(178, 178, 178, 1);
