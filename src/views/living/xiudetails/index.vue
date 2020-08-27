@@ -244,18 +244,15 @@
         <!-- 主播上架的商品 -->
         <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus" :style="{height:windowInnerHeight}">
           <div class="goodsbox" @click.stop="returnfn">
-            <p><span class="ic"></span>全部商品<span v-if="goodsList.length">({{goodsList.length}})</span></p>
+            <p class="headtitle">全部商品<span v-if="goodsList.length">({{goodsList.length}})</span></p>
             <ul>
               <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
-                <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/>
+                <!-- <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/> -->
+                <img src="./../../../assets/imgs/living/sytu1.png" alt="抓周" />
                 <div class="details">
-                  <p class="name _txtov1">{{item.goods_title}}</p>
-                  <p class="guige _txtov1">{{item.price.toFixed(2)}}</p>
-                  <div class="shop clearfix">
-                    <img v-if="item.brand_logo" src="@/assets/imgs/icons/zbddp.png" alt="抓周">
-                    <p>{{item.brand_name}}</p>
-                  </div>
-                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)"></div>
+                  <p class="name">{{item.goods_title}}</p>
+                  <p class="guige"><span>{{item.price.toFixed(2)}}</span><span class="sale-num">已售56件</span></p>
+                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">立即购买</div>
                   <!-- <div class="btn gray">已添加</div> -->
                 </div>
                 

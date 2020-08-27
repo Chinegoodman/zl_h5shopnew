@@ -97,8 +97,44 @@ export default {
             livingendstatus: true, // 直播  默认为未结束
             confirmordermbstatus: false, //直播间 主播推送到用户的立即付款状态 默认 false
             confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
-
-            goodsList: [], //直播间的商品列表
+            default_img_small: require('../../../../assets/imgs/shop/list-default-small.png'), //默认图片
+            goodsList: [{
+                    goods_image: this.default_img_small,
+                    goods_title: '夏季新款个性耳环小清新耳坠小夏季新款个性耳环小夏季新款个性耳环小香风气夏季新款个性耳环小质 耳钉耳饰',
+                    price: 1586,
+                    brand_name: '助力集团'
+                },
+                {
+                    goods_image: this.default_img_small,
+                    goods_title: '代码青春',
+                    price: 1586,
+                    brand_name: '助力集团'
+                },
+                {
+                    goods_image: this.default_img_small,
+                    goods_title: '代码青春',
+                    price: 1586,
+                    brand_name: '助力集团'
+                },
+                {
+                    goods_image: this.default_img_small,
+                    goods_title: '代码青春',
+                    price: 1586,
+                    brand_name: '助力集团'
+                },
+                {
+                    goods_image: this.default_img_small,
+                    goods_title: '代码青春',
+                    price: 1586,
+                    brand_name: '助力集团'
+                },
+                {
+                    goods_image: this.default_img_small,
+                    goods_title: '代码青春',
+                    price: 1586,
+                    brand_name: '助力集团'
+                }
+            ], //直播间的商品列表
             giftList: [], //礼物列表
             topgiftList: [], //前三排列列表
             onlinesList: [], //在线人数列表
@@ -872,26 +908,6 @@ export default {
                         }
                     }
                 })
-        },
-        //获取礼物列表 -礼物打赏 暂无
-        getgiftList() {
-            let that = this;
-            that.api.xiuchangliving
-                .giftList({})
-                .then(res => {
-                    if (res.data.code == 1) {
-                        if (
-                            res.data.data.list != null ||
-                            res.data.data.list != undefined ||
-                            res.data.data.list != ""
-                        ) {
-                            that.goodsList = res.data.data.list;
-                        } else {
-                            that.goodsList = [];
-                        }
-                    }
-                })
-
         },
         // 直播间商品列表
         getgoodsList() {
