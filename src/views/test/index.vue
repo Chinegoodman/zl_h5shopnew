@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import uploadfile from "@/components/uploadfile_multiple.vue";
+// import uploadfile from "@/components/uploadfile_multiple.vue";
 export default {
   components: {
-    uploadfile,
+    // uploadfile,
   },
   data() {
     return {
