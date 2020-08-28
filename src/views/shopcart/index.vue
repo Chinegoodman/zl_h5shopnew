@@ -1,132 +1,291 @@
 <!-- 组件说明 -->
 <template>
-  <div class="shoppingcartwrap">
-    <div class="header">
-      <div class="in">
-        <div class="title_shopcar">购物车</div>
-        <!-- <span class="title_shopnum">共0件宝贝</span> -->
-        <div class="bianbtn" v-show="iskong==1" @click="gotobian">{{bianbtn}}</div>
-      </div>
-    </div>
-    <!-- 购物车为空时 -->
-    <div class="order_body_null" v-show="iskong==0">
-      <div class="banner" v-if="1">
-        <img src="../../assets/imgs/shopcart/shopcart-nodata.png" alt />
-      </div>
-      <p class="banner_title">
-        <span>哎呀，购物车竟然是空的,快去逛一逛吧。</span>
-      </p>
-      <button style="cursor:pointer;" @click="gotoshop">逛一逛</button>
-    </div>
-    <!-- 有商品时 -->
-    <div class="car_body" v-show="iskong==1">
-      <ul>
-        <li class="car_list" v-for="(item,index) in list" :key="index">
-          <div class="dianpu">
-            <div class="checkall" @click="dianpucheckevery(index,item.isselect)">
-              <img v-if="item.itemCount == '1' && (item.items[0].sp1==1 || item.items[0].sp1==2)" src="../../assets/imgs/shopcart/noclick.png" alt="">
-              <van-checkbox v-model="item.isselect" v-else></van-checkbox>
-            </div>
-            <span @click="gotoshopowner(item)">
-              <span   class="icon-shops" ><img src="../../assets/imgs/shopcart/icon-shops.png" alt /></span>
-              <span class="tit">
-                {{item.shopName}}
+   <div class="main">
+        <div class="returnindex" @click="shopback">首页 < 隐私政策</div>
+        <div class="main-mass">
+          <div class="mass-tit">提示条款：<br>
+            欢迎您（下称“用户”或“您”）与抓周平台的经营者共同签署本《抓周平台用户服务协议》（下称“本协议”）并使用抓周平台珠宝首饰信息中介服务。各条款标题仅为帮助您理解该条款表达的主旨之用，不影响或限制本协议条款的含义或解释。为维护您自身权益，建议您仔细阅读各条款具体表述。
+          </div>
+          <!-- <div class="mass-content">
+              各条款标题仅为帮助您理解该条款表达的主旨之用，不影响或限制本协议条款的含义或解释。
+              <span>
+                为维护您自身权益，建议您仔细阅读各条款具体表述。
               </span>
-              <span class="gd"><img src="../../assets/imgs/follow/xiangqing@2x.png" alt /></span>
-            </span>  
+          </div> -->
+        </div>
+        <div class="mass-txt">
+          <span>【审慎阅读】</span>您在申请注册流程中点击同意本协议之前，应当认真阅读本协议。请您务必审慎阅读、充分理解各条款内容，特别是免除或限制责任的条款、法律适用和争议解决条款。免除或限制责任的条款将以粗体下划线标识，您应重点阅读。若您对协议有任何疑问，可向抓周平台客服咨询。
+        </div>
+        <div class="mass-txt">
+          <span>【签约动作】</span>当您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，即表示您已充分阅读、理解并接受本协议的全部内容，并与抓周平台达成一致，成为抓周平台 “用户”。阅读本协议的过程中，如果您不同意本协议或其中任何条款约定，您应立即停止注册程序。
+        </div>
+        <div class="mass-txt">
+          <span class="text-underline">本“提示条款”是本协议正文的组成部分。</span>
+        </div>
+        <div class="main-mass">
+          <div class="mass-tittxt">1.定义</div>
+          <div class="mass-txt">
+            <span>1.1 抓周平台：是指深圳助力文化传媒有限公司经营的珠宝首饰信息中介服务平台，包括但不限于抓周平台网站（网址：<span class="text-underline">www.izhuazhou.com</span>）、抓周客户端等。</span>
           </div>
-          <!-- <van-checkbox-group v-model="checklist" ref="checkbox"> -->
-          <div class="car_list_items clearfix" v-for="(tab,i) in item.items" :key="i">
-            <div class="car_list_check">
-              <van-checkbox v-if="tab.sp1==0" v-model="tab.isselect" @click="checkone(tab,item)" :name="tab.productSkuId" ref="checkboxGroup"></van-checkbox>
-              <img v-if="tab.sp1!=0" src="../../assets/imgs/shopcart/noclick.png" alt="">
-            </div>
-          <div class="car_list_banner">
-            <span class="im">
-              <img :src="tab.productPic" alt />
+          <div class="mass-txt">
+            <span>1.2抓周：是指抓周平台的经营者，即深圳助力文化传媒有限公司。<span class="text-underline">作为黄金珠宝趣味直播电商服务平台经营者，抓周仅为平台上的产品提供方（下称“销售方”）与您达成交易提供网页空间、信息展示、交易撮合、代收货款、物流支持等居间服务。</span></span>
+          </div>
+          <div class="mass-txt">
+            <span>1.3抓周平台用户服务协议:即本协议，指您与抓周订立的旨在约定您注册、登录、使用抓周平台服务，以及您与抓周平台之间的权利、义务的书面合同。</span>
+          </div>
+          <div class="mass-txt">
+            <span>1.4抓周规则：包括所有已经发布或将来可能发布、修订的各类规则、规范、规则解读、实施细则、通知、公告等。</span>
+          </div>
+          <div class="mass-txt">
+            <span>1.5用户：下称“您”或“用户”，是指注册、登录、使用、浏览、获取本协议项下服务的个人或组织。</span>
+          </div>
+        </div>
+        <div class="main-mass">
+          <div class="mass-tittxt">2.协议范围及变更</div>
+          <div class="mass-txt">
+            <span class="text-underline">2.1协议范围。抓周规则为本协议不可分割的一部分，与协议正文具有同等法律效力。</span>
+          </div>
+          <div class="mass-txt">
+            <span class="text-underline">2.2协议变更。为给您提供更好的服务，抓周将根据业务变化，相应调整本协议。抓周将按照法律规定对修订内容提前进行公示，修订后的协议一经实施，将完全替代修订前的协议。您应当及时关注和了解本协议的修订情况、公告、提示信息等，如果您不同意修订后协议，请您立即停止使用抓周平台，否则即视为您同意并完全接受修订后的协议。</span>
+          </div>
+        </div>
+        <div class="main-mass">
+          <div class="mass-tittxt">3.用户账户</div>
+          <div class="mass-txt">
+            <span>3.1行为能力。在注册抓周平台用户账户之前，您应当确认并承诺，您具备中华人民共和国法律规定的与您行为相适应的民事行为能力。</span>
+          </div>
+          <div class="mass-txt">
+            <span>3.2登录方式。您可以通过注册抓周平台用户账户或使用第三方账号登录并使用抓周平台。</span>
+          </div>
+          <div class="mass-txt">
+            <span>3.3 账户注册。注册抓周平台用户账户时，您应当提供真实、有效的信息（包括姓名、电子邮箱、联系电话、联系地址等）；同时，您应当保证上述信息的持续有效性，一旦信息发生变化，您应当及时进行更新；否则您应当承担因信息提供不真实、联系方式无效导致的相关不利后果及全部损失，且抓周保留终止向您提供服务的权利。</span>
+          </div>
+          <div class="mass-txt">
+            <span>3.4账户保管。您的账户由您自行设置并保管，抓周任何时候均不会主动要求您提供您的账户密码。因您保管账号、密码不当而造成的所有后果，将由您自行承担。凡经您的账号和密码成功登录使用抓周平台，即视为您的使用行为；您应当对您的账户进行的所有活动及后果负法律责任。您不得以任何形式擅自转让或授权他人使用您的账户，<span class="text-underline">因您主动泄露、出借账户信息或因您遭受他人攻击、诈骗等行为导致的损失及后果，抓周并不承担责任,</span>您可以通过司法、行政等救济途径向侵权行为人追偿。</span>
+          </div>
+        </div>
+        <div class="main-mass">
+          <div class="mass-tittxt">4.商品及/或服务的交易</div>
+          <div class="mass-txt">
+            <span>4.1订单信息的确认。当您在抓周平台购买商品或服务时，请您务必仔细确认所购商品的名称、价格、数量、重量、质量、型号、规格、尺寸或服务的时间、内容、限制性要求等重要事项，并在下单时核实您的联系地址、电话、收货人等信息。</span>
+            <span class="text-underline">如您填写的收货人非您本人，则该收货人的行为和意思表示产生的法律后果均由您承担。</span>
+          </div>
+          <div class="mass-txt">
+            <span>4.2交易秩序。您的购买行为应当<span class="text-underline">基于真实的消费需求，</span>不得实施恶意购买、恶意维权等扰乱抓周平台正常交易秩序的行为。基于维护抓周平台交易秩序及交易安全的需要，抓周发现上述情形时有权采取关闭相关交易订单，限制账户使用功能、中止或终止服务等措施而无需事先通知您。</span>
+          </div>
+          <div class="mass-txt">
+            <span>4.3 合同的成立与生效。</span>
+            <span class="text-underline">您通过抓周平台下达订单后，仅表示系统接收到了您下达的订单。只有您支付价款，您与销售方之间的买卖合同才成立。</span>
+          </div>
+          <div class="mass-txt">
+            <span>4.4 真实评价。您有权在抓周平台提供的评价系统中对您购买的商品或服务进行评价。您的所有评价行为应遵守法律法规及/或抓周规则的相关规定，评价内容应当客观真实，不应包含任何污言秽语、色情低俗、广告信息及法律法规与本协议列明的其他禁止性信息；您不得以不正当方式帮助他人提升信用或利用评价权利对其他用户实施威胁、敲诈勒索。</span>
+            <span class="text-underline">抓周可按照法律法规及/或抓周规则的相关规定对您发布的违规信息进行屏蔽等，并有权视情形对您采取身份验证、限制购买行为等处理措施。</span>
+          </div>
+          <div class="mass-txt">
+            <span>4.5 商品信息。除另有明确说明外，抓周平台上销售的商品/服务的相关信息由销售方提供，抓周尽可能通过与销售方签订合作协议及发布平台规则等方式约束销售方提供准确、完整、可靠、有效、没有错误和误导性的商品描述。</span>
+            <span class="text-underline">
+              然而，您充分理解，抓周平台上存在海量信息，因为互联网技术及人力的局限性，抓周不能保证平台上所有商品的信息均准确、完整、可靠、有效、没有错误等瑕疵。
             </span>
-            <div class="imMask" v-if="tab.sp1_status">
-              <div v-if="tab.sp1_status==1">商品无效</div>
-              <div v-else-if="tab.sp1_status==2">已售罄</div>
-            </div>
-            <div class="car_list_title">
-              <h4 class="title _txtov2">{{tab.productName}}</h4>
-              <div class="car_list_p">
-                <!-- <span>颜色： jins</span> -->
-                <span>规格：{{tab.productAttr}}</span>
-              </div>
-              <div class="car_list_price"><span>￥</span>{{tab.price}}</div>
-              <div class="car_num">
-                <!-- <button @click="jian(index,tab,item)">-</button>
-                <span>{{tab.quantity}}</span>
-                <button @click="jia(index,tab,item)">+</button> -->
-                <span :class="{grew:tab.quantity==1}" @click="jian(index,tab,item)">-</span>
-                <span class="show">{{tab.quantity}}</span>
-                <span @click="jia(index,tab,item)">+</span>
-              </div>
-            </div> 
           </div>
+          <div class="mass-txt">
+            <span>4.6 异常订单的处理。抓周保留对单个商品的总出售数量进行限制、对单个订单的商品购买数量及同一IP地址对同类商品购买数量进行限制，并对异常订单、异常用户采取监控、限制等措施的权利。如抓周发现您通过抓周平台下达的订单存在违反法律规定或者本协议约定的异常情形的，抓周有权采取关闭相关交易订单、限制账户使用功能、中止或终止服务等措施而无需事先通知您。</span>
           </div>
-          <!-- </van-checkbox-group> -->
-        </li>
-      </ul>
-    </div>
-    <div class="bottom" v-show="iskong==1">
-      <div class="bottom_left">
-        <van-checkbox v-model="allchecked" @click="checkalll"></van-checkbox>
-        <span>全选</span>
+          <div class="mass-txt">
+            <span>4.7违规行为的处理。如果您使用抓周平台时存在违反国家法律法规、本协议、侵害他人利益、抓周利益或社会公共利益、严重违背社会公德等情形，</span>
+            <span class="text-underline">抓周有权采取屏蔽相关信息、中止或终止提供服务等处理措施。</span>
+          </div>
+          <div class="mass-txt">
+            <span class="text-underline">4.8 法律责任。您理解并同意，因您违反本协议或抓周规则而产生的第三方索赔请求，由您自行承担法律责任；由此导致抓周遭受损失的，您也应当一并赔偿。</span>
+          </div>
+        </div>
+        <div class="main-mass">
+          <div class="mass-tittxt">5.费用</div>
+          <div class="mass-txt">
+            <span>5.1 费用。除本协议另有约定外，抓周平台暂时为您提供免费服务，不向您收取任何费用。但抓周保留收费的权利，包括设置收费的软件功能，决定收费对象、收费时段或收费费率等。</span>
+          </div>
+          <div class="mass-txt">
+            <span>5.2 收费规则。抓周在收费前，会通过本协议或抓周规则约定的通知方式给予提前通知，若您不同意抓周的收费规则，应当立即停止使用抓周平台；如果您继续使用抓周平台，则视为您接受相关收费规则，您应当遵照收费规则向抓周支付相应的费用。</span>
+          </div>
       </div>
-      <div class="bottom_right" v-if="bobtn">
-        <span class="price">
-          合计：<span style="font-size:0.35rem">￥{{allprice.toFixed(2)}}</span>
-        </span>
-        <button @click="checkmoney">结算({{past_pay_nums}})件</button>
+      <div class="main-mass">
+        <div class="mass-tittxt">6.所有权及知识产权</div>
+        <div class="mass-txt">
+          <span>平台的知识产权。抓周平台提供的服务中包含的任何编码、商标、服务标志、商号、图形、美术品、照片、肖像、文字内容、音频、视频、按钮图标以及计算机软件、标识、数码下载、数据汇编、数据信息等都是抓周或其内容提供者的财产，受到中华人民共和国版权、商标权、专利权和其他财产所有权法律法规的保护。</span>
+        </div>
       </div>
-      <div class="bianji_right" v-else>
-        <!-- <button class="add" @click="addlist">添加关注</button> -->
-        <button class="deleted" @click="deleted">删除</button>
+      <div class="main-mass">
+        <div class="mass-tittxt">7.用户守则</div>
+        <div class="mass-txt">
+          <span>7.1禁止行为。您不得进行任何侵犯抓周知识产权的行为，或者进行其他有损于抓周或其他用户合法权益的行为，包括但不限于：</span>
+        </div>
+        <div class="mass-txt">
+          1)删除或修改抓周平台上的版权信息；
+        </div>
+        <div class="mass-txt">
+          2)对抓周平台及其中的相关信息擅自出租、出借、复制、修改、链接、转载、汇编、发表、出版、建立镜像站点，借助抓周平台发展与之有关的衍生产品、作品、服务、插件、外挂、兼容、互联等；
+        </div>
+        <div class="mass-txt">
+          3)在抓周平台中内置各种插件程序或者其他的第三方程序，或者制作、发布、传播上述程序，而无论是否出于商业目的；
+        </div>
+        <div class="mass-txt">
+          4)进行编译、反编译、反向工程或者以其他方式破解抓周平台的行为；
+        </div>
+        <div class="mass-txt">
+          5)使用抓周平台外挂和/或利用抓周平台当中的BUG来获得不正当的利益；
+        </div>
+        <div class="mass-txt">
+          6)利用劫持域名服务器等技术非法侵入、破坏抓周平台的服务器软件系统，或者修改、增加、删除、窃取、截留、替换抓周平台的客户端和/或服务器软件系统中的数据，或者非法挤占抓周平台的服务器空间，或者实施其他的使之超负荷运行的行为；
+        </div>
+        <div class="mass-txt">
+          7)假冒抓周在抓周平台当中发布任何诈骗或虚假信息；
+        </div>
+        <div class="mass-txt">
+          8)利用抓周平台故意传播恶意程序或计算机病毒。
+        </div>
+        <div class="mass-txt">
+          <span>7.2 信息发布。您应当遵守国家有关法律法规，不得在抓周平台当中发表、转发或者传播含有下列内容的信息：</span>
+        </div>
+        <div class="mass-txt">
+          1)反对宪法所确定的基本原则的；
+        </div>
+        <div class="mass-txt">
+          2)危害国家安全、泄露国家秘密、颠覆国家政权、破坏国家统一的；
+        </div>
+        <div class="mass-txt">
+          3)损害国家荣誉和利益的；
+        </div>
+        <div class="mass-txt">
+          4)煽动民族仇恨、民族歧视，破坏民族团结的；
+        </div>
+        <div class="mass-txt">
+          5)破坏国家宗教政策，宣扬邪教和封建迷信的；
+        </div>
+        <div class="mass-txt">
+          6)散布谣言，扰乱社会秩序，破坏社会稳定的；
+        </div>
+        <div class="mass-txt">
+          7)散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；
+        </div>
+        <div class="mass-txt">
+          8)侮辱或者诽谤他人，侵害他人合法权益的；
+        </div>
+        <div class="mass-txt">
+          9)含有法律、行政法规禁止的其他内容的。
+        </div>
+        <div class="mass-txt">
+          <span>7.3 法律责任。您需要对您在抓周平台的言论及行为承担法律责任，若您违反国家法律法规的规定，抓周平台的系统记录有可能成为您违反法律法规的证据。</span>
+        </div>
       </div>
-    </div>
-    <van-loading v-if="loadingstatus" type="spinner" color="#1989fa" />
-
-    <!-- 投资金及其他商品分开结算弹层 start-->
-    <div class="openappbtnsbox" v-if="judgementType">
-        <div class="box-cover"></div>
-        <div class="box-content">
-            <h3>请分开结算以下商品</h3>
-            <ul>
-              <li>
-                <div class="ck" @click="inveClick">
-                  <!-- <van-checkbox v-model="check_tzj" ></van-checkbox> -->
-                  <img src="../../assets/imgs/address/dd-weixuanz@2x.png" alt="" v-if="inves==false">
-                  <img src="../../assets/imgs/address/gwcxz.png" alt="" v-if="inves==true">
-                </div>
-                <div class="rt">
-                  <span class="n">投资金类商品</span>
-                  <div class="type">(购物车内含<span class="t">融通金</span>购物车内含)</div> 
-                  <div class="num">共<span>{{invesLeng}}</span> 件</div>
-                </div> 
-              </li>
-              <li>
-                <!-- <van-checkbox v-model="check_tzj" class="ck"></van-checkbox> -->
-                <div class="ck" @click="otherClick">
-                  <!-- <van-checkbox v-model="check_tzj" ></van-checkbox> -->
-                  <img src="../../assets/imgs/address/dd-weixuanz@2x.png" alt="" v-if="other==false">
-                  <img src="../../assets/imgs/address/gwcxz.png" alt="" v-if="other==true">
-                </div>
-                <div class="rt">
-                  <span class="n">其他商品</span>
-                  <div class="num">共<span>{{otherLeng}}</span> 件</div>
-                </div> 
-              </li>
-            </ul>
-            <div class="btn">
-                <span class="rn" @click="goToShop">返回购物车</span>
-                <span class="go" @click="goToSettlement">去结算</span>
-            </div>
+      <div class="main-mass">
+        <div class="mass-tittxt">8.有限责任</div>
+        <div class="mass-txt">
+          <span>8.1 纠纷处理。您理解并同意，抓周仅为向您提供珠宝首饰交易相关信息的中介服务平台，并非平台上相关商品的生产方或销售方，若您因平台上相关商品的售后问题与平台发生纠纷的，您可以按照平台相关售后规则与平台协商处理，平台会积极与您沟通协调以解决相关纠纷，但平台仅在其提供服务的责任能力范围内负责处理。</span>
+        </div>
+        <div class="mass-txt">
+          <span>8.2 外部影响。不论在何种情况下，抓周平台均不对由于Internet连接故障，电脑、通讯或其他系统的故障，电力故障，计算机病毒，程序漏洞，罢工，劳动争议，暴乱，起义，骚乱，生产力或生产资料不足，火灾，洪水，风暴，爆炸，不可抗力，战争，政府行为，国际、国内法院的命令或第三方的不作为而造成的不能服务或延迟服务承担责任。</span>
+        </div>
+        <div class="mass-txt">
+          <span>8.3 服务中断。除法律法规规定外，抓周有权单方面地中止或者终止抓周平台所提供的服务而无须提前通知您。 您理解并同意， 抓周需要定期或者不定期地对抓周平台、设备进行维护或者检修，因此造成的抓周服务在合理时间内的中断，抓周无需为此承担任何责任，但抓周将尽可能事先通知您。</span>
+        </div>
+      </div>
+      <div class="main-mass">
+        <div class="mass-tittxt">9.个人信息保护及授权</div>
+        <div class="mass-txt">
+          <span>9.1 授权收集。您充分理解并同意抓周可能通过抓周平台在您自愿选择服务或提供信息的情况下收集您的个人信息，例如您的姓名、电子邮箱、地址、电话号码及其他身份信息等。我们有可能会保留一些用户的使用习惯信息，用于更好地了解和服务用户。这些数据将有利于我们开发出更符合用户需求的功能、信息和服务。</span>
+        </div>
+        <div class="mass-txt">
+          <span>9.2 隐私政策。</span>
+          <span class="text-underline">抓周非常重视您的个人信息保护，在您使用 抓周提供的服务时，您同意按照本协议及《隐私政策》收集、存储、使用、披露和保护您的个人信息，该《隐私政策》是本协议的一部分，与本协议具有同等法律效力。</span>
+        </div>
+        <div class="mass-txt">
+          <span>9.3 技术的有限性。抓周将使用各种安全技术和程序防止您及其他用户个人信息的丢失、不当使用、未经授权阅览或披露。</span>
+          <span class="text-underline">但您充分理解并同意：由于技术的限制以及可能存在的各种恶意手段，在互联网行业，即便竭尽所能加强安全措施，也不可能始终保证信息百分之百的安全。</span>
+        </div>
+      </div>
+      <div class="main-mass">
+        <div class="mass-tittxt">10.期限、解除和终止</div>
+        <div class="mass-txt">
+          <span>10.1 期限。本协议自您确认同意之日起生效并长期有效。</span>
+        </div>
+        <div class="mass-txt">
+          <span>10.2 账户的注销。您可以按照平台公示的方式要求注销账户，终止本协议。注销账户的条件在抓周平台公示。您知晓并理解以下情况：</span>
+        </div>
+        <div class="mass-txt">
+          1)注销账户后，您将放弃账户信息以及该账户在抓周的资产、虚拟权益等，且抓周无法为您恢复前述服务。这可能对您主张售后服务带来不便。
+        </div>
+        <div class="mass-txt">
+          2)您注销账户后，您的个人信息在抓周前台将不可检索、访问。您知晓并理解，相关交易记录须在法律规定的期限内予以保存。
+        </div>
+        <div class="mass-txt">
+          <span>10.3 协议的终止。出现以下情况时，抓周可以本协议约定的方式通知您终止本协议：</span>
+        </div>
+        <div class="mass-txt">
+          1)您违反本协议约定，抓周依据违约条款终止本协议的；
+        </div>
+        <div class="mass-txt">
+          2)您盗用他人账户、发布违禁信息、骗取他人财物、扰乱市场秩序、采取不正当手段谋利等行为，抓周依据抓周平台相关业务规则对您的账户予以查封的；
+        </div>
+        <div class="mass-txt">
+          3)除上述情形外，因您多次违反抓周规则相关规定且情节严重，抓周依据抓周规则对您的账户予以查封的；
+        </div>
+        <div class="mass-txt">
+          4)您的账户被抓周回收的；
+        </div>
+        <div class="mass-txt">
+          5)其它应当终止服务的情况。
+        </div>
+        <div class="mass-txt">
+          <span>10.4 后续事项。协议终止或解除后续事项的处理</span>
+        </div>
+        <div class="mass-txt">
+          1)自本协议终止或解除之日起，抓周将关闭您在抓周平台的账户权限。
+        </div>
+        <div class="mass-txt">
+          2)本协议终止或解除后，抓周有权保留您的注册信息及交易行为记录等数据，但抓周不承担在协议终止后向您或第三方提供任何数据信息的义务，也不就协议终止向您或任何第三方承担责任，但法律法规另有规定的除外。
+        </div>
+        <div class="mass-txt">
+          3)本协议终止或解除后，抓周仍保留对您过往的违约行为追究责任的权利。
+        </div>
+      </div>
+      <div class="main-mass">
+        <div class="mass-tittxt">11.不可抗力</div>
+        <div class="mass-txt">
+          <span>11.1 由于不可抗力事件导致一方不能及时履行或者不能履行该方在本协议下的任何义务（付款义务除外）的，不构成违约。但是受不可抗力事件影响的一方应立即把不可抗力事件的性质和程度通知对方，并积极采取相应补救措施，以最大程度地减少和避免损失。</span>
         </div>
     </div>
-    <!-- 投资金及其他商品分开结算弹层 end-->
+    <div class="main-mass">
+      <div class="mass-tittxt">12.法律适用及管辖</div>
+      <div class="mass-txt">
+        <span>12.1 法律适用。本协议之订立、生效、解释、修订、补充、终止、执行与争议解决均适用中华人民共和国大陆地区法律；如法律无相关规定的，参照商业惯例及/或行业惯例。</span>
+      </div>
+      <div class="mass-txt">
+        <span>12.2 约定管辖。对于因本协议而产生的或者与本协议有关的争议，双方均应努力通过友好协商的方式进行解决。</span>
+        <span class="text-underline">协商不成的，任何一方均有权提起诉讼，且双方一致同意由深圳市罗湖区人民法院管辖。</span>
+      </div>
+    </div>
+    <div class="main-mass">
+      <div class="mass-tittxt">13.通知</div>
+      <div class="mass-txt">
+        <span>13.1 有效地址。您在注册抓周平台账户时所填写的联系电话、电子邮箱地址、联系地址视为您的有效通知地址。若上述信息发生变更您应当及时进行更新，如果因您提供的联系方式不准确，或不及时告知变更后的联系方式，使相关通知（包括但不限于协议变更、法律文书等）无法送达或未及时送达，由您自行承担可能产生的法律后果。</span>
+      </div>
+      <div class="mass-txt">
+        <span>13.2 通知送达。抓周通过上述联系方式向您发出通知，其中以电子的方式发出的书面通知，包括但不限于在抓周平台公告，向您提供的联系电话发送手机短信，向您提供的电子邮箱发送电子邮件，向您的抓周用户账户发送系统消息以及站内信信息，在发送成功后即视为送达；以纸质载体发出的书面通知，按照提供联系地址交邮后的第五个自然日即视为送达。</span>
+      </div>
+      <div class="mass-txt">
+        <span>
+          13.3 法律文书的送达。对于与抓周平台有关的任何纠纷，您同意行政、公安、司法等有权机关可以通过手机短信、电子邮件、系统消息或站内信等方式向您送达法律文书，有权机关向上述联系方式发出法律文书即视为送达；若同时采取以上多种方式向您送达法律文书，送达时间以最先送达的为准。您同意上述送达方式适用于行政、仲裁、司法等法定程序全过程。
+        </span>
+      </div>
+    </div>
+    <div class="main-mass">
+      <div class="mass-tittxt">14.其他</div>
+      <div class="mass-txt">
+        <span>14.1 条款的独立性。如果根据适用的法律认定本协议中的任何条款或者任何条款中的任何部分无效、违法或者不具有可执行性，这种无效、违法或者不具有可执行性不影响本协议中的任何其它条款或者这些条款中的任何其它部分的效力。</span>
+      </div>
+      <div class="mass-txt">
+        <span>14.2 平台权利的保留。本协议未明示授权的其他权利仍由抓周保留，用户未经抓周书面许可不得行使，且抓周未行使前述任何权利并不构成放弃权利。</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -203,573 +362,11 @@ export default {
   computed: {
   },
   methods: {
-    // 进入商城首页
-    gotoshop(){
-      this.$router.push({name:'shopindex'});
-    },
-    allpricefn(){
+    // 返回上一页
+    shopback() {
       let that = this;
-      let price = 0;
-      let priceparamsarr = [];
-      let productSkuIdarr = [];
-      let productarr = [];
-      if (that.list.length) {
-        let goodsarr = [];
-        for(let j=0;j<that.list.length;j++){
-          for(let k=0;k<that.list[j].items.length;k++){
-            if(that.list[j].items[k].sp1==0){
-              goodsarr.push(that.list[j].items[k]);
-            }
-            
-          }
-        }
-
-        for(let o=0;o<goodsarr.length;o++){
-          if(goodsarr[o].isselect){
-            price = (price*100)/100 + ((goodsarr[o].price*100)*goodsarr[o].quantity)/100;
-            let pricenew = {
-              skuId:goodsarr[o].productSkuId,
-              goodsCount:goodsarr[o].quantity,
-            }
-            priceparamsarr.push(pricenew);
-          }
-        }
-        for(let i=0;i<goodsarr.length;i++){
-          if(goodsarr[i].isselect){
-            productSkuIdarr.push(goodsarr[i].productSkuId);
-            productarr.push(goodsarr[i]);
-          }
-        }
-      }
-      // debugger;
-      // 获取服务器计算的 总 价格
-      if(productarr.length>0){
-        // that.loadingstatus = true;
-        // that.api.shopcart.carsprice({
-        //   params:JSON.stringify(priceparamsarr)
-        // }).then(res=>{
-        //   if(res.data.code==1){
-        //     // console.log(res.data.data);
-        //     that.allprice=res.data.data.toFixed(2)
-        //   }
-        //   that.loadingstatus = false;
-        // }).catch(err=>{
-        //   console.log(err);
-        //   that.loadingstatus = false;
-        // })
-
-        // 134行代码
-        // that.allprice = price.toFixed(2);
-      }else{
-        // that.allprice=(0).toFixed(2);
-      }
-      // that.allprice = price.toFixed(2);
-      that.productSkuIdarr = productSkuIdarr;
-      that.productarr = productarr;
-      that.allprice = price
-    },
-    // 添加关注
-    addlist() {
-      let that = this;
-      this.api.shopcart
-        .addlist({
-           uid: that.$store.state.user.userid, 
-           goodsIds: that.productSkuIdarr.join(','),
-        })
-        .then(res => {
-          if (res.data.code == 1) {
-            this.$toast(res.data.info);
-            that.bianbtn = "编辑";
-            that.bobtn = true;
-          } else {
-            this.$toast("关注失败");
-          }
-        });
-    },
-    // 跳转地址选择页面
-    gotocheck() {
-      this.$router.push("/address/check");
-    },
-    gotoshopowner(item){
-      let that = this;
-      if(item.shopId==null || that.$store.state.user.userid==null){
-          this.$toast('数据错误，请刷新页面');
-      }else{
-        that.$router.push({path:'/shop/shopowner',query:{
-            shop_userId : that.$store.state.user.userid,
-            shop_id : item.shopId
-        }})
-      }
-    },
-    // 数量减
-    jian(index,data,father,domselect) {
-      // debugger;
-      if (data.quantity > 1) {
-        data.isselect =true;
-        data.quantity--;
-        this.additem(data.productSkuId,data.shopId,data.quantity,data,father);
-      }else{
-        data.isselect =true;
-        this.$toast('至少选择一件商品');
-        this.checkone(data,father);
-      }
-      // debugger;
-      // this.checkone(data,father);
-    },
-    // 数量加
-    jia(index,data,father,domselect) {
-      // debugger;
-      data.quantity++;
-      data.isselect =true;
-      // this.checkone(data,father);
-      this.additem(data.productSkuId,data.shopId,data.quantity,data,father);
-    },
-    // 商品数量加减事件--存储 商品数量
-    additem(skuId,shopId,quantity,data,father){
-      let that = this;
-      this.api.productdetails.additem({
-          skuId,
-          userId:that.$store.state.user.userid,
-          shopId,
-          quantity,
-          isAdd:false,
-      }).then(res=>{
-          if(res.data.info=='请求执行成功'){
-              that.$toast({
-                  message: '操作成功',
-                  duration: 810,
-                  forbidClick: true
-              });
-              that.checkone(data,father);
-          }else{
-              that.$toast({
-                  message: '加入购物车失败，请重试',
-                  duration: 810,
-                  forbidClick: true
-              });
-          }
-      })
-    },
-    // 编辑与完成的切换事件
-    gotobian() {
-      let that = this;
-      if (that.bobtn) {
-        that.bianbtn = "完成";
-        that.bobtn = false;
-        //将所有过期商品设置为可选
-        for(let a =0;a<that.list.length;a++){
-           for(let i=0;i<that.list[a].items.length;i++){
-            if(that.list[a].items[i].sp1 >= 0){
-               that.list[a].items[i].sp1 = 0;
-            }
-          }
-        }
-      } else {
-        that.bianbtn = "编辑";
-        that.bobtn = true;
-        for(let a =0;a<that.list.length;a++){
-           for(let i=0;i<that.list[a].items.length;i++){
-            if(that.list[a].items[i].sp1_status){
-              that.list[a].items[i].sp1 = that.list[a].items[i].sp1_status;
-            } 
-          }
-        }
-      }
-    },
-    // 删除该商品
-    deleted() {
-      let that = this;
-      if(that.productSkuIdarr.length>0){
-        that.api.shopcart
-          .removeitem({
-            userId: that.$store.state.user.userid, 
-            skuIds: that.productSkuIdarr.join(','),
-          })
-          .then(function(res) {
-            // debugger
-            if(res.data.code==1){
-              
-              that.bianbtn = "编辑";
-              that.bobtn = true;
-              that.listtable();
-              that.$toast('删除成功');
-            }else{
-              that.$toast(res.data.info);
-            }
-          });
-      }else{
-        that.$toast('请选择要删除的商品');
-      }
-    },
-    // 单选一个商品
-    checkone(self,father) {
-      // debugger;
-      let that =this;
-      if(self.isselect == true){
-        that.allchecked = false;
-      }
-      setTimeout(() => {
-        if(father.items.length == 1){
-          father.isselect = self.isselect;
-        }else{
-          let noselect = 0;
-          for(let a=0;a<father.items.length;a++){
-            if(father.items[a].isselect == true){
-              noselect++;
-            }
-          }
-          if(noselect == father.items.length){
-            father.isselect = true;
-          }else{
-            father.isselect = false;
-          }
-        }
-        let fatherisselect = 0;
-        for(let aa = 0; aa < that.list.length;aa++){
-          // debugger;
-          if(that.list[aa].isselect == true){
-            fatherisselect++;
-          }
-          if(fatherisselect == that.list.length){
-            that.allchecked = true;
-          }else{
-            that.allchecked = false;
-          }
-        }
-        that.allpricefn();
-        that.getjiesuanALL()
-      }, 0);
-    },
-    // 店铺选中事件
-    dianpucheckevery(index,currentstatus) {
-      let that = this;
-      if(currentstatus == true){
-        that.getjiesuanALL();
-        that.allchecked = false;
-      }
-
-      for(let i=0;i<that.list[index].items.length;i++){
-        that.list[index].items[i].isselect = !currentstatus;
-      }
-      setTimeout(() => {
-        that.allpricefn();
-        that.getjiesuanALL();
-      }, 0);
-    },
-    //全选
-    checkalll() {
-      let that = this;
-      if(that.allchecked){
-        for(let a =0;a < that.list.length; a++){
-          if(that.list[a].isselect == false){
-            that.list[a].isselect = true;
-            that.dianpucheckevery(a,false);
-          }
-        }
-      }else{
-        for(let a =0;a<that.list.length;a++){
-          if(that.list[a].isselect == true){
-            that.list[a].isselect = false;
-            that.dianpucheckevery(a,true);
-          }
-        }
-      }
-    },
-    getjiesuanALL(){
-      let that = this;
-      
-      let listnew = [];
-      listnew = JSON.parse(JSON.stringify(this.list));//地址引用的解决
-      let listindex=[];
-      for(let i=0;i<that.productarr.length;i++){
-        for(let a =0; a<listnew.length;a++){
-          if(that.productarr[i].shopId == listnew[a].shopId){
-            if(listindex.indexOf(a)<0){
-              listindex.push(a);
-            }
-          }
-        }
-      }
-      
-      let listnewA = JSON.parse(JSON.stringify(this.list));//地址引用的解决
-      for(let a = 0;a<listindex.length;a++){
-         let listnewaitems = listnewA[listindex[a]].items.filter(itemmm => itemmm.isselect == true);
-         listnewA[listindex[a]].items = listnewaitems;
-      }
-      // console.log('店铺列表');
-      // console.log(listnewA);
-      let listnew2 = [];
-      for(let b=0;b<listnewA.length;b++){
-        for(let c = 0;c<listindex.length;c++){
-          if(b==listindex[c]){
-            listnew2.push(listnewA[listindex[c]]);
-          }
-        }
-      }
-
-      let arrayOrder = [];
-      let arrayOrders = [];
-      let leng = [];
-      let lengs = [];
-      listnew2.forEach(e=>{
-        let fatherItem;
-        let childItem = [];
-        e.items.forEach(items=>{
-          //正常商品
-          if(items.sp1 == '0'){
-            //正常商品
-            if(items.sp2=='0'){
-              childItem.push(items);
-              fatherItem = e;
-              fatherItem.items = childItem;
-              leng.push(items.quantity * 1);
-              if (arrayOrder.indexOf(fatherItem) == -1) {
-                arrayOrder.push(fatherItem);
-              }
-            }else{
-              //投资金商品
-              childItem.push(items);
-                // console.log(childItem)
-                fatherItem = e;
-                // console.log(fatherItem)
-                fatherItem.items = childItem;
-                lengs.push(items.quantity * 1)
-                    // fatherItem.items.push(childItem)
-                    // console.log(fatherItem)
-                if (arrayOrders.indexOf(fatherItem) == -1) {
-                    arrayOrders.push(fatherItem);
-              }
-            }
-          }
-          // console.log(items)
-        })
-       
-      })
-
-      let current_num;
-      if(arrayOrders.length){
-        let newarr = arrayOrders.map((item) => {
-          return item.items.map((e) => {
-            // console.log('e.quantity');
-            return e.quantity;
-          });
-        })
-
-        let returnlastarr_tzj = [];
-        newarr.map((itemarr)=>{
-            returnlastarr_tzj = returnlastarr_tzj.concat(itemarr);
-        })
-        current_num = returnlastarr_tzj.reduce((n,m) => n + m);
-
-      }else{
-        current_num = 0;
-      }
-      
-      // let currenttzj_num;
-      let currentother_num;
-      if(arrayOrder.length){
-        let newothershops = arrayOrder.map((item) => {
-          return item.items.map((e) => {
-            return e.quantity;
-          });
-        })
-
-        let returnlastarr = [];
-        newothershops.map((itemarr)=>{
-            returnlastarr = returnlastarr.concat(itemarr);
-        })
-        currentother_num = returnlastarr.reduce((n,m) => n + m);
-      }else{
-        currentother_num = 0;
-      }
-      that.past_pay_nums = current_num + currentother_num;
-    },
-    // 页面数据初始化
-    listtable() {
-      let that = this;
-      let userid = that.$store.state.user.userid;
-      let gps = JSON.parse(sessionStorage.getItem("checkaddressitem"));
-      if (gps) {
-        that.gps = gps.province + " " + gps.city;
-      } else {
-        that.gps = "无收货地址";
-      }
-      that.loadingstatus = true;
-      that.api.shopcart.showcarcontent({ userId: userid }).then(function(res) {
-        let resdata = res.data.data;
-        that.loadingstatus = false;
-        // if(that.list[index].items.length==1 && (that.list[index].items[0].sp1_status == 2 || that.list[index].items[0].sp1_status == 3)){
-        //   console.log('该店铺只有一个商品且已售完');
-        // }
-
-        if(resdata.length>0){
-          for(let i =0;i<resdata.length;i++){
-            resdata[i].isselect = false;
-            for(let k =0;k<resdata[i].items.length;k++){
-              if(resdata[i].items[k].sp1 == 1){
-                resdata[i].items[k].sp1_status = 1;
-              }
-              if(resdata[i].items[k].sp1 == 2){
-                resdata[i].items[k].sp1_status = 2;
-              }
-              resdata[i].items[k].isselect = false;
-            }
-          }
-          console.log('resdata');
-          console.log(resdata);
-        }
-        that.list = resdata;//添加默认项 isselect:false
-        if (that.list.length == 0) {
-          that.iskong = 0;
-        } else {
-          that.iskong = 1;
-        }
-      })
-    },
-    // 结算
-    checkmoney(){
-      let that = this;
-      if(that.productarr.length == 0){
-        that.$toast('请最少选择一个商品后再点击结算');
-      }else{
-        that.getsaveOrderImmediatelydata();
-      }
-    },
-    // 存储购物车选中项的数据
-    getsaveOrderImmediatelydata(){
-      let that = this;
-
-      let listnew = [];
-      listnew = JSON.parse(JSON.stringify(this.list));//地址引用的解决
-      let listindex=[];
-      for(let i=0;i<that.productarr.length;i++){
-        for(let a =0; a<listnew.length;a++){
-          if(that.productarr[i].shopId == listnew[a].shopId){
-            // console.log(listindex.indexOf(a));
-            if(listindex.indexOf(a)<0){
-              listindex.push(a);
-            }
-          }
-        }
-      }
-      let listnewA = JSON.parse(JSON.stringify(this.list));//地址引用的解决
-      for(let a = 0;a<listindex.length;a++){
-         let listnewaitems = listnewA[listindex[a]].items.filter(itemmm => itemmm.isselect == true);
-         listnewA[listindex[a]].items = listnewaitems;
-      }
-      // console.log('店铺列表');
-      // console.log(listnewA);
-      let listnew2 = [];
-      for(let b=0;b<listnewA.length;b++){
-        for(let c = 0;c<listindex.length;c++){
-          console.log(listnewA[listindex[c]])
-          if(b==listindex[c]){
-            listnew2.push(listnewA[listindex[c]]);
-          }
-        }
-      }
-
-      let arrayOrder = [];
-      let arrayOrders = [];
-      let leng = [];
-      let lengs = [];
-      listnew2.forEach(e=>{
-        let fatherItem;
-        let childItem = [];
-        e.items.forEach(items=>{
-          //正常商品
-          if(items.sp1 == '0'){
-            //正常商品
-            if(items.sp2=='0'){
-              childItem.push(items);
-              fatherItem = e;
-              fatherItem.items = childItem;
-              leng.push(items.quantity * 1);
-              if (arrayOrder.indexOf(fatherItem) == -1) {
-                arrayOrder.push(fatherItem);
-              }
-            }else{
-              //投资金商品
-              childItem.push(items);
-                // console.log(childItem)
-                fatherItem = e;
-                // console.log(fatherItem)
-                fatherItem.items = childItem;
-                lengs.push(items.quantity * 1)
-                    // fatherItem.items.push(childItem)
-                    // console.log(fatherItem)
-                if (arrayOrders.indexOf(fatherItem) == -1) {
-                    arrayOrders.push(fatherItem);
-              }
-            }
-          }
-          // console.log(items)
-        })
-       
-      })
-      //console.log(arrayOrders,arrayOrder)
-      // debugger;
-      var s = 0;
-      var ind = 0;
-      if (arrayOrder.length > 0 && arrayOrders.length > 0) {
-          for (var x = 0; x < leng.length; x++) {
-              s += leng[x]
-              that.otherLeng=s
-          }
-          for (var j = 0; j < lengs.length; j++) {
-              ind += lengs[j]
-                  that.invesLeng= ind
-              
-          }
-          that.judgementType=true,
-          that.arrayOrder=arrayOrder,
-          that.arrayOrders=arrayOrders
-          // wx.navigateTo({
-          //     url: '/pages/order/order-pay?form=shopping'
-          // })
-          // wx.setStorageSync('arrayOrder', arrayOrder)
-          // console.log(arrayOrder, 'arrayOrder')
-      } else if (arrayOrder.length > 0 && arrayOrders.length == 0) {
-          that.$router.push({name:'confirmorder'})
-          setsessionStorage('orderListdata', arrayOrder)
-      } else if (arrayOrder.length == 0 && arrayOrders.length > 0) {
-          that.$router.push({name:'confirmorder'})
-          setsessionStorage('orderListdata', arrayOrders)
-
-      }
-      setsessionStorage("pagefrom","shopcart"); 
-      // setsessionStorage("orderListdata",listnew2); 
-      setsessionStorage("allprice",that.allprice); 
-      // setsessionStorage("orderListdata",listnew); 
-      // that.$router.push({name:'confirmorder'})
-    },
-    //点击单选框
-    inveClick() {
-      this.inves= true,
-      this.other= false
-            // wx.setStorageSync('arrayOrder', arrayOrders)
-    },
-    otherClick() {
-      this.inves= false,
-      this.other= true
-            // wx.setStorageSync('arrayOrder', arrayOrder)
-    },
-    //回到购物车
-    goToShop() {
-        
-            this.judgementType=false
-        
-    },
-    //去结算
-    goToSettlement() {
-        if (this.inves == true) {
-           this.$router.push({name:'confirmorder'})
-            setsessionStorage('orderListdata', this.arrayOrders)
-        } else if (this.other == true) {
-            this.$router.push({name:'confirmorder'})
-            setsessionStorage('orderListdata', this.arrayOrder)
-        }
-    },
+      that.$router.go(-1);
+    }
   },
   
   created() {
@@ -777,16 +374,14 @@ export default {
   },
   mounted() {
     // 移除confirmpageorder 填写订单页的存储数据
-    localStorage.removeItem('confirmpageorder');
   },
   beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
+
   }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
   beforeDestroy() {
-    document.querySelector('body').setAttribute('style', '')
   }, //生命周期 - 销毁之前
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
@@ -796,24 +391,60 @@ export default {
 <style lang='less' scoped>
 @import "./css/index.less";
 </style>
-<style lang="less">
-.shoppingcartwrap .van-loading, .shoppingcartwrap .van-loading__spinner{
-  position: fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  height: 0.8rem;
-}
-.shoppingcartwrap .van-checkbox__icon{
-  height: .35rem;
-}
-.shoppingcartwrap .van-checkbox__icon .van-icon{
-  width: .35rem;
-  height: .35rem;
+<style>
+  body{
+    background: #763aff url("./../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+  }
+  .main {
+    width : 1200px; 
+    margin : 0 auto;
+    padding: 0.3rem 0.5rem;
+  }
 
-}
-.shoppingcartwrap .van-checkbox__icon--checked .van-icon-success{
-  background:rgba(255,189,4,1);
-  border-color : rgba(255,189,4,1);
-}
+  .main-tit {
+    font-size: 0.26rem;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 0.19rem;
+  }
+  
+  .mass-tit {
+    font-size: 0.26rem;
+    font-weight:500;
+    padding-bottom: 0.3rem;
+    color: rgba(255,255,255,.75);
+    line-height:0.38rem;
+  }
+  .mass-tittxt {
+    font-size: 0.26rem;
+    font-weight:500;
+    color: rgba(255,255,255,.75);
+    line-height:0.38rem;
+  }
+  .mass-content {
+    padding-bottom: 0.49rem;
+    font-size: 0.26rem;
+    color: rgba(255,255,255,.75);
+    line-height:0.38rem;
+  }
+  .mass-txt {
+    padding-bottom: 0.3rem;
+    font-size: 0.26rem;
+   color: rgba(255,255,255,.75);
+    line-height:0.38rem;
+  }
+  .mass-txt span, .mass-content span {
+    color: rgba(255,255,255,.75);
+    font-weight:500;
+  }
+  .text-underline {
+    text-decoration: underline
+  }
+  .returnindex{
+    font-size: 0.26rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.75);
+    cursor: pointer;
+    padding-bottom : 30px; 
+  }
 </style>

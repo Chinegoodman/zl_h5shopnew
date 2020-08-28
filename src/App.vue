@@ -173,7 +173,6 @@
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width:1200px;
   min-height: 100vh;
   margin: 0 auto;
   box-shadow: 0 0 5px #ccc;

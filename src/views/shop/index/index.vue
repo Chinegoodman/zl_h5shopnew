@@ -2,35 +2,37 @@
 <template>
   <div class="shopwrap" id="shopwrap">
     <div class="navbar">
-      <van-tabs v-model="active">
-        <van-tab
-          :title="tit.category_name"
-          v-for="(tit, index) in titlistmassage"
-          :key="index"
-        >
-          <div class="tab-title" slot="title" @click="titleclick(tit.tabindex,1)" >{{tit.category_name}}</div>
-        </van-tab>
-      </van-tabs>
-      <div class="login-inter">
-        <div class="intercom" v-if="$store.state.user.isLogin">
-           <span class="im">
-              <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
-            </span>
-            <span class="nm">{{$store.state.user.userdata.nickName}}</span>
-            <span class="loginout" @click="logout">退出</span>
-        </div>
-        <div class="intercom" @click="pageto('regist')" v-else>
-           <span class="im">
-              <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
-            </span>
-            <span class="nm">登录</span>
+      <div class="nav-in">
+        <van-tabs v-model="active">
+          <van-tab
+            :title="tit.category_name"
+            v-for="(tit, index) in titlistmassage"
+            :key="index"
+          >
+            <div class="tab-title" slot="title" @click="titleclick(tit.tabindex,1)" >{{tit.category_name}}</div>
+          </van-tab>
+        </van-tabs>
+        <div class="login-inter">
+          <div class="intercom" v-if="$store.state.user.isLogin">
+            <span class="im">
+                <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
+              </span>
+              <span class="nm">{{$store.state.user.userdata.nickName}}</span>
+              <span class="loginout" @click="logout">退出</span>
+          </div>
+          <div class="intercom" @click="pageto('regist')" v-else>
+            <span class="im">
+                <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
+              </span>
+              <span class="nm">登录</span>
+          </div>
         </div>
       </div>
     </div>
     <div class="swiper">
       <van-swipe class="swiperdom" :autoplay="2000">
         <van-swipe-item v-for="(image, index) in images" :key="index">
-          <img :src="image.img_url?image.img_url:default_img_banner" @click="imageurl(image)" />
+          <img :src="image.img_url?image.img_url:default_img_banner" />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -78,6 +80,53 @@
     </div>   
     <!-- 投资金列表 end -->
     <nodata :pagetype="pagetypedata" v-if="nodatashow"></nodata>
+    <!-- footer satrt -->
+    <div class="box-footer">
+      <div class="footer-in">
+        <ul class="corperation">
+          <router-link :to="{name:'diamond'}" tag="li">公司介绍</router-link>
+          <li class="grep">|</li> 
+          <router-link :to="{name:'invoice'}" tag="li">服务协议</router-link>
+          <li class="grep">|</li> 
+          <router-link :to="{name:'shopcart'}" tag="li">隐私权政策</router-link>
+          <li class="grep">|</li>
+          <router-link :to="{name:'olpay'}" tag="li">联系合作</router-link>
+           <li class="grep">|</li>
+          <router-link :to="{name:'shopowner'}" tag="li">招聘信息</router-link>
+        </ul>
+        <div class="logo-down-box">
+          <div class="box-in">
+             <ul>
+              <li class="clearfix">
+                <span class="im">
+                  <img src="./../../../assets/logo.png" alt="抓周" />
+                </span>
+                <span class="t">&nbsp;&nbsp;</span>
+              </li>
+              <li class="clearfix">
+                <span class="im">
+                  <img src="./../../../assets/iosdownload.png" alt="抓周" />
+                </span>
+                <span class="t">IOS下载</span>
+              </li>
+              <li class="clearfix">
+                <span class="im">
+                  <img src="./../../../assets/anzhuodownload.png" alt="抓周" />
+                </span>
+                <span class="t">安卓下载</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recordcode">
+          © 17biyi.com  北京艺相逢文化传播有限公司--
+          <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502034096&token=4ea5e840-0a37-4895-a22a-187ea1d61d34" target="_blank" data-v-5bdb8ecf="">京公安备11010502034096号</a>
+          <a href="http://beian.miit.gov.cn" target="_blank" data-v-5bdb8ecf="">京ICP备17006123号-4</a>
+          <a href="javascript:void(0)" data-v-5bdb8ecf="">京网文[2017]7669-849号</a>
+        </div>
+      </div>
+    </div>
+    <!-- footer end -->
   </div>
 </template>
 
@@ -136,7 +185,17 @@ export default {
       pagetypedata:"discountshop",
       active: 0,
       activeName: "",
-      images: [], //banner图
+      images: [
+        {
+          img_url : require('../../../assets/imgs/shop/banner01.jpg')
+        },
+        {
+          img_url : require('../../../assets/imgs/shop/banner02.jpg')
+        },
+        {
+          img_url : require('../../../assets/imgs/shop/banner03.jpg')
+        }
+      ], //banner图
       explosive: [], //人气爆款
       popularity:'',
       ercommend: [], //每日推荐
@@ -148,8 +207,16 @@ export default {
       homelisttzjmsg: [], //投资金列表
       titlistmassage: [
         {
-          category_name:"推荐",
+          category_name:"首页",
           tabindex: 0  //推荐
+        },
+        {
+          category_name:"关于我们",
+          tabindex: 1  //推荐
+        },
+        {
+          category_name:"招聘信息",
+          tabindex: 1  //推荐
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
@@ -258,7 +325,7 @@ export default {
   computed: {},
   mounted() {
     let that = this;
-    that.bannerimages();
+    // that.bannerimages();
     //刷新列表
     // if(this.$route.query.tab != undefined){
     //   let tab = Number(this.$route.query.tab);
@@ -269,6 +336,38 @@ export default {
     
   },
   methods: {
+    // 点击跳转到用户登录页面
+    gotologin(){ 
+        let that = this;
+        // if(that.$route.params.webtype==0){
+        //     jsCallLogin()
+        //     return;
+        // }else{
+        //     setTimeout(() => {
+        //         that.$router.push({name:'login'})
+        //     }, 800);
+        // }
+        setTimeout(() => {
+            that.$router.push({name:'regist'})
+        }, 800);
+    },
+    // 是否登录
+    iflogin(){
+        let that = this;
+        if(!that.$store.state.user.userid || that.$store.state.user.userid == 0){
+            that.$toast({
+                message: '暂未登录，请先登录',
+                duration: 810,
+                forbidClick: true
+            });
+            setTimeout(() => {
+                that.gotologin();
+            }, 810);
+            return false;
+        }else{
+            return true
+        }
+    },
     // 退出登录
     logout() {
       let confirmfn = window.confirm("确定要退出登录吗？");
@@ -291,8 +390,8 @@ export default {
     /*跳转到秀场直播详情*/
     gotoxiuchangdetails(paramsdata) {
       let that = this;
-      // if(!that.iflogin()){return;}
-      // setsessionStorage("livinglidata-xiu", paramsdata);
+      if(!that.iflogin()){return;}
+      setsessionStorage("livinglidata-xiu", paramsdata);
       if(paramsdata.state==1){
         this.$router.push({
           path: "/living/xiuchangdetails",
@@ -356,7 +455,7 @@ export default {
       that.api.homedetails.bannerimg({
         flag:'',
       }).then(res => {
-        that.images = res.data.data;
+        // that.images = res.data.data;
         // console.log(that.images);
       });
     },
@@ -435,7 +534,7 @@ export default {
         .homelistxcpost({
           type : 2,
           page : that.nextPage_xc,
-          pageSize : 10
+          pageSize : 20
         })
         .then(res => {
           console.log('res');
@@ -465,7 +564,9 @@ export default {
             if(that.nextPage_xc  != res.data.data.totalPage && res.data.data.totalPage != 0) {
               that.listfinished_xc = false;
               that.listloading_xc = false;
-              that.nextPage_xc ++
+              that.nextPage_xc = that.nextPage_xc + 1;
+              console.log('that.nextPage_xc');
+              console.log(that.nextPage_xc);
             }else {
               if(that.hasmorepage === 1){
                 that.nodatashow = true;
@@ -527,7 +628,7 @@ body{
 }
 
 #shopwrap .van-tabs__nav{
-  width : 100px;
+  width : 400px;
   background : none;
 }
 #shopwrap .van-tabs__line{
@@ -537,9 +638,9 @@ body{
 }
 
 #shopwrap .van-tab {
-  font-size: .26rem;
+  font-size: .34rem;
   font-family:PingFang SC;
-  font-weight:500;
+  font-weight:bold;
   color:rgba(31,31,31,1);
   display: inline-block;
   padding : 0 .32rem;

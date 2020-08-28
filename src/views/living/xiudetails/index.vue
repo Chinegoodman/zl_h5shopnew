@@ -227,7 +227,7 @@
             <div class="close" @click.stop="returnprevpage">
               <img src="./../../../assets/imgs/living/details/close.png" alt="抓周" />
             </div>
-            <div class="chatgd" @click.stop="moreClick">
+            <div class="chatgd" @click.stop="goodschoosestatus=true">
               <img src="./../../../assets/imgs/living/details/gengduo.png" alt />
             </div>
             <div class="chatxin">
@@ -247,7 +247,7 @@
         
         <div class="imiptshowmb"  @click.stop="imiptshowstatus=false" v-if="imiptshowstatus">
           <div class="imiptshow" @click.stop="returnfn">
-            <input type="text" autofocus="autofocus" v-model="timtxt" @keyup.enter="txtpost" />
+            <textarea type="text" autofocus="autofocus" v-model="timtxt" @keyup.enter="txtpost"></textarea>
             <p @click.stop="txtpost" style="cursor:pointer;">发送</p>
           </div>
         </div>
@@ -255,21 +255,19 @@
         <!-- 主播上架的商品 -->
         <div class="goodsboxmb" @click.stop="goodschoosestatus=false" v-if="goodschoosestatus">
           <div class="goodsbox" @click.stop="returnfn">
-            <p class="headtitle">全部商品<span v-if="goodsList.length">({{goodsList.length}})</span></p>
+            <p class="headtitle">下载导航</p>
             <ul>
-              <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
-                <!-- <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/> -->
-                <img src="./../../../assets/imgs/living/sytu1.png" alt="抓周" />
-                <div class="details">
-                  <p class="name">{{item.goods_title}}</p>
-                  <p class="guige"><span>{{item.price.toFixed(2)}}</span><span class="sale-num">已售56件</span></p>
-                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">立即购买</div>
-                  <!-- <div class="btn gray">已添加</div> -->
-                </div>
-                
+              <li class="clearfix">
+                <span class="im">
+                  <img src="./../../../assets/iosdownload.png" alt="抓周" />
+                </span>
+                <span class="t">IOS下载</span>
               </li>
-              <li class="nogood" v-if="goodsList==null||goodsList.length==0">
-                主播暂未添加商品
+              <li class="clearfix">
+                <span class="im">
+                  <img src="./../../../assets/anzhuodownload.png" alt="抓周" />
+                </span>
+                <span class="t">安卓下载</span>
               </li>
             </ul>
             <span class="closeshell" @click.stop="goodschoosestatus=false"></span>
@@ -345,6 +343,7 @@
     </div>
     <!-- 直播结束、、 -->
     <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}">
+    <!-- <div class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}"> -->
        <div class="livingendinner"> </div>
         <div class="close" @click.stop="$router.go(-1)">
           <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
@@ -583,34 +582,34 @@
 
 <style lang='less'>
 
-    .danchangcontent .tit .van-tabs{
-      width : 100%;
-    }
-    .danchangcontent .tit .van-tabs--line .van-tabs__wrap{
-      height: .88rem;
-    }
-    .danchangcontent .tit  .van-tab{
-      // height: .5rem;
-      // line-height : .5rem;
-      font-size: .34rem;
-      font-family:PingFang SC;
-      font-weight:500;
-      color:rgba(31,31,31,1);
-    }
-    .danchangcontent .tit .van-tab--active{
-      color:rgba(255,189,79,1);
-    }
-    .danchangcontent .tit .van-tabs__line{
-      background:rgba(255,189,4,1);
-    }
-    .danchangcontent .van-toast--html, .van-toast--text{
-      z-index: 11000 !important;
-    }
+.danchangcontent .tit .van-tabs{
+  width : 100%;
+}
+.danchangcontent .tit .van-tabs--line .van-tabs__wrap{
+  height: .88rem;
+}
+.danchangcontent .tit  .van-tab{
+  // height: .5rem;
+  // line-height : .5rem;
+  font-size: .34rem;
+  font-family:PingFang SC;
+  font-weight:500;
+  color:rgba(31,31,31,1);
+}
+.danchangcontent .tit .van-tab--active{
+  color:rgba(255,189,79,1);
+}
+.danchangcontent .tit .van-tabs__line{
+  background:rgba(255,189,4,1);
+}
+.danchangcontent .van-toast--html, .van-toast--text{
+  z-index: 11000 !important;
+}
 
-    .videoswrapout .openappbtnsbox{
-      z-index: 10500;
-    }
-    
+.videoswrapout .openappbtnsbox{
+  z-index: 10500;
+}
+
 .videoswrapout .van-tabs--line .van-tabs__wrap {
   width : 160px;
   height: 0.74rem;

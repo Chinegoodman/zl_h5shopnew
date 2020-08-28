@@ -140,12 +140,16 @@
         height: 65px;
         box-sizing: border-box;
         background: #FFBD03;
-        position: relative;
+        .nav-in{
+            width: 1200px;
+            margin : 0 auto;
+            position: relative;
+        }
     }
 
     .swiper {
         width: 1200px;
-        margin: 15px 0 0;
+        margin: 15px auto 0;
         .swiperdom {
             width: 1200px;
             height: 420px;
@@ -1515,7 +1519,7 @@
     .xiuchang{
         width: 1200px;
         overflow: hidden;
-        margin-top: 0.25rem;
+        margin: 0.25rem auto 0;
         .xclist{
             .goodslist{
                 .goodsli{
@@ -1746,22 +1750,105 @@
         cursor: pointer;
         .im{
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
             img{
                 width: 100%;
                 height: 100%;
+                border-radius: 50%;
             }
         }
         .nm{
-            height: 20px;
-            line-height: 20px;
+            height: 30px;
+            line-height: 30px;
             font-size: 16px;
             color: #454545;
             font-weight: bold;
-            margin-left: 3px;
+            margin-left: 8px;
         }
-        .loginout{margin-left: 8px;}
+        .loginout{
+            margin-left: 8px;
+            height: 30px;
+            line-height: 30px;
+        }
     }
 }    
+
+.shopwrap .box-footer{
+    width: 100%;
+    height: 300px;
+    background: #1d1d1d;
+    color: #fff;
+    margin-top : 50px;
+    .footer-in{
+        width: 1200px;
+        margin : 0 auto;
+        .corperation{
+            padding : 25px 0;
+            display: block;
+            text-align: center;
+            li{
+                display: inline-block;
+                color:rgba(255,255,255,.75);
+                cursor: pointer;
+            }
+            li.grep{
+                padding:  0 24px;
+                color:rgba(255,255,255,.35);
+            }
+            
+
+        }
+        .logo-down-box{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            .box-in{
+                width: 600px;
+                margin : 0 auto;
+                ul{
+                    li{
+                        display: inline-block;
+                        padding: 0.2rem 0;
+                        width: 33.33%;
+                        position: relative;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                        &.nogood{
+                            padding: 0.6rem 0.3rem 0.8rem;
+                            text-align: center;
+                            color: rgba(51, 51, 51, 1);
+                        }
+                        .im{
+                            display: inline-block;
+                            width: 1.7rem;
+                            height: 1.7rem;
+                            img{
+                                width: 100%;
+                            }
+                        }
+                        .t{
+                            display: block;
+                            font-size: 16px;
+                        }
+                       
+                        
+                    }
+                }
+            }
+        }
+        .recordcode{
+            text-align: center;
+            margin-top: 15px;
+            color:rgba(255,255,255,.75);
+            a, a:active, a:hover, a:link, a:visited{
+                color:rgba(255,255,255,.75);
+                margin: 0 15px;
+                display: inline-block;
+            }
+        }
+
+    }
+}
 

@@ -1,43 +1,10 @@
 <!-- 组件说明 -->
 <template>
   <div class="confirmorderwrap">
-    <div class="header clearfix">
-      <img
-        @click="$router.go(-2)"
-        style="transform:rotate(180deg);"
-        src="./../../../assets/imgs/icons/sp-gengduo@2x.png"
-        alt
-      />
-      <p>在线支付</p>
-    </div>
-    <div class="containerwrap">
-      <div class="top">
-        <div class="top1" v-if="paystatus == true">
-          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="抓周">
-          <p>订单支付成功，感谢您的购买！</p>
-        </div>
-        <div class="top1 top11" v-if="paystatus == false">
-          <img src="./../../../assets/imgs/icons/tstjcg.png" alt="抓周">
-          <p>订单提交成功，请尽快付款哦！</p>
-          <span>未支付订单在30分钟后自动关闭</span>
-        </div>
-        <div class="top2">
-          <div class="li clearfix">
-            <span class="title">订单金额：</span>
-            <p>￥{{confirmpageorder.payfundata.amont}}</p>
-          </div>
-          <div class="li clearfix">
-            <span class="title titleh">收货信息：</span>
-            <p>{{addressdata.name}}</p>
-            <p>{{addressdata.phone}}</p>
-            <p>{{addressdata.province}}&nbsp;{{addressdata.city}}&nbsp;{{addressdata.area}}&nbsp;{{addressdata.address}}</p>
-          </div>
-        </div>
-        <div class="top3">
-          <p @click="checkorder">查看订单</p>
-          <p class="red" v-if="paystatus == true" @click="$router.go(-2)">完成</p>
-        </div>
-      </div>
+    <div class="returnindex" @click="shopback">首页 < 联系合作</div>
+    <div class="concat-methoded">
+        <p>邮箱: <span>peter@17biyi.com</span></p>
+        <p>电话: <span>‭(010) 6493 5833‬</span></p>
     </div>
   </div>
 </template>
@@ -70,17 +37,14 @@ export default {
   computed: {
   },
   methods: {
-    // 查看订单页 ==>>目前调列表页
-    checkorder(){
-      this.$router.push({path:'/personalcenter/order/index',query:{tabid:0}});
+    // 返回上一页
+    shopback() {
+      let that = this;
+      that.$router.go(-1);
     }
   },
   mounted() {
     let that = this;
-    that.userID = that.$store.state.user.userid;
-    that.confirmpageorder= getlocalStorage('confirmpageorder');
-    that.addressdata = getsessionStorage("checkaddressitem");
-    that.paystatus = getsessionStorage('paystatus');
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -92,10 +56,37 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
-@import url("./css/index.less");
-</style>
-
-<style lang='less'>
-//@import url()
+<style>
+body{
+  background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
+ .confirmorderwrap{
+  width : 1200px; 
+  margin : 0 auto; 
+  padding: 0.3rem 0.5rem;
+}
+.confirmorderwrap p{
+  padding: .2rem 0;
+  font-size: 0.26rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.75);
+}
+.confirmorderwrap .returnindex{
+  font-size: 0.26rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.75);
+  cursor: pointer;
+}
+.confirmorderwrap .concat-methoded{
+  padding : 200px 150px;
+  border : 1px solid rgba(255,255,255,.35);
+  margin-top : 25px;
+}
+.confirmorderwrap .concat-methoded p{
+  font-size: 0.32rem;
+  padding : 20px;
+}
+.confirmorderwrap .concat-methoded p span{
+   font-size: 0.34rem;
+}
 </style>

@@ -7,6 +7,8 @@ import {
 import "xgplayer";
 import Player from "xgplayer";
 import FlvPlayer from "xgplayer-flv";
+// import HlsPlayer from 'xgplayer-hls';
+import HlsJsPlayer from 'xgplayer-hls.js';
 import { checkdevice } from "@/utils/checkdevice.js";
 import complaints from '@/components/complaints.vue';
 import viplevel from '@/components/viplevel.vue';
@@ -396,9 +398,10 @@ export default {
             if (
                 checkdevice() == "weixin" ||
                 checkdevice() == "anzhuo" ||
-                checkdevice() == "ios"
+                checkdevice() == "ios" ||
+                checkdevice() == "pc"
             ) {
-                that.player = new Player({
+                that.player = new HlsJsPlayer({
                     //解除注释 m3u8方法
                     id: "videodom",
                     // url: "rtmp://58.200.131.2:1935/livetv/dftv", //rtmp
@@ -433,7 +436,7 @@ export default {
                     isLive: true,
                     cors: true
                 });
-            } else if (checkdevice() == "pc") {
+            } else if (checkdevice() == "testtt") {
                 console.log('that.livinglidata.streamAddrFlv99999999999999');
                 console.log(that.livinglidata.streamAddrFlv);
                 that.player = new FlvPlayer({
@@ -1014,25 +1017,25 @@ export default {
             this.$router.push({ name: 'confirmorder' });
         },
         // // 是否登录
-        // iflogin() {
-        //     let that = this;
-        //     // H5端
-        //     if (!that.$store.state.user.userid ||
-        //         that.$store.state.user.userid == 0
-        //     ) {
-        //         that.$toast({
-        //             message: "暂未登录，请先登录",
-        //             duration: 810,
-        //             forbidClick: true
-        //         });
-        //         setTimeout(() => {
-        //             that.gotologin();
-        //         }, 810);
-        //         return false;
-        //     } else {
-        //         return true;
-        //     }
-        // },
+        iflogin() {
+            let that = this;
+            // H5端
+            if (!that.$store.state.user.userid ||
+                that.$store.state.user.userid == 0
+            ) {
+                that.$toast({
+                    message: "暂未登录，请先登录",
+                    duration: 810,
+                    forbidClick: true
+                });
+                setTimeout(() => {
+                    that.gotologin();
+                }, 810);
+                return false;
+            } else {
+                return true;
+            }
+        },
 
         // postmsg IM聊天
         postmsg() {

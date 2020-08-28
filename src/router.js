@@ -306,4 +306,8 @@ router.beforeEach((to, from, next) => {
     }
 
 });
+/*解决跳转后滚动条回到顶部*/
+router.afterEach((to, from, next) => {
+    window.scrollTo(0, 0)
+});
 export default router;

@@ -2,10 +2,7 @@
 import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
-        <div class="header">
-        <img class="back" @click="goback" src="@/assets/imgs/follow/xiangqing@2x.png" alt />
-        <span>{{pagetitle}}</span>
-    </div>
+        <div @click="goback" v-if="step ==1" class="topbtn">< 返回</div>
         <div class="content">
             <div class="step1" v-if="step==1">
                 <div class="iptbox">
@@ -254,25 +251,26 @@ import { clearInterval } from 'timers';
         activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
     }
 </script>
+
 <style lang='less' scoped>
 .registwrap {
   position: relative;
-  width: 7.5rem;
+  width: 1200px;
   margin: 0 auto;
   height: 100vh;
-  overflow-y: scroll;
   .toprightbtn {
     height: 0.64rem;
     margin-top : .2rem;
-    color: rgba(136, 136, 136, 1);
+    color: rgba(255, 255, 255,.75);
     text-align : center;
     cursor: pointer;
   }
   .content {
-    padding-top: 2.05rem;
+    width: 1200px;
+    padding:158px 0 0 0;
     .title {
       text-align: center;
-      color: rgba(51, 51, 51, 1);
+      color: rgba(255, 255, 255,.75);
       font-size: 0.56rem;
       line-height: 0.74rem;
       height: auto;
@@ -327,53 +325,52 @@ import { clearInterval } from 'timers';
     }
     .iptbox {
       border-radius: 0.089rem;
-      padding: 0.2rem 0;
-      width: 5.68rem;
+      padding: .2rem 2.2rem 1.5rem;
       // height: 0.78rem;
       box-sizing: border-box;
-      margin: 0 0.91rem .52rem 0.91rem;
+      margin: 0.5rem 1.8rem;
       // font-size:0.28rem;
       font-size: 0.37rem;
       line-height: 1em;
-      height: calc(1em + 0.4rem);
+      // height: calc(1em + 0.4rem);
       position: relative;
       border-bottom :.01rem solid rgba(215,215,215,1);
       .t{
         font-size: .3rem;
         font-weight:500;
-        color:rgba(31,31,31,1);
+        color: rgba(250, 250, 250,.75);
         text-align: left;
       }
       span {
         float: left;
-        width: 1.2rem;
-        height:0.37rem;
+        width: 2rem;
+        height:0.8rem;
+        line-height: .8rem;
         text-align: right;
-        color: rgba(51, 51, 51, 1);
+        color: rgba(250, 250, 250,.75);
         font-size: 0.32rem;
         &.getcodebtn {
           width: 1.6rem;
           padding-left: 0.43rem;
           color:rgba(255,189,4,1);
           border-right: none;
-          font-size: 0.24rem;
+          font-size: 0.26rem;
           cursor: pointer;
           position: absolute;
-          right: 0.05rem;
+          left: 9rem;
           top: 0.2rem;
         }
       }
       input {
-        width:3.85rem;
         border: none;
-        height: 0.37rem;
+        // height: 1em;
+        height: 0.8rem;
         line-height: 1em;
-        color: #333;
+        color: 333;
         font-size: 0.28rem;
         padding-left: 0.24rem;
         float: left;
-        background: transparent;
-        
+        width: 6.8rem;
       }
 
       input::placeholder {
@@ -401,6 +398,7 @@ import { clearInterval } from 'timers';
       color : #fff;
     }
     .step2 {
+      margin-top: 1.3rem;
       .iptbox {
         padding: 0.2rem 0 0.2rem;
         width: 5.68rem;
@@ -416,7 +414,7 @@ import { clearInterval } from 'timers';
           border: none;
           height: 0.37rem;
           line-height: 0.37rem;;
-          color: rgba(206, 206, 206, 1);
+          color: rgba(250, 250, 250,.75);
           font-size: 0.28rem;
           // padding-left: 0.24rem;
           // float: left;
@@ -440,7 +438,7 @@ import { clearInterval } from 'timers';
       }
       & > p {
         width: 6.32rem;
-        color: rgba(155, 155, 155, 1);
+        color: rgba(250, 250, 250,.75);
         line-height: 0.37rem;
         font-size: 0.24rem;
         margin: 0.12rem auto 0.4rem .91rem;
@@ -491,13 +489,14 @@ import { clearInterval } from 'timers';
 // 顶部返回按钮
 .topbtn {
   position: absolute;
-  width: 0.42rem;
-  height: 0.42rem;
-  left: 0.17rem;
+  width: 80px;
+  height: 38px;
+  left: 10px;
   top: 0.55rem;
   border-radius: 50%;
-  overflow: hidden;
   z-index: 400;
+  font-size: 22px;
+  color:rgba(255,255,255,.75);
   cursor: pointer;
   img {
     width: auto;
@@ -521,13 +520,13 @@ import { clearInterval } from 'timers';
   .tit{
     font-size: .34rem;
     font-weight:bold;
-    color:rgba(31,31,31,1);
+    color: rgba(250, 250, 250,.75);
     margin-top : .55rem;
   }
   .t{
     font-size: .24rem;
     font-weight:500;
-    color:rgba(191,191,191,1);
+    color:rgba(255,255,255,.75);
     margin-top : .2rem;
   }
 
@@ -536,7 +535,7 @@ import { clearInterval } from 'timers';
 
 .registwrap{
   .header {
-      width: 7.5rem;
+      width: 1200px;
       border-bottom: 1px solid #DEDEDE;
       background: white;
       text-align: center;
@@ -565,7 +564,7 @@ import { clearInterval } from 'timers';
 .forgetpw {
   float: right;
   margin-right: 0.5rem;
-  color: rgba(136, 136, 136, 1);
+  color : #fff;
   font-size: 0.26rem;
   line-height: 0.37rem;
   margin-top: 0.25rem;
@@ -573,5 +572,11 @@ import { clearInterval } from 'timers';
 }
 </style>
 
-<style lang='less'>
+<style>  
+  body{
+    background: #763aff url("../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+  }
+  .ding-xiang-code .dx_captcha_basic_link{
+    display: none;
+  }
 </style>

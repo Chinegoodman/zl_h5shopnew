@@ -10,7 +10,7 @@ export default function needloginroute() {
         'order',
 
         //购物车
-        'shopcart',
+        // 'shopcart',
 
         // 商城
         'confirmorder',

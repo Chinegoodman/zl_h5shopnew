@@ -534,7 +534,7 @@ export default {
 <style lang='less' scoped>
 .registwrap {
   position: relative;
-  width: 1200;
+  width: 1200px;
   margin: 0 auto;
   height: 100vh;
   .toprightbtn {
@@ -546,6 +546,8 @@ export default {
   }
   .content {
     margin-top: .58rem;
+    width: 1200px;
+    margin: 0 auto;
     .title {
       text-align: center;
       color: rgba(255, 255, 255,.75);
@@ -842,7 +844,7 @@ export default {
 .forgetpw {
   float: right;
   margin-right: 0.5rem;
-  color: rgba(136, 136, 136, 1);
+  color : #fff;
   font-size: 0.26rem;
   line-height: 0.37rem;
   margin-top: 0.25rem;
