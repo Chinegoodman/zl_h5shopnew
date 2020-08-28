@@ -103,7 +103,8 @@
                 },
                 isAttention_status:false,
                 currentpagetype:'',
-                serviceshow:false,//当前页面版本小于 116 隐藏底部按钮客服
+                // serviceshow:false,//当前页面版本小于 116 隐藏底部按钮客服
+                serviceshow:true,// 默认展示
             };
         },
         watch:{
@@ -132,19 +133,19 @@
                 this.currentpagetype = newval;
             },
             service(newval,oldval){
-                // ios
-                if(Number(newval.version) <= 116 && newval.client == "iOS"){
-                    this.serviceshow=false;
-                }else if(Number(newval.version) > 116 && newval.client == "iOS"){
-                    this.serviceshow=true;
-                }
-                // 安卓
-                if(Number(newval.version) <= 130 && newval.client == "Android"){
-                    this.serviceshow=false;
-                }else if(Number(newval.version) > 130 && newval.client == "Android"){
-                    this.serviceshow=true;
-                }
-                // this.currentpagetype = newval;
+                // // ios
+                // if(Number(newval.version) <= 116 && newval.client == "iOS"){
+                //     this.serviceshow=false;
+                // }else if(Number(newval.version) > 116 && newval.client == "iOS"){
+                //     this.serviceshow=true;
+                // }
+                // // 安卓
+                // if(Number(newval.version) <= 130 && newval.client == "Android"){
+                //     this.serviceshow=false;
+                // }else if(Number(newval.version) > 130 && newval.client == "Android"){
+                //     this.serviceshow=true;
+                // }
+                // // this.currentpagetype = newval;
             }
         },
         computed: {
