@@ -65,14 +65,14 @@ export default {
     computed: {
         //全屏高度
         windowInnerHeight() {
-            return window.innerHeight + 'px';
+            return window.innerHeight - 85 + 'px';
         },
         // 直播相关
         wdwidth() {
-            return document.documentElement.clientWidth;
+            // return document.documentElement.clientWidth;
         },
         wdheight() {
-            return document.documentElement.clientHeight;
+            // return document.documentElement.clientHeight;
         },
         hasStartstatus: function() {
             return this.player.hasStart;

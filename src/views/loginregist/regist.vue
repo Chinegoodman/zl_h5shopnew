@@ -2,7 +2,7 @@
 <template>
     <div class="registwrap">
         
-        <div @click="goback" v-if="step ==1" class="topbtn"><img src="@/assets/imgs/icons/back.png" alt="返回"></div>
+        <div @click="goback" v-if="step ==1" class="topbtn">< 返回</div>
         <div class="header" v-if="step ==2">
           <img class="back" @click="goback" src="../../assets/imgs/follow/xiangqing@2x.png" alt />
           <span>设置密码</span>
@@ -603,7 +603,7 @@ export default {
     }
     .iptbox {
       border-radius: 0.089rem;
-      padding: 1rem 2.2rem 1.5rem;
+      padding: .2rem 2.2rem 1.5rem;
       // height: 0.78rem;
       box-sizing: border-box;
       margin: 0.5rem 1.8rem;
@@ -632,10 +632,10 @@ export default {
           padding-left: 0.43rem;
           color:rgba(255,189,4,1);
           border-right: none;
-          font-size: 0.24rem;
+          font-size: 0.26rem;
           cursor: pointer;
           position: absolute;
-          right: 0.05rem;
+          left: 9rem;
           top: 0.2rem;
         }
       }
@@ -767,13 +767,14 @@ export default {
 // 顶部返回按钮
 .topbtn {
   position: absolute;
-  width: 0.42rem;
-  height: 0.42rem;
-  left: 0.17rem;
+  width: 80px;
+  height: 38px;
+  left: 10px;
   top: 0.55rem;
   border-radius: 50%;
-  overflow: hidden;
   z-index: 400;
+  font-size: 22px;
+  color:rgba(255,255,255,.75);
   cursor: pointer;
   img {
     width: auto;
@@ -850,6 +851,9 @@ export default {
 </style>
 
 <style>  
+  body{
+    background: #763aff url("../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+  }
   .ding-xiang-code .dx_captcha_basic_link{
     display: none;
   }

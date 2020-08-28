@@ -140,6 +140,7 @@
         height: 65px;
         box-sizing: border-box;
         background: #FFBD03;
+        position: relative;
     }
 
     .swiper {
@@ -1733,4 +1734,34 @@
         }
     }
 }
+
+.shopwrap .login-inter{
+    position: absolute;
+    right: .35rem;
+    top: 50%;
+    margin-top: -10px;
+    .intercom{
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        .im{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .nm{
+            height: 20px;
+            line-height: 20px;
+            font-size: 16px;
+            color: #454545;
+            font-weight: bold;
+            margin-left: 3px;
+        }
+        .loginout{margin-left: 8px;}
+    }
+}    
 

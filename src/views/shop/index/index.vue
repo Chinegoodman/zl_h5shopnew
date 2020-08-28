@@ -11,6 +11,21 @@
           <div class="tab-title" slot="title" @click="titleclick(tit.tabindex,1)" >{{tit.category_name}}</div>
         </van-tab>
       </van-tabs>
+      <div class="login-inter">
+        <div class="intercom" v-if="$store.state.user.isLogin">
+           <span class="im">
+              <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
+            </span>
+            <span class="nm">{{$store.state.user.userdata.nickName}}</span>
+            <span class="loginout" @click="logout">退出</span>
+        </div>
+        <div class="intercom" @click="pageto('regist')" v-else>
+           <span class="im">
+              <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
+            </span>
+            <span class="nm">登录</span>
+        </div>
+      </div>
     </div>
     <div class="swiper">
       <van-swipe class="swiperdom" :autoplay="2000">
@@ -254,6 +269,25 @@ export default {
     
   },
   methods: {
+    // 退出登录
+    logout() {
+      let confirmfn = window.confirm("确定要退出登录吗？");
+      if (confirmfn) {
+        // window.sessionStorage.removeItem('pagefrom');
+        // window.sessionStorage.removeItem('allprice');
+        // window.sessionStorage.removeItem('OrderImmediatelydata');
+        // window.sessionStorage.removeItem('checkaddressitem');
+        // window.sessionStorage.removeItem('orderListdata');
+        window.sessionStorage.clear();
+        window.localStorage.clear();
+        this.$store.commit("resetuserdata");
+        this.$router.push({ name: "shopindex" });
+      }
+    },
+    // 页面跳转到登录而
+    pageto(routername){
+        this.$router.push({name:routername});
+    },
     /*跳转到秀场直播详情*/
     gotoxiuchangdetails(paramsdata) {
       let that = this;
