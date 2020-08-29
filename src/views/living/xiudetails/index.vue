@@ -1,19 +1,36 @@
 <!-- 组件说明 -->
 <template>
   <div class="videoswrapout">
-    <div class="navbar">
-      <van-tabs v-model="active">
-        <van-tab
-          :title="tit.category_name"
-          v-for="(tit, index) in titlistmassage"
-          :key="index"
-        >
-          <div class="tab-title" slot="title" @click.stop="returnprevpage" >{{tit.category_name}}</div>
-        </van-tab>
-      </van-tabs>
+      <div class="navbar">
+      <div class="nav-in">
+        <van-tabs v-model="active">
+          <van-tab
+            :title="tit.category_name"
+            v-for="(tit, index) in titlistmassage"
+            :key="index"
+          >
+            <div class="tab-title" slot="title" @click.stop="titleclicktopnav(tit.tabindex,1)" >{{tit.category_name}}</div>
+          </van-tab>
+        </van-tabs>
+        <div class="login-inter">
+          <div class="intercom" v-if="$store.state.user.isLogin">
+            <span class="im">
+                <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
+              </span>
+              <span class="nm">{{$store.state.user.userdata.nickName}}</span>
+              <span class="loginout" @click="logout">退出</span>
+          </div>
+          <div class="intercom" @click="pageto('regist')" v-else>
+            <span class="im">
+                <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
+              </span>
+              <span class="nm">登录</span>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 直播中、、、 -->
-    <div v-if="livingendstatus" class="videoswrap"  @click.capture="videoplay" >
+    <div v-if="livingendstatus" class="videoswrap"  @click.stop="videoplay" >
       <div class="video">
         <div id="videodom"></div>
       </div>
@@ -610,11 +627,6 @@
   z-index: 10500;
 }
 
-.videoswrapout .van-tabs--line .van-tabs__wrap {
-  width : 160px;
-  height: 0.74rem;
-  padding: .1rem 0;
-}
 .videoswrapout .van-tabs__nav--line {
   padding-bottom: 18px;
 }
@@ -682,6 +694,66 @@
 }
 body{
   background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
+.videoswrapout .van-tabs--line .van-tabs__wrap {
+  height: 0.74rem;
+  padding: .1rem 0;
+}
+.videoswrapout .van-tabs__nav--line {
+  padding-bottom: 18px;
+}
+
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width : 0;
+}
+
+.videoswrapout .van-tabs__nav{
+  width : 400px;
+  background : none;
+}
+.videoswrapout .van-tabs__line{
+  width : .45rem !important;
+  background:rgba(31,31,31,1);
+  bottom: 16px;
+}
+
+.videoswrapout .van-tab {
+  font-size: .34rem;
+  font-family:PingFang SC;
+  font-weight:bold;
+  color:rgba(31,31,31,1);
+  display: inline-block;
+  padding : 0 .32rem;
+  flex-basis : auto !important;
+  line-height : .75rem;
+}
+.videoswrapout .van-ellipsis{
+  // overflow: auto;
+}
+.videoswrapout .van-tab__text--ellipsis{
+  text-align : center;
+  // width : 140px;
+  // overflow: auto;
+}
+.videoswrapout .van-tab--active.van-tab {
+  color: rgba(51, 51, 51, 1);
+  font-size: .36rem;
+  font-weight: bold;
+}
+
+.videoswrapout .van-swipe__indicators {
+  padding: 0.06rem 0.18rem;
+  background-color: rgba(0, 0, 0, 0.23);
+  border-radius: 0.105rem;
+}
+
+.videoswrapout .van-list__placeholder{
+  width: 100%;
+  float: left;
+}
+
+.videoswrapout .van-swipe{
+  cursor: default;
 }
 
 </style>

@@ -1,258 +1,138 @@
-<!-- 组件说明 -->
+<!-- 组件说明 -->
 <template>
-  <div class="productsearchwrap">
-    <div class="header">
-      <div class="header-icon">
-        <img src="./../../../assets/imgs/icons/massicon.png" alt="">
-      </div>
-      <div class="header-tit">
-        <img src="./../../../assets/imgs/search/findtit.png" alt="">
-      </div>
-      <!-- <van-icon name="search" class="search" /> -->
-      <div class="header_back">
-        <div class="header_inp" @click="gotosearch">输入宝贝名称或关键词</div>
-      </div>
-    </div>
-    <div class="body">
-      <div class="body_left">
-        <ul class="left-one">
-          <li v-for="(item,index) in titlelist" :key="index" @click="titlechange(item.category_id,index)" ref="titlep"
-            class="left-one-tit">
-            <p ref="titleleft" class="left-one-mass">{{item.category_name}}</p>
-          </li>
-        </ul>
-      </div>
-      <div class="body_right">
-        <div class="body_right_content">
-          <!-- <div class="banner_sw">
-            <van-swipe :autoplay="3000" indicator-color="red">
-              <van-swipe-item v-for="(image, index) in images" :key="index" @click="imageurl(image)">
-                <img :src="image.img_url" />
-              </van-swipe-item>
-            </van-swipe>
-          </div> -->
-          <div class="body_right_list" style="border-bottom:0.16rem solid #F7F7F7">
-            <!-- <div class="body_right_header" >
-              <span class="title">{{item.two_category_name}}</span>
-              <span class="title_btn">
-                全部
-                <van-icon name="arrow" style="position: relative;
-            top: 0.01rem;" />
-              </span>
-            </div> -->
-            <ul class="right-two">
-              <li v-for="(item,index) in list" :key="index" @click="twoCategoryId(item)" class="right-two-mass">
-                <img :src="item.two_category_image" alt class="right-two-img" />
-                <p class="right-two-tit">{{item.two_category_name}}</p>
-              </li>
-            </ul>
-            <nodata :pagetype="pagetypedata" v-if="nodatashow"></nodata>
-          </div>
-          <!-- 三级分类 -->
-          <!-- <div
-            v-for="(item,index) in list"
-            :key="index"
-            class="body_right_list"
-            style="border-bottom:0.16rem solid #F7F7F7" @click="twoCategoryId(item)"
-          > -->
-          <!-- <div class="body_right_header">
-              <span class="title">{{item.two_category_name}}</span>
-              <span class="title_btn">
-                全部
-                <van-icon name="arrow" style="position: relative;
-            top: 0.01rem;" />
-              </span>
-            </div> -->
-          <!-- <ul>
-              <li v-for="(tab,index) in item.threeCategoryInfo" :key="index" @click="threeCategoryId(tab)">
-                <img :src="tab.three_category_image" alt />
-                <p>{{tab.three_category_name}}</p>
-              </li>
-            </ul>
-          </div> -->
+  <div class="confirmorderwrap">
+    <div class="jiazhang">
+      <div class="returnindex" @click="shopback">首页 < 服务申请</div>
+      <div class="banner">
+        <img src="./../../../assets/imgs/shop/jiazhang-banner.jpg" alt="">
+      </div> 
+      <div class="content">
+        <h3>服务申请</h3>
+        <div class="guildimg">
+          <img src="./../../../assets/imgs/shop/2c_03.png" alt="">
         </div>
-        <!-- <div class="bottom">
-          <img src="../../../assets/imgs/shop/top.png" alt />
-          上拉继续浏览
-        </div> -->
-      </div>
+        <div class="sec-tit">流程介绍详细说明：</div>
+        <div class="zu">
+           <span class="tit">监护人提出申请</span>
+           <p>在监护人发现被监护人有沉溺yxf直播戏的情况下，监护人可向游家公司申请发起未成年人家长监护机制。 　监护人需亲自通过邮寄方式 向我司提供有效材料，向游家公司提出未成年人账户监控的申请。在收到邮件后，我司即开始启动监护机制审核流程，首先进入疑似账号身份确认期。</p>
+        </div>
+        <div class="zu">
+           <span class="tit">疑似账号身份确认期（15 个自然日）</span>
+           <p>在判断申请材料完整的情况下，我司将通过官方邮箱联系疑似帐号归属者，告知其在 15 个自然日内将按照监护人需求对其账号进行相关操作，并要求疑似账号归属者提供身份材料以便我司判定其与监护人监护关系； 若疑似账号归属者在 15 个自然日内不能提供有效身份证明或逾期提供，则默认为疑似账号归属者与被监护人身份相符。我司即按照监护人申请要求，对其直播账号纳入防沉迷系统；</p>
+          <p>若疑似账号归属者在 15 个自然日内提供的身份证明与被监护人相符，我司即按照监护人申请要求，对其直播账号纳入防沉迷系统；</p>
+          <p>若疑似账号归属者在 15 个自然日内提供的身份证明与被监护人不符，我司则无法判定其与被监护人的身份关系。在此情况下，为保障用户直播账号安全，我司将通知监护人通过公安机关出具账号找回协查证明，由我司协助被监护人找回直播账号后再进行后续操作；</p>
+        </div>
+        <div class="sec-tit">流程介绍详细说明：</div>
+        <div class="zu">
+          <p style="backgroud : red">yxf直播戏未成年人用户家长监控服务申请书(点击下载)</p>
+          <p>1、监护人信息表（包含监护人的身份证明复印件）；</p>
+          <p>2、被监护人信息表（包含被监护人所玩直播相关信息及身份证明复印件）；</p>
+          <p>3、填写网络直播未成年人家长监护申请书、保证书、授权书并手工签字（需下载，填写并打印，签字）；</p>
+          <p>4、申请人与被监护人的监护关系证明文件（户口簿或有关机关出具的证明文件）。</p>
+        </div>
+      </div>  
     </div>
   </div>
 </template>
 
 <script>
-  //import x from ''
-  import nodata from './../../../components/nodata.vue'
-  export default {
-    components: {
-      nodata
-    },
-    data() {
-      return {
-        nodatashow: false,
-        pagetypedata: "classifydata",
-        shleid: "",
-        value: "",
-        titlelist: [],
-        list: [],
-        images: []
-      };
-    },
-    computed: {},
-    methods: {
-      goback() {
-        this.$router.go(-1);
-      },
-      gotosearch() {
-        this.$router.push({
-          name: "livingsearch"
-        });
-      },
-      titlechange(id, index) {
-        console.log('id');
-        console.log(id);
-        let json = JSON.parse(sessionStorage.getItem("searchtitle"));
-        this.titlelist = json;
-        for (let i = 0; i < this.titlelist.length; i++) {
-          this.$refs.titlep[i].style.background = "white";
-          this.$refs.titlep[i].style.color = "#757575";
-          this.$refs.titleleft[i].style.borderLeft = "0.06rem solid transparent";
-        }
-        this.$refs.titlep[index].style.background = "#F6F6F6";
-        this.$refs.titleleft[index].style.borderLeft = "0.06rem solid #FFBD04";
-        this.$refs.titlep[index].style.color = "#FFBD04";
-        let that = this;
-        that.api.productsearch
-          .getshelves({
-            oneCategoryId: id
-          })
-          .then(function (res) {
-            console.log('res');
-            console.log(res.data.code);
-            if(res.data.code == 1){
-              that.list = res.data.data.goodsCategoryPojo;
-              if (res.data.data.goodsCategoryPojo.length > 0) {
-                that.nodatashow = false;
-              } else {
-                that.nodatashow = true;
-              }
-            }else{
-              that.nodatashow = true;
-            }
-          })
-      },
-
-      // 存储二级标题ID
-      twoCategoryId(twoid) {
-        let twoids = twoid.two_category_name;
-        let twoidsid = twoid.two_category_id;
-        sessionStorage.setItem("twoid", twoidsid);
-        sessionStorage.setItem("searchname", twoids);
-        this.$router.push({
-          name: "searchresult"
-        });
-      },
-      // 存储三级标题ID
-      threeCategoryId(threeid) {
-        let threeids = threeid.three_category_id;
-        sessionStorage.setItem("threeid", threeids);
-        this.$router.push({
-          name: "shopindex"
-        });
-      },
-      // banner图跳转
-      imageurl(item) {
-        let that = this;
-        if (item.type == 1) {
-          return;
-        } else if (item.type == 2) {
-          that.$router.push({
-            name: "productdetails",
-            params: {
-              product_id: item.number,
-              webtype: 1
-            }
-          });
-        } else if (item.type == 3) {
-          window.open(item.to_url);
-        } else if (item.type == 4) {
-          // 视频
-          alert('视频暂未添加');
-        }
-      },
-    },
-    created() {
+// import base from "@/api/base.js"; // 导入接口域名列表
+// import axios from "axios";
+// import { constants } from 'fs';
+//import x from ''
+export default {
+  components: {},
+  data() {
+    return {
+      userID:'',
+      
+    };
+  },
+  computed: {
+  },
+   mounted() {
+    
+  },
+  methods: {
+    // 返回上一页
+    shopback() {
       let that = this;
-      that.api.homedetails.bannerimg({
-        flag: 1
-      }).then(res => {
-        that.images = res.data.data;
-      });
-      that.api.productsearch
-        .getshelves({
-          oneCategoryId: that.shleid
-        })
-        .then(function (res) {
-          that.titlelist = res.data.data.oneCategoryList;
-          that.shleid = res.data.data.oneCategoryList[0].category_id;
-          // console.log(that.titlelist);
-          // let js = JSON.stringify(that.titlelist);
-          // sessionStorage.setItem("searchtitle", js);
-          // that.list = res.data.data.goodsCategoryPojo;//二级分类
-          that.api.productsearch
-            .getshelves({
-              oneCategoryId: that.shleid
-            })
-            .then(function (res) {
-              // that.titlelist = res.data.data.oneCategoryList;
-              // console.log(that.titlelist);
-              let js = JSON.stringify(that.titlelist);
-              sessionStorage.setItem("searchtitle", js);
-              that.list = res.data.data.goodsCategoryPojo; //二级分类
-            });
-        });
-    },
-    mounted() {
-      sessionStorage.removeItem("twoid")
-    },
-    beforeCreate() {}, //生命周期 - 创建之前
-    beforeMount() {}, //生命周期 - 挂载之前
-    beforeUpdate() {}, //生命周期 - 更新之前
-    updated() {}, //生命周期 - 更新之后
-    beforeDestroy() {}, //生命周期 - 销毁之前
-    destroyed() {}, //生命周期 - 销毁完成
-    activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
-  };
+      that.$router.go(-1);
+    }
+  },
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
+  beforeDestroy() {}, //生命周期 - 销毁之前
+  destroyed() {}, //生命周期 - 销毁完成
+  activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
+};
 </script>
 
-<style lang='css' scoped>
-  /*
-  .banner_sw
-  >>>
-  .van-swipe__indicators
-  {
-  position:
-  absolute;
-  left:
-  85%;
-  bottom:
-  0.08rem;
-  }
-  .banner_sw
-  >>>
-  .van-swipe
-  {
-  width:
-  90%;
-  width:
-  100%;
-  width:
-  5.25rem;
-  }
-  */
+<style lang='less' scoped>
+.confirmorderwrap{
+  .jiazhang{
+        width : 1200px; 
+        margin : 0 auto;
+        .banner{
+            width : 1200px; 
+            height: 368px;
+            margin-top : 25px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .content{
+            min-height: 300px;
+            position: relative;
+            padding: 15px 15px 50px;
+            border : 1px solid rgba(255,255,255,.5);
+            h3{
+              font-size: 22px;
+              color: rgba(255,255,255,1);
+              font-weight: bold;
+              padding: 10px 0 20px;
+            }
+            .sec-tit{
+              font-size: 18px;
+              color: rgba(255,255,255,1);
+              font-weight: bold;
+            }
+            .guildimg{
+              padding: 0 0 30px;
+              img{
+                width: 100%;
+              }
+            }
+            .zu{
+                  font-size: 16px;
+                  font-weight: 400;
+                  color: rgba(255,255,255,1);
+                  font-weight: bold;
+                  margin: 15px 0;
+              }
+              p{
+                  font-size: 15px;
+                  font-weight: 500;
+                  line-height: 32px;
+                  text-indent: 2em;
+              }    
+        }
+        .returnindex{
+            font-size: 0.26rem;
+            font-weight: 500;
+            color: rgba(255,255,255,.75);
+            cursor: pointer;
+            padding-top : 20px;
+         }
+    }
+  }  
 </style>
 
-<style lang='less'>
-  @import
-  "./index.less";
+<style >
+body{
+  background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
 </style>

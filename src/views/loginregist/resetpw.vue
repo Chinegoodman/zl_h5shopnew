@@ -2,7 +2,7 @@
 import { clearInterval } from 'timers';
 <template>
     <div class="registwrap">
-        <div @click="goback" v-if="step ==1" class="topbtn">< 返回</div>
+        <div @click="goback" class="topbtn">< 返回</div>
         <div class="content">
             <div class="step1" v-if="step==1">
                 <div class="iptbox">
@@ -11,7 +11,7 @@ import { clearInterval } from 'timers';
                 </div>
                 <div class="iptbox">
                     <span class="t">验证码</span>
-                    <input type="text" v-model="phonecode" :disabled="isAble" placeholder="请输入验证码9">
+                    <input type="text" v-model="phonecode" :disabled="isAble" placeholder="请输入验证码">
                     <span @click="dingxiangsdk" v-show="!gettingcodestatus" class="getcodebtn">获取验证码</span>
                     <span v-show="gettingcodestatus" class="getcodebtn">剩余 {{gettingcodestatustime}} S</span>
                 </div>
@@ -222,10 +222,8 @@ import { clearInterval } from 'timers';
                   password: that.setpassword,
                   verificationCode: that.phonecode
               }).then(data=>{
-                  console.log('data.data.info重置密码');
-                  console.log(data.data.info);
                   that.$toast(data.data.info);
-                  if(data.data.info == "修改成功"){
+                  if(data.data.code == 1){
                     that.$router.push({ name: "shopindex" });
                   }
               })
@@ -398,30 +396,64 @@ import { clearInterval } from 'timers';
       color : #fff;
     }
     .step2 {
-      margin-top: 1.3rem;
+      // margin-top: 1.3rem;
       .iptbox {
-        padding: 0.2rem 0 0.2rem;
-        width: 5.68rem;
+      border-radius: 0.089rem;
+      padding: .2rem 2.2rem 1.5rem;
       // height: 0.78rem;
-        box-sizing: border-box;
-        margin: 0 0.91rem .52rem 0.91rem;
-        border-bottom :.01rem solid rgba(215,215,215,1);
-        font-size: 0.37rem;
-        line-height: 1em;
-        height: calc(1em + 0.4rem);
-        position: relative;
-        input {
-          border: none;
-          height: 0.37rem;
-          line-height: 0.37rem;;
-          color: rgba(250, 250, 250,.75);
-          font-size: 0.28rem;
-          // padding-left: 0.24rem;
-          // float: left;
-          // // width:3.65rem;
-          width: 70%;
+      box-sizing: border-box;
+      margin: 0.5rem 1.8rem;
+      // font-size:0.28rem;
+      font-size: 0.37rem;
+      line-height: 1em;
+      // height: calc(1em + 0.4rem);
+      position: relative;
+      border-bottom :.01rem solid rgba(215,215,215,1);
+      .t{
+        font-size: .3rem;
+        font-weight:500;
+        color: rgba(250, 250, 250,.75);
+        text-align: left;
+      }
+      span {
+        float: left;
+        width: 2rem;
+        height:0.8rem;
+        line-height: .8rem;
+        text-align: right;
+        color: rgba(250, 250, 250,.75);
+        font-size: 0.32rem;
+        &.getcodebtn {
+          width: 1.6rem;
+          padding-left: 0.43rem;
+          color:rgba(255,189,4,1);
+          border-right: none;
+          font-size: 0.26rem;
+          cursor: pointer;
+          position: absolute;
+          left: 9rem;
+          top: 0.2rem;
         }
       }
+      input {
+        border: none;
+        // height: 1em;
+        height: 0.8rem;
+        line-height: 1em;
+        color: 333;
+        font-size: 0.28rem;
+        padding-left: 0.24rem;
+        float: left;
+        width: 6.8rem;
+      }
+
+      input::placeholder {
+        font-size: .24rem;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:rgba(191,191,191,1);
+      }
+    }
 
       .setpassword,
       .setpassworded{
@@ -437,11 +469,12 @@ import { clearInterval } from 'timers';
         cursor: pointer;
       }
       & > p {
-        width: 6.32rem;
+        width: 9960px;
         color: rgba(250, 250, 250,.75);
         line-height: 0.37rem;
         font-size: 0.24rem;
-        margin: 0.12rem auto 0.4rem .91rem;
+        margin: 0.12rem auto;
+        padding-left : 240px;
       }
       .setpassworded{
         background:rgba(255,189,4,1);

@@ -58,9 +58,18 @@ export default {
     data() {
         return {
             titlistmassage: [{
-                category_name: "返回首页",
-                tabindex: 0 //推荐
-            }], //头部导航数据
+                    category_name: "首页",
+                    tabindex: 0 //推荐
+                },
+                {
+                    category_name: "招聘信息",
+                    tabindex: 1 //推荐
+                },
+                {
+                    category_name: "关于我们",
+                    tabindex: 2 //推荐
+                }
+            ], //头部导航数据
             livinglidata: "",
             liveId: '',
             active: '', //直播间榜单tab切换当前个
@@ -548,20 +557,50 @@ export default {
         });
     },
     methods: {
-        // 获取头部导航数据
-        titlelistmass() {
-            let that = this;
-            that.api.homedetails
-                .titlelist({})
-                .then(res => {
-                    // console.log(res.data);
-                    that.titlistmassage = res.data.data;
-                })
-                .catch(() => {
-                    that.vanerror = true;
-                });
-        },
+        // // 获取头部导航数据
+        // titlelistmass() {
+        //     let that = this;
+        //     that.api.homedetails
+        //         .titlelist({})
+        //         .then(res => {
+        //             // console.log(res.data);
+        //             // that.titlistmassage = res.data.data;
+        //         })
+        //         .catch(() => {
+        //             that.vanerror = true;
+        //         });
+        // },
         // 阻止冒泡
+        // 头部导航点击事件
+        titleclicktopnav(type_index) {
+            let that = this;
+            switch (type_index) {
+                case 0:
+                    this.$router.push({ name: "shopindex" });
+                    break
+                case 1:
+                    that.$router.push({ name: "shopowner" });
+                    break
+                case 2:
+                    that.$router.push({ name: "diamond" });
+                    break
+            }
+        },
+        // 退出登录
+        logout() {
+            let confirmfn = window.confirm("确定要退出登录吗？");
+            if (confirmfn) {
+                // window.sessionStorage.removeItem('pagefrom');
+                // window.sessionStorage.removeItem('allprice');
+                // window.sessionStorage.removeItem('OrderImmediatelydata');
+                // window.sessionStorage.removeItem('checkaddressitem');
+                // window.sessionStorage.removeItem('orderListdata');
+                window.sessionStorage.clear();
+                window.localStorage.clear();
+                this.$store.commit("resetuserdata");
+                this.$router.push({ name: "shopindex" });
+            }
+        },
         returnfn() {
             return false;
         },

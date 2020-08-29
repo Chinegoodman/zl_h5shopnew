@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class="shopower_wrap">
-    <div class="returnindex" @click="shopback">首页 < 招聘信息</div>
+    <div class="returnindex" @click="shopback"> < 返回</div>
     <div class="zhao">
       职位名称：中高级前端开发工程师<br/><br/>
       任职要求<br/>

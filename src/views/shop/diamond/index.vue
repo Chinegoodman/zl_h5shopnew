@@ -1,9 +1,9 @@
 <!-- 组件说明 -->
 <template>
   <div class="diamondwrap">
-    <div class="returnindex" @click="shopback">首页 < 公司简介</div>
+    <div class="returnindex" @click="shopback"> < 返回</div>
     <p>
-      简介：北京艺相bai逢文化传播有du限公司，是一家坐落中国“硅谷”——中关村zhi的科技文化类企业公司主要从事文dao化艺术的交流、研讨；其主打产品为比艺直播，更是一款全天候直播产品，可以让艺术爱好者随时随地想播就播，而且可以让播客在数据环境下进行视频录制，待链接WIFI在进行视频上传；
+      简介：北京艺相逢文化传播有限公司，是一家坐落中国“硅谷”——中关村的科技文化类企业;公司主要从事文化艺术的交流、研讨；其主打产品为比艺直播，更是一款全天候直播产品，可以让艺术爱好者随时随地想播就播，而且可以让播客在数据环境下进行视频录制，待链接WIFI再进行视频上传；
     </p>
   </div>
 </template>
@@ -88,7 +88,7 @@ export default {
     let that = this;
     that.title = that.$route.query.title;
     that.type_id = that.$route.query.typeId;
-    that.diamondlist();
+    // that.diamondlist();
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

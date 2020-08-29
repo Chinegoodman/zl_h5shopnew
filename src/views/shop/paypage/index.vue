@@ -1,60 +1,73 @@
 <!-- 组件说明 -->
 <template>
   <div class="confirmorderwrap">
-    <div class="header clearfix">
-      <img
-        @click="goprevpage"
-        style="transform:rotate(180deg);"
-        src="./../../../assets/imgs/icons/sp-gengduo@2x.png"
-        alt
-      />
-      <p>在线支付</p>
-    </div>
-    <div class="containerwrap">
-      <!-- 支付方式  平安银行支付 微信支付 支付宝支付-->
-        <div class="paytypebox clearfix">
-          <div class="payamount">
-              <span class="sm">￥</span>
-              <span>{{lastpaymsg.amont.toFixed(2)}}</span>
-          </div>
-          <div class="paytype clearfix" v-for="(item,index) in paytypedata.arr" :key="index">
-            <div class="left">
-              <img :src="item.logo" alt="抓周">
-              <div class="content">
-                <p>{{item.name}}</p>
-                <span>{{item.title}}</span>
+    <div class="jiazhang">
+      <div class="returnindex" @click="shopback">首页 < 家长监护专栏</div>
+      <div class="banner">
+        <img src="./../../../assets/imgs/shop/jiazhang-banner.jpg" alt="">
+      </div> 
+      <div class="content">
+        <div class="area-lt">
+          <div  class="lt-con">
+            <div class="floor02">
+              <div class="tit">*防沉迷家长监控系统FAQ</div>
+              <div class="con">
+                  <span>Q： 可以通过什么渠道申请家长监督未成 年人账号？ </span>
+                  <p>‭A： 目前您可以通过电话反馈，进行申请。</p>
+                  <span>Q： 申请监督的账号有什么要求？</span>
+                  <p>‭A： 账号所属人必须未满18周岁。‬</p>
+                  <span>Q： 申请监督未成年人账号需要提供什么</span>
+                  <p>A： 您需要提供监护人身份证复印件、账号 所属人身份证复印件以及户口本复印件、公安机关监护证明。‬</p>
+                  <router-link :to="{name:'confirmorder'}" tag="li">查看更多FAQ</router-link>
               </div>
             </div>
-            <div class="right" @click="selectpaytype(index)">
-             <img style="width:0.3rem;height:0.3rem;" :src="paytypedata.currentindex==index? require('./../../../assets/imgs/personal/return-select.png'):require('./../../../assets/imgs/personal/return-unselect.png')" alt />
+            <div class="floor03">
+              <div class="tit">*申请表下载</div>
+              <div class="con">
+                  <span>表单内容：</span>
+                  <p>附件表一：监护人信息表明书</p>
+                  <p>‭附件表二：被监护人信息表明书‬</p>
+                  <p>附件表三：家长监护申请书‬</p>
+              </div>
+              <a class="download" href="http://www.17biyi.tv/yxf.zip">申请表单下载</a>
+            </div>
+            <div class="floor01">
+              <div class="tit">*咨询渠道</div>
+              <div class="con">
+                <span>咨询电话: </span>
+                <p>‭(010) 6493 5833‬</p>
+                <span>咨询邮箱: </span>
+                <p>peter@17biyi.com</p>
+                <span>服务时段: </span>
+                <p>全天24小时</p>
+              </div>  
             </div>
           </div>
         </div>
-        <div class="wrap-paybtn" >
-          <span class="paybtnbegin" @click="payfun">使用{{checked_paytype}}</span>
-        </div>
+        <div class="right-rt">
+            <p> “网络直播未成年人家长监护工程”是一项由国内网络直播企业共同发起并参与实施，由中华人民共和国文化部指导，旨在加强家长对未成年人参与网络直播的监护，引导未成年人健康、绿色参与网络直播，和谐家庭关系的社会性公益行动。它提供了一种切实可行的方法，一种家长实施监控的管道，使家长纠正部分未成年子女沉迷直播的行为成为可能。</p>
+            <p>该项社会公益行动充分反映了中国网络直播行业高度的社会责任感，对未成年玩家合法权益的关注及对用实际行动营造和谐社会的愿望。</p>
+            <p>“家长监护机制”是4399在这一公益行动中，针对目前未成年人缺乏自控及自律能力，容易陷入沉迷；少数监护人缺少时间照顾未成年人，不能及时监督未成年人直播时间的现状，而推出的一种可由家长实施监控，纠正部分未成年子女沉迷直播的保护机制。</p>
+            <div class="zu">《未成年人健康参与网络直播提示》</div>
+            <p>随着网络在青少年中的普及，未成年人接触网络直播已经成为普遍现象。为保护未成年人健康参与直播，在政府进一步加强行业管理的前提下，家长也应当加强监护引导。为此，我们为未成年人参与网络直播提供以下意见：</p>
+            <p>一、主动控制直播时间。直播只是学习、生活的调剂，要积极参与线下的各类活动，并让父母了解自己在网络直播中的行为和体验。</p>
+            <p>二、不参与可能耗费较多时间的直播设置。不玩大型角色扮演类直播，不玩有PK类设置的直播。在校学生每周玩直播不超过2小时，每月在直播中的花费不超过10元。</p>
+            <p>三、不要将直播当作精神寄托。尤其在现实生活中遇到压力和挫折时，应多与家人朋友交流倾诉，不要只依靠直播来缓解压力。</p>
+            <p>四、养成积极健康的直播心态。克服攀比、炫耀、仇恨和报复等心理，避免形成欺凌弱小、抢劫他人等不良网络行为习惯。</p>
+            <p>五、注意保护个人信息。包括个人家庭、朋友身份信息，家庭、学校、单位地址，电话号码等，防范网络陷阱和网络犯罪。</p>
+            <div class="zu">家长监护服务进度查询：</div>
+            <p>如果您已经申请家长监护服务，在服务期间，当您对需要提交的信息、处理结果有疑问，或者其他任何问题，您均可以在工作时间联系我们，我们将由专门负责的受理专员为您提供咨询解答服务，或者配合、指导您解决问题。</p>
+            <div class="zu">家长监护服务说明：</div>
+            <p>家长监护系统充分考虑家长的实际需求，当家长发现自己的孩子玩直播过于沉迷的时候，由家长提供合法的监护人资质证明、直播名称账号、以及家长对于限制强度的愿望等信息，可对处于孩子直播沉迷状态的账号采取几种限制措施，解决未成年人沉迷直播的不良现象，如限制未成年人每天玩直播的时间区间和长度，也可以限制只有节假日才可以直播，或者完全禁止。</p>
+            </div>
+      </div> 
     </div>
-    <!-- 查看支付状态 -->
-    <div class="confirmboxmb" v-if="confirmboxmbstatus" @click.stop="confirmboxmbclose">
-      <div class="confirmbox" @click.stop="stopfn">
-        <p>请确认支付是否已完成</p>
-        <p @click.stop="confirmcheck" class="confirm">已完成支付</p>
-        <span @click.stop="payagain">支付遇到问题，重新支付</span>
-        <span @click.stop="paycancel">取消支付</span>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 // import base from "@/api/base.js"; // 导入接口域名列表
 // import axios from "axios";
-import {
-  setsessionStorage,
-  getsessionStorage,
-  getlocalStorage
-} from "./../../../utils/index.js";
 // import { constants } from 'fs';
 //import x from ''
 export default {
@@ -62,263 +75,19 @@ export default {
   data() {
     return {
       userID:'',
-      // paytype 支付方式数据
-      lastpaymsg : {
-        amont : 0
-      },
-      paytypedata:{
-        currentindex:0,
-        arr:[
-          {
-            name: "支付宝支付",
-            title: "支付宝安全支付",
-            logo: require("./../../../assets/imgs/icons/dd-qzf-zhifub@2x.png"),
-            payType: 1
-          },
-          {
-            name: "微信支付",
-            title: "微信安全支付",
-            logo: require("./../../../assets/imgs/icons/dd-qzf-weixin@2x.png"),
-            payType: 2
-          }
-          // {
-          //   name:'银联支付',
-          //   title:'银联安全支付',
-          //   logo:require('./../../../assets/logo.png'),
-          //   payType:3,
-          // },
-          // {
-          //   name:'平安银行支付',
-          //   title:'平安银行安全支付',
-          //   logo:require('./../../../assets/logo.png'),
-          //   payType:4,
-          // },
-        ]
-      },
-      checked_paytype : '支付宝支付',
-      confirmpageorder:{
-        payfundata:{
-          amont:''
-        }
-      },//订单数据
-      addressdata:'',//地址数据
-      paystatus:'',//订单是否完成状态
-      confirmboxmbstatus: false, //支付状态模板
+      
     };
   },
   computed: {
   },
    mounted() {
-    let that = this;
-    that.userID = that.$store.state.user.userid;
-    this.confirmpageorder= getlocalStorage('confirmpageorder');
-    this.addressdata = getsessionStorage("checkaddressitem");
-    this.paystatus = getsessionStorage('paystatus');
-    
-    that.lastpaymsg = getsessionStorage('lastpaymsg');
-
-    that.timeinterval = setInterval(() => {
-      that.checkpayfundatastatus();
-      if (that.confirmboxmbstatus) {
-        window.clearInterval(that.timeinterval);
-        that.timeinterval = null;
-      } else if (!JSON.parse(localStorage.getItem("confirmpageorder"))) {
-        // window.clearInterval(that.timeinterval);
-        // that.timeinterval=null;
-      }
-    }, 450);
     
   },
   methods: {
-    // 支付方式选择事件 支付方式：1->支付宝；2->微信；3->银联；4->????
-    selectpaytype(index) {
+    // 返回上一页
+    shopback() {
       let that = this;
-      that.paytypedata.currentindex = index;
-      console.log('支付方式为:'+that.paytypedata.arr[index].name);
-      that.checked_paytype = that.paytypedata.arr[index].name;
-    },
-    //最后支付
-     // 支付接口
-    payfun() {
-      let that = this,
-      amont = that.lastpaymsg.amont,
-      orderId = that.lastpaymsg.orderId;
-      that.$toast.loading({
-        // message:'',
-        duration: 0
-      });
-      // 支付方式：1->支付宝；2->微信；3->银联；4->平安银行????
-      if (that.paytypedata.currentindex == 0) {
-        // this.confirmboxmbstatus = true;//确认支付是否已完成的弹窗
-        that.api.shopcart
-          .aliprepay({
-            uid: that.$store.state.user.userid,
-            amont,
-            // amont:0.01,
-            orderId
-          })
-          .then(res => {
-            that.$toast.clear();
-            // debugger;
-            localStorage.setItem(
-              "confirmpageorder",
-              JSON.stringify({
-                payfundata: {
-                  amont,
-                  orderId
-                },
-                payfundatastatus: "paying",
-                paytype: that.paytypedata.currentindex
-              })
-            );
-            let zfbdom = res.data;
-            // that.$refs.zfbdom.innerHtml=zfbdom;
-            const payDiv = document.getElementById("payDiv");
-            if (payDiv) {
-              document.body.removeChild(payDiv);
-            }
-            const div = document.createElement("div");
-            div.id = "payDiv";
-            // alert(zfbdom);
-            div.innerHTML = zfbdom;
-            document.body.appendChild(div);
-            document
-              .getElementById("payDiv")
-              .getElementsByTagName("form")[0]
-              .submit();
-            // alert('支付成功');
-            // that.$router.push({path:'/shop/olpay',query:{paystatus:true,orderdata:'orderdatasuccess'}});
-          })
-          .catch(err => {
-            that.$toast.clear();
-            if (window.confirm("拉起支付宝支付失败，是否重试?")) {
-              that.payfun();
-            } else {
-              that.paycancel();
-            }
-            // that.$router.push({path:'/shop/olpay',query:{paystatus:false,orderdata:'orderdatafailed'}});
-          });
-      } else {
-        // alert('暂时只接入支付宝支付');
-        if (
-          window.confirm("支付宝之外的是否成功拉起了支付？？(成功与否不考虑)")
-        ) {
-          localStorage.setItem(
-            "confirmpageorder",
-            JSON.stringify({
-              payfundata: {
-                amont,
-                orderId
-              },
-              payfundatastatus: "paying",
-              paytype: that.paytypedata.currentindex
-            })
-          );
-        }
-      }
-    },
-    // 蒙版点击关闭事件2  取消此功能
-    confirmboxmbclose() {
-      return;
-      // this.confirmboxmbstatus = false;
-    },
-    //  支付弹窗相关 接口
-    //查看订单是否支付成功
-    confirmcheck() {
-      let confirmpageorderdata = JSON.parse(
-        localStorage.getItem("confirmpageorder")
-      );
-      this.checkorderstatus(
-        confirmpageorderdata.payfundata.orderId,
-        confirmpageorderdata.payfundata.amont
-      );
-    },
-    // 查询一下订单支付状态接口
-    checkorderstatus(order, amont) {
-      let that = this;
-      // console.log(orderId);
-      this.api.shopcart
-        .paystatus({
-          uid: that.$store.state.user.userid,
-          order
-          // amont,
-        })
-        .then(res => {
-          console.log(res);
-          if (res.data.code == 1) {
-            // 0为未 成功 付款
-            if (res.data.data == 0) {
-              that.$toast("支付未成功。请重试");
-            } else if (res.data.data == 1) {
-              // 1为 成功 付款
-              setsessionStorage("paystatus", true);
-              that.$router.push({ path: "/shop/olpay" });
-            }
-          }
-        })
-    },
-    // 再次支付
-    payagain() {
-      let confirmpageorderdata = JSON.parse(
-        localStorage.getItem("confirmpageorder")
-      );
-      this.payfun(
-        confirmpageorderdata.payfundata.amont,
-        confirmpageorderdata.payfundata.orderId
-      );
-    },
-    //取消支付
-    paycancel() {
-      this.confirmboxmbstatus = false;
-      this.$router.push({ path: "/shop/olpay" });
-      setsessionStorage("paystatus", false);
-    },
-    //查看此订单 是否 拉起过 支付事件
-    checkpayfundatastatus() {
-      let that = this;
-      let confirmpageorderdata = JSON.parse(
-        localStorage.getItem("confirmpageorder")
-      );
-      if (!confirmpageorderdata) {
-        // console.log("confirmpageorderdata 无数据");
-        window.clearInterval(that.timeinterval);
-        that.timeinterval = "";
-      } else {
-        if (confirmpageorderdata.payfundatastatus == "paying") {
-          that.confirmboxmbstatus = true;
-          that.paytypedata.currentindex = confirmpageorderdata.paytype;
-        }else{
-          that.confirmboxmbstatus = false;
-        }
-      }
-    },
-    goprevpage(){
-      let that = this;
-      let type = that.$route.query.type,
-          tabid = that.lastpaymsg.tabid,
-          orderId = that.lastpaymsg.orderId;
-      if(type == 'orderdetails'){
-        this.$router.push({
-          path:'/personalcenter/order/orderdetails',
-          query:{
-            orderId :  orderId,
-            tabid : tabid
-          }
-        });
-      }else if(type == 'orderindex'){
-        this.$router.push({path:'/personalcenter/order/index',
-          query:{
-            tabid : tabid
-          }
-        });
-      }else{
-        this.$router.push({path:'/shop/confirmorder'});
-      }
-      
-    },
-    // 查看订单页 ==>>目前调列表页
-    checkorder(){
-      this.$router.push({path:'/order',query:{tabid:0}});
+      that.$router.go(-1);
     }
   },
   beforeCreate() {}, //生命周期 - 创建之前
@@ -332,9 +101,11 @@ export default {
 </script>
 
 <style lang='less' scoped>
-@import url("./css/index.less");
+  @import url("./css/index.less");
 </style>
 
-<style lang='less'>
-//@import url()
+<style >
+body{
+  background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
 </style>

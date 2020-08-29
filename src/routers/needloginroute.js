@@ -13,7 +13,7 @@ export default function needloginroute() {
         // 'shopcart',
 
         // 商城
-        'confirmorder',
+        // 'confirmorder',
         // 'productsearch',
     ]
 }

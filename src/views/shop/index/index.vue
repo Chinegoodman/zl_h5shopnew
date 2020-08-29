@@ -81,6 +81,11 @@
     <!-- 投资金列表 end -->
     <nodata :pagetype="pagetypedata" v-if="nodatashow"></nodata>
     <!-- footer satrt -->
+    <div class="shop-ad-area" >
+      <router-link :to="{name:'paypage'}" tag="a">
+        <img src="./../../../assets/imgs/shop/ad-area.jpg" alt="">
+      </router-link>
+    </div>
     <div class="box-footer">
       <div class="footer-in">
         <ul class="corperation">
@@ -208,15 +213,27 @@ export default {
       titlistmassage: [
         {
           category_name:"首页",
-          tabindex: 0  //推荐
-        },
-        {
-          category_name:"关于我们",
-          tabindex: 1  //推荐
+          tabindex: 0
         },
         {
           category_name:"招聘信息",
-          tabindex: 1  //推荐
+          tabindex: 1
+        },
+        {
+          category_name:"关于我们",
+          tabindex: 2
+        },
+        {
+          category_name:"家长监护",
+          tabindex: 3
+        },
+        {
+          category_name:"服务申请",
+          tabindex: 4
+        },
+        {
+          category_name:"常见问题",
+          tabindex: 5 
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
@@ -501,6 +518,33 @@ export default {
           that.vanerror = true;
         });
     },
+    
+    // 头部导航点击事件
+    titleclick(type_index) {
+      console.log(type_index);
+      let that = this;
+      switch(type_index){
+        case 0 :
+          this.$router.push({ name: "shopindex" });
+          break
+        case 1 :
+          that.$router.push({ name: "shopowner" });
+          break  
+        case 2 :  
+          that.$router.push({ name: "diamond" });
+          break
+        case 3 :  
+          that.$router.push({ name: "paypage" });
+          break
+        case 4 :  
+          that.$router.push({ name: "producttypelist"});
+          break   
+        case 5 :  
+          that.$router.push({ name: "confirmorder"});
+          break    
+      }
+    },
+    //直播的分类筛选 直播中 每日必看...
     clearsessionStoragelist(index){
       let that = this;
       switch(index){
@@ -628,7 +672,7 @@ body{
 }
 
 #shopwrap .van-tabs__nav{
-  width : 400px;
+  width : 1000px;
   background : none;
 }
 #shopwrap .van-tabs__line{
@@ -690,6 +734,9 @@ body{
 }  
 #shopwrap .nodata .discountshopnodata .nodataimg{
   padding-top: 0;
+}
+#shopwrap .van-swipe{
+  cursor: default;
 }
 
 </style>
