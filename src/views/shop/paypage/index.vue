@@ -2,7 +2,19 @@
 <template>
   <div class="confirmorderwrap">
     <div class="jiazhang">
-      <div class="returnindex" @click="shopback">首页 < 家长监护专栏</div>
+      <div class="inner-nav">
+        <div class="nav-in">
+          <van-tabs v-model="active">
+          <van-tab
+            :title="tit.category_name"
+            v-for="(tit, index) in innerNavcontent"
+            :key="index"
+          >
+            <div class="tab-title" slot="title" @click="titleclick(tit.tabindex,1)" >{{tit.category_name}}</div>
+          </van-tab>
+        </van-tabs>
+        </div>
+      </div>
       <div class="banner">
         <img src="./../../../assets/imgs/shop/jiazhang-banner.jpg" alt="">
       </div> 
@@ -70,12 +82,64 @@
 // import axios from "axios";
 // import { constants } from 'fs';
 //import x from ''
+import {
+    //   AddressEdit,
+    //   Area,
+    //   Calendar,
+    //   Checkbox,
+    //   CheckboxGroup,
+    //   CountDown,
+    //   DatetimePicker,
+    //   Dialog,
+    //   DropdownItem,
+    //   Form,
+    //   Field,
+    //   ImagePreview,
+    //   Locale,
+    //   Notify,
+    //   Picker,
+    //   Sku,
+    //   SwipeCell,
+    // ====项目中可能用到的===
+    //  Uploader,
+    Tab,
+    Tabs,
+    List,
+    // Lazyload,
+    // ====项目中可能用到的===
+    // Toast,
+    // Loading,
+    // Swipe,
+    // SwipeItem
+} from 'vant'
 export default {
-  components: {},
+ components: {
+    vanTab:Tab,
+    vanTabs:Tabs,
+    vanList:List
+  },
   data() {
     return {
+      active : 1,
       userID:'',
-      
+      innerNavcontent : [
+        {
+          category_name:"首页",
+          tabindex: 0
+        },
+        {
+          category_name:"家长监护",
+          tabindex: 1
+        },
+        {
+          category_name:"服务申请",
+          tabindex: 2
+        },
+        {
+          category_name:"常见问题",
+          tabindex: 3
+        },
+      ]
     };
   },
   computed: {
@@ -88,6 +152,25 @@ export default {
     shopback() {
       let that = this;
       that.$router.go(-1);
+    },
+    // 头部导航点击事件
+    titleclick(type_index) {
+      console.log(type_index);
+      let that = this;
+      switch(type_index){
+        case 0 :
+          this.$router.push({ name: "shopindex" });
+          break
+        case 1 :  
+          that.$router.push({ name: "paypage" });
+          break
+        case 2 :  
+          that.$router.push({ name: "producttypelist"});
+          break   
+        case 3 :  
+          that.$router.push({ name: "confirmorder"});
+          break    
+      }
     }
   },
   beforeCreate() {}, //生命周期 - 创建之前
@@ -107,5 +190,50 @@ export default {
 <style >
 body{
   background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
+.confirmorderwrap .van-tabs--line .van-tabs__wrap {
+  height: 0.74rem;
+  padding: .1rem 0;
+}
+.confirmorderwrap .van-tabs__nav--line {
+  padding-bottom: 18px;
+}
+
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after{
+  border-width : 0;
+}
+
+.confirmorderwrap .van-tabs__nav{
+  width : 1000px;
+  background : none;
+}
+.confirmorderwrap .van-tabs__line{
+  width : .45rem !important;
+  background:rgba(31,31,31,1);
+  bottom: 16px;
+}
+
+.confirmorderwrap .van-tab {
+  font-size: .34rem;
+  font-family:PingFang SC;
+  font-weight:bold;
+  color:rgba(31,31,31,1);
+  display: inline-block;
+  padding : 0 .32rem;
+  flex-basis : auto !important;
+  line-height : .75rem;
+}
+.confirmorderwrap .van-ellipsis{
+  /* // overflow: auto; */
+}
+.confirmorderwrap .van-tab__text--ellipsis{
+  text-align : center;
+  /* // width : 140px; */
+  /* // overflow: auto; */
+}
+.confirmorderwrap .van-tab--active.van-tab {
+  color: rgba(51, 51, 51, 1);
+  font-size: .36rem;
+  font-weight: bold;
 }
 </style>

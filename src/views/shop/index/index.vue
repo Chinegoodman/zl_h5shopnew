@@ -224,16 +224,8 @@ export default {
           tabindex: 2
         },
         {
-          category_name:"家长监护",
+          category_name:"家长监护工程",
           tabindex: 3
-        },
-        {
-          category_name:"服务申请",
-          tabindex: 4
-        },
-        {
-          category_name:"常见问题",
-          tabindex: 5 
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
@@ -536,12 +528,6 @@ export default {
         case 3 :  
           that.$router.push({ name: "paypage" });
           break
-        case 4 :  
-          that.$router.push({ name: "producttypelist"});
-          break   
-        case 5 :  
-          that.$router.push({ name: "confirmorder"});
-          break    
       }
     },
     //直播的分类筛选 直播中 每日必看...
@@ -672,7 +658,7 @@ body{
 }
 
 #shopwrap .van-tabs__nav{
-  width : 1000px;
+  width : 700px;
   background : none;
 }
 #shopwrap .van-tabs__line{
