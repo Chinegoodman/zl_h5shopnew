@@ -68,6 +68,10 @@ export default {
                 {
                     category_name: "关于我们",
                     tabindex: 2 //推荐
+                },
+                {
+                    category_name: "家长监护工程",
+                    tabindex: 3
                 }
             ], //头部导航数据
             livinglidata: "",
@@ -583,6 +587,9 @@ export default {
                     break
                 case 2:
                     that.$router.push({ name: "diamond" });
+                    break
+                case 3:
+                    that.$router.push({ name: "paypage" });
                     break
             }
         },

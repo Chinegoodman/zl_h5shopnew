@@ -139,7 +139,7 @@ body{
 .shopower_wrap {
   width : 1200px; 
   margin : 0 auto;
-  padding : 50px 0;
+  padding : 0.3rem 0;
   color : #fff;
   font-size : 18px;
 }

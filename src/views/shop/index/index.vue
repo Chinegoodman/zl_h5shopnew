@@ -81,7 +81,7 @@
     <!-- 投资金列表 end -->
     <nodata :pagetype="pagetypedata" v-if="nodatashow"></nodata>
     <!-- footer satrt -->
-    <div class="shop-ad-area" >
+    <div class="shop-ad-area"  v-if="false">
       <router-link :to="{name:'paypage'}" tag="a">
         <img src="./../../../assets/imgs/shop/ad-area.jpg" alt="">
       </router-link>

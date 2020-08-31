@@ -374,7 +374,13 @@
             <span class="title">总观看人数</span>
           </div>
         </div>
-        <p class="followbtn" @click.stop="follow(false)">关注主播</p>
+        <div class="followbtn" @click.stop="follow(false)">
+          <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0" @click.stop="follow(false)">
+              关注
+              <!-- <img src="./../../../assets/imgs/living/details/attention.png"> -->
+            </div>
+            <div class="dznamegz" v-if="attention_flag && attention_flag===1" @click.stop="follow(true)">取消关注</div>
+        </div>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
@@ -708,7 +714,7 @@ body{
 }
 
 .videoswrapout .van-tabs__nav{
-  width : 400px;
+  width : 700px;
   background : none;
 }
 .videoswrapout .van-tabs__line{
