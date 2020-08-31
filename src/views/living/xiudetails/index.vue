@@ -248,11 +248,11 @@
             <ul>
               <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
                 <!-- <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/> -->
-                <img src="./../../../assets/imgs/living/sytu1.png" alt="抓周" />
+                <img :src="item.specsImage" alt="抓周" />
                 <div class="details">
-                  <p class="name">{{item.goods_title}}</p>
+                  <p class="name">{{item.goodsTitle}}</p>
                   <p class="guige"><span>{{item.price.toFixed(2)}}</span><span class="sale-num">已售56件</span></p>
-                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">立即购买</div>
+                  <div class="btn red" @click.stop="goodadd(item.skuId,item.goods_brand_id)">立即购买</div>
                   <!-- <div class="btn gray">已添加</div> -->
                 </div>
                 

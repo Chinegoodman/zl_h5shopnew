@@ -370,6 +370,9 @@ export default {
         let that = this;
         that.liveId = that.$route.query.liveId;
         that.getLiveDetailInfo(that.liveId, function() {
+
+            //购物袋商品列表
+            that.getXiuChangLivingGoodsList();
             // this.quitGroup();
             // 0 普通级别，日志量较多，接入时建议使用
             // 1 release级别，SDK 输出关键信息，生产环境时建议使用
@@ -517,7 +520,7 @@ export default {
                 that.canplaythroughstatus = true;
             });
 
-            that.getgoodsList();
+
             // that.getgiftList();
             that.gettopgiftList();
             that.getAnchorMuteState();
@@ -864,7 +867,7 @@ export default {
             let that = this;
             console.log(id);
             copy(id);
-            console.log(1111);
+            // console.log(1111);
             that.$toast("已复制");
         },
         //获取静音模式状态
@@ -910,14 +913,20 @@ export default {
                 })
         },
         // 直播间商品列表
-        getgoodsList() {
+        getXiuChangLivingGoodsList() {
             let that = this;
-            this.api.living
-                .goodsList({
-                    operatorId: that.livinglidata.uid,
-                    liveId: that.liveId
+            console.log(1515);
+            console.log(that.livinglidata.uid);
+            console.log(that.liveId);
+            that.api.xiuchangliving.xiuChangLivingGoodsList({
+                    userId: that.livinglidata.uid,
+                    liveId: that.liveId,
+                    page: 1,
+                    pageSize: 10
                 })
                 .then(res => {
+                    console.log('res1515');
+                    console.log(res);
                     if (res.data.code == 1) {
                         if (
                             res.data.data.list != null ||
