@@ -159,8 +159,35 @@
                           </span>
                         </li>
                   </ul>
-                  <!-- 小礼物end-->
               </div>
+              <!-- 小礼物end-->
+              <!-- 商品讲解及新上架 start-->
+              <div class="shop-instruction">
+                <div class="pull-shop">
+                  <div class="tit">主播刚刚上架了商品</div>
+                  <div class="con">
+                     <span class="lt">
+                        <img src="./../../../assets/imgs/living/details/renwu.png" alt />
+                      </span>
+                      <div class="rt">
+                        <span class="t">夏季新款个性耳环小清新耳坠...</span>
+                        <span class="price">6253.00</span>
+                        <span class="toguild">去看看</span>
+                      </div>
+                  </div>
+                  <span class="shut">
+                    <img src="./../../../assets/imgs/living/xiudetails/tsgb.png" alt />
+                  </span>
+                </div>
+                <div class="instruction-shop">
+                  <span class="im">
+                    <img src="./../../../assets/imgs/living/details/renwu.png" alt />
+                  </span>
+                  <span class="state"><img src="./../../../assets/imgs/living/xiudetails/jjz.png" alt /></span>
+                  <span class="t">3</span>
+                </div>
+              </div>  
+              <!-- 商品讲解及新上架 end-->
               <!-- 直播消息 会员进入动画 start-->
               <div class="vip-level-anim-box" v-if="levelMsgobj.sendUserInfo.level">
                 <div :class="{'anim-box-one': true,'liStyleLevelone' : liStyleLevel_active_one,'liStyleLevelOneNone' : liStyleLevelOneNone}" ref="levelElementanim">
