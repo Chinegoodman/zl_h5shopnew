@@ -36,6 +36,54 @@
         </van-swipe-item>
       </van-swipe>
     </div>
+     <div class="index_list_recommend sunlist" v-show="list_content_show_type===0">
+      <div class="title"><span class="ic"></span>为你推荐</div>
+       <!-- big_list 为切换到大图的class -->
+      <div :class="{'list' : true,'big_list' : change_big_small_flag_tj===0}">
+        <van-list
+          class="goodslist"
+          v-model="listloading"
+          :finished="listfinished"
+          :finished-text="finished_text"
+          :error.sync="vanerror"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelisttj"
+        >
+          <div
+            @click="gotolivingdetails(item)"
+            class="goodsli"
+            v-for="(item,index) in homelistmassage"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="im"> 
+              <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="" v-if="change_big_small_flag_tj===1" />
+              <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="" v-if="change_big_small_flag_tj===0" />
+            </div>
+            <div class="goodsli_title clearfix">
+              <span class="img_w">
+                <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+              </span>
+              <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
+            </div>
+            <span class="tit">{{item.name}}</span>
+            <div class="zan" @click.stop="clickPraisePoint(index)">
+              <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
+            </div>
+            <div class="gd_btm">
+               <span class="zb"></span>
+               <!-- <span class="zb" v-if="item.state==0"></span> -->
+               <!-- <span class="huifang" v-if="item.state==1"></span> -->
+               <span class="num">{{item.realcount}}观看</span>
+            </div>
+          </div>
+        </van-list>
+        <div class="changebigsize" v-if="change_big_small_flag_tj===1" @click="changeimgsize_tj()"></div>
+        <div class="changesmallsize" v-if="change_big_small_flag_tj===0" @click="changeimgsize_tj()"></div>
+      </div>
+    </div> 
+
     <!-- 秀场列表数据展示 -->
     <div class="index_list_recommend xiuchang">
        <!-- big_list 为切换到大图的class -->
@@ -327,6 +375,7 @@ export default {
       default_img_guildarea : require('../../../assets/logo-gray.png'),
       default_img_banner : require('../../../assets/imgs/shop/banner-default.png'),
       hasmorepage : 1, //是第一页还是多页后无数据区分  1为初始无数据 2为下拉之后无更多
+      pagestop : true,
       newcomershellshowstate : false,
       shoucang_type : '' //收藏与取消收藏请求类型
 
@@ -341,8 +390,9 @@ export default {
     //   let tab = Number(this.$route.query.tab);
     //   that.titleclick(tab,false);
     // }
-
+    that.homelisttj();
     that.homelistxc();
+   
     
   },
   methods: {
@@ -563,12 +613,15 @@ export default {
       }); 
       that.api.homedetails
         .homelisttjpost({
-          nextpage : that.nextpage
+          nextpage : that.nextpage,
+          pageSize : 20
         })
         .then(res => {
           that.$toast.clear();
           that.listloading = false;
-          if(res.data.code == 1){
+          if(that.pagestop){
+            that.pagestop = false;
+            if(res.data.code == 1){
             if (res.data.data.list && res.data.data.list.length > 0) {
               that.nodatashow = false;
               that.hasmorepage = 2;
@@ -578,13 +631,8 @@ export default {
               that.homelistmassage.map( item => {
                 return item.change_size = 1;
               });
-              //缓存数据处理
-              let homelisttjstorerange = that.homelistmassage;
-              setsessionStorage('homelisttjstorerange',homelisttjstorerange);
             } 
-
             that.nextpage = res.data.data.nextpage;
-            setsessionStorage('homelisttjstorerange_page',that.nextpage);
             if(that.nextpage != "") {
               that.listfinished = false;
               that.listloading = false;
@@ -593,7 +641,7 @@ export default {
                 that.nodatashow = true;
               }else{
                 that.listloading = false;
-                that.finished_text = '亲~已经到底了';
+                // that.finished_text = '亲~已经到底了';
               }
               that.listfinished = true;
             }
@@ -602,6 +650,7 @@ export default {
           }else{
             that.$toast(res.data.info);
             that.listfinished = true;
+          }
           }
         })
     },

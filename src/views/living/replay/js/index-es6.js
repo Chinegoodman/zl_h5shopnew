@@ -44,10 +44,10 @@ export default {
     computed: {
         // 直播相关
         wdwidth() {
-            return document.documentElement.clientWidth;
+            // return document.documentElement.clientWidth;
         },
         wdheight() {
-            return document.documentElement.clientHeight;
+            // return document.documentElement.clientHeight;
         },
         hasStartstatus: function() {
             return this.player.hasStart;

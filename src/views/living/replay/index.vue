@@ -29,7 +29,7 @@
               </div>
               <div class="dznamegz" v-if="livinglidata.is_attention==1 || livinglidata.is_attention== 2" @click.stop="follow(true)">已关注</div>
             </div>
-            <div class="complaints">
+            <div class="complaints" v-if="false">
               <img src="./../../../assets/imgs/living/details/complaints.png" alt="抓周" />
             </div>
             <div class="dznameid" @click.stop="returnfn">
@@ -128,10 +128,42 @@
           </div>
         </div>
         <!-- 会员权益 -->
-        <div class="hlrtipsbtn member">
+        <!-- <div class="hlrtipsbtn member">
           <img src="./../../../assets/imgs/living/details/member.png" alt="抓周" />
-        </div>
+        </div> -->
       </div>
+      <!-- 青少年说明start -->
+      <div class="about-instruction">
+          <h2>儿童/青少年使用须知</h2>
+          <div class="instruction">
+              抓周在未成年人的保护方面非常重视。为保护儿童和青少年个人信息的安全、身心健康，并提供更加丰富、多元的优质内容，我们涉及并开发了“儿童/青少年模式”。在该模式下，我们将挖掘和呈现更多的适合未成年人观看的优质内容，为监护人提供更丰富的管理手段，并严格的、积极的响应相关法律法规等规定，确保在该模式下我们让青少年得到更适合的内容。
+          </div>
+          <div class="zu">
+              <p class="tit">1.共同守护儿童和青少年</p>
+              <p class="t">1.1 未满14周岁的儿童 </p>
+              <p class="in">如果您的孩子是未满14周岁的儿童，他/她使用抓周的正常模式，需要经过您的同意；如果您不同意他/她使用抓周的正常模式，请您为他/她设置“儿童/青少年模式”。</p>
+              <p class="t">1.2 已满14周岁不满18周岁的未成年人</p>
+              <p class="in">如果您的孩子是已满14周岁不满18周岁的未成年人，请您根据自主需要，选择为您的孩子设置“儿童/青少年”模式。</p>
+              <p class="t">1.3 协助监护人更好地守护儿童和青少年</p>
+              <p class="in">为帮助监护人控制未成年人管理使用时间，在儿童/青少年模式该模式下，每日22时至次日早6时期间无法使用抓周。</p>
+              <p class="in">进入该模式后，系统将自动开启时间锁，时间锁默认设置为40分钟。单日使用时长超过触发时间，需要输入密码才可以继续使用。密码由您设置并掌握，确保您能有效引导孩子健康使用抓周。</p>
+              <p class="in">您也可以进入“设置”功能内选择帮助自己的孩子打开或关闭青少年模式，实现对未成年人使用抓周的管理。</p>
+          </div>
+          <div class="zu">
+              <p class="tit">2.保护儿童和青少年个人信息安全</p>
+              <p class="in">我们采取严格的数据使用和访问制度，确保只有授权人员才可访问，并适时对数据和技术进行安全审计，确保该模式下的内容是合规、合法、健康、纯净的。</p>
+          </div>
+          <div class="zu">
+              <p class="tit">3.保障儿童和青少年健康使用</p>
+              <p class="in">我们会提供更多元与适合未成年人的优质作品，并会继续致力于对向未成年人推荐内容的质量审查和优化，让未成年人看到更多不同领域的优质内容，拓展未成年人的视野。</p>
+          </div>
+          <div class="zu">
+              <p class="tit">4.退出儿童和青少年模式</p>
+              <p class="in">如果您为您的孩子解除或退出“儿童/青少年模式”，使用者将可以使用抓周的全部功能，为保护儿童和青少年个人信息的安全、身心健康，请您慎重使用。</p>
+              <p class="in">如果您有更宝贵的建议，或进行投诉，请通过tousu@zhulihr.com联系我们，我们在认真核查后，会根据您的建议或请求，在相关法律法规允许范围内进行修改，万分感谢。</p>
+          </div>
+      </div>
+      <!-- 青少年说明 edn -->
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">
@@ -158,5 +190,8 @@
 @import url("./css/index.less");
 </style>
 
-<style lang='less'>
+<style>
+body{
+  background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
+}
 </style>
