@@ -24,7 +24,7 @@
             <span class="im">
                 <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
               </span>
-              <span class="nm">登录</span>
+              <span class="nm">登录/注册</span>
           </div>
         </div>
       </div>
@@ -123,6 +123,7 @@
             </ul>
           </div>
         </div>
+        <div class="noticetips">健康游戏忠告：抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活</div>
         <div class="recordcode">
           © 17biyi.com  北京艺相逢文化传播有限公司--
           <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502034096&token=4ea5e840-0a37-4895-a22a-187ea1d61d34" target="_blank" data-v-5bdb8ecf="">京公安备11010502034096号</a>
@@ -550,6 +551,59 @@ export default {
           window.sessionStorage.removeItem('homelisttzjstorerange');  
           break;
       }  
+    },
+    //首页推荐列表
+    homelisttj() {
+      let that = this;
+      // that.listloading = true;
+      that.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
+      that.api.homedetails
+        .homelisttjpost({
+          nextpage : that.nextpage
+        })
+        .then(res => {
+          that.$toast.clear();
+          that.listloading = false;
+          if(res.data.code == 1){
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homelistmassage.push(e);
+              });
+              that.homelistmassage.map( item => {
+                return item.change_size = 1;
+              });
+              //缓存数据处理
+              let homelisttjstorerange = that.homelistmassage;
+              setsessionStorage('homelisttjstorerange',homelisttjstorerange);
+            } 
+
+            that.nextpage = res.data.data.nextpage;
+            setsessionStorage('homelisttjstorerange_page',that.nextpage);
+            if(that.nextpage != "") {
+              that.listfinished = false;
+              that.listloading = false;
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading = false;
+                that.finished_text = '亲~已经到底了';
+              }
+              that.listfinished = true;
+            }
+              that.$forceUpdate();
+              that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished = true;
+          }
+        })
     },
     //秀场列表
     homelistxc() {
