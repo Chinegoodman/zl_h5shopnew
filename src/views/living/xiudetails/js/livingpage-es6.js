@@ -430,7 +430,7 @@ export default {
                     // autoplayMuted: true,
                     preloadTime: 30, //预加载时长(秒)	30
                     isLive: true,
-                    cors: false
+                    cors: true
                 });
             } else if (checkdevice() == "pc") {
                 console.log('that.livinglidata.streamAddrFlv99999999999999');
@@ -467,7 +467,7 @@ export default {
                     // autoplayMuted: true,
                     preloadTime: 30, //预加载时长(秒)	30
                     isLive: true,
-                    cors: false
+                    cors: true
                 });
             }
 
