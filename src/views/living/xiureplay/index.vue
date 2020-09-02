@@ -257,4 +257,8 @@
 body{
   background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
 }
+.xgplayer-skin-default .xgplayer-start{
+  z-index: 1;
+}
+
 </style>

@@ -70,9 +70,11 @@ export default {
         // 直播相关
         wdwidth() {
             // return document.documentElement.clientWidth;
+            return 800;
         },
         wdheight() {
             // return document.documentElement.clientHeight;
+            return 620;
         },
         hasStartstatus: function() {
             return this.player.hasStart;
@@ -119,6 +121,9 @@ export default {
     mounted() {
         let that = this;
         let liveId = that.$route.query.liveId;
+
+        console.log('wdwidth');
+        console.log(that.wdwidth);
 
         //分享相关
         if (checkdevice() == "anzhuo") {
@@ -169,7 +174,9 @@ export default {
                     "x5-video-orientation": "portraint",
                     "x5-video-player-fullscreen": true, //微信全屏播放
                     width: that.wdwidth,
+                    // width: 800 + 'px',
                     height: that.wdheight,
+                    // height: 620 + 'px',
                     autoplay: true,
                     // autoplayMuted: true,
                     // videoInit: true,//初始化显示视频首帧
