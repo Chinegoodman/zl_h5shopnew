@@ -179,12 +179,12 @@
                     <img src="./../../../assets/imgs/living/xiudetails/tsgb.png" alt />
                   </span>
                 </div>
-                <div class="instruction-shop">
+                <div class="instruction-shop" v-if="showGoodSale.liveId" @click="showGoodSale.skuId">
                   <span class="im">
-                    <img src="./../../../assets/imgs/living/details/renwu.png" alt />
+                    <img :src="showGoodSale.specsImage" alt />
                   </span>
                   <span class="state"><img src="./../../../assets/imgs/living/xiudetails/jjz.png" alt /></span>
-                  <span class="t">3</span>
+                  <span class="t">{{showGoodSale.goodsTitle}}</span>
                 </div>
               </div>  
               <!-- 商品讲解及新上架 end-->

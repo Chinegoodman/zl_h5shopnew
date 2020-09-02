@@ -67,6 +67,10 @@ const xiuchangliving = {
     // 直播间商品列表-秀场直播
     xiuChangLivingGoodsList(params) {
         return axios.get(`${base.yxf2}//v1/show/goods/list?liveId=${params.liveId}&userId=${params.userId}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
+    // 直播间商品列表-秀场直播-获取当前直播间正在讲解的商品
+    xiuChangShowGoodsSale(params) {
+        return axios.get(`${base.yxf2}/v1/show/goods/sale?liveId=${params.liveId}`);
     }
 
 

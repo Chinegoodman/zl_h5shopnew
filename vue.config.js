@@ -40,8 +40,8 @@ module.exports = {
             //     }
             // },
             '/devapi': {
-                target: 'http://47.103.198.168', //抓周 测试服-A
-                // target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222 -A
+                // target: 'http://47.103.198.168', //抓周 测试服-A
+                target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222 -A
                 // target: 'https://shop.zhulihr.com', //生产222 -A
                 changeOrigin: true,
                 ws: true,
@@ -50,9 +50,9 @@ module.exports = {
                 }
             },
             '/xiuchangdevapi2': {
-                target: 'http://47.100.12.152:8100', //新架构 测试服
+                // target: 'http://47.100.12.152:8100', //新架构 测试服
                 // target: 'http://xc.testmapi.zhulihr.cn', //新架构 测试服-A
-                // target: 'https://xc.premapi.zhulihr.cn', //新架构 灰度-A
+                target: 'https://xc.premapi.zhulihr.cn', //新架构 灰度-A
                 // target: 'https://xc.mobile.zhulihr.cn', //生产222-A
                 changeOrigin: true,
                 ws: true,
