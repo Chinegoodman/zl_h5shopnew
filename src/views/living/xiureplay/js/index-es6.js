@@ -185,7 +185,7 @@ export default {
                     // useHls: true,
                     loop: true,
                     isLive: true,
-                    cors: false
+                    cors: true
                 });
             } else if (checkdevice() == "testtt") {
                 that.player = new FlvPlayer({
@@ -576,14 +576,22 @@ export default {
             let that = this;
             console.log('that.canplaythroughstatus');
             console.log(that.canplaythroughstatus);
+            that.player.start();
+            that.player.play();
             if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
-                that.player.start();
-                that.player.play();
-            } else if (that.canplaythroughstatus) {
-                setTimeout(() => {
+                if (!that.canplaythroughstatus) {
+                    that.canplaythroughstatus = true;
                     that.player.start();
                     that.player.play();
-                }, 0);
+                }
+            } else if (that.canplaythroughstatus) {
+                if (!that.canplaythroughstatus) {
+                    that.canplaythroughstatus = true;
+                    setTimeout(() => {
+                        that.player.start();
+                        that.player.play();
+                    }, 0);
+                }
             }
         },
         videoplay() {
