@@ -574,12 +574,15 @@ export default {
         // 播放直播、视频 事件
         videopaly() {
             let that = this;
-            console.log('that.canplaythroughstatus');
-            console.log(that.canplaythroughstatus);
             if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
-                that.player.start();
-                that.player.play();
-            } else if (that.canplaythroughstatus) {
+                if (!that.canplaythroughstatus) {
+                    that.canplaythroughstatus = true;
+                    that.player.start();
+                    that.player.play();
+                }
+
+            } else if (!that.canplaythroughstatus) {
+                that.canplaythroughstatus = true;
                 setTimeout(() => {
                     that.player.start();
                     that.player.play();

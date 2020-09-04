@@ -98,6 +98,11 @@ export default {
             confirmordermbstatus: false, //直播间 主播推送到用户的立即付款状态 默认 false
             confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
             default_img_small: require('../../../../assets/imgs/shop/list-default-small.png'), //默认图片
+            showGoodSale: {
+                skuId: 0,
+                specsImage: '',
+                goodsTitle: ''
+            },
             goodsList: [{
                     goods_image: this.default_img_small,
                     goods_title: '夏季新款个性耳环小清新耳坠小夏季新款个性耳环小夏季新款个性耳环小香风气夏季新款个性耳环小质 耳钉耳饰',
@@ -370,6 +375,12 @@ export default {
         let that = this;
         that.liveId = that.$route.query.liveId;
         that.getLiveDetailInfo(that.liveId, function() {
+
+            //获取当前直播间正在讲解的商品
+            that.getXiuChangShowGoodsSale();
+
+            //购物袋商品列表
+            that.getXiuChangLivingGoodsList();
             // this.quitGroup();
             // 0 普通级别，日志量较多，接入时建议使用
             // 1 release级别，SDK 输出关键信息，生产环境时建议使用
@@ -517,7 +528,7 @@ export default {
                 that.canplaythroughstatus = true;
             });
 
-            that.getgoodsList();
+
             // that.getgiftList();
             that.gettopgiftList();
             that.getAnchorMuteState();
@@ -864,7 +875,7 @@ export default {
             let that = this;
             console.log(id);
             copy(id);
-            console.log(1111);
+            // console.log(1111);
             that.$toast("已复制");
         },
         //获取静音模式状态
@@ -909,15 +920,43 @@ export default {
                     }
                 })
         },
-        // 直播间商品列表
-        getgoodsList() {
+        // 获取当前直播间正在讲解的商品
+        getXiuChangShowGoodsSale() {
             let that = this;
-            this.api.living
-                .goodsList({
-                    operatorId: that.livinglidata.uid,
-                    liveId: that.liveId
+            that.api.xiuchangliving.xiuChangShowGoodsSale({
+                    liveId: that.liveId,
                 })
                 .then(res => {
+                    console.log('res1515998');
+                    console.log(res.data.data);
+                    if (res.data.code == 1) {
+                        if (
+                            res.data.data != null ||
+                            res.data.data != undefined ||
+                            res.data.data != ""
+                        ) {
+                            that.showGoodSale = res.data.data;
+                        } else {
+                            that.showGoodSale = {};
+                        }
+                    }
+                })
+        },
+        // 直播间商品列表
+        getXiuChangLivingGoodsList() {
+            let that = this;
+            console.log(1515);
+            console.log(that.livinglidata.uid);
+            console.log(that.liveId);
+            that.api.xiuchangliving.xiuChangLivingGoodsList({
+                    userId: that.livinglidata.uid,
+                    liveId: that.liveId,
+                    page: 1,
+                    pageSize: 10
+                })
+                .then(res => {
+                    console.log('res1515');
+                    console.log(res);
                     if (res.data.code == 1) {
                         if (
                             res.data.data.list != null ||
@@ -1244,8 +1283,8 @@ export default {
             let onMessageReceived = function(event) {
                 let msgdata = JSON.parse(event.data[0].payload.data);
                 let msgcontent = msgdata.msgContent;
-                // console.log('msgdata');
-                // console.log(msgdata);
+                console.log('msgdata');
+                console.log(msgdata);
                 if (msgdata.timestamp == that.IMtanchuang_currentdata.timestamp) {
                     return;
                 }
@@ -1294,13 +1333,6 @@ export default {
                         that.quitGroup();
                         that.logoutfn();
                         that.player.destroy(true);
-                    } else if (msgdata.msgType == "switchGoods") {
-                        // 主播切换商品了
-                        // let msgtxt = `主播切换商品了`;
-                        // let name = "系统公告";
-                        // let isvip = msgdata.sendUserInfo.isVip;
-                        // that.messageList.push({ isvip, name, msgtxt });
-                        that.getgoodsList();
                     } else if (msgdata.msgType == "kickout") {
                         // 收到 主播或者管理员 踢人了 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1435,6 +1467,36 @@ export default {
                         } else {
                             /*小礼物及幸运礼物*/
                             that.getgiftdata(msgdata);
+                        }
+                    } else if (msgdata.msgType == "speekGoods") {
+                        // 收到 用户请求购买消息 的消息
+                        // let comename= msgdata.sendUserInfo.name;
+                        // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
+                        let msgtxt = `用户请求购买消息`;
+                        let comename = "系统公告";
+                        let speekGoodsEnd = msgdata.msgContent.text;
+                        /*当前商品讲解结束 */
+                        if (speekGoodsEnd === '0' || speekGoodsEnd === '1') {
+                            that.getXiuChangShowGoodsSale();
+                        }
+
+                    } else if (msgdata.msgType == 'switchGoods') {
+                        // 收到 用户请求购买消息 的消息
+                        // let comename= msgdata.sendUserInfo.name;
+                        // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
+                        let msgtxt = `用户请求购买消息`;
+                        let comename = "系统公告";
+                        let addGoodnumber = msgdata.msgContent.skuIDString;
+                        let addGoodlength = addGoodnumber.split(',');
+
+                        console.log('addGoodlength');
+                        console.log(addGoodlength);
+
+                        /*当前中途增加商品 */
+                        if (addGoodlength > 1) {
+                            console.log(11111)
+                        } else {
+                            console.log(2222)
                         }
                     }
                 }

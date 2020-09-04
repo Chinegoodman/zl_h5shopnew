@@ -159,8 +159,35 @@
                           </span>
                         </li>
                   </ul>
-                  <!-- 小礼物end-->
               </div>
+              <!-- 小礼物end-->
+              <!-- 商品讲解及新上架 start-->
+              <div class="shop-instruction">
+                <div class="pull-shop">
+                  <div class="tit">主播刚刚上架了商品</div>
+                  <div class="con">
+                     <span class="lt">
+                        <img src="./../../../assets/imgs/living/details/renwu.png" alt />
+                      </span>
+                      <div class="rt">
+                        <span class="t">夏季新款个性耳环小清新耳坠...</span>
+                        <span class="price">6253.00</span>
+                        <span class="toguild">去看看</span>
+                      </div>
+                  </div>
+                  <span class="shut">
+                    <img src="./../../../assets/imgs/living/xiudetails/tsgb.png" alt />
+                  </span>
+                </div>
+                <div class="instruction-shop" v-if="showGoodSale && showGoodSale.liveId" @click="showGoodSale.skuId">
+                  <span class="im">
+                    <img :src="showGoodSale.specsImage" alt />
+                  </span>
+                  <span class="state"><img src="./../../../assets/imgs/living/xiudetails/jjz.png" alt /></span>
+                  <span class="t">{{showGoodSale.number}}</span>
+                </div>
+              </div>  
+              <!-- 商品讲解及新上架 end-->
               <!-- 直播消息 会员进入动画 start-->
               <div class="vip-level-anim-box" v-if="levelMsgobj.sendUserInfo.level">
                 <div :class="{'anim-box-one': true,'liStyleLevelone' : liStyleLevel_active_one,'liStyleLevelOneNone' : liStyleLevelOneNone}" ref="levelElementanim">
@@ -248,11 +275,11 @@
             <ul>
               <li class="clearfix" v-for="(item,index) in goodsList" :key="index">
                 <!-- <img :src="item.goods_image" alt="抓周" @click.stop="gotodetails(item.sku_id)"/> -->
-                <img src="./../../../assets/imgs/living/sytu1.png" alt="抓周" />
+                <img :src="item.specsImage" alt="抓周" />
                 <div class="details">
-                  <p class="name">{{item.goods_title}}</p>
+                  <p class="name">{{item.goodsTitle}}</p>
                   <p class="guige"><span>{{item.price.toFixed(2)}}</span><span class="sale-num">已售56件</span></p>
-                  <div class="btn red" @click.stop="goodadd(item.sku_id,item.goods_brand_id)">立即购买</div>
+                  <div class="btn red" @click.stop="goodadd(item.skuId,item.goods_brand_id)">立即购买</div>
                   <!-- <div class="btn gray">已添加</div> -->
                 </div>
                 
