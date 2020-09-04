@@ -2089,15 +2089,29 @@
     position: absolute;
     right: .35rem;
     top: 50%;
-    margin-top: -10px;
+    margin-top: -15px;
+    display: flex;
+    flex-direction: row;
+    .identityguild{
+        display: inline-block;
+        width: 109px;
+        height: 36px;
+        margin-right: .3rem;
+        cursor: pointer;
+        img{
+            width: auto;
+            height: 100%;
+            cursor: pointer;
+        }
+    }
     .intercom{
         display: flex;
         flex-direction: row;
         cursor: pointer;
         .im{
             display: inline-block;
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             img{
                 width: 100%;
@@ -2106,8 +2120,8 @@
             }
         }
         .nm{
-            height: 30px;
-            line-height: 30px;
+            height: 36px;
+            line-height: 36px;
             font-size: 16px;
             color: #454545;
             font-weight: bold;
@@ -2115,8 +2129,18 @@
         }
         .loginout{
             margin-left: 8px;
-            height: 30px;
-            line-height: 30px;
+            height: 36px;
+            line-height: 36px;
+            cursor: pointer;
+        }
+        .loginim{
+            display: inline-block;
+            width: 115px;
+            height: 36px;
+            img{
+                width: auto;
+                height: 100%;
+            }
         }
     }
 }    

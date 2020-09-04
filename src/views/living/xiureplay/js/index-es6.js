@@ -29,6 +29,7 @@ export default {
             livingendstatus: true, // 直播  默认为未结束
             confirmordermbstatus: false, //直播间 主播推送到用户的立即付款状态 默认 false
             confirmorderdata: '', //直播间 主播推送到用户的立即付款 相关数据
+            defaultvideobtn: true,
 
             goodsList: [], //直播间的商品列表
             // currentgood:[],//当前商品【只有一条商品】
@@ -121,9 +122,6 @@ export default {
     mounted() {
         let that = this;
         let liveId = that.$route.query.liveId;
-
-        console.log('wdwidth');
-        console.log(that.wdwidth);
 
         //分享相关
         if (checkdevice() == "anzhuo") {
@@ -583,22 +581,20 @@ export default {
             let that = this;
             console.log('that.canplaythroughstatus');
             console.log(that.canplaythroughstatus);
-            that.player.start();
-            that.player.play();
             if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
                 if (!that.canplaythroughstatus) {
                     that.canplaythroughstatus = true;
+                    that.defaultvideobtn = false;
                     that.player.start();
                     that.player.play();
                 }
-            } else if (that.canplaythroughstatus) {
-                if (!that.canplaythroughstatus) {
-                    that.canplaythroughstatus = true;
-                    setTimeout(() => {
-                        that.player.start();
-                        that.player.play();
-                    }, 0);
-                }
+            } else if (!that.canplaythroughstatus) {
+                that.canplaythroughstatus = true;
+                that.defaultvideobtn = false;
+                setTimeout(() => {
+                    that.player.start();
+                    that.player.play();
+                }, 0);
             }
         },
         videoplay() {

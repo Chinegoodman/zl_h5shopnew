@@ -6,6 +6,11 @@
       <div :class="{'video':true,'video-in-wx': true}">
         <div id="videodom"></div>
       </div>
+       <!-- video新增的上层播放按钮start -->
+        <div class="videopalybtn" @click.stop="videoplay" v-if="defaultvideobtn">
+          <img src="./../../../assets/imgs/living/xiudetails/play-btn.png" alt="">
+        </div>
+       <!-- video新增的上层播放按钮end -->
       <!-- video之外的部分 -->
       <div class="video-content">
         <!-- 店主名称与关闭 -->
@@ -258,7 +263,8 @@ body{
   background: #763aff url("./../../../assets/imgs/icons/bg_body.png") no-repeat 0 0 ;
 }
 .xgplayer-skin-default .xgplayer-start{
-  z-index: 1;
+  z-index: 1 !important;
+  display: none !important;
 }
 
 </style>

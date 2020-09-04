@@ -13,6 +13,9 @@
           </van-tab>
         </van-tabs>
         <div class="login-inter">
+          <router-link class="identityguild" :to="{name:'productsearch'}" tag="span">
+            <img src="./../../../assets/imgs/icons/smrz.png" alt="">
+          </router-link>
           <div class="intercom" v-if="$store.state.user.isLogin">
             <span class="im">
                 <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
@@ -21,10 +24,9 @@
               <span class="loginout" @click="logout">退出</span>
           </div>
           <div class="intercom" @click="pageto('regist')" v-else>
-            <span class="im">
-                <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
-              </span>
-              <span class="nm">登录</span>
+            <span class="loginim">
+              <img src="./../../../assets/imgs/icons/dlzc.png" alt="">
+            </span>
           </div>
         </div>
       </div>

@@ -13,6 +13,9 @@
           </van-tab>
         </van-tabs>
         <div class="login-inter">
+          <router-link class="identityguild" :to="{name:'productsearch'}" tag="span">
+            <img src="./../../../assets/imgs/icons/smrz.png" alt="">
+          </router-link>
           <div class="intercom" v-if="$store.state.user.isLogin">
             <span class="im">
                 <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" alt="">
@@ -21,10 +24,9 @@
               <span class="loginout" @click="logout">退出</span>
           </div>
           <div class="intercom" @click="pageto('regist')" v-else>
-            <span class="im">
-                <img src="./../../../assets/imgs/icons/guanzhudrenzhihui.png" alt="">
+            <span class="loginim">
+                <img src="./../../../assets/imgs/icons/dlzc.png" alt="">
               </span>
-              <span class="nm">登录/注册</span>
           </div>
         </div>
       </div>
@@ -36,7 +38,7 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-     <div class="index_list_recommend sunlist" v-show="list_content_show_type===0">
+     <div class="index_list_recommend sunlist" v-show="false">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'list' : true,'big_list' : change_big_small_flag_tj===0}">
@@ -94,6 +96,7 @@
           :finished="listfinished_xc"
           :finished-text="finished_text_xc"
           :error.sync="vanerror_xc"
+          :immediate-check="false"
           error-text="请求失败，点击重新加载"
           :offset="10"
           @load="homelistxc"
@@ -128,12 +131,31 @@
     </div>   
     <!-- 投资金列表 end -->
     <nodata :pagetype="pagetypedata" v-if="nodatashow"></nodata>
-    <!-- footer satrt -->
+    <!-- 安长监护 satrt -->
     <div class="shop-ad-area"  v-if="false">
       <router-link :to="{name:'paypage'}" tag="a">
         <img src="./../../../assets/imgs/shop/ad-area.jpg" alt="">
       </router-link>
     </div>
+    <!-- 安长监护 satrt -->
+    <!-- 我要开播 satrt -->
+    <div class="openplayerbtn" @click="openpalyclick">
+      <span></span>
+    </div>
+    <!-- 我要开播 end -->
+    <!-- 提示实名认证 satrt -->
+    <div class="identitytipsbox" v-if="identitytipsshow">
+      <div class="cover"></div>
+      <div class="con">
+         <h3>您尚未进行实名认证，立即前往认证？</h3>
+         <div class="btn">
+          <span class="s" @click="identitytipsclick">确定</span>
+          <span class="c" @click="identitytipsshow=false">取消</span>
+         </div>
+      </div>
+    </div>
+    <!-- 提示实名认证 end -->
+     <!-- footer satrt -->
     <div class="box-footer">
       <div class="footer-in">
         <ul class="corperation">
@@ -377,8 +399,8 @@ export default {
       hasmorepage : 1, //是第一页还是多页后无数据区分  1为初始无数据 2为下拉之后无更多
       pagestop : true,
       newcomershellshowstate : false,
-      shoucang_type : '' //收藏与取消收藏请求类型
-
+      shoucang_type : '', //收藏与取消收藏请求类型
+      identitytipsshow : false //实名认证弹层显示
     };
   },
   computed: {},
@@ -390,7 +412,7 @@ export default {
     //   let tab = Number(this.$route.query.tab);
     //   that.titleclick(tab,false);
     // }
-    that.homelisttj();
+    // that.homelisttj();
     that.homelistxc();
    
     
@@ -670,28 +692,28 @@ export default {
           pageSize : 20
         })
         .then(res => {
-          console.log('res');
-          console.log(res);
+          // console.log('res');
+          // console.log(res);
           that.$toast.clear();
           that.listloading_xc = false;
           if(res.data.code == 1){
             that.nextPage_xc = res.data.data.page;
-             if(that.nextPage_xc  == res.data.data.totalPage && that.homelistxcmsg != '') {
+             if((that.nextPage_xc  == res.data.data.totalPage && that.homelistxcmsg != '') || that.nextPage_xc >= 4) {
                 that.listfinished_xc = true;
                 that.listloading_xc = false;
                 that.finished_text_xc = '亲~已经到底了';
                 return;
              }
-            setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
+            // setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
             if (res.data.data.list && res.data.data.list.length > 0) {
               that.nodatashow = false;
               that.hasmorepage = 2;
               res.data.data.list.forEach(e => {
                 that.homelistxcmsg.push(e);
               });
-              //缓存数据处理
-              let homelistxcstorerange = that.homelistxcmsg;
-              setsessionStorage('homelistxcstorerange',homelistxcstorerange);
+              // //缓存数据处理
+              // let homelistxcstorerange = that.homelistxcmsg;
+              // setsessionStorage('homelistxcstorerange',homelistxcstorerange);
             } 
 
             if(that.nextPage_xc  != res.data.data.totalPage && res.data.data.totalPage != 0) {
@@ -716,6 +738,14 @@ export default {
             that.listfinished_xc = true;
           }
         })
+    },
+    //我要开播
+    openpalyclick(){
+      let that = this
+      that.identitytipsshow = true;
+    },
+    identitytipsclick(){
+      this.$router.push({ name: "productsearch" });
     }
   },
   beforeCreate() {
