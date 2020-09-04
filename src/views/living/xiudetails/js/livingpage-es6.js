@@ -1283,8 +1283,8 @@ export default {
             let onMessageReceived = function(event) {
                 let msgdata = JSON.parse(event.data[0].payload.data);
                 let msgcontent = msgdata.msgContent;
-                // console.log('msgdata');
-                // console.log(msgdata);
+                console.log('msgdata');
+                console.log(msgdata);
                 if (msgdata.timestamp == that.IMtanchuang_currentdata.timestamp) {
                     return;
                 }
@@ -1333,13 +1333,6 @@ export default {
                         that.quitGroup();
                         that.logoutfn();
                         that.player.destroy(true);
-                    } else if (msgdata.msgType == "switchGoods") {
-                        // 主播切换商品了
-                        // let msgtxt = `主播切换商品了`;
-                        // let name = "系统公告";
-                        // let isvip = msgdata.sendUserInfo.isVip;
-                        // that.messageList.push({ isvip, name, msgtxt });
-                        that.getgoodsList();
                     } else if (msgdata.msgType == "kickout") {
                         // 收到 主播或者管理员 踢人了 的消息
                         // let comename= msgdata.sendUserInfo.name;
@@ -1481,13 +1474,30 @@ export default {
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         let msgtxt = `用户请求购买消息`;
                         let comename = "系统公告";
-                        let level = msgdata.sendUserInfo.level;
-                        that.showGoodSale = {
-                            specsImage: msgdata.msgContent.url,
-                            goodsTitle: msgdata.msgContent.text,
-                            skuId: msgdata.msgContent.skuId
+                        let speekGoodsEnd = msgdata.msgContent.text;
+                        /*当前商品讲解结束 */
+                        if (speekGoodsEnd === '0' || speekGoodsEnd === '1') {
+                            that.getXiuChangShowGoodsSale();
                         }
-                        that.messageList.push({ level, comename, msgtxt, talkinguid });
+
+                    } else if (msgdata.msgType == 'switchGoods') {
+                        // 收到 用户请求购买消息 的消息
+                        // let comename= msgdata.sendUserInfo.name;
+                        // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
+                        let msgtxt = `用户请求购买消息`;
+                        let comename = "系统公告";
+                        let addGoodnumber = msgdata.msgContent.skuIDString;
+                        let addGoodlength = addGoodnumber.split(',');
+
+                        console.log('addGoodlength');
+                        console.log(addGoodlength);
+
+                        /*当前中途增加商品 */
+                        if (addGoodlength > 1) {
+                            console.log(11111)
+                        } else {
+                            console.log(2222)
+                        }
                     }
                 }
                 setTimeout(() => {
