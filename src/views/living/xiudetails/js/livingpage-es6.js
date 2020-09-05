@@ -103,43 +103,25 @@ export default {
                 specsImage: '',
                 goodsTitle: ''
             },
+            /*不回商品IM推送单条*/
+            newAddGoodSale: {
+                price: 0,
+                receiveId: '',
+                shopId: '',
+                skuIDString: '',
+                skuId: '',
+                subText: '',
+                text: '',
+                url: ''
+            },
+            /*不回商品IM推送多条-展示文字提示标致*/
+            newAddGoodSaleMore: false,
             goodsList: [{
-                    goods_image: this.default_img_small,
-                    goods_title: '夏季新款个性耳环小清新耳坠小夏季新款个性耳环小夏季新款个性耳环小香风气夏季新款个性耳环小质 耳钉耳饰',
-                    price: 1586,
-                    brand_name: '助力集团'
-                },
-                {
-                    goods_image: this.default_img_small,
-                    goods_title: '代码青春',
-                    price: 1586,
-                    brand_name: '助力集团'
-                },
-                {
-                    goods_image: this.default_img_small,
-                    goods_title: '代码青春',
-                    price: 1586,
-                    brand_name: '助力集团'
-                },
-                {
-                    goods_image: this.default_img_small,
-                    goods_title: '代码青春',
-                    price: 1586,
-                    brand_name: '助力集团'
-                },
-                {
-                    goods_image: this.default_img_small,
-                    goods_title: '代码青春',
-                    price: 1586,
-                    brand_name: '助力集团'
-                },
-                {
-                    goods_image: this.default_img_small,
-                    goods_title: '代码青春',
-                    price: 1586,
-                    brand_name: '助力集团'
-                }
-            ], //直播间的商品列表
+                goods_image: '',
+                goods_title: '',
+                price: 0,
+                brand_name: ''
+            }], //直播间的商品列表
             giftList: [], //礼物列表
             topgiftList: [], //前三排列列表
             onlinesList: [], //在线人数列表
@@ -942,6 +924,11 @@ export default {
                     }
                 })
         },
+        goodsListShell() {
+            let that = this;
+            that.goodschoosestatus = true;
+            that.getXiuChangLivingGoodsList();
+        },
         // 直播间商品列表
         getXiuChangLivingGoodsList() {
             let that = this;
@@ -1489,15 +1476,27 @@ export default {
                         let addGoodnumber = msgdata.msgContent.skuIDString;
                         let addGoodlength = addGoodnumber.split(',');
 
+
                         console.log('addGoodlength');
-                        console.log(addGoodlength);
+                        console.log(addGoodlength.length);
 
                         /*当前中途增加商品 */
-                        if (addGoodlength > 1) {
-                            console.log(11111)
+                        if (addGoodlength.length > 1) {
+                            that.newAddGoodSaleMore = true;
                         } else {
-                            console.log(2222)
+                            that.newAddGoodSale = msgdata.msgContent;
                         }
+                    } else if (msgdata.msgType == "system_mutedVoice") {
+                        let msgtxt = `主播开启/关闭麦克风`;
+                        let comename = "系统公告";
+                        let mutedVoiceflag = msgdata.msgContent.text;
+                        /*当前商品讲解结束 */
+                        if (mutedVoiceflag === '1') {
+                            that.anchormuteflag = true;
+                        } else if (mutedVoiceflag === '0') {
+                            that.anchormuteflag = false;
+                        }
+
                     }
                 }
                 setTimeout(() => {

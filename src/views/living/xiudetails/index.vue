@@ -163,19 +163,23 @@
               <!-- 小礼物end-->
               <!-- 商品讲解及新上架 start-->
               <div class="shop-instruction">
-                <div class="pull-shop">
+                <div class="pull-shop" v-if="newAddGoodSale.skuIDString || newAddGoodSaleMore">
                   <div class="tit">主播刚刚上架了商品</div>
-                  <div class="con">
+                  <div class="con" v-if="newAddGoodSale.skuIDString">
                      <span class="lt">
-                        <img src="./../../../assets/imgs/living/details/renwu.png" alt />
+                        <img :src="newAddGoodSale.subText" alt />
                       </span>
                       <div class="rt">
-                        <span class="t">夏季新款个性耳环小清新耳坠...</span>
-                        <span class="price">6253.00</span>
-                        <span class="toguild">去看看</span>
+                        <span class="t">{{newAddGoodSale.text}}</span>
+                        <span class="price">{{newAddGoodSale.price}}</span>
+                        <span class="toguild" @click.stop="goodsListShell" >去看看</span>
                       </div>
                   </div>
-                  <span class="shut">
+                  <div class="con-more" v-if="newAddGoodSaleMore">
+                    <p>主播添加了多件直播商品，快来看看是否有您心仪的商品吧</p>
+                    <span class="toguild" @click.stop="goodsListShell">去看看</span>
+                  </div>
+                  <span class="shut" @click.stop="newAddGoodSale.skuIDString?newAddGoodSale.skuIDString=false:newAddGoodSaleMore=false" >
                     <img src="./../../../assets/imgs/living/xiudetails/tsgb.png" alt />
                   </span>
                 </div>
@@ -254,7 +258,7 @@
                 <canvas id="bubble"  width="90" height="300" class="like-fx" ></canvas>
               </div>
             </div>
-            <div class="chatsp"  @click.stop="goodschoosestatus=true">
+            <div class="chatsp"  @click.stop="goodsListShell">
               <!-- <div class="chatsptxt">商品</div> -->
             </div>
           </div>
@@ -279,10 +283,10 @@
                 <div class="details">
                   <p class="name">{{item.goodsTitle}}</p>
                   <p class="guige"><span>{{item.price.toFixed(2)}}</span><span class="sale-num">已售56件</span></p>
-                  <div class="btn red" @click.stop="goodadd(item.skuId,item.goods_brand_id)">立即购买</div>
+                  <!-- <div class="btn red" @click.stop="goodadd(item.skuId,item.goods_brand_id)">立即购买</div> -->
+                  <div class="btn red" @click="opendownload">立即购买</div>
                   <!-- <div class="btn gray">已添加</div> -->
                 </div>
-                
               </li>
               <li class="nogood" v-if="goodsList==null||goodsList.length==0">
                 主播暂未添加商品
