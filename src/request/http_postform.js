@@ -38,7 +38,8 @@ const errorHandle = (status, other) => {
             tip('请求的资源不存在');
             break;
         default:
-            console.log('状态码:' + status + '---' + other != undefined ? other : '');
+            console.log('状态码:' + status + '---' + (other != undefined ? other : ''));
+            tip('状态码:' + status + '---' + (other != undefined ? other : ''));
     }
 }
 var instance = axios.create({ timeout: 1000 * 20 });

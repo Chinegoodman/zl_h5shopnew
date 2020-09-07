@@ -42,8 +42,8 @@ const errorHandle = (status, other) => {
             tip('服务器内部错误');
             break;
         default:
-            tip('其他状态码:' + status);
-            console.log('状态码:' + status + '---' + other);
+            console.log('状态码:' + status + '---' + (other != undefined ? other : ''));
+            tip('状态码:' + status + '---' + (other != undefined ? other : ''));
     }
 }
 var instance = axios.create({ timeout: 1000 * 20 });
