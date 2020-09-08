@@ -145,13 +145,26 @@
     <!-- 我要开播 end -->
     <!-- 提示实名认证 satrt -->
     <div class="identitytipsbox" v-if="identitytipsshow">
-      <div class="cover"></div>
+      <div class="cover" @click="identitytipsshow=false"></div>
       <div class="con">
-         <h3>您尚未进行实名认证，立即前往认证？</h3>
+         <h3>请扫码下载前往APP端开直播</h3>
+         <span class="close" @click="identitytipsshow=false"><img src="./../../../assets/imgs/icons/scpzsc.png" alt="抓周" /></span>
          <div class="btn">
-          <span class="s" @click="identitytipsclick">确定</span>
-          <span class="c" @click="identitytipsshow=false">取消</span>
-         </div>
+          <!-- <span class="s" @click="identitytipsclick">确定</span> -->
+          <div class="ic icios">
+            <span class="pic">
+              <img src="./../../../assets/iosdownload.png" alt="抓周" />
+            </span>
+            <span class="t">IOS下载</span>
+          </div>
+          <!-- <span class="c" @click="identitytipsshow=false">取消</span> -->
+          <div class="ic">
+             <span class="pic">
+              <img src="./../../../assets/anzhuodownload.png" alt="抓周" />
+            </span>
+            <span  class="t">安卓下载</span>
+          </div>
+         </div> 
       </div>
     </div>
     <!-- 提示实名认证 end -->

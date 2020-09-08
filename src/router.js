@@ -3,10 +3,10 @@ import Router from 'vue-router'
 import living from './views/living/index.vue'
 import NotFound from './components/NotFound.vue'
 import shop_children from './routers/shop/index'
-import newcomer_children from './routers/newcomer/index'
+// import newcomer_children from './routers/newcomer/index'
 import living_children from './routers/living/index'
-import personalcenter_children from './routers/personalcenter/index'
-import videos_children from './routers/videos/index'
+// import personalcenter_children from './routers/personalcenter/index'
+// import videos_children from './routers/videos/index'
 import needloginroute from './routers/needloginroute.js'
 // import { resolve } from '_any-promise@1.3.0@any-promise'
 
@@ -38,20 +38,20 @@ const router = new Router({
             },
             children: living_children
         },
-        {
-            path: '/videos',
-            // name: 'videos',
-            component: resolve => require(['./views/videos/index.vue'], resolve),
-            meta: {
-                name: 'videos',
-                navstatus: true,
-                breadnav: [{
-                    name: '小视频',
-                    url: '/videos',
-                }]
-            },
-            children: videos_children
-        },
+        // {
+        //     path: '/videos',
+        //     // name: 'videos',
+        //     component: resolve => require(['./views/videos/index.vue'], resolve),
+        //     meta: {
+        //         name: 'videos',
+        //         navstatus: true,
+        //         breadnav: [{
+        //             name: '小视频',
+        //             url: '/videos',
+        //         }]
+        //     },
+        //     children: videos_children
+        // },
         {
             path: '/shop',
             component: resolve => require(['./views/shop/index.vue'], resolve),
@@ -65,60 +65,60 @@ const router = new Router({
             },
             children: shop_children
         },
-        // 商城  商品详情
-        {
-            path: '/shop/productdetails/:product_id/:webtype',
-            name: 'productdetails',
-            component: resolve => require(['./views/shop/productdetails/index.vue'], resolve),
-            meta: {
-                name: 'shopindex',
-                navstatus: false,
-                //面包屑需要的参数
-                breadnav: [{
-                        name: '商城首页',
-                        url: '/shop/index',
-                    },
-                    {
-                        name: '商城详情页',
-                        url: '/shop/productdetails/:product_id/:webtype',
-                    },
-                ]
-            }
-        },
-        {
-            path: '/newcomer',
-            component: resolve => require(['./views/newcomer/index.vue'], resolve),
-            meta: {
-                name: 'newcomer',
-                navstatus: true,
-                breadnav: [{
-                    name: '新人专区',
-                    url: '/newcomer',
-                }]
-            },
-            children: newcomer_children
-        },
+        // // 商城  商品详情
+        // {
+        //     path: '/shop/productdetails/:product_id/:webtype',
+        //     name: 'productdetails',
+        //     component: resolve => require(['./views/shop/productdetails/index.vue'], resolve),
+        //     meta: {
+        //         name: 'shopindex',
+        //         navstatus: false,
+        //         //面包屑需要的参数
+        //         breadnav: [{
+        //                 name: '商城首页',
+        //                 url: '/shop/index',
+        //             },
+        //             {
+        //                 name: '商城详情页',
+        //                 url: '/shop/productdetails/:product_id/:webtype',
+        //             },
+        //         ]
+        //     }
+        // },
+        // {
+        //     path: '/newcomer',
+        //     component: resolve => require(['./views/newcomer/index.vue'], resolve),
+        //     meta: {
+        //         name: 'newcomer',
+        //         navstatus: true,
+        //         breadnav: [{
+        //             name: '新人专区',
+        //             url: '/newcomer',
+        //         }]
+        //     },
+        //     children: newcomer_children
+        // },
         // 新人专区详情页
-        {
-            path: '/newcomer/productdetails/:product_id/:webtype',
-            // path: '/newcomer/productdetails',
-            name: 'newcomerdetails',
-            component: resolve => require(['./views/newcomer/productdetails/index.vue'], resolve),
-            meta: {
-                name: 'newcomerindex',
-                navstatus: false,
-                //面包屑需要的参数
-                breadnav: [{
-                        name: '新人专区首页',
-                        url: '/newcomer/index',
-                    },
-                    {
-                        name: '新人专区详情页',
-                        url: '/newcomer/productdetails/:product_id/:webtype',
-                    },
-                ]
-            }
-        },
+        // {
+        //     path: '/newcomer/productdetails/:product_id/:webtype',
+        //     // path: '/newcomer/productdetails',
+        //     name: 'newcomerdetails',
+        //     component: resolve => require(['./views/newcomer/productdetails/index.vue'], resolve),
+        //     meta: {
+        //         name: 'newcomerindex',
+        //         navstatus: false,
+        //         //面包屑需要的参数
+        //         breadnav: [{
+        //                 name: '新人专区首页',
+        //                 url: '/newcomer/index',
+        //             },
+        //             {
+        //                 name: '新人专区详情页',
+        //                 url: '/newcomer/productdetails/:product_id/:webtype',
+        //             },
+        //         ]
+        //     }
+        // },
         {
             path: '/shopcart',
             name: 'shopcart',
@@ -132,40 +132,40 @@ const router = new Router({
                 }]
             },
         },
-        {
-            path: '/personalcenter',
-            // name: 'personalcenter',
-            component: resolve => require(['./views/personalcenter/index.vue'], resolve),
-            meta: {
-                name: 'personalcenter',
-                navstatus: true,
-                breadnav: [{
-                    name: '个人中心',
-                    url: '/personalcenter',
-                }]
-            },
-            children: personalcenter_children
-        },
+        // {
+        //     path: '/personalcenter',
+        //     // name: 'personalcenter',
+        //     component: resolve => require(['./views/personalcenter/index.vue'], resolve),
+        //     meta: {
+        //         name: 'personalcenter',
+        //         navstatus: true,
+        //         breadnav: [{
+        //             name: '个人中心',
+        //             url: '/personalcenter',
+        //         }]
+        //     },
+        //     children: personalcenter_children
+        // },
         //秀场会员等级 vip-levle
-        {
-            path: '/personalcenter/viplevledetails',
-            name: 'viplevledetails',
-            component: resolve => require(['./views/personalcenter/viplevledetails/index.vue'], resolve),
-            meta: {
-                name: 'viplevledetails',
-                navstatus: false,
-                //面包屑需要的参数
-                breadnav: [{
-                        name: '个人中心首页',
-                        url: '/personalcenter/index',
-                    },
-                    {
-                        name: '个人中心-会员等级页',
-                        url: '/personalcenter/viplevledetails',
-                    },
-                ]
-            }
-        },
+        // {
+        //     path: '/personalcenter/viplevledetails',
+        //     name: 'viplevledetails',
+        //     component: resolve => require(['./views/personalcenter/viplevledetails/index.vue'], resolve),
+        //     meta: {
+        //         name: 'viplevledetails',
+        //         navstatus: false,
+        //         //面包屑需要的参数
+        //         breadnav: [{
+        //                 name: '个人中心首页',
+        //                 url: '/personalcenter/index',
+        //             },
+        //             {
+        //                 name: '个人中心-会员等级页',
+        //                 url: '/personalcenter/viplevledetails',
+        //             },
+        //         ]
+        //     }
+        // },
         {
             //登录首页
             path: '/login',

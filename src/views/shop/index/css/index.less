@@ -1935,11 +1935,11 @@
     }
     .con{
         width: 600px;
-        height: 200px;
+        height: 300px;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin: -100px 0 0 -300px;
+        margin: -150px 0 0 -300px;
         z-index: 10002;
         border-radius: 30px;
         background: #763aff;
@@ -1948,6 +1948,19 @@
             padding: 35px;
             font-size: 24px;
             text-align: center;
+        }
+        .close{
+            display: inline-block;
+            width: .54rem;
+            height: .54rem;
+            position: absolute;
+            right: .2rem;
+            top: .2rem;
+            cursor: pointer;
+            img{
+                width: 100%;
+                height: 100%;
+            }
         }
         .btn{
             display: flex;
@@ -1966,6 +1979,32 @@
                 background: #EBEBE9;
                 margin-left: 60px;
                 color: #333;
+            }
+            .ic{
+                width: 2rem;
+                // min-height: 2.5rem;
+                .pic{
+                    display: inline-block;
+                    width: 1.7rem;
+                    height: 1.7rem;
+                    padding: 10px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .t{
+                    color:rgba(255,255,255,.75);
+                    font-size: 22px;
+                    display: block;
+                    margin-top: 10px;
+                    text-align: center;
+                    padding: 0;
+                }
+                
+            }
+            .icios{
+               margin-right: 50px;     
             }
         }
     }
