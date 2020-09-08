@@ -198,10 +198,10 @@
 
         <van-list
           class="radiolist"
-          v-model="listloading_xc"
-          :finished="listfinished_xc"
-          :finished-text="finished_text_xc"
-          :error.sync="vanerror_xc"
+          v-model="listloading_dt"
+          :finished="listfinished_dt"
+          :finished-text="finished_text_dt"
+          :error.sync="vanerror"
           error-text="请求失败，点击重新加载"
           :offset="10"
           @load="homelistxc"
@@ -223,7 +223,14 @@
               <div class="details">
                   <span class="t">{{item.nickname}}</span>  
                   <div class="data">
-                      <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 1" ><img src="@/assets/imgs/living/radiodetails/qg.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 2" ><img src="@/assets/imgs/living/radiodetails/xl.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 3" ><img src="@/assets/imgs/living/radiodetails/yy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 4" ><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 5" ><img src="@/assets/imgs/living/radiodetails/lx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 6" ><img src="@/assets/imgs/living/radiodetails/jy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 7" ><img src="@/assets/imgs/living/radiodetails/tkx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="radio_secnav_active_id == 8" ><img src="@/assets/imgs/living/radiodetails/sfh.png" alt="抓周" /></span>
                       <span class="num">{{item.realCount}}人在线</span> 
                   </div>
                 </div>
@@ -1061,9 +1068,6 @@ export default {
               that.radio_secnav_active_id = that.radiotitletype[0].id;
               that.homelistradio();
             })
-            .catch(() => {
-              that.vanerror = true;
-            });
         break 
         case 3 :
           //秀场列表
@@ -1330,6 +1334,7 @@ export default {
                 that.listfinished_dt = true;
                 that.listloading_dt = false;
                 that.finished_text_dt = '亲~已经到底了';
+                alert(1)
                 return;
              }
             setsessionStorage('homelistdtstorerange_page',that.nextPage_dt);
@@ -1353,6 +1358,7 @@ export default {
                 that.nodatashow = true;
               }else{
                 that.listloading_dt = false;
+                that.listfinished_dt = true;
                 that.finished_text_dt = '亲~已经到底了';
               }
               that.listfinished_dt = true;
