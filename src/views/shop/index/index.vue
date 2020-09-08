@@ -61,7 +61,7 @@
         <span>创意者秀</span>
       </p>
     </div>
-    <div class="bangdanguild" v-show="list_content_show_type===2">
+    <div class="bangdanguild" v-show="list_content_show_type===3">
       <div class="lis tuhao">
         <span class="t">土豪榜</span>
         <span class="ic">
@@ -136,15 +136,16 @@
         <div class="changesmallsize" v-if="change_big_small_flag_tj===0" @click="changeimgsize_tj()"></div>
       </div>
     </div> 
-    <!-- 直播列表数据展示 --> 
-    <div class="index_list_recommend lili" v-show="list_content_show_type===1">
-        <div class="nav_type">
+    <!-- 直播(娱乐)列表数据展示 --> 
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===1">
+        <!-- 抓周列表改成与秀场列表接口一致type为1之后 下面二级分类废弃 -->
+        <!-- <div class="nav_type">
           <ul>
             <li v-for="(tit, index) in zhibotitletype" :class="{'active':tab_active==index}" :key="index" @click="tabtittypezhibo(tit,index)">{{tit.name}}</li>
           </ul>
-        </div>
+        </div> -->
         <!-- big_list 为切换到大图的class homelistzb -->
-        <div :class="{'list' : true,'big_list' : change_big_small_flag_zb===0}">
+        <div class="list xclist">
           <van-list
             class="goodslist"
             v-model="listloading_zb"
@@ -156,40 +157,134 @@
             @load="homelistzb"
           >
             <div
-              @click="gotolivingdetails(item)"
+              @click="gotoxiuchangdetails(item)"
               class="goodsli"
               v-for="(item,index) in homelistzbmsg"
               :key="index"
               :id="item.id"
             >
-              <div class="im">
-                <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="珠宝商品" v-if="change_big_small_flag_zb===1" />
-                <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="珠宝商品" v-if="change_big_small_flag_zb===0" />
+              <div class="im"> 
+                <img :src="item.cover?item.cover:default_img_small" alt="" />
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                  <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
                 </span>
-                <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
+                <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
-              <div class="zan" @click.stop="clickPraisePoint(index)">
-                <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
-              </div>
               <div class="gd_btm">
-                <span class="zb" v-if="item.state==0"></span>
-                <span class="huifang" v-if="item.state==1"></span>
-                <span class="num">{{item.realcount}}观看</span>
+                <span class="num">{{item.realCount}}观看</span>
+              </div>
+              <div class="stateflag">
+                <span class="zb" v-if="item.state===1"></span>
+                <span class="huifang" v-if="item.state===0"></span>
               </div>
             </div>
           </van-list>
-          <div class="changebigsize" v-if="change_big_small_flag_zb===1" @click="changeimgsize_zb()"></div>
-          <div class="changesmallsize" v-if="change_big_small_flag_zb===0" @click="changeimgsize_zb()"></div>
+          <!-- <div class="changebigsize" v-if="change_big_small_flag_zb===1" @click="changeimgsize_zb()"></div>
+          <div class="changesmallsize" v-if="change_big_small_flag_zb===0" @click="changeimgsize_zb()"></div> -->
       </div>
       <div class="changesize"></div>
     </div>
+    <!-- 电台列表数据展示 --> 
+    <div class="index_list_recommend radiolist" v-show="list_content_show_type===2">
+      <div class="radio-nav">
+        <ul>
+          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_active==index}" :key="index" @click="tabtittypezhibo(tit,index)">{{tit.name}}</li>
+        </ul>
+      </div>
+      <div class="list dtlist">
+         <ul>
+           <li class="fense">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+           <li class="orange">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+           <li class="green">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+           <li class="fense">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+           <li class="orange">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+           <li class="green">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+         </ul>
+      </div> 
+    </div>
     <!-- 秀场列表数据展示 -->
-    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===2">
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===3">
        <!-- big_list 为切换到大图的class -->
       <div class="list xclist">
         <van-list
@@ -231,7 +326,7 @@
       </div>
     </div>   
     <!-- 新品列表数据展示 --> 
-     <div class="index_list_recommend wang" v-show="list_content_show_type===3">
+     <div class="index_list_recommend wang" v-show="list_content_show_type===4">
         <div class="nav_type">
           <!-- 分类tab -->
           <ul>
@@ -474,19 +569,49 @@ export default {
           tabindex: 1  //直播
         },
         {
-          category_name:"娱乐",
+          category_name:"电台",
           tabindex: 2  //直播
         },
         {
+          category_name:"娱乐",
+          tabindex: 3  //直播
+        },
+        {
           category_name:"商城",
-          tabindex: 3  //推荐
+          tabindex: 4  //推荐
         },
         {
           category_name:"投资金",
-          tabindex: 4  //推荐
+          tabindex: 5  //推荐
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
+      radiotitletype : [ //电台分类导航
+        {
+          name:"热门",
+          tabindex: 0  //推荐
+        },
+        {
+          name:"情感",
+          tabindex: 1  //推荐
+        },
+        {
+          name:"热门",
+          tabindex: 2  //推荐
+        },
+        {
+          name:"情感",
+          tabindex: 3  //推荐
+        },
+        {
+          name:"热门",
+          tabindex: 4  //推荐
+        },
+        {
+          name:"情感",
+          tabindex: 5  //推荐
+        }
+      ], 
       xinpintitletype : [],   //新品分类导航
       xinpintitsort : [ //新品三级导航排序
         {
@@ -700,14 +825,14 @@ export default {
       let that = this;
       if(!that.iflogin()){return;}
       setsessionStorage("livinglidata", paramsdata);
-      if(paramsdata.state==0){
+      if(paramsdata.state==1){
         this.$router.push({
           path: "/living/livingdetails",
           query : {
             tab : that.list_content_show_type
           }
         });
-      }else if(paramsdata.state==1){
+      }else if(paramsdata.state==0){
         this.$router.push({
           path: "/living/livingreplay",
           query : {
@@ -845,12 +970,15 @@ export default {
           window.sessionStorage.removeItem('homelistzbstorerange');
           break;
         case 2:
+          // window.sessionStorage.removeItem('homelistxcstorerange');
+          break;   
+        case 3:
           window.sessionStorage.removeItem('homelistxcstorerange');
           break;  
-        case 3:
+        case 4:
           window.sessionStorage.removeItem('homelistxpstorerange');
           break;
-        case 4:
+        case 5:
           window.sessionStorage.removeItem('homelisttzjstorerange');  
           break;
       }  
@@ -901,40 +1029,44 @@ export default {
       switch(tabindex){
         case 0 :
           //推荐列表
-           console.log(1999);
           if(getsessionStorage('homelisttjstorerange')){
             that.homelistmassage = getsessionStorage('homelisttjstorerange');
             this.nextpage = getsessionStorage('homelisttjstorerange_page');
             // that.listfinished = false;
           }else{
-             console.log(2000);
             that.homelisttj();
           }
           break
         case 1 :
         //直播列表 
-        if(getsessionStorage('homelistzbstorerange')){
-          that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
-          that.nextPage_zb = getsessionStorage('homelistzbstorerange_page');
-        }else{
-          that.api.homedetails
-          .homelistfenleizb({})
-          .then(res => {
-            if(!res.data.code)return;
-            if(res.data.code == 1){
-              if(res.data.data.length > 0){
-                that.zhibotitletype = res.data.data;
-                that.obj_option.id = that.zhibotitletype[0].id;
-                that.obj_option.categoryName = that.zhibotitletype[0].name;
-                that.homelistzb();
-              }else{
-                this.$toast("直播分类暂无数据");
-              }   
-            }
-          })
-        }
+          if(getsessionStorage('homelistzbstorerange')){
+            that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
+            console.log('that.homelistzbmsg');
+            console.log(that.homelistzbmsg);
+            that.nextPage_zb = getsessionStorage('homelistzbstorerange_page');
+          }else{
+            that.homelistzb();
+            /*抓周列表修改成秀场列表接口type=1之后 下面的分类函数弃用*/
+            // that.api.homedetails
+            // .homelistfenleizb({})
+            // .then(res => {
+            //   if(!res.data.code)return;
+            //   if(res.data.code == 1){
+            //     if(res.data.data.length > 0){
+            //       that.zhibotitletype = res.data.data;
+            //       that.obj_option.id = that.zhibotitletype[0].id;
+            //       that.obj_option.categoryName = that.zhibotitletype[0].name;
+            //     }else{
+            //       this.$toast("直播分类暂无数据");
+            //     }   
+            //   }
+            // })
+          }
         break 
         case 2 :
+          /*电台*/
+        break 
+        case 3 :
           //秀场列表
           if(getsessionStorage('homelistxcstorerange')){
             that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
@@ -945,7 +1077,7 @@ export default {
             that.homelistxc();
           }
           break 
-        case 3 :  
+        case 4 :  
         //新品列表
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
@@ -969,7 +1101,7 @@ export default {
           })
         }
         break
-        case 4 :
+        case 5 :
         //投资金列表 
         clearInterval(that.goldpricetimer);  
         that.goldpricetimer = setInterval(that.goldmass,5000);
@@ -1058,57 +1190,121 @@ export default {
         })
     },
     //直播列表
-    homelistzb(){
+    homelistzb() {
       let that = this;
+      // that.listloading = true;
       that.$toast.loading({
-          message: "加载中...",
-          forbidClick: true,
-          duration: 200000
-        });  
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
       that.api.homedetails
-      .homelistzbpost({
-        id : that.obj_option.id,
-        categoryName : that.obj_option.categoryName,
-        nextpage : that.nextPage_zb
-      })
-      .then(res => {
-        that.$toast.clear();
-        that.listloading_zb = false;
-        if(res.data.code == 1){
-          if (res.data.data.list && res.data.data.list.length > 0) {
-            that.nodatashow = false;
-            that.hasmorepage = 2;
-            res.data.data.list.forEach(e => {
-              that.homelistzbmsg.push(e);
-            });
-            //缓存数据处理
-            let homelistzbstorerange = that.homelistzbmsg;
-            setsessionStorage('homelistzbstorerange',homelistzbstorerange);
-          } 
-
-          that.nextPage_zb = res.data.data.nextpage;
-          setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
-          if (that.nextPage_zb != "" && that.nextPage_zb !== undefined) {
-            that.listfinished_zb = false;
-            that.listloading_zb = false;
-          } else {
-            if(that.hasmorepage === 1){
-              that.nodatashow = true;
-            }else{
-              that.listloading_zb = false;
-              that.finished_text_zb = '亲~已经到底了';
-            }
-            that.listfinished_zb = true;
-          }
-          that.$forceUpdate();
+        .homelistxcpost({
+          type : 1,
+          page : that.nextPage_zb,
+          pageSize : 10
+        })
+        .then(res => {
+          console.log('res');
+          console.log(res);
           that.$toast.clear();
-        }
-        else{
-          that.$toast(res.data.info);
-          that.listfinished_zb = true;
-        }
-      })
+          that.listloading_zb = false;
+          if(res.data.code == 1){
+            that.nextPage_zb = res.data.data.page;
+             if(that.nextPage_zb  == res.data.data.totalPage && that.homelistxcmsg != '') {
+                that.listfinished_zb  = true;
+                that.listloading_zb  = false;
+                that.finished_text_zb  = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homelistzbmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistzbstorerange = that.homelistzbmsg;
+              setsessionStorage('homelistzbstorerange',homelistzbstorerange);
+            } 
+
+            if(that.nextPage_zb   != res.data.data.totalPage && res.data.data.totalPage != 0) {
+              that.listfinished_zb  = false;
+              that.listloading_zb  = false;
+              that.nextPage_zb  ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_zb  = false;
+                that.finished_text_zb  = '亲~已经到底了';
+              }
+              that.listfinished_zb  = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_zb  = true;
+          }
+        })
     },
+    // homelistzb(){
+    //   let that = this;
+    //   that.$toast.loading({
+    //       message: "加载中...",
+    //       forbidClick: true,
+    //       duration: 200000
+    //     });  
+    //   that.api.homedetails
+    //     .homelistxcpost({
+    //     type : 1,
+    //     page : that.nextPage_zb,
+    //     pageSize : 10
+    //   })
+    //   .then(res => {
+    //     that.$toast.clear();
+    //     that.listloading_zb = false;
+
+    //     console.log('res3333');
+    //     console.log(res);
+    //     if(res.data.code == 1){
+    //       if (res.data.data.list && res.data.data.list.length > 0) {
+    //         that.nodatashow = false;
+    //         that.hasmorepage = 2;
+    //         res.data.data.list.forEach(e => {
+    //           that.homelistzbmsg.push(e);
+    //         });
+    //         //缓存数据处理
+    //         let homelistzbstorerange = that.homelistzbmsg;
+
+    //         setsessionStorage('homelistzbstorerange',homelistzbstorerange);
+    //       } 
+
+    //       that.nextPage_zb = res.data.data.page;
+    //       setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
+    //       if (that.nextPage_zb != "" && that.nextPage_zb !== undefined) {
+    //         that.listfinished_zb = false;
+    //         that.listloading_zb = false;
+    //       } else {
+    //         if(that.hasmorepage === 1){
+    //           that.nodatashow = true;
+    //         }else{
+    //           that.listloading_zb = false;
+    //           that.finished_text_zb = '亲~已经到底了';
+    //         }
+    //         that.listfinished_zb = true;
+    //       }
+    //       that.$forceUpdate();
+    //       that.$toast.clear();
+    //     }
+    //     else{
+    //       that.$toast(res.data.info);
+    //       that.listfinished_zb = true;
+    //     }
+    //   })
+    // },
     //秀场列表
     homelistxc() {
       let that = this;
