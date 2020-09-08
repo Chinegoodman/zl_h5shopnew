@@ -35,7 +35,7 @@
         </div>
         <div class="zu">
            <span class="tit">Q3：申请该项服务时需要提交哪些资料呢？如何提交呢？</span>
-           <p>申请人需通过邮寄方式向我司提交《<a class="download" href="http://www.17biyi.tv/艺相逢.zip">艺相逢直播未成年人用户家长监控服务申请书</a>》及其中所提及需提供的附件，包含：</p>
+           <p>申请人需通过邮寄方式向我司提交《<a class="download" href="http://www.17biyi.tv/yxf.zip">艺相逢直播未成年人用户家长监控服务申请书</a>》及其中所提及需提供的附件，包含：</p>
           <p>附件1：申请人的身份证或户口本（复印件）</p>
           <p>附件2：被申请人的身份证或户口本（复印件）</p>
           <p>附件3：申请人与被申请人的监护法律关系证明（原件）</p>
@@ -43,7 +43,7 @@
         </div>
         <div class="zu">
            <span class="tit">Q4：相关资料寄往哪里呢？</span>
-           <p>您提交相关申请资料后，我司受理专员将按照 <a class="download" href="http://www.17biyi.tv/艺相逢.zip">监护申请流程</a>尽快处理您的申请，处理过程中可能需要对监护人和被监护人进行电话回访以便信息的判定，希望您的配合。</p>
+           <p>您提交相关申请资料后，我司受理专员将按照 <a class="download" href="http://www.17biyi.tv/yxf.zip">监护申请流程</a>尽快处理您的申请，处理过程中可能需要对监护人和被监护人进行电话回访以便信息的判定，希望您的配合。</p>
         </div>
         <div class="zu">
            <span class="tit">Q5：判定帐号归属需要多久呢？</span>
