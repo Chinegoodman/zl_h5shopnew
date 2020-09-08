@@ -207,7 +207,7 @@
           @load="homelistxc"
         >
           <div
-            @click="gotoxiuchangdetails(item)"
+            @click="goRadioDetails(item)"
             class="lis"
             v-for="(item,index) in homeradiolistmsg"
             :key="index"
@@ -801,6 +801,29 @@ export default {
           }
         });
       }  
+    },
+     /*跳转到电台直播详情*/
+    goRadioDetails(paramsdata) {
+      let that = this;
+      if(!that.iflogin()){return;}
+      // setsessionStorage("livinglidata-xiu", paramsdata);
+      // if(paramsdata.state==1){
+        this.$router.push({
+          path: "/living/radiodetails",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.liveId
+          }
+        });
+      // }else if(paramsdata.state==0){
+      //   this.$router.push({
+      //     path: "/living/livingxiureplay",
+      //     query : {
+      //       tab : that.list_content_show_type,
+      //       liveId : paramsdata.id
+      //     }
+      //   });
+      // }  
     },
     // 跳转到直播详情页
     gotolivingdetails(paramsdata) {
