@@ -191,14 +191,51 @@
     <div class="index_list_recommend radiolist" v-show="list_content_show_type===2">
       <div class="radio-nav">
         <ul>
-          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_active==index}" :key="index" @click="tabtittypezhibo(tit,index)">{{tit.name}}</li>
+          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_radio_active==index}" :key="index" @click="radioSecNavTab(tit,index)">{{tit.name}}</li>
         </ul>
       </div>
       <div class="list dtlist">
-         <ul>
+
+        <van-list
+          class="radiolist"
+          v-model="listloading_xc"
+          :finished="listfinished_xc"
+          :finished-text="finished_text_xc"
+          :error.sync="vanerror_xc"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelistxc"
+        >
+          <div
+            @click="gotoxiuchangdetails(item)"
+            class="lis"
+            v-for="(item,index) in homeradiolistmsg"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="livecover">
+              <img :src="item.liveCoverUrl?item.liveCoverUrl:default_img_small" alt="" />
+            </div>
+            <div class="livecon">
+              <div class="im"> 
+                <img :src="item.headPortrait?item.headPortrait:default_img_small" alt="" />
+              </div>
+              <div class="details">
+                  <span class="t">{{item.nickname}}</span>  
+                  <div class="data">
+                      <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                      <span class="num">{{item.realCount}}人在线</span> 
+                  </div>
+                </div>
+                <span class="hot" v-if="item.realCount > 10"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+              </div>
+            </div>
+        </van-list>
+
+         <!-- <ul>
            <li class="fense">
               <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> 
                 <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
               </div>
               <div class="details">
@@ -210,77 +247,7 @@
               </div>
               <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
            </li>
-           <li class="orange">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-           <li class="green">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-           <li class="fense">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-           <li class="orange">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-           <li class="green">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> -->
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-         </ul>
+         </ul> -->
       </div> 
     </div>
     <!-- 秀场列表数据展示 -->
@@ -555,6 +522,7 @@ export default {
       ercommend: [], //每日推荐
       everday:'',
       homelistmassage: [], //推荐列表
+      homeradiolistmsg : [],//电台列表
       homelistzbmsg: [], //直播列表
       homelistxcmsg : [], //秀场列表
       homelistxpmsg: [], //新品列表
@@ -633,6 +601,7 @@ export default {
       goldpricetimer : null,
       nextpage: "",
       nextPage_zb :"",
+      nextPage_dt : 0,
       nextPage_xc : 1,
       nextPage_xp :"",
       nextpage_tzj : 1,
@@ -641,6 +610,8 @@ export default {
       listfinished: false,
       listfinished_zb: false,
       listloading_zb: false,
+      listfinished_dt: false,
+      listloading_dt: false,
       listfinished_xc: false,
       listloading_xc: false,
       listfinished_xp: false,
@@ -649,6 +620,7 @@ export default {
       listloading_tzj: false,
       finished_text : '',
       finished_text_zb : '',
+      finished_text_dt : '亲，没有更多啦哟~',
       finished_text_xc : '亲，没有更多啦哟~',
       finished_text_xp : '',
       finished_text_tzj : '',
@@ -667,6 +639,7 @@ export default {
       list_content_show_type : 0,  // 1为推荐列表显示 2为直播列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
       obj_option : {},   //点击导航“直播” 传入请求直播列表的类型参数
       tab_active : 0, //直播列表下的分类查询选种项  热播中 每日必看...
+      tab_radio_active : 0, //电台列表二级导航选中项
       tab_active_xp : 0, //新品下的分类查询选种项
       titesortactive : 0, //新品三级导选中项
       price_area_step : [
@@ -694,11 +667,13 @@ export default {
       price_area_step_active : '', //价格区间选定当前
       price_up : false,
       price_down : false,
+      /*点击导航“新品” 传入请求直播列表的类型参数 */
       obj_option_xp :{
         priceSort: 0,
         price_area : '1000以下'
-      }, //点击导航“新品” 传入请求直播列表的类型参数
-      filtershow_flag : false,
+      }, 
+      radio_secnav_active_id : 0, //电台二级搜索卖盘ID
+      filtershow_flag : false, //筛选展示价格区间弹层条件
       change_big_small_flag_tj : 1, //推荐切换大小图外层class条件
       change_big_small_flag_zb : 1, //直播切换大小图外层class条件
       change_big_small_flag_xp : 1, //新品切换大小图外层class条件
@@ -960,6 +935,7 @@ export default {
           that.vanerror = true;
         });
     },
+    /*清除各列表缓存 */
     clearsessionStoragelist(index){
       let that = this;
       switch(index){
@@ -983,6 +959,15 @@ export default {
           break;
       }  
     },
+    /*电台列表二级导航点击*/
+    radioSecNavTab(item,index){
+      let that = this;
+      that.tab_radio_active = index;
+      that.radio_secnav_active_id = item.id;
+      that.nextPage_dt = 0;
+      that.homeradiolistmsg = [];
+      that.homelistradio();
+    },
     // 头部导航点击事件
     titleclick(tabindex,status) {
       // console.log('tabindex');
@@ -1001,13 +986,16 @@ export default {
       that.nextPage_xc = 1;
       that.nextPage_xp = '';
       that.nextpage_tzj = '1';
+      that.nextPage_dt = 0;
       that.homelistmassage = []; //推荐列表
       that.homelistzbmsg = []; //直播列表
       that.homelistxcmsg = []; //直播列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
+      that.homeradiolistmsg = [];
       that.finished_text = '';
       that.finished_text_zb = '';
+      that.finished_text_dt = '';
       that.finished_text_xc = '';
       that.finished_text_xp = '';
       that.finished_text_tzj = '';
@@ -1064,7 +1052,18 @@ export default {
           }
         break 
         case 2 :
-          /*电台*/
+          that.api.homedetails
+            .radioLabelList({
+              uid : that.$store.state.user.userid
+            })
+            .then(res => {
+              that.radiotitletype = res.data.data;
+              that.radio_secnav_active_id = that.radiotitletype[0].id;
+              that.homelistradio();
+            })
+            .catch(() => {
+              that.vanerror = true;
+            });
         break 
         case 3 :
           //秀场列表
@@ -1305,6 +1304,67 @@ export default {
     //     }
     //   })
     // },
+    /*电台列表homeradiolistmsg */
+    homelistradio() {
+      let that = this;
+      // that.listloading = true;
+      that.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
+      that.api.homedetails
+        .radioliveList({
+          tag :  that.radio_secnav_active_id,
+          page : that.nextPage_dt,
+          pageSize : 10
+        })
+        .then(res => {
+          console.log('res0908');
+          console.log(res);
+          that.$toast.clear();
+          that.listloading_dt = false;
+          if(res.data.code == 1){
+            that.nextPage_dt = res.data.data.page;
+             if(that.nextPage_dt  == res.data.data.totalPage && that.homeradiolistmsg != '') {
+                that.listfinished_dt = true;
+                that.listloading_dt = false;
+                that.finished_text_dt = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistdtstorerange_page',that.nextPage_dt);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homeradiolistmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistdtstorerange = that.homeradiolistmsg;
+              setsessionStorage('homelistdtstorerange',homelistdtstorerange);
+            } 
+
+            if(that.nextPage_dt  != res.data.data.totalPage && res.data.data.totalPage != 0) {
+              that.listfinished_dt = false;
+              that.listloading_dt = false;
+              that.nextPage_dt ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_dt = false;
+                that.finished_text_dt = '亲~已经到底了';
+              }
+              that.listfinished_dt = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_dt = true;
+          }
+        })
+    },
     //秀场列表
     homelistxc() {
       let that = this;
@@ -1516,7 +1576,7 @@ export default {
       }
 
     },
-    //首页新品--点击晒选展示价格区间
+    //首页新品--点击筛选展示价格区间
     filtershow(){
       let that = this;
       that.filtershow_flag = true;

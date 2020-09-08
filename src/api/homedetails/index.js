@@ -80,7 +80,15 @@ const homedetails = {
     // 判断是否新手(然后显示推送弹层)
     checknewcomercondition(params) {
         return axios.post(`${base.yxf}/wapi/v1/user/isNoviceById`, qs.stringify(params));
-    }
+    },
+    //获取电台列表-标签列表(二级导航)
+    radioLabelList(params) {
+        return axios.get(`${base.yxf2}/v1/label/list?uid=${params.uid}`);
+    },
+    //首页-电台列表
+    radioliveList(params) {
+        return axios.get(`${base.yxf2}/v1/radio/live/list?tag=${params.tag}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
 
 }
 
