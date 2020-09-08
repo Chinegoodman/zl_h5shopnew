@@ -206,7 +206,6 @@
             </ul>
           </div>
         </div>
-        <div class="noticetips">健康游戏忠告：抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活</div>
         <div class="recordcode">
           © 17biyi.com  北京艺相逢文化传播有限公司--
           <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502034096&token=4ea5e840-0a37-4895-a22a-187ea1d61d34" target="_blank" data-v-5bdb8ecf="">京公安备11010502034096号</a>
