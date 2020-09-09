@@ -71,6 +71,18 @@ const xiuchangliving = {
     // 直播间商品列表-秀场直播-获取当前直播间正在讲解的商品
     xiuChangShowGoodsSale(params) {
         return axios.get(`${base.yxf2}/v1/show/goods/sale?liveId=${params.liveId}`);
+    },
+    /*电台详情信息 */
+    radioLiveInfo(params) {
+        return axios.get(`${base.yxf2}/v1/radio/live/info?liveId=${params.liveId}`);
+    },
+    /*电台详情席位*/
+    radioSeatsList(params) {
+        return axios.get(`${base.yxf2}/v1/seats/list?liveId=${params.liveId}`);
+    },
+    /*电台-获取直播间榜单*/
+    radioLeaderboadRoom(params) {
+        return axios.get(`${base.yxf2}/v1/radio/leaderboard/room/${params.liveId}?page=${params.page}&pageSize=${params.pageSize}`);
     }
 
 

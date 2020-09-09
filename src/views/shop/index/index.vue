@@ -61,19 +61,19 @@
         <span>创意者秀</span>
       </p>
     </div>
-    <div class="bangdanguild" v-show="list_content_show_type===3">
-      <div class="lis tuhao">
+    <div class="bangdanguild" v-show="list_content_show_type===2">
+      <router-link tag="div" class="lis tuhao" to="tuhaorange">
         <span class="t">土豪榜</span>
         <span class="ic">
           <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
         </span>
-      </div>
-      <div class="lis zhubo">
+      </router-link>
+      <router-link tag="div"  class="lis zhubo"  to="anchorrange">
         <span class="t">主播榜</span>
         <span class="ic">
           <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
         </span>
-      </div>
+      </router-link>
     </div>
     <div class="guild-area" v-show="guildarea.length > 0 && list_content_show_type===0">
       <ul>
@@ -90,52 +90,47 @@
     </div>
 
     <!-- 推荐列表数据展示 -->
-    <div class="index_list_recommend sun" v-show="list_content_show_type===0">
-      <div class="title"><span class="ic"></span>为你推荐</div>
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===0">
        <!-- big_list 为切换到大图的class -->
-      <div :class="{'list' : true,'big_list' : change_big_small_flag_tj===0}">
+      <div class="list xclist">
         <van-list
           class="goodslist"
-          v-model="listloading"
-          :finished="listfinished"
-          :finished-text="finished_text"
-          :error.sync="vanerror"
+          v-model="listloading_xc"
+          :finished="listfinished_xc"
+          :finished-text="finished_text_xc"
+          :error.sync="vanerror_xc"
           error-text="请求失败，点击重新加载"
           :offset="10"
-          @load="homelisttj"
+          @load="homelistxc"
         >
           <div
-            @click="gotolivingdetails(item)"
+            @click="gotoxiuchangdetails(item)"
             class="goodsli"
-            v-for="(item,index) in homelistmassage"
+            v-for="(item,index) in homelistxcmsg"
             :key="index"
             :id="item.id"
           >
             <div class="im"> 
-              <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="" v-if="change_big_small_flag_tj===1" />
-              <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="" v-if="change_big_small_flag_tj===0" />
+              <img :src="item.cover?item.cover:default_img_small" alt="" />
             </div>
             <div class="goodsli_title clearfix">
               <span class="img_w">
-                <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
               </span>
-              <h2 class="_txtov2" :class="{'indent':item.nickname}">{{item.nickname}}</h2>
+              <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
-            <div class="zan" @click.stop="clickPraisePoint(index)">
-              <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
-            </div>
             <div class="gd_btm">
-               <span class="zb" v-if="item.state==0"></span>
-               <span class="huifang" v-if="item.state==1"></span>
-               <span class="num">{{item.realcount}}观看</span>
+               <span class="num">{{item.realCount}}观看</span>
+            </div>
+            <div class="stateflag">
+              <span class="zb" v-if="item.state===1"></span>
+              <span class="huifang" v-if="item.state===0"></span>
             </div>
           </div>
         </van-list>
-        <div class="changebigsize" v-if="change_big_small_flag_tj===1" @click="changeimgsize_tj()"></div>
-        <div class="changesmallsize" v-if="change_big_small_flag_tj===0" @click="changeimgsize_tj()"></div>
       </div>
-    </div> 
+    </div>   
     <!-- 直播(娱乐)列表数据展示 --> 
     <div class="index_list_recommend xiuchang" v-show="list_content_show_type===1">
         <!-- 抓周列表改成与秀场列表接口一致type为1之后 下面二级分类废弃 -->
@@ -187,78 +182,9 @@
       </div>
       <div class="changesize"></div>
     </div>
-    <!-- 电台列表数据展示 --> 
-    <div class="index_list_recommend radiolist" v-show="list_content_show_type===2">
-      <div class="radio-nav">
-        <ul>
-          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_radio_active==index}" :key="index" @click="radioSecNavTab(tit,index)">{{tit.name}}</li>
-        </ul>
-      </div>
-      <div class="list dtlist">
-
-        <van-list
-          class="radiolist"
-          v-model="listloading_dt"
-          :finished="listfinished_dt"
-          :finished-text="finished_text_dt"
-          :error.sync="vanerror"
-          error-text="请求失败，点击重新加载"
-          :offset="10"
-          @load="homelistxc"
-        >
-          <div
-            @click="goRadioDetails(item)"
-            class="lis"
-            v-for="(item,index) in homeradiolistmsg"
-            :key="index"
-            :id="item.id"
-          >
-            <div class="livecover">
-              <img :src="item.liveCoverUrl?item.liveCoverUrl:default_img_small" alt="" />
-            </div>
-            <div class="livecon">
-              <div class="im"> 
-                <img :src="item.headPortrait?item.headPortrait:default_img_small" alt="" />
-              </div>
-              <div class="details">
-                  <span class="t">{{item.nickname}}</span>  
-                  <div class="data">
-                      <span class="ic" v-if="radio_secnav_active_id == 1" ><img src="@/assets/imgs/living/radiodetails/qg.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 2" ><img src="@/assets/imgs/living/radiodetails/xl.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 3" ><img src="@/assets/imgs/living/radiodetails/yy.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 4" ><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 5" ><img src="@/assets/imgs/living/radiodetails/lx.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 6" ><img src="@/assets/imgs/living/radiodetails/jy.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 7" ><img src="@/assets/imgs/living/radiodetails/tkx.png" alt="抓周" /></span>
-                      <span class="ic" v-if="radio_secnav_active_id == 8" ><img src="@/assets/imgs/living/radiodetails/sfh.png" alt="抓周" /></span>
-                      <span class="num">{{item.realCount}}人在线</span> 
-                  </div>
-                </div>
-                <span class="hot" v-if="item.realCount > 10"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-              </div>
-            </div>
-        </van-list>
-
-         <!-- <ul>
-           <li class="fense">
-              <div class="im"> 
-                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> 
-                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
-              </div>
-              <div class="details">
-                <span class="t">钟情于你</span>  
-                <div class="data">
-                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
-                    <span class="num">9人在线</span> 
-                </div>
-              </div>
-              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
-           </li>
-         </ul> -->
-      </div> 
-    </div>
+    
     <!-- 秀场列表数据展示 -->
-    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===3">
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===2">
        <!-- big_list 为切换到大图的class -->
       <div class="list xclist">
         <van-list
@@ -299,6 +225,76 @@
         </van-list>
       </div>
     </div>   
+    <!-- 电台列表数据展示 --> 
+    <div class="index_list_recommend radiolist" v-show="list_content_show_type===3">
+      <div class="radio-nav">
+        <ul>
+          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_radio_active==index}" :key="index" @click="radioSecNavTab(tit,index)">{{tit.name}}</li>
+        </ul>
+      </div>
+      <div class="list dtlist">
+
+        <van-list
+          class="radiolist"
+          v-model="listloading_dt"
+          :finished="listfinished_dt"
+          :finished-text="finished_text_dt"
+          :error.sync="vanerror"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelistxc"
+        >
+          <div
+            @click="goRadioDetails(item)"
+            :class="{'lis' : true,'radiobg_0' : item.liveCoverUrl == 'radiobg_0','radiobg_1' : item.liveCoverUrl == 'radiobg_1','radiobg_2' : item.liveCoverUrl == 'radiobg_2'}"
+            v-for="(item,index) in homeradiolistmsg"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="livecover">
+              <img :src="item.liveCoverUrl?item.liveCoverUrl:''" alt="" />
+            </div>
+            <div class="livecon">
+              <div class="im"> 
+                <img :src="item.headPortrait?item.headPortrait:default_img_small" alt="" />
+              </div>
+              <div class="details">
+                  <span class="t">{{item.liveTitle}}</span>  
+                  <div class="data">
+                      <span class="ic" v-if="item.tagName == '情感'" ><img src="@/assets/imgs/living/radiodetails/qg.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '闲聊'" ><img src="@/assets/imgs/living/radiodetails/xl.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '音乐'" ><img src="@/assets/imgs/living/radiodetails/yy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '声音恋人'" ><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '旅行'" ><img src="@/assets/imgs/living/radiodetails/lx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '交友'" ><img src="@/assets/imgs/living/radiodetails/jy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '脱口秀'" ><img src="@/assets/imgs/living/radiodetails/tkx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '私房话'" ><img src="@/assets/imgs/living/radiodetails/sfh.png" alt="抓周" /></span>
+                      <span class="num">{{item.realCount}}人在线</span> 
+                  </div>
+                </div>
+                <span class="hot" v-if="item.realCount > 10"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+              </div>
+            </div>
+        </van-list>
+
+         <!-- <ul>
+           <li class="fense">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> 
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+         </ul> -->
+      </div> 
+    </div>
     <!-- 新品列表数据展示 --> 
      <div class="index_list_recommend wang" v-show="list_content_show_type===4">
         <div class="nav_type">
@@ -544,13 +540,14 @@ export default {
           tabindex: 1  //直播
         },
         {
-          category_name:"电台",
+          category_name:"娱乐",
           tabindex: 2  //直播
         },
         {
-          category_name:"娱乐",
+          category_name:"电台",
           tabindex: 3  //直播
         },
+        
         {
           category_name:"商城",
           tabindex: 4  //推荐
@@ -564,27 +561,7 @@ export default {
       radiotitletype : [ //电台分类导航
         {
           name:"热门",
-          tabindex: 0  //推荐
-        },
-        {
-          name:"情感",
-          tabindex: 1  //推荐
-        },
-        {
-          name:"热门",
-          tabindex: 2  //推荐
-        },
-        {
-          name:"情感",
-          tabindex: 3  //推荐
-        },
-        {
-          name:"热门",
-          tabindex: 4  //推荐
-        },
-        {
-          name:"情感",
-          tabindex: 5  //推荐
+          id: ''  //推荐
         }
       ], 
       xinpintitletype : [],   //新品分类导航
@@ -970,17 +947,17 @@ export default {
       let that = this;
       switch(index){
         case 0:
-          window.sessionStorage.removeItem('homelisttjstorerange');
+          window.sessionStorage.removeItem('homelistxcstorerange');
           break;
         case 1:
           window.sessionStorage.removeItem('homelistzbstorerange');
           break;
         case 2:
+          window.sessionStorage.removeItem('homelistxcstorerange');
+          break;    
+        case 3:
           // window.sessionStorage.removeItem('homelistxcstorerange');
           break;   
-        case 3:
-          window.sessionStorage.removeItem('homelistxcstorerange');
-          break;  
         case 4:
           window.sessionStorage.removeItem('homelistxpstorerange');
           break;
@@ -1019,10 +996,10 @@ export default {
       that.nextPage_dt = 0;
       that.homelistmassage = []; //推荐列表
       that.homelistzbmsg = []; //直播列表
-      that.homelistxcmsg = []; //直播列表
+      that.homelistxcmsg = []; //秀场列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
-      that.homeradiolistmsg = [];
+      that.homeradiolistmsg = []; //电台列表
       that.finished_text = '';
       that.finished_text_zb = '';
       that.finished_text_dt = '';
@@ -1047,12 +1024,11 @@ export default {
       switch(tabindex){
         case 0 :
           //推荐列表
-          if(getsessionStorage('homelisttjstorerange')){
-            that.homelistmassage = getsessionStorage('homelisttjstorerange');
-            this.nextpage = getsessionStorage('homelisttjstorerange_page');
-            // that.listfinished = false;
+          if(getsessionStorage('homelistxcstorerange')){
+            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
+            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
           }else{
-            that.homelisttj();
+            that.homelistxc();
           }
           break
         case 1 :
@@ -1082,27 +1058,26 @@ export default {
           }
         break 
         case 2 :
+          //秀场列表
+          if(getsessionStorage('homelistxcstorerange')){
+            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
+            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
+          }else{
+            that.homelistxc();
+          }
+          break 
+        case 3 :
           that.api.homedetails
             .radioLabelList({
               uid : that.$store.state.user.userid
             })
             .then(res => {
-              that.radiotitletype = res.data.data;
+              that.radiotitletype = [{name:"热门",id: ''}];
+              that.radiotitletype = that.radiotitletype.concat(res.data.data);
               that.radio_secnav_active_id = that.radiotitletype[0].id;
               that.homelistradio();
             })
-        break 
-        case 3 :
-          //秀场列表
-          if(getsessionStorage('homelistxcstorerange')){
-            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
-            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
-            console.log('1646546');
-            // that.listfinished = false;
-          }else{
-            that.homelistxc();
-          }
-          break 
+        break   
         case 4 :  
         //新品列表
         if(getsessionStorage('homelistxpstorerange')){
@@ -1276,61 +1251,6 @@ export default {
           }
         })
     },
-    // homelistzb(){
-    //   let that = this;
-    //   that.$toast.loading({
-    //       message: "加载中...",
-    //       forbidClick: true,
-    //       duration: 200000
-    //     });  
-    //   that.api.homedetails
-    //     .homelistxcpost({
-    //     type : 1,
-    //     page : that.nextPage_zb,
-    //     pageSize : 10
-    //   })
-    //   .then(res => {
-    //     that.$toast.clear();
-    //     that.listloading_zb = false;
-
-    //     console.log('res3333');
-    //     console.log(res);
-    //     if(res.data.code == 1){
-    //       if (res.data.data.list && res.data.data.list.length > 0) {
-    //         that.nodatashow = false;
-    //         that.hasmorepage = 2;
-    //         res.data.data.list.forEach(e => {
-    //           that.homelistzbmsg.push(e);
-    //         });
-    //         //缓存数据处理
-    //         let homelistzbstorerange = that.homelistzbmsg;
-
-    //         setsessionStorage('homelistzbstorerange',homelistzbstorerange);
-    //       } 
-
-    //       that.nextPage_zb = res.data.data.page;
-    //       setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
-    //       if (that.nextPage_zb != "" && that.nextPage_zb !== undefined) {
-    //         that.listfinished_zb = false;
-    //         that.listloading_zb = false;
-    //       } else {
-    //         if(that.hasmorepage === 1){
-    //           that.nodatashow = true;
-    //         }else{
-    //           that.listloading_zb = false;
-    //           that.finished_text_zb = '亲~已经到底了';
-    //         }
-    //         that.listfinished_zb = true;
-    //       }
-    //       that.$forceUpdate();
-    //       that.$toast.clear();
-    //     }
-    //     else{
-    //       that.$toast(res.data.info);
-    //       that.listfinished_zb = true;
-    //     }
-    //   })
-    // },
     /*电台列表homeradiolistmsg */
     homelistradio() {
       let that = this;
@@ -1347,8 +1267,6 @@ export default {
           pageSize : 10
         })
         .then(res => {
-          console.log('res0908');
-          console.log(res);
           that.$toast.clear();
           that.listloading_dt = false;
           if(res.data.code == 1){
@@ -1410,8 +1328,6 @@ export default {
           pageSize : 10
         })
         .then(res => {
-          console.log('res');
-          console.log(res);
           that.$toast.clear();
           that.listloading_xc = false;
           if(res.data.code == 1){

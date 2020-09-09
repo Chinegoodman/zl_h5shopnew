@@ -86,7 +86,7 @@
             };
         },
         computed: {
-
+         
         },
         methods: {
           // 超时检测
@@ -176,7 +176,7 @@
   width:7.5rem;
   min-height: 100vh;
   margin: 0 auto;
-  box-shadow: 0 0 5px #ccc;
+  // box-shadow: 0 0 5px #ccc;
   .bottomnav{
     position: fixed;
     left: 50%;

@@ -190,4 +190,40 @@ export default [{
             }]
         }
     },
+    /*土豪榜 */
+    {
+        path: 'tuhaorange',
+        name: 'tuhaorange',
+        component: resolve => require(['./../../views/shop/tuhaorange/index.vue'], resolve),
+        meta: {
+            navstatus: false,
+            name: 'tuhaorange',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '商城首页',
+                url: '/shop/index',
+            }, {
+                name: '商品分类页',
+                url: '/shop/tuhaorange',
+            }]
+        }
+    },
+    /*主播榜 */
+    {
+        path: 'anchorrange',
+        name: 'anchorrange',
+        component: resolve => require(['./../../views/shop/anchorrange/index.vue'], resolve),
+        meta: {
+            navstatus: true,
+            name: 'anchorrange',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '商城首页',
+                url: '/shop/index',
+            }, {
+                name: '商品分类页',
+                url: '/shop/anchorrange',
+            }]
+        }
+    },
 ]
