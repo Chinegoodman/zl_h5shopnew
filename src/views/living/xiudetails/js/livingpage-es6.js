@@ -748,8 +748,8 @@ export default {
                         ) {
                             setTimeout(fn, 500);
                             that.livinglidata = res.data.data;
-                            console.log('that.livinglidata秀场直播请求回来的数据');
-                            console.log(res.data);
+                            // console.log('that.livinglidata秀场直播请求回来的数据');
+                            // console.log(res.data);
                         } else {
                             that.livinglidata = [];
                         }
@@ -826,8 +826,8 @@ export default {
                 .then(res => {
                     that.$toast.clear();
                     that.listloading = false;
-                    console.log('res.data06在线人数列表');
-                    console.log(res.data);
+                    // console.log('res.data06在线人数列表');
+                    // console.log(res.data);
                     if (res.data.code == 1) {
                         that.nextpage = res.data.data.page;
                         if (that.nextPage == res.data.data.totalPage && that.onlinesList != []) {
@@ -877,8 +877,8 @@ export default {
                 .then(res => {
                     that.$toast.clear();
                     that.listloading_ben = false;
-                    console.log('res.data06直播间礼物榜单');
-                    console.log(res.data);
+                    // console.log('res.data06直播间礼物榜单');
+                    // console.log(res.data);
                     that.nextPage_ben = res.data.data.page;
                     if (res.data.data.list && res.data.data.list.length > 0) {
                         // that.nodatashow = false;
@@ -967,8 +967,8 @@ export default {
                             res.data.data.list != ""
                         ) {
                             that.topgiftList = res.data.data.list;
-                            console.log('res.data06');
-                            console.log(that.topgiftList);
+                            // console.log('res.data06');
+                            // console.log(that.topgiftList);
                         } else {
                             that.topgiftList = [];
                         }
@@ -1148,8 +1148,8 @@ export default {
                 // touid: that.livinglidata.uid,
                 type: inorout, //0离开 1 加入
             }).then(res => {
-                console.log('res加入或者离开直播间');
-                console.log(res);
+                // console.log('res加入或者离开直播间');
+                // console.log(res);
             })
         },
 
@@ -1193,14 +1193,14 @@ export default {
         txtpost(sendMsgType) {
             let that = this;
             if (that.timtxt == '') { return; }
-            console.log('that.$store.state.user.userdata');
-            console.log(that.$store.state.user.userdata);
+            // console.log('that.$store.state.user.userdata');
+            // console.log(that.$store.state.user.userdata);
 
             let timestamp = parseInt(new Date().getTime() / 1000);
             // 发送文本消息，Web 端与小程序端相同
             // 1. 创建消息实例，接口返回的实例可以上屏
-            console.log('that.$store.state.user');
-            console.log(that.$store.state.user);
+            // console.log('that.$store.state.user');
+            // console.log(that.$store.state.user);
             let message = that.tim.createCustomMessage({
                 //自定义消息
                 to: that.livinglidata.gid.toString(),
@@ -1236,8 +1236,8 @@ export default {
                     extension: ""
                 }
             });
-            console.log('message');
-            console.log(message);
+            // console.log('message');
+            // console.log(message);
             // 2. 发送消息
             let promise = that.tim.sendMessage(message);
             that.$toast.loading("发送中...");

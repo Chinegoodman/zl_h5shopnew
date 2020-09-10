@@ -89,23 +89,6 @@
                 <p class="powerby">Power by 助力文化 co.,Ltd</p>
             </div> -->
         </div>
-        <!-- 第三方登录 -->
-        <div class="bottom" v-if="false">
-            <div class="threelogin" >
-                <ul>
-                    <li @click="threelogin('微信')">
-                        <img src="http://playback.17biyi.com/df523c64f873156a5b4433390c5458bb" alt="">
-                    </li>
-                    <li @click="threelogin('QQ')">
-                        <img src="http://playback.17biyi.com/df523c64f873156a5b4433390c5458bb" alt="">
-                    </li>
-                    <li @click="threelogin('微博')">
-                        <img src="http://playback.17biyi.com/df523c64f873156a5b4433390c5458bb" alt="">
-                    </li>
-                </ul>
-            </div>
-            <p class="powerby">Power by 助力文化 co.,Ltd</p>
-        </div>
     </div>
 </template>
 

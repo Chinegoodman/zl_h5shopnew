@@ -339,8 +339,8 @@ export default {
                         ) {
                             setTimeout(fn, 500);
                             that.livinglidata = res.data.data;
-                            console.log('that.livinglidata秀场直播请求回来的数据');
-                            console.log(res.data);
+                            // console.log('that.livinglidata秀场直播请求回来的数据');
+                            // console.log(res.data);
                         } else {
                             that.livinglidata = [];
                         }
@@ -579,8 +579,8 @@ export default {
         // 播放直播、视频 事件
         videopaly() {
             let that = this;
-            console.log('that.canplaythroughstatus');
-            console.log(that.canplaythroughstatus);
+            // console.log('that.canplaythroughstatus');
+            // console.log(that.canplaythroughstatus);
             if (checkdevice() == "weixinios" || checkdevice() == "weixin") {
                 if (!that.canplaythroughstatus) {
                     that.canplaythroughstatus = true;

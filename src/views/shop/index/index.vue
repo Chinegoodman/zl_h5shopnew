@@ -207,7 +207,7 @@
           </div>
         </div>
         <div class="recordcode">
-          © 17biyi.com  北京艺相逢文化传播有限公司--
+          © 17biyi.tv  北京艺相逢文化传播有限公司--
           <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502034096&token=4ea5e840-0a37-4895-a22a-187ea1d61d34" target="_blank" data-v-5bdb8ecf="">京公安备11010502034096号</a>
           <a href="http://beian.miit.gov.cn" target="_blank" data-v-5bdb8ecf="">京ICP备17006123号-4</a>
           <a href="javascript:void(0)" data-v-5bdb8ecf="">京网文[2017]7669-849号</a>
@@ -732,8 +732,6 @@ export default {
               that.listfinished_xc = false;
               that.listloading_xc = false;
               that.nextPage_xc = that.nextPage_xc + 1;
-              console.log('that.nextPage_xc');
-              console.log(that.nextPage_xc);
             }else {
               if(that.hasmorepage === 1){
                 that.nodatashow = true;
