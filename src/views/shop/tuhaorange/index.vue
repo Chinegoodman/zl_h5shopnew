@@ -6,21 +6,23 @@
       <span>土豪榜</span>
     </div>
     <div class="tuhaorange-con">
-      <div class="topnav">
-        <ul>
-          <li class="active"><span>日榜</span></li>
-          <li><span>周榜</span></li>
-          <li><span>月榜</span></li>
-        </ul>
+      <div class="toparea"  ref="toparea">
+        <div class="topnav">
+          <ul>
+            <li class="active"><span>日榜</span></li>
+            <li><span>周榜</span></li>
+            <li><span>月榜</span></li>
+          </ul>
+        </div>
+        <div class="notice">
+          <span><img src="../../../assets/imgs/shop/tz-tips.png" alt=""></span>
+          <div>土豪榜按用户打赏花费的金币进行排行，每日0点结算。</div>
+        </div>
       </div>
-      <div class="notice">
-        <span><img src="../../../assets/imgs/shop/tz-tips.png" alt=""></span>
-        <div>土豪榜按用户打赏花费的金币进行排行，每日0点结算。</div>
-      </div>
-      <div class="list-area">
+      <div class="list-area" ref="listarea">
          <div class="area-cover"></div>
          <div class="area-box">
-           121313
+           
          </div>
       </div>
     </div>
@@ -90,6 +92,9 @@ export default {
   computed: {
     innerHeight(){
       return window.innerHeight + 'px';
+    },
+    topAreaHeight(){
+      return this.refs.toparea.height;
     }
   },
   methods: {
@@ -232,6 +237,10 @@ export default {
     that.userID = that.$store.state.user.userid;
     that.istzj = that.$route.query.istzj;
     that.getdefaultinvoice(); //上来加载默认发票
+
+
+    console.log('this.refs.toparea');
+    console.log(that.$refs.toparea.offsetHeight);
   },
   beforeCreate() {
     // document.querySelector('body').setAttribute('style', 'background-color: #FFBD04')
