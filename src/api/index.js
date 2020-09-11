@@ -33,6 +33,7 @@ import shopmassages from '@/api/shopmassages';
 // 退货接口
 import returngoods from '@/api/returngoods';
 // ==========================李可心============================
+import wangsuapi from '@/api/wangsuapi/wangsuapi' //网宿api token 获取
 
 // 导出接口
 export default {
@@ -48,6 +49,6 @@ export default {
     xiuchangliving,
     test,
     returngoods,
-    newcomer
-    // ……
+    newcomer,
+    wangsuapi
 }
