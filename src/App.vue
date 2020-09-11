@@ -24,16 +24,7 @@
           <span>分类</span>
         </div>
       </router-link>
-      <!-- <router-link :to="{name:'videosindex'}">
-        <div class="default">
-          <img src="@/assets/imgs/bottomnav/videos.png" alt="" srcset="">
-          <span>小视频</span>
-        </div>
-        <div class="active">
-          <img src="@/assets/imgs/bottomnav/videosactive.png" alt="" srcset="">
-          <span>小视频</span>
-        </div>
-      </router-link>
+      <!-- </router-link>
       <router-link class="shop" :to="{name:'shopindex'}">
         <div class="default">
           <img src="@/assets/imgs/bottomnav/shop.png" alt="" srcset="">
@@ -86,7 +77,7 @@
             };
         },
         computed: {
-
+         
         },
         methods: {
           // 超时检测
@@ -176,7 +167,7 @@
   width:7.5rem;
   min-height: 100vh;
   margin: 0 auto;
-  box-shadow: 0 0 5px #ccc;
+  // box-shadow: 0 0 5px #ccc;
   .bottomnav{
     position: fixed;
     left: 50%;

@@ -49,6 +49,21 @@ export default [{
             }]
         }
     },
+    // 电台直播 直播详情页
+    {
+        path: 'radiodetails',
+        name: 'radiodetails',
+        navstatus: false,
+        component: resolve => require(['./../../views/living/radiodetails/index.vue'], resolve),
+        meta: {
+            name: 'radiodetails',
+            //面包屑需要的参数
+            breadnav: [{
+                name: '直播详情',
+                url: '/living/radiodetails',
+            }]
+        }
+    },
     // 直播 直播回放  
     {
         path: 'livingreplay',
