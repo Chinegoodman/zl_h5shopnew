@@ -259,22 +259,6 @@ export default [{
             }]
         }
     },
-
-    //个人中心--用户等级
-    {
-        path: '/levelinstruct',
-        name: 'levelinstruct',
-        navstatus: false,
-        component: resolve => require(['./../../views/personalcenter/levelinstruct/index.vue'], resolve),
-        meta: {
-            name: 'levelinstruct',
-            //面包屑需要的参数
-            breadnav: [{
-                name: '用户等级',
-                url: '/levelinstruct',
-            }]
-        }
-    },
     //个人中心--关于抓周
     {
         path: '/aboutzhuazhou',

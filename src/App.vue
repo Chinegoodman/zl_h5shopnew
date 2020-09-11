@@ -24,16 +24,7 @@
           <span>分类</span>
         </div>
       </router-link>
-      <!-- <router-link :to="{name:'videosindex'}">
-        <div class="default">
-          <img src="@/assets/imgs/bottomnav/videos.png" alt="" srcset="">
-          <span>小视频</span>
-        </div>
-        <div class="active">
-          <img src="@/assets/imgs/bottomnav/videosactive.png" alt="" srcset="">
-          <span>小视频</span>
-        </div>
-      </router-link>
+      <!-- </router-link>
       <router-link class="shop" :to="{name:'shopindex'}">
         <div class="default">
           <img src="@/assets/imgs/bottomnav/shop.png" alt="" srcset="">

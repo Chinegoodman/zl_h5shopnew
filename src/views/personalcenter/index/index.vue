@@ -202,10 +202,6 @@ export default {
   },
   computed: {},
   methods: {
-    //用户等级
-    go_levelinstruct(){
-      this.$router.push({ name: "levelinstruct" });
-    },
     // 会员福利跳转
     gotovip() {// /personalcenter/viplevledetails/:levelid/:webtype
       this.$toast("敬请期待");

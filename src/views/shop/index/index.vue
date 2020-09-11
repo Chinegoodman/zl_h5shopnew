@@ -86,7 +86,7 @@
       </ul>
     </div>
     <div @click="gonewcomer" class="newcomerindexguild" v-show="list_content_show_type===0">
-      <img src="http://playback.17biyi.com/53eb461b1acea844204c921440705211" alt="">
+      <img src="https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1599818601711.png" alt="">
     </div>
 
     <!-- 推荐列表数据展示 -->
