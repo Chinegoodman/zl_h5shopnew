@@ -1,7 +1,7 @@
 <!-- 组件说明 -->
 <template>
   <div class="radiodetailswrap">
-        <div :class="{'wrap-page':true,'radiobg_0' : radioInfodetails.coverUrl}" >
+        <div :class="{'wrap-page':true,'rtc_bg_0' : radioInfodetails.backgroundImage!= true,'rtc_bg_1' : radioInfodetails.backgroundImage=='rtc_bg_1','rtc_bg_2' : radioInfodetails.backgroundImage=='rtc_bg_2','rtc_bg_3' : radioInfodetails.backgroundImage=='rtc_bg_3','rtc_bg_4' : radioInfodetails.backgroundImage=='rtc_bg_4','rtc_bg_5' : radioInfodetails.backgroundImage=='rtc_bg_5','rtc_bg_6' : radioInfodetails.backgroundImage=='rtc_bg_6','rtc_bg_7' : radioInfodetails.backgroundImage=='rtc_bg_7','rtc_bg_8' : radioInfodetails.backgroundImage=='rtc_bg_8','rtc_bg_9' : radioInfodetails.backgroundImage=='rtc_bg_9'}" >
             <div class="page-content">
             <div id="startdowm">
                 <div id="share" class="video-content">

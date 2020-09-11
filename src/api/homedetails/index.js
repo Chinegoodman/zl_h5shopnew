@@ -89,6 +89,10 @@ const homedetails = {
     radioliveList(params) {
         return axios.get(`${base.yxf2}/v1/radio/live/list?tag=${params.tag}&page=${params.page}&pageSize=${params.pageSize}`);
     },
+    //首页-土豪榜内页列表
+    showGiftTopListByDate(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/rank/topListByDate?type=${params.type}&cycleType=${params.cycleType}&appType=${params.appType}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
 
 }
 

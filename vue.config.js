@@ -69,5 +69,5 @@ module.exports = {
             // new BundleAnalyzerPlugin(), //webpack-bundle-analyzer 分析打包体积
         ]
     },
-    productionSourceMap: process.env.VUE_APP_ENV != 'production'
+    productionSourceMap: process.env.VUE_APP_ENV != 'production' || process.env.VUE_APP_ENV != 'gray'
 }

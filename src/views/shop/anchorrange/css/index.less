@@ -2,7 +2,7 @@
     background-color: #FFBD04;
     .header {
         width: 7.5rem;
-        background: transparent;
+        background:transparent;
         text-align: center;
         position: fixed;
         z-index: 100;
@@ -22,100 +22,289 @@
             left: 50%;
             margin-left: -0.55rem;
             font-size: 0.34rem;
-            color: #333333;
+            font-weight: 500;
+            color: #1F1F1F;
         }
     }
-    .invoice-con{
-        padding: 1.3rem 0 .2rem;
+    .anchorrange-con{
+        padding: 0 0 .2rem;
         font-family:PingFang SC;
         font-weight:500;
-        ul{
-            margin-bottom: .2rem;
-            background: #fff;
-            padding: 0 .27rem;
-            li{
-                height: 1rem;
-                line-height: 1rem;
-                font-size: .28rem;
-                color:rgba(31,31,31,1);
-                position: relative;
-                border-bottom: 1px solid rgba(0,0,0,.08);
-                .asker{
-                    display: inline-block;
-                    width: .26rem;
-                    height: .26rem;
-                    vertical-align: middle;
-                    img{
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-                .rt{
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    .taitoumsg{
-                        border: none;
-                        padding: .25;
-                        height: .5rem;
-                        line-height: .5rem;
-                        text-align: right;
-                    }
-                    .txt {
-                        display: block;
-                        padding-right: .2rem;
-                    }
-                }
+        .topnav{
+            padding: 1.6rem .95rem 0;
+            ul{
+                display: flex;
+                flex-direction: row;
                 
-            }
-            li:last-child{
-                border-bottom: none;
-            }
-        }
-        .permsg{
-            li{
-                font-size: .26rem;
-                .tit{
-                    font-size: .28rem;
+                li{
+                    flex: 1;
+                    justify-content: center;
+                    text-align: center;
+                    cursor: pointer;
+                    span{
+                        display: inline-block;
+                        min-width: 1.2rem;
+                        height: .6rem;
+                        line-height: .6rem;
+                        font-size: .32rem;
+                        color: #757575;
+                    }
                 }
-                .rt{
-                    left: 2.03rem;
-                    .taitoumsg{
-                        text-align: left;
+                li.active{
+                    span{
+                        background: rgba(255,255,255,.5);
+                        border-radius: .3rem;
                     }
                 }
             }
         }
-        .btm-area{
-            position: fixed;
-            left: 50%;
-            bottom: .5rem;
-            transform: translateX(-50%);
-            .sure-gray{
-                display: block;
-                width: 6.24rem;
-                height: .94rem;
-                line-height: .94rem;
-                border-radius: .47rem;
-                font-size: .32rem;
-                color:rgba(255,255,255,1);
-                text-align: center;
-                background:#ccc;
-                margin: 0 auto;
-            }
-            .sure-active{
-                background:rgba(255,189,4,1);
-            }
-            p{
-                font-size: .26rem;
-                font-weight:400;
-                color:rgba(153,153,153,1);
-                text-align: center;
-                margin-top: .2rem;
-                span{
-                    color: rgba(255, 32, 19, 1)
+        .notice{
+            padding: .35rem .2rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            span{
+                display: inline-block;
+                width: .25rem;
+                height: .28rem;
+                padding-top: .02rem;
+                img{
+                    width: 100%;
+                    height: 100%;
                 }
+            }
+            div{
+                padding-left: .2rem;
+                font-size: .24rem;
+                color: #FFFFFF;
+            }
+        }
+        .list-area{
+            min-height: 6rem;
+            position: relative;
+            .area-cover{
+                width: 7.1rem;
+                background: #F7F7F7;
+                border-radius: .12rem .12rem 0 0;
+                position: absolute;
+                top: 130px;
+                left: 50%;
+                transform: translate(-50%);
+                z-index: 1;
+            }
+            .area-box{
+                width: 6.3rem;
+                background: #F7F7F7;
+                border-radius: .08rem;
+                overflow-y: scroll;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%);
+                z-index: 2;
+                .topthree{
+                    padding: .3rem .66rem;
+                    font-family: PingFang SC;
+                    font-weight: 500;
+                    ul{
+                        display: flex;
+                        flex-direction: row;
+                        // justify-content: space-between;
+                        li{
+                            padding-top: .5rem;
+                            text-align: center;
+                            span{
+                                display: block;
+                            }
+                            .range{
+                                width: .9rem;
+                                height: .79rem;
+                                margin: 0 auto;
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                            .hd{
+                                width: 1.17rem;
+                                height: 1.17rem;
+                                margin-top: .34rem;
+                                border-radius: 50%;
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
+                            }
+                            .nm{
+                                margin-top: .2rem;
+                                color: #757575;
+                                font-size: .24rem;
+                            }
+
+                            .level{
+                                // width: .94rem;
+                                height: .35rem;
+                                margin-top: .1rem;
+                                .levlein{
+                                    margin: 0 auto;
+                                }
+                            }
+
+                            .jb{
+                                margin-top: .05rem;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: center;
+                                .j{
+                                    display: inline-block;
+                                    width: .26rem;
+                                    height: .26rem;
+                                    margin-right: .04rem;
+                                    padding-top: .03rem;
+                                    img{
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
+                                .n{
+                                    display: inline-block;
+                                    font-size: .2rem;
+                                    color: #757575;
+                                }
+                            }
+                        }
+                        li:nth-child(2){
+                            padding: 0 .4rem;
+                            .range{
+                                width: 1.09rem;
+                                height: 1.09rem;
+                            }
+                            .hd{
+                                width: 1.71rem;
+                                height: 1.71rem;
+                            }
+                            .nm{
+                                color: #1F1F1F;
+                                font-size: .26rem;
+                            }
+
+                            .jb{
+                                .n{
+                                    display: inline-block;
+                                    font-size: .24rem;
+                                    color: #1F1F1F;
+                                }
+                            }
+                        }
+                    }
+                }
+                hr{
+                    background: #d7d7d7;
+                    margin: 0 .83rem;
+                }
+                .from-four{
+                    .list-wrap{
+                        overflow-y: scroll;
+                        .list,
+                        .mybenbang{
+                            width: 100%;
+                            padding-top: .3rem;
+                            .li{
+                                position: relative;
+                                min-height: 1.1rem;
+                                padding: .2rem 0 0;
+                                border-radius: 50%;
+                                .sort-num{
+                                    color: #1F1F1F;
+                                    font-size: .26rem;
+                                    position: absolute;
+                                    height: .3rem;
+                                    line-height: .3rem;
+                                    left: .15rem;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                }
+                                .hd{
+                                    display: inline-block;
+                                    width: .72rem;
+                                    height: .72rem;
+                                    border-radius: 50%;
+                                    overflow: hidden;
+                                    position: absolute;
+                                    left: .55rem;
+                                    top:  .24rem;
+                                    z-index: 5;
+                                    img{
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
+                                .rt{
+                                    padding-left: 1.45rem;
+                                    .tit{
+                                        display: inline-block;
+                                        min-width: 1.2rem;
+                                        height: .8rem;
+                                        line-height: .8rem;
+                                        font-size: .28rem;
+                                        font-family:PingFang SC;
+                                        font-weight:500;
+                                        color:rgba(31,31,31,1);
+                                        }
+                                    .lv{
+                                        display: inline-block;
+                                        width: .94rem;
+                                        height: .34rem;
+                                        margin-left: .2rem;
+                                    }
+                                    .num{
+                                        padding-left: .36rem;
+                                        font-size: .28rem;
+                                        font-family:PingFang SC;
+                                        font-weight:500;
+                                        color:rgba(31,31,31,1);
+                                        background-image: url(./../../../../assets/imgs/living/xiudetails/jbsc.png);
+                                        background-size: .26rem .26rem;
+                                        background-position: left center;
+                                        background-repeat: no-repeat;
+                                        position: absolute;
+                                        right: .2rem;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                    }
+                                    .sendgift{
+                                        display: inline-block;
+                                        width: 1.32rem;
+                                        height: .54rem;
+                                        line-height: .54rem;
+                                        text-align: center;
+                                        background:rgba(255,189,4,1);
+                                        border-radius: .27rem;
+                                        font-size: .24rem;
+                                        font-weight:500;
+                                        color:rgba(255,255,255,1);
+                                    }
+                    
+                                }
+                                .jb{
+                                    display: flex;
+                                    flex-direction: row;
+                                    position: absolute;
+                                    right: .3rem;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    .n{
+                                        display: inline-block;
+                                        font-size: .24rem;
+                                        color: #1F1F1F;
+                                        margin-left: .1rem;
+                                    }
+                                }
+                            }
+                        }
+                    }   
+                }    
             }
         }
     }

@@ -1,17 +1,121 @@
 <!-- 组件说明 -->
 <template>
   <div class="anchorrangewrap" :style="{'height':innerHeight}">
-    <div class="header">
-      <img class="back" @click="shopback" src="../../../assets/imgs/follow/xiangqing@2x.png" alt />
-      <span>主播榜</span>
-    </div>
     <div class="anchorrange-con">
-    </div>  
+      <div class="toparea"  ref="toparea">
+        <div class="header">
+          <img class="back" @click="shopback" src="../../../assets/imgs/shop/returnprev.png" alt />
+          <span>土豪榜</span>
+        </div>
+        <div class="topnav">
+          <ul>
+            <li :class="{'active' : navactive===index}" v-for="(datanav,index) in dateNavlist" :key="index" @click="dateNavClick(index)">
+              <span>{{datanav.name}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="notice">
+          <span><img src="../../../assets/imgs/shop/tz-tips.png" alt=""></span>
+          <div>土豪榜按用户打赏花费的金币进行排行，每日0点结算。</div>
+        </div>
+      </div>
+      <div class="list-area" ref="listarea" :style="{'height' : pageBottomHieght}">
+         <div class="area-cover" ref="areaCover" :style="{'height' : areaCoverHeight}"></div>
+         <div class="area-box"  ref="areaBox" :style="{'height' : pageBottomHieght}">
+           <div class="topthree">
+              <ul>
+                <li>
+                  <span class="range">
+                    <img src="../../../assets/imgs/icons/hg.png" alt="">           
+                    </span>
+                  <span class="hd">
+                    <img :src="ShowGiftTopByDateList[0] && ShowGiftTopByDateList[0].avatar?ShowGiftTopByDateList[0].avatar:default_img_head" alt="">
+                  </span>
+                  <span class="nm">{{ShowGiftTopByDateList[0] && ShowGiftTopByDateList[0].nickName?ShowGiftTopByDateList[0].nickName:'虚伪以待'}}</span>
+                  <span class="level"><viplevel :lv_num="ShowGiftTopByDateList[0] && ShowGiftTopByDateList[0].level?ShowGiftTopByDateList[0].level:'1'"></viplevel></span>
+                  <span class="jb">
+                    <span class="j"><img src="../../../assets/imgs/icons/gcjg.png" alt=""></span>
+                    <span class="n">{{ShowGiftTopByDateList[0]&& ShowGiftTopByDateList[0].price?ShowGiftTopByDateList[0].price:''}}</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="range">
+                    <img src="../../../assets/imgs/icons/by.png" alt="">           
+                    </span>
+                  <span class="hd">
+                    <img :src="ShowGiftTopByDateList[1] && ShowGiftTopByDateList[1].avatar?ShowGiftTopByDateList[1].avatar:default_img_head" alt="">
+                  </span>
+                  <span class="nm">{{ShowGiftTopByDateList[1] && ShowGiftTopByDateList[1].nickName?ShowGiftTopByDateList[1].nickName:'虚伪以待'}}</span>
+                  <span class="level"><viplevel :lv_num="ShowGiftTopByDateList[1] && ShowGiftTopByDateList[1].level?ShowGiftTopByDateList[1].level:'1'"></viplevel></span>
+                  <span class="jb">
+                    <span class="j"><img src="../../../assets/imgs/icons/gcjg.png" alt=""></span>
+                    <span class="n">{{ShowGiftTopByDateList[1] && ShowGiftTopByDateList[1].price ? ShowGiftTopByDateList[1].price:''}}</span>
+                  </span>
+                </li>
+                <li>
+                  <span class="range">
+                    <img src="../../../assets/imgs/icons/jt.png" alt="">                  
+                    </span>
+                  <span class="hd">
+                    <img :src="ShowGiftTopByDateList[2] && ShowGiftTopByDateList[2].avatar?ShowGiftTopByDateList[2].avatar:default_img_head" alt="">
+                  </span>
+                  <span class="nm">{{ShowGiftTopByDateList[2] && ShowGiftTopByDateList[2].nickName ? ShowGiftTopByDateList[2].nickName:'虚伪以待'}}</span>
+                  <span class="level"><viplevel :lv_num="ShowGiftTopByDateList[2] && ShowGiftTopByDateList[2].level?ShowGiftTopByDateList[2].level:'1'"></viplevel></span>
+                  <span class="jb">
+                    <span class="j"><img src="../../../assets/imgs/icons/gcjg.png" alt=""></span>
+                    <span class="n">{{ShowGiftTopByDateList[2] && ShowGiftTopByDateList[2].price ? ShowGiftTopByDateList[2].price :''}}</span>
+                  </span>
+                </li>
+              </ul>
+           </div>
+           <hr/>
+           <div class="from-four">
+              <div class="list-wrap">
+                <van-list
+                class="list"
+                v-model="listloading"
+                :finished="listfinished"
+                :finished-text="finished_text"
+                :error.sync="vanerror"
+                error-text="请求失败，点击重新加载"
+                :immediate-check="false"
+                :offset="10"
+                @load="getShowGiftTopListByDate"
+                >
+                  <div class="li"
+                        v-for="(item,index) in ShowGiftTopByDateList"
+                        :key="index"
+                        :id="item.liveId"
+                        v-if="item.sort > 3"
+                  >
+                      <span class="sort-num">{{item.sort?item.sort:1}}</span>
+                      <span class="hd">
+                        <img :src="item.avatar" alt />
+                      </span>
+                      <div class="rt">
+                        <span class="tit">{{item.nickName}}</span>
+                        <span class="lv">
+                          <viplevel :lv_num="item.level?item.level:'01'"></viplevel>
+                        </span>
+                      </div>
+                      <span class="jb">
+                          <span class="j"><img src="../../../assets/imgs/icons/gcjg.png" alt=""></span>
+                          <span class="n">{{item.price}}</span>
+                      </span>
+                  </div>
+                  </van-list>
+                </div>
+           </div>
+         </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import viplevel from '@/components/viplevel.vue';
 //import x from ''
+
 import {
     //   AddressEdit,
     //   Area,
@@ -30,18 +134,14 @@ import {
     //   Picker,
     //   Sku,
     //   SwipeCell,
-    RadioGroup,
-    Radio,
-    Switch 
     // ====项目中可能用到的===
     //  Uploader,
-    // Tab,
-    // Tabs,
-    // List,
+    Tab,
+    Tabs,
+    List,
     // Lazyload,
-    // Search
     // ====项目中可能用到的===
-    // Toast
+    // Toast,
     // Loading,
     // Swipe,
     // SwipeItem
@@ -51,23 +151,59 @@ import {
 } from "./../../../utils/index.js";
 export default {
   components: {
-   vanRadioGroup : RadioGroup,
-   vanRadio : Radio,
-   vanSwitch : Switch 
+    vanTab: Tab,
+    vanTabs: Tabs,
+    vanList: List,
+    viplevel 
   },
   data() {
     return {
-      istzj : '', //是否为投资金商品
-      radioperson : '1', //开具类型
-      radiotype : '2', //发票类型 1为电子 2为纸质
-      taitoumsg : '', //发票抬头
-      taxmsg : '', //纳税人信息
-      checked : false, //是否默认
-      personipone : '', //个人电话
-      personmail : '',  //个人邮箱
-      invoiceshellshow : false, //发票弹层
-      userID : '', //用户id
-      submitbtnstate : true  //发票提交按钮状态
+      pageBottomHieght : 0,
+      areaCoverHeight : 0,
+      contentHeight : 0,
+      navactive : 0,
+      datetype : 1,
+      dateNavlist : [
+          {
+            name : '日榜',
+            type : 0
+          },
+          {
+            name : '周榜',
+            type : 1
+          },
+          {
+            name : '月榜',
+            type : 2
+          }
+      ],
+      lv_num : 0,
+      listloading: false, //在线用户vantlist加载
+      listfinished: false,
+      finished_text: '',
+      vanerror: false,
+      nextpage : 1,
+      ShowGiftTopByDateList :[
+        {
+          avatar:'',
+          nickName : '',
+          level :'',
+          price : ''
+        },
+        {
+          avatar:'',
+          nickName : '',
+          level :'',
+          price : ''
+        },
+        {
+          avatar:'',
+          nickName : '',
+          level :'',
+          price : ''
+        }
+      ],
+      default_img_head : require('../../../assets/imgs/icons/default-head.png')
     };
   },
   computed: {
@@ -79,130 +215,93 @@ export default {
     // 返回上一页
     shopback() {
       let that = this;
-      that.$router.go(-1);
+      that.$router.push(
+        {
+          path:'/shop/index',
+          query : {
+            tab : that.navactive
+          }
+      });
     },
-    kaijutype(name){
-      if(name==1){
-        this.taitoumsg = '个人';
-        this.taxmsg = '';
-      }else{
-        this.taitoumsg = '';
-      }
-      this.radioperson = name;
-    },
-    invoicetype(name){
-      this.radiotype = name;
-    },
-    invoicecheckdefault(name){
-      if(name == 1){
-        this.checked = true;
-      }else{
-        this.checked = false;
-      }
-      this.checked = name;
-    },
-    taitoumsginput(){
-      var that = this;
-      if(that.taitoumsg == undefined || that.taitoumsg == ''){
-        that.submitbtnstate = false;
-      }else{
-        that.submitbtnstate = true;
-      }
-    },
-    taxmsgblur(){
-      var that = this;
-      if(that.taxmsg == undefined || that.taxmsg == ''){
-        that.submitbtnstate = false;
-      }else{
-        that.submitbtnstate = true;
-      }
-    },
+    
     openinvoiceshellshell(){
       this.invoiceshellshow = true;
     },
     shutinvoiceshellshell(){
       this.invoiceshellshow = false;
     },
-    // 获取默认发票内容
-    getdefaultinvoice(){
+    /*时间选择 */
+    dateNavClick(index){
       let that = this;
-      that.$toast.loading({
-          message: "加载中...",
-          duration: 200000
-        });  
-      that.api.shopcart
-      .takedefaultinvoice({
-        "userId" : that.userID
-      })
-      .then(res => {
-        that.$toast.clear();
-        if(res.data.code == 1){
-          that.invoiceOrder = res.data.data.invoiceOrder;
-          if(that.istzj == 0){ //暂时不用后端返回的字段(有问题)
-            that.radiotype = "2";
-          }else{
-            that.radiotype = "1";
+      that.navactive = index;
+      that.datetype = index + 1;
+      that.$router.push(
+        {
+          path:'/shop/tuhaorange',
+          query : {
+            tab : that.navactive
           }
-          that.taitoumsg = res.data.data.invoiceTitle;
-          that.taxmsg = res.data.data.taxCode;
-          if(!that.taitoumsg && !that.taxmsg){
-            that.submitbtnstate = false;
-          }
-          if(res.data.data.firstChoice == 1){
-            that.checked = true;
-          }
-        }
-        else{
-          that.$toast(res.data.info);
-        }
-      })
+      });
+      that.ShowGiftTopByDateList = [];
+      that.nextpage = 1;
+      that.getShowGiftTopListByDate();
+
     },
-    //确认新增发票
-    submitaddinvoice(){
-      let that = this;
-      if(that.taitoumsg == undefined || that.taitoumsg == ''){
-        that.$toast('发票抬头不能为空');
-        return;
-      }
-      if(that.radioperson == 2 && (that.taxmsg == undefined || that.taxmsg == '')){
-        that.$toast('纳税人识别号不能为空');
-        return;
-      }
-      if(that.checked == true){
-        that.checked = 1;
-      }else{
-        that.checked = 0;
-      } 
-      that.$toast.loading({
-          message: "加载中...",
-          duration: 200000
-        });   
-      that.api.shopcart
-      .takeaddnewinvoice({
-        "userId" : that.userID,
-        "invoiceType" : that.radiotype,
-        "invoiceOrder" : that.radioperson,
-        "invoiceTitle" : that.taitoumsg,
-        "taxCode" : that.taxmsg,
-        "firstChoice" : that.checked,
-        "reciverPhone" : that.personipone,
-        "reciverMail" : that.personmail
-      })
-      .then(res => {
-        that.$toast.clear();
-        if(res.data.code == 1){
-          let invoicenewmsg = {
-            id : res.data.data.id,
-            type : res.data.data.invoiceType,
-            invoicecontent : res.data.data.invoiceContent
-          }
-          setsessionStorage('invoicenewmsg',invoicenewmsg)
-          that.shopback();
-        }
-        else{
-          that.$toast(res.data.info);
-        }
-      })
+    //在线人数列表
+    getShowGiftTopListByDate() {
+        let that = this;
+        that.$toast.loading({
+            message: "加载中...",
+            forbidClick: true,
+            duration: 200000
+        });
+        this.api.homedetails
+            .showGiftTopListByDate({
+                cycleType: that.datetype,
+                type: 1,
+                appType : 1,
+                page: that.nextpage,
+                pageSize: 20
+            })
+            .then(res => {
+                that.$toast.clear();
+                that.listloading = false;
+                if (res.data.code == 1) {
+                    that.nextpage = res.data.data.page;
+                    if (res.data.data.list && res.data.data.list.length > 0) {
+                        // that.nodatashow = false;
+                        that.hasmorepage = 2;
+                        res.data.data.list.forEach(e => {
+                            that.ShowGiftTopByDateList.push(e);
+                        });
+                    }
+
+                    if (that.nextpage == res.data.data.totalPage) {
+                        that.listfinished = true;
+                        that.listloading = false;
+                        that.finished_text = '亲~已经到底了';
+                        return;
+                    }
+
+                  
+                    if (that.nextpage != res.data.data.totalPage) {
+                      that.listfinished = false;
+                      that.listloading = false;
+                      that.nextpage++
+                    } 
+                    // else {
+                    //     if (that.hasmorepage === 1) {
+                    //         // that.nodatashow = true;
+                    //     } else {
+                    //         that.listloading = false;
+                    //         that.finished_text = '亲~已经到底了';
+                    //     }
+                    //     that.listfinished = true;
+                    // }
+                    that.$forceUpdate();
+                    that.$toast.clear();
+                }
+            })
     }
   },
   // created() {
@@ -213,17 +312,28 @@ export default {
   mounted() {
     let that = this;
     that.userID = that.$store.state.user.userid;
-    that.istzj = that.$route.query.istzj;
-    that.getdefaultinvoice(); //上来加载默认发票
+    that.getShowGiftTopListByDate(); //上来加载默认发票
+    
+  
+    let topAreaHeight = that.$refs.toparea.offsetHeight;
+    that.pageBottomHieght = (window.innerHeight - topAreaHeight) + 'px';
+    that.areaCoverHeight = (window.innerHeight - topAreaHeight - 130) + 'px';
+
+    if(this.$route.query.tab != undefined){
+      let tab = Number(this.$route.query.tab);
+      that.dateNavClick(tab);
+    }
+    
+
   },
   beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background-color:#f6f6f6')
+    // document.querySelector('body').setAttribute('style', 'background-color: #FFBD04')
   },
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
     beforeDestroy() {
-    document.querySelector('body').setAttribute('style', '')
+    // document.querySelector('body').setAttribute('style', '')
   },
   destroyed() {}, //生命周期 - 销毁完成
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发

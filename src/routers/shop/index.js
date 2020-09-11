@@ -214,7 +214,7 @@ export default [{
         name: 'anchorrange',
         component: resolve => require(['./../../views/shop/anchorrange/index.vue'], resolve),
         meta: {
-            navstatus: true,
+            navstatus: false,
             name: 'anchorrange',
             //面包屑需要的参数
             breadnav: [{
