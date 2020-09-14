@@ -106,8 +106,8 @@ export default {
       phonenum2: "", //手机号、、账号密码登录的手机号
       phonecode: "", //手机验证码
 
-      logintypechangetxt: "密码登录", //登录模式切换按钮的文字
-      logintype: "验证码登录", // 默认为验证码登录，可切换为密码登陆
+      logintypechangetxt: "验证码登录 >>", //登录模式切换按钮的文字
+      logintype: "密码登录", // 默认为验证码登录，可切换为密码登陆
 
       gettingcodestatus: false, //正在获取验证码的状态
       gettingcodestatustime: 120, //获取验证码倒计时时间
@@ -222,10 +222,10 @@ export default {
     logintypechange() {
       let that = this;
       if (that.logintype == "验证码登录") {
-        that.logintypechangetxt = "切换验证码登录";
+        that.logintypechangetxt = "切换验证码登录 >>";
         that.logintype = "密码登录";
       } else {
-        that.logintypechangetxt = "切换密码登录";
+        that.logintypechangetxt = "切换密码登录 >>";
         that.logintype = "验证码登录";
       }
       this.datareset();
@@ -522,10 +522,13 @@ export default {
   height: 100vh;
   .toprightbtn {
     height: 0.64rem;
-    margin-top : .2rem;
-    color: rgba(255, 255, 255,.75);
+    margin-top : .35rem;
+    color: rgba(255, 255, 255,1);
     text-align : center;
     cursor: pointer;
+    font-size : 16px;
+    font-weight :bold;
+    // color: #ffbd04;
   }
   .content {
     margin-top: .58rem;
