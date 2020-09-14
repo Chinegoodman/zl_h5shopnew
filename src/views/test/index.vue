@@ -6,17 +6,35 @@
     query{{ this.$route.query }} <br />
     params{{ this.$route.params }} <br />
     <uploadfile
-      :defaultfileslist="defaultfileslist"
-      :uploaddatainit="uploaddatainit"
-      @_upfileslistchange="upfileslistchange"
+        :canedit="true"
+        :uploaddatainit="uploaddatainit"
+        :defaultfileslist="defaultfileslist"
+        @_upfileslistchange="upfileslistchange"
     ></uploadfile>
+
+    <div class="levelwarp">
+        <div class="herder_line"></div>
+        <div class="centerdom">
+            <p>level 12</p>
+        </div>
+        <div class="centerdom">
+            <p>level 13</p>
+        </div>
+        <div class="centerdom">
+            <p>level 14</p>
+        </div>
+        <div class="centerdom">
+            <p>level 15</p>90
+        </div>
+        <div class="footer_line"></div>
+    </div>
 
     <button @click="agorartcleaveCall">离开频道</button>
   </div>
 </template>
 
 <script>
-import uploadfile from "@/components/uploadfile_multiple.vue";
+// import uploadfile from "@/components/uploadfile_multiple.vue";
 
 // Agora Web SDK NG
 // https://agoraio-community.github.io/AgoraWebSDK-NG/docs/zh-CN/setup
@@ -25,16 +43,20 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 
 export default {
   components: {
-    uploadfile,
+    // uploadfile,
   },
   data() {
     return {
       uploaddatainit: {
-        // upfileslist:[],
-        maxnumber: 4,
-        issingle: false, //除了图片之外的资源建议设置为true(单文件上传模式)
-        w: "",
-        h: "",
+        upfileslist: [],
+        maxnumber: 5,
+        issingle: false, //除了图片之外的资源设置为true(单文件上传模式)
+        imgSize: [
+          {
+            w: "",
+            h: "",
+          },
+        ],
         // filetype
         //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
         //'1.all':图片 (所有)
@@ -44,6 +66,7 @@ export default {
         // '5':办公文件 MS 及 wps
         // '6':html css js相关
         filetype: "1",
+        getwangsu_token_prams: 1, //云存储的存储目录
       },
       defaultfileslist: [],
 
@@ -72,7 +95,20 @@ export default {
   methods: {
     upfileslistchange(listdata) {
       console.log(listdata);
-      // this.uploaddatainit.upfileslist = listdata;
+      this.defaultfileslist = listdata;
+    },
+    getuserlevelquities(){
+        let zs = this;
+        let userId = zs.$store.state.user.userid?zs.$store.state.user.userid:'';
+        this.api.test.userlevelequities({
+            userId
+        }).then(res=>{
+          if(res.data.code==1){
+            zs.$toast(res.data.info);
+          }else{
+            zs.$toast(res.data.info);
+          }
+        })
     },
     // 1 创建本地客户端  agoraRTC初始化
     agoraRTCinit() {
@@ -201,6 +237,7 @@ export default {
   },
   mounted() {
     this.agoraRTCinit();
+    this.getuserlevelquities();
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前

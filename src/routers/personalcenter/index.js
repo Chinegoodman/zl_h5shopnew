@@ -259,22 +259,6 @@ export default [{
             }]
         }
     },
-
-    //个人中心--用户等级
-    {
-        path: '/levelinstruct',
-        name: 'levelinstruct',
-        navstatus: false,
-        component: resolve => require(['./../../views/personalcenter/levelinstruct/index.vue'], resolve),
-        meta: {
-            name: 'levelinstruct',
-            //面包屑需要的参数
-            breadnav: [{
-                name: '用户等级',
-                url: '/levelinstruct',
-            }]
-        }
-    },
     //个人中心--关于抓周
     {
         path: '/aboutzhuazhou',
@@ -346,7 +330,7 @@ export default [{
                     name: 'personalcentermyinfochangeintroduction',
                     navstatus: false,
                     breadnav: [{
-                        name: '个人中心-完善资料-修改昵称',
+                        name: '个人中心-完善资料-修改个人描述',
                         url: '/personalcenter/myinfo/changeintroduction'
                     }]
                 }
@@ -643,6 +627,54 @@ export default [{
                     breadnav: [{
                         name: '个人中心==我的钱包==首页',
                         url: '/personalcenter/mypurse/index',
+                    }]
+                }
+            },
+            //个人中心==我的钱包[秀场] --首页
+            {
+                path: '/personalcenter/mypurse/livingpurse',
+                name: 'personalcentermypurseliving',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingpurse/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingpurse',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==首页',
+                        url: '/personalcenter/livingpurse/index',
+                    }]
+                }
+            },
+            //个人中心==我的钱包[秀场] --账单类型
+            {
+                path: '/personalcenter/mypurse/livingacounttypes',
+                name: 'personalcenterlivingacounttypes',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingacounttypes/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingacounttypes',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==账单类型',
+                        url: '/personalcenter/livingacounttypes/index',
+                    }]
+                }
+            },
+            //个人中心==我的钱包[秀场] --账单列表
+            {
+                path: '/personalcenter/mypurse/livingacountlist',
+                name: 'personalcenterlivingacountlist',
+                component: () =>
+                    import ('./../../views/personalcenter/mypurse/livingacountlist/index.vue'),
+                meta: {
+                    name: 'personalcenterlivingacountlist',
+                    navstatus: false,
+                    //面包屑需要的参数
+                    breadnav: [{
+                        name: '个人中心==我的秀场钱包==账单',
+                        url: '/personalcenter/livingacountlist/index',
                     }]
                 }
             },

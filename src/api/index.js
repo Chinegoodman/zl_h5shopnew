@@ -7,6 +7,8 @@ import productdetails from '@/api/productdetails';
 import login from '@/api/login'
 import living from '@/api/living/index.js'
 // import living from '@/api/living/index.min.js'
+import xiuchangliving from '@/api/living/xiuchangindex.js'
+import test from '@/api/test/test.js'
 // ==========================庞世锋============================
 
 // ==========================刘巍============================
@@ -31,6 +33,7 @@ import shopmassages from '@/api/shopmassages';
 // 退货接口
 import returngoods from '@/api/returngoods';
 // ==========================李可心============================
+import wangsuapi from '@/api/wangsuapi/wangsuapi' //网宿api token 获取
 
 // 导出接口
 export default {
@@ -43,7 +46,9 @@ export default {
     shopcart,
     shopmassages,
     living,
+    xiuchangliving,
+    test,
     returngoods,
-    newcomer
-    // ……
+    newcomer,
+    wangsuapi
 }

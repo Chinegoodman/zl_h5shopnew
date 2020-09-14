@@ -6,7 +6,6 @@ import shop_children from './routers/shop/index'
 import newcomer_children from './routers/newcomer/index'
 import living_children from './routers/living/index'
 import personalcenter_children from './routers/personalcenter/index'
-import videos_children from './routers/videos/index'
 import needloginroute from './routers/needloginroute.js'
 // import { resolve } from '_any-promise@1.3.0@any-promise'
 
@@ -37,20 +36,6 @@ const router = new Router({
                 }]
             },
             children: living_children
-        },
-        {
-            path: '/videos',
-            // name: 'videos',
-            component: resolve => require(['./views/videos/index.vue'], resolve),
-            meta: {
-                name: 'videos',
-                navstatus: true,
-                breadnav: [{
-                    name: '小视频',
-                    url: '/videos',
-                }]
-            },
-            children: videos_children
         },
         {
             path: '/shop',
@@ -145,6 +130,26 @@ const router = new Router({
                 }]
             },
             children: personalcenter_children
+        },
+        //秀场会员等级 vip-levle
+        {
+            path: '/personalcenter/viplevledetails',
+            name: 'viplevledetails',
+            component: resolve => require(['./views/personalcenter/viplevledetails/index.vue'], resolve),
+            meta: {
+                name: 'viplevledetails',
+                navstatus: false,
+                //面包屑需要的参数
+                breadnav: [{
+                        name: '个人中心首页',
+                        url: '/personalcenter/index',
+                    },
+                    {
+                        name: '个人中心-会员等级页',
+                        url: '/personalcenter/viplevledetails',
+                    },
+                ]
+            }
         },
         {
             //登录首页

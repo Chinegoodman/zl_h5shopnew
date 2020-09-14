@@ -1,5 +1,5 @@
 import base from '../base'; // 导入接口域名列表
-import axios from './../../../node_modules/zlapi/http.js'; // 导入http中创建的axios实例
+import axios from '@/request/http.js'; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const homedetails = {
@@ -39,7 +39,7 @@ const homedetails = {
     },
     // 实时金价
     goldmassage(params) {
-        return axios.post(`${base.yxf}/mapi/v1/valuation/price/nowGold`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/valuation/price/nowGold`, qs.stringify(params));
     },
     // 首页推荐tab列表 ljx
     homelisttjpost(params) {
@@ -51,7 +51,7 @@ const homedetails = {
     },
     // 首页金钢区-内页列表
     diamondlistpost(params) {
-        return axios.post(`${base.yxf}/mapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
+        return axios.post(`${base.yxf}/wapi/v1/live/getGoodsLiveRoomList`, qs.stringify(params));
     },
     // 首页直播tab列表 ljx
     homelistzbpost(params) {
@@ -60,6 +60,10 @@ const homedetails = {
     // 直播分类接口 ljx
     homelistfenleizb(params) {
         return axios.post(`${base.yxf}/wapi/v1/live/homepage/goldType`, qs.stringify(params));
+    },
+    // 首页秀场列表 ljx
+    homelistxcpost(params) {
+        return axios.get(`${base.yxf2}/v1/show/live/getLiveList?type=${params.type}&page=${params.page}&pageSize=${params.pageSize}`);
     },
     // 首页新品tab列表 ljx
     homelistxppost(params) {
@@ -76,7 +80,19 @@ const homedetails = {
     // 判断是否新手(然后显示推送弹层)
     checknewcomercondition(params) {
         return axios.post(`${base.yxf}/wapi/v1/user/isNoviceById`, qs.stringify(params));
-    }
+    },
+    //获取电台列表-标签列表(二级导航)
+    radioLabelList(params) {
+        return axios.get(`${base.yxf2}/v1/label/list?uid=${params.uid}`);
+    },
+    //首页-电台列表
+    radioliveList(params) {
+        return axios.get(`${base.yxf2}/v1/radio/live/list?tag=${params.tag}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
+    //首页-土豪榜内页列表
+    showGiftTopListByDate(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/rank/topListByDate?type=${params.type}&cycleType=${params.cycleType}&appType=${params.appType}&page=${params.page}&pageSize=${params.pageSize}`);
+    },
 
 }
 

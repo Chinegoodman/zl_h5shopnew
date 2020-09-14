@@ -8,31 +8,28 @@
         <ul>
             <li>
                 <div class="lt">头像</div>
-                <div class="rt">
-                    <img v-if="baseuserinfo.face_url" :src="baseuserinfo.face_url?baseuserinfo.face_url:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
+                <div class="rt" @click="faceurlshowclick">
+                    <img v-if="baseuserinfo.headPortrait" :src="baseuserinfo.headPortrait?baseuserinfo.headPortrait:'../../../assets/imgs/personal/mine_default.png'" alt="抓周" class="hd-face"/>
                 </div>
-                <div class="van-uploader-box">
-                   <input type="file" class="upfile" @change="upimgs">
-                </div>  
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li @click="changenickname">
                 <div class="lt">昵称</div>
-                <div class="rt">{{baseuserinfo.nickname}}</div>
+                <div class="rt">{{baseuserinfo.nickName}}</div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li>
                 <div class="lt">ID</div>
-                <div class="rt">{{baseuserinfo.id}}</div>
+                <div class="rt">{{baseuserinfo.userId}}</div>
             </li>
-            <li>
+            <!-- <li>
                 <div class="lt">所在地</div>
                 <div class="rt">{{baseuserinfo.site}}</div>
-                <!-- <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt /> -->
-            </li>
+                <!-- <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+            </li> -->
             <li @click="gotosex">
                 <div class="lt">性别</div>
-                <div class="rt">{{baseuserinfo.sex===1?'男':'女'}}</div>
+                <div class="rt">{{baseuserinfo.gender===1?'男':'女'}}</div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
             <li @click="gotobirthday">
@@ -43,6 +40,22 @@
             <li @click="gotointroduction">
                 <div class="lt">我的介绍</div>
                 <div class="rt">{{baseuserinfo.introduction}}</div>
+                <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+            </li>
+        </ul>
+        <ul>
+            <li @click="acountsafe" v-if="false">
+                <div class="lt">主播实名认证</div>
+                <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+            </li>
+            <li v-if="false">
+                <div class="lt">实休店铺认证</div>
+                <div class="rt">
+                    <span class="hot">
+                        <img  src="../../../../assets/imgs/personal/rm.png" alt />
+                    </span>
+                    线上开店不打洋
+                </div>
                 <img class="gd"  src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
             </li>
         </ul>    
@@ -58,6 +71,27 @@
             </li>
         </ul>
     </div>
+    <!-- 修改头像 start -->
+    <div class="birthday_box" v-if="faceurl_show">
+        <div class="box-cover" @click="faceurl_show=false"></div>
+        <div class="box-con">
+            <div class="changefaceurl">
+                <span>点击上传头像</span>
+                <div class="faceurl-in">
+                   <img :src="theShellfaceUrl?theShellfaceUrl: defaultFaceUrl" alt="抓周" class="hd-face"/>
+                   <div class="upload-tool">
+                       <uploadfile
+                    :canedit="true"
+                    :uploaddatainit="uploaddatainit"
+                    :defaultfileslist="upimglist"
+                    @_upfileslistchange="upfileslistchange"
+                ></uploadfile>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修改头像 end -->
     <!-- 修改出生年月start -->
     <div class="birthday_box" v-if="datatime_show">
         <div class="box-cover"></div>
@@ -105,15 +139,40 @@ export default {
     data(){
         return{
             baseuserinfo : {},
-            upimglist :[],  //头像上传图片数组
+            /*头像上传图片数组*/
+            upimglist: [], //图片列表
+            uploaddatainit: {
+                upfileslist: [],
+                maxnumber: 1,
+                issingle: true, //除了图片之外的资源设置为true(单文件上传模式)
+                imgSize: [
+                    {
+                        w: '',
+                        h: ''
+                    },
+                ],
+                // filetype
+                //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
+                //'1.all':图片 (所有)
+                // '2':音频
+                // '3':视频
+                // '4':zip文件
+                // '5':办公文件 MS 及 wps
+                // '6':html css js相关
+                filetype: "1",
+                getwangsu_token_prams:1,//云存储的存储目录
+            },
             minDate: new Date(1500, 0, 1),
             maxDate: new Date(10000, 10, 1),
             currentDate: new Date(), //时间选择器当前时间
-            datatime_show : false,
-            sex_show : false,
+            datatime_show : false, //时间弹层显示
+            sex_show : false,  //性别弹层显示
+            faceurl_show : false, //修改头像弹层显示
             post_time : '', //发给后台的修改出生日期
             columns : ['男','女'], //性别选择器数据
-            post_sex : '' //发给后台的修改性别数据
+            post_sex : '', //发给后台的修改性别数据
+            theShellfaceUrl : '',
+            defaultFaceUrl : require('../../../../assets/imgs/personal/mine_default.png')
         }
     },
     mounted(){
@@ -135,7 +194,7 @@ export default {
             that.$router.push({
                 path : '/personalcenter/myinfo/nickname',
                 query : {
-                    nickname : that.baseuserinfo.nickname
+                    nickname : that.baseuserinfo.nickName
                 }
             });
         },
@@ -145,7 +204,7 @@ export default {
             that.$router.push({
                 path : '/personalcenter/myinfo/acountsafe',
                 query : {
-                    phone : that.baseuserinfo.phone
+                    phone : that.baseuserinfo.mobile
                 }
             });
         },
@@ -165,75 +224,47 @@ export default {
         getuseinfo(){
             let that = this;
             that.api.personalcenter
-            .getinfouser({
+            .getinfouser_new({
                 userId : that.$store.state.user.userid
             })
             .then(res => {
                 if(res.data.code === 1){
-                    that.baseuserinfo = res.data.data.userInfo;
+                    console.log('res');
+                    console.log(res.data.data);
+                    that.baseuserinfo = res.data.data;
                 }
             })
             
         },
+        /*点击出修改头像弹层 */
+        faceurlshowclick(){
+            this.faceurl_show = true;
+            this.theShellfaceUrl = this.baseuserinfo.headPortrait;
+            this.upimglist[0] = this.baseuserinfo.headPortrait;
+            
+        },
         // 上传图片
-        upimgs(e) {
-            let that = this;
-            // 时间戳文件名
-            const aliyunFileKey = new Date().getTime() + Math.floor(Math.random() * 150) + '.png';
-            // OSS配置
-            // let client = new OSS({
-            //     endpoint: 'https://zjlwhtestshimingrenzheng.oss-cn-shanghai.aliyuncs.com',
-            //     accessKeyId: 'LTAI4FmNE7xB2NTaeFxAxXTj',
-            //     accessKeySecret: 'edI7UHgU0poiQhWnhej58nIqu3K3B2',
-            //     key: aliyunFileKey,
-            //     bucket: that.ossmassage.BUCKET_NAME,
-            // });
-            // FormData 对象
-            let formFile = new FormData();
-            // 其他参数
-            formFile.append("OssAccessKeyId", 'LTAI4FmNE7xB2NTaeFxAxXTj');
-            formFile.append("policy",
-                'eyJleHBpcmF0aW9uIjoiMjIwMC0wMS0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF1dfQ=='
-            );
-            formFile.append("signature", '5r4Zr1NwCEQjSUOm1xuWJkmqNSw=');
-            formFile.append("accessKeySecret", 'edI7UHgU0poiQhWnhej58nIqu3K3B2');
-            formFile.append("key", aliyunFileKey);
-            formFile.append("success_action_status", '200');
-            // 文件对象
-            formFile.append("file", e.target.files[0]);
-            // that.convertBase64UrlToBlob(formFile);
-            // client.put(aliyunFileKey, formFile).then(results => {
-            //     console.log(results);
-            // }).catch(err => {
-            //     console.log(err);
-            // });
-            // OSS路径
-            let FileController = 'https://zjlwhtestshimingrenzheng.oss-cn-shanghai.aliyuncs.com';
-            // XMLHttpRequest 对象
-            var xhr = new XMLHttpRequest();
-            xhr.open("post", FileController, true);
-            // xhr.setRequestHeader('Content-Type','multipart/form-data');
-            // 发送请求
-            xhr.send(formFile);
-            // 返回路径
-            let urlRes = 'http://zhulitest.izhuazhou.cn/'
-            // readyState == 4 为请求完成，status == 200为请求陈宫返回的状态
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    that.upimglist.push(urlRes + aliyunFileKey);
-                    that.changefaceurl();
-                }
+        upfileslistchange(listdata, file_lasttag, e,wh){
+            this.upimglist = listdata;
+            // console.log('listdata');
+            // console.log(listdata.length);
+            if(listdata.length === 0){
+                this.upimglist = [];
+                this.theShellfaceUrl = '';
+                return;
             }
+            this.changefaceurl();
         },
         //修改上传头像
         changefaceurl(){
             let that = this;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                face_url :  that.upimglist[0]
+            .updateHeadPortrait({
+                userId : that.$store.state.user.userid,
+                headPortraitUrl :  that.upimglist[0]
             }).then(res => {
                 that.getuseinfo();
+                that.faceurl_show = false;
             })
             
         },
@@ -265,8 +296,8 @@ export default {
             that.datatime_show = false; 
             that.post_time = this.timeValue;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
                 birthday :  that.post_time
             }).then(res => {
                 if(res.data.code === 1){
@@ -292,12 +323,12 @@ export default {
             if(val == '男'){
                 that.post_sex = 1;
             }else if(val == '女'){
-                that.post_sex = 0;
+                that.post_sex = 2;
             }
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                sex :  that.post_sex
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
+                gender :  that.post_sex
             }).then(res => {
                 if(res.data.code === 1){
                     this.sex_show = false;
@@ -332,6 +363,7 @@ export default {
             display: block;
             padding: 0.4rem 0;
             margin-left: 0.46rem;
+            cursor: pointer;
         }
 
         span {
@@ -356,10 +388,22 @@ export default {
                 font-family:PingFang SC;
                 font-weight:500;
                 border-bottom: 1px solid rgba(215, 215, 215, 1);
+                cursor: pointer;
                 .lt,
                 .rt{
                     display : inline-block;
                     line-height: .98rem;
+                    .hot{
+                        display : inline-block;
+                        width : .22rem;
+                        height : .30rem;
+                        img{
+                            width : 100%;
+                            height : 100%;
+                            vertical-align: middle;
+                            margin-top : 0;
+                        }
+                    }
                 }
                 .lt{
                     float: left;
@@ -421,24 +465,73 @@ export default {
         border-top: 1px solid #ccc;
         z-index: 1000;
         .box-cover{
+            width: 7.5rem;
             position: fixed;
-            left: 0 ;
+            left: 50%;
             top: 0;
             right: 0;
             bottom:0;
             z-index: 998;
             background:rgba(0,0,0,.5); 
+            transform: translateX(-50%);
+            cursor: pointer;
         }
         .box-con{
+            width: 7.5rem;
             height: 5rem;
             position: fixed;
-            left: 0 ;
+            left: 50%;
             right: 0;
             bottom:0;
+            transform: translateX(-50%);
             z-index: 999;
             background: #fff;
         }
+        .changefaceurl{
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            text-align: center;
+            .faceurl-in{
+                width: 1.2rem;
+                height: 1.2rem;
+                overflow: hidden;
+                border-radius: .3rem;
+                margin: 0 auto;
+                position: relative;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+                .upload-tool{
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 10;
+                    .wrap{
+                        .upload-full{
+                            background: transparent;
+                        }
+                        input{
+                            display: block;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+            span{
+                padding : .5rem 0 .3rem;
+                font-size: .3rem;
+                color: #333;
+            }
+        }
     }
+
     .van-picker__cancel, .van-picker__confirm{
         color:rgba(31, 31, 31, 1);
         font-size : .28rem;

@@ -17,7 +17,7 @@
         <div class="complaints-pic">
             <div class="type-tit">上传凭证：</div>
             <div class="list-pic clearfix">
-                <div class="pic-box" v-for="(img,index) in upimglist" :key="index">
+                <!-- <div class="pic-box" v-for="(img,index) in upimglist" :key="index">
                     <img :src="img" alt="">
                     <div class="close" @click="closepic(index)">
                         <img src="../assets/imgs/icons/scpzsc.png" alt="">
@@ -26,7 +26,14 @@
                 <div class="picupbox" v-if="upimglist.length<6">
                     <img src="../assets/imgs/personal/scpz.png" alt="">
                     <input type="file" @change="upimgs">
-                </div>
+                </div> -->
+                
+                <uploadfile
+                    :canedit="true"
+                    :uploaddatainit="uploaddatainit"
+                    :defaultfileslist="upimglist"
+                    @_upfileslistchange="upfileslistchange"
+                ></uploadfile>
             </div>
         </div>
         <div class="bottom-btn" @click="save">提交</div>
@@ -59,10 +66,37 @@
                 ossmassage: {},
                 type: "", //投诉类型
                 successshow: false,
+
+                uploaddatainit: {
+                    upfileslist: [],
+                    maxnumber: 5,
+                    issingle: false, //除了图片之外的资源设置为true(单文件上传模式)
+                    imgSize: [
+                        {
+                            w: '',
+                            h: ''
+                        },
+                    ],
+                    // filetype
+                    //'1':图片（只要常用的图片类型:image/gif,image/jp2,image/jpeg,image/png）
+                    //'1.all':图片 (所有)
+                    // '2':音频
+                    // '3':视频
+                    // '4':zip文件
+                    // '5':办公文件 MS 及 wps
+                    // '6':html css js相关
+                    filetype: "1",
+                    getwangsu_token_prams:1,//云存储的存储目录
+                },
             };
         },
         computed: {},
         methods: {
+            // 文件上传
+            upfileslistchange(listdata, file_lasttag, e,wh){
+                this.upimglist=listdata;
+                console.log(listdata);
+            },
             //   获取建议类型
             complaintstype() {
                 let that = this;
@@ -326,6 +360,7 @@
         margin:0 auto;
         margin-top:1.93rem;
         border-radius:2rem;
+        cursor: pointer;
     }
     .successtc{
         width: 100%;

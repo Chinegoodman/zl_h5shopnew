@@ -7,13 +7,14 @@
     <div class="w-password">
         <form name="ofrom">
             <ul>
-                <li><input type="text" name="input_password" v-model="newphone" v-on:input="input_password($event)" placeholder="请输入新的手机号" /></li>
+                <li><input type="text" name="input_password" :disabled="isAble" v-model="newphone" placeholder="请输入新的手机号" /></li>
                 <li>
-                    <input type="text"  v-model="code"  v-on:input="input_code($event)" name="input_code" value="" placeholder="请输入验证码" />
-                    <span class="code"  @click="codeButton">{{btncodetext}}</span>
+                    <input type="text"  v-model="code" name="input_code" value="" placeholder="请输入验证码" />
+                    <span class="code"  @click="dingxiangsdk">{{btncodetext}}</span>
                 </li>
             </ul>
-            <span :class="{'save' : true,'saved' : btnstatusaboutnewphone===true && btnstatusaboutcode === true}" @click="savepasswordmsg" >确定</span>
+            <div class="ding-xiang-code" ref="dingxiangcode"></div>
+            <span :class="{'save' : true,'saved' : btnstatusnew==true}" @click="savefrom" >确定</span>
         </form>
     </div>
   </div>
@@ -27,12 +28,33 @@ export default {
             password : '',
             btncodestatus : true,
             btncodetext : '验证码',
-            btnstatusaboutnewphone : false,
-            btnstatusaboutcode : false
+            btnstatusnew : false,
+            return_token : '',
+            isAble : true
         }
     },
     mounted(){
         let that = this;
+    },
+    watch:{
+        newphone(newName){
+            let that = this;
+            if(newName != '' && newName != undefined && that.code != '' && that.checkPhone() == true){
+                console.log('监听1');
+                that.btnstatusnew = true;
+            }else{
+                that.btnstatusnew = false;
+            }   
+        },
+        code(newName){
+            let that = this;
+            if(newName != '' && newName != undefined && that.newphone != ''){
+                console.log('监听2');
+                that.btnstatusnew = true;
+            }else{
+                that.btnstatusnew = false;
+            }
+        }
     },
     methods:{
         goback() {
@@ -45,39 +67,49 @@ export default {
                 path : '/personalcenter/myinfo/acountsafe'
             });
         },
-        input_password(){
-            let that = this;
-            if(that.newphone != ''){
-                if(that.checkPhone(that.newphone)){
-                    that.btnstatusaboutnewphone = true;
-                }
-            }
-        },
-        input_code(){
-            let that = this;
-            if(that.code != ''){
-                that.btnstatusaboutcode = true;
-            }
-        },
         //手机号验证
-        checkPhone(phone) {
+        checkPhone(){ 
             let that = this;
-            //验证电话号码手机号码，包含至今所有号段? ?
-            var ab = /^[1][3,4,5,7,8][0-9]{9}$/;
-            if (ab.test(phone) == false) {
-                that.$toast("请正确填写手机号码!");
-                return false;
-            }
-            return true;
+            if(!that.newphone)return;
+            if(!(/^1[3456789]\d{9}$/.test(that.newphone))){ 
+                that.$toast("手机号码有误，请重填");
+                this.btnstatusaboutnewphone = false;
+                return false; 
+            }else{
+                // this.loginbtned_state = true;
+                return true;
+            } 
+        },
+        //引入顶象验证sdk
+        dingxiangsdk(){
+            let that = this;
+            let dingxiangcode = that.$refs.dingxiangcode;
+            var myCaptcha = _dx.Captcha(dingxiangcode, {
+                //appId，在控制台中“应用管理”或“应用配置”模块获取
+                appId: '14eb88949244fad2a3da49cab8dd2b9b', 
+                type: 'basic', // <-- 指定为"基础类型"，此参数可省略
+                style: 'popup', // 可省略
+                width: 300, // 可省略
+                success: function (token) {
+                    that.return_token = token;
+                    setTimeout(function(){
+                    myCaptcha.hide();
+                    //获取验证码
+                    that.codeButton();
+                    },200);
+                }
+            })
+            myCaptcha.reload();
+            myCaptcha.show();
         },
         //获取验证码
         getcode(){
             var that = this;
             this.api.login
             .captcha({
-                phone: that.newphone,
-                sign: "",
-                timeStamp: ""
+                mobile: that.newphone,
+                type : 3,
+                token : that.return_token
             })
             .then(data => {
                 that.$toast(data.data.info);
@@ -90,18 +122,47 @@ export default {
                 that.btncodestatus = false; 
                 let time = 60;
                 let settimer = setInterval(function(){
-                        that.btncodetext = "重新获取("+--time+")"
+                        that.btncodetext = "重新获取("+--time+")";
+                        that.isAble = false;
+
                     }, 1000);
                     setTimeout(function(){
                         that.btncodetext = "重新获取验证码"
-                        that.btncodestatus = true; 
+                        that.btncodestatus = true;
+                        that.isAble = true; 
                         clearInterval(settimer);
                     }, 60000);
             }
         },
-        //验证-验证码正确与否
-        savepasswordmsg(){
-            let that  = this;
+        // //验证-验证码正确与否
+        // savepasswordmsg(){
+        //     let that  = this;
+        //     if(that.newphone == undefined || that.newphone == ''){
+        //         that.$toast('手机号不能为空');
+        //         return;
+        //     }
+        //     if(that.code == undefined || that.code == ''){
+        //         that.$toast('验证码不能为空');
+        //         return;
+        //     }
+        //     this.api.login
+        //     .verifycaptcha_new({
+        //         mobile: that.newphone,
+        //         verificationCode: that.code
+        //     })
+        //     .then(res => {
+        //         console.log(res);
+        //         if(res.data.code==1){
+        //            //提交 
+        //            that.savefrom();
+        //         }else{
+        //             that.$toast(res.data.info);
+        //         }
+        //     });
+        // },
+        //修改密码提交
+        savefrom(){
+            let that = this;
             if(that.newphone == undefined || that.newphone == ''){
                 that.$toast('手机号不能为空');
                 return;
@@ -111,28 +172,10 @@ export default {
                 return;
             }
             this.api.login
-            .verifycaptcha({
-                phone: that.newphone,
-                code: that.code
-            })
-            .then(res => {
-                console.log(res);
-                if(res.data.code==1){
-                   //提交 
-                   that.savefrom();
-                }else{
-                    that.$toast(res.data.info);
-                }
-            });
-        },
-        //修改密码提交
-        savefrom(){
-            let that = this;
-            this.api.login
-            .savephone({
-                uid : that.$store.state.user.userid,
-                phone: that.newphone,
-                code : that.code
+            .savephone_new({
+                userId : that.$store.state.user.userid,
+                mobile: that.newphone,
+                verificationCode : that.code
             }).then(res => {
                 if(res.data.code === 1){
                     that.$toast('修改成功');
@@ -221,6 +264,7 @@ export default {
                     right : .2rem;
                     top : 50%;
                     transform: translateY(-50%);
+                    cursor: pointer;
                 }
             }
         }
@@ -238,6 +282,7 @@ export default {
             font-family:PingFang SC;
             font-weight:500;
             margin : 1.46rem auto 0;
+            cursor: pointer;
         }
 
         .saved{

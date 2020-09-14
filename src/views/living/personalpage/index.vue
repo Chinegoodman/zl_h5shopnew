@@ -548,15 +548,11 @@ export default {
   },
   created() {
     let that = this;
-    let user = localStorage.getItem("user-info");
-    let userj = JSON.parse(user);
-    that.userId = userj.userid;
+    that.userId = that.$store.state.user.userid;
   },
   mounted() {
     let that = this;
-    let user = localStorage.getItem("user-info");
-    let userj = JSON.parse(user);
-    that.userIdss = userj.userid;
+    that.userIdss = that.$store.state.user.userid;
     that.shop_id = this.$route.query.shopId;
     that.shop_userId = this.$route.query.shop_userId;
     that.tab = this.$route.query.tab;

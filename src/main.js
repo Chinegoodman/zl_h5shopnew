@@ -65,6 +65,7 @@ if (process.env.VUE_APP_ENV == 'uat') {
     // 开发环境
     // eruda.init();
 }
+import 'font-awesome/css/font-awesome.css'
 
 import api from './api'
 Vue.prototype.api = api;

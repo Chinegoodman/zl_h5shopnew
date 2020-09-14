@@ -30,13 +30,13 @@ export default {
         gotoaddresspage() {
             this.$router.push({ name: "personalcenteraddress" });
         },
-        //修改上传头像
+        //修改昵称
         changefaceurl(){
             let that = this;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
-                nickname :  that.nickname
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
+                nickName :  that.nickname
             }).then(res => {
                 if(res.data.code === 1){
                     that.$router.go(-1);
@@ -89,6 +89,7 @@ export default {
             top: 50%;
             right : .2rem;
             transform: translateY(-50%);
+            cursor: pointer;
         }
     }
     .w-nickname{

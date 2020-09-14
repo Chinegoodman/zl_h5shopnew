@@ -3,7 +3,7 @@
     <!-- 新人专区弹层start -->
       <div v-if="newcomershellshowstate" class="openappbtnsbox opennewcomersbox">
         <div class="box-cover">
-            <img src="http://playback.17biyi.com/149ca6a5e3ae975b25dee00ba656a99c" alt="">
+            <img src="https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1599818771648.png" alt="">
         </div>
         <div class="box-content box-content-newcomer-inner">
           <span @click="gonewcomer" class="content-newcomer-btn"><img src="@/assets/imgs/newcomer/xrzqan.png" alt=""></span>

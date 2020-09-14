@@ -43,7 +43,7 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-    <div class="tipsbox">
+    <div class="tipsbox" v-if="list_content_show_type != 2">
       <p>
         <img src="@/assets/imgs/icons/dppz.png" alt="大牌品质，工厂价格，个性定制，创意者秀" />
         <span>大牌品质</span>
@@ -61,6 +61,20 @@
         <span>创意者秀</span>
       </p>
     </div>
+    <div class="bangdanguild" v-show="list_content_show_type===2">
+      <router-link tag="div" class="lis tuhao" to="tuhaorange">
+        <span class="t">土豪榜</span>
+        <span class="ic">
+          <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
+        </span>
+      </router-link>
+      <router-link tag="div"  class="lis zhubo"  to="anchorrange">
+        <span class="t">主播榜</span>
+        <span class="ic">
+          <img src="@/assets/imgs/shop/white-gd.png" alt="抓周" />
+        </span>
+      </router-link>
+    </div>
     <div class="guild-area" v-show="guildarea.length > 0 && list_content_show_type===0">
       <ul>
         <li v-for="(item,index) in guildarea" :key="index" id="item.id" :to="item.toUrl"  @click="gotodiamondlist(item)">
@@ -72,65 +86,61 @@
       </ul>
     </div>
     <div @click="gonewcomer" class="newcomerindexguild" v-show="list_content_show_type===0">
-      <img src="http://playback.17biyi.com/53eb461b1acea844204c921440705211" alt="">
+      <img src="https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1599818601711.png" alt="">
     </div>
 
     <!-- 推荐列表数据展示 -->
-    <div class="index_list_recommend sun" v-show="list_content_show_type===0">
-      <div class="title"><span class="ic"></span>为你推荐</div>
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===0">
        <!-- big_list 为切换到大图的class -->
-      <div :class="{'list' : true,'big_list' : change_big_small_flag_tj===0}">
+      <div class="list xclist">
         <van-list
           class="goodslist"
-          v-model="listloading"
-          :finished="listfinished"
-          :finished-text="finished_text"
-          :error.sync="vanerror"
+          v-model="listloading_xc"
+          :finished="listfinished_xc"
+          :finished-text="finished_text_xc"
+          :error.sync="vanerror_xc"
           error-text="请求失败，点击重新加载"
           :offset="10"
-          @load="homelisttj"
+          @load="homelistxc"
         >
           <div
-            @click="gotolivingdetails(item)"
+            @click="gotoxiuchangdetails(item)"
             class="goodsli"
-            v-for="(item,index) in homelistmassage"
+            v-for="(item,index) in homelistxcmsg"
             :key="index"
             :id="item.id"
           >
             <div class="im"> 
-              <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="" v-if="change_big_small_flag_tj===1" />
-              <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="" v-if="change_big_small_flag_tj===0" />
+              <img :src="item.cover?item.cover:default_img_small" alt="" />
             </div>
             <div class="goodsli_title clearfix">
               <span class="img_w">
-                <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
               </span>
-              <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+              <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
             </div>
             <span class="tit">{{item.name}}</span>
-            <div class="zan" @click.stop="clickPraisePoint(index)">
-              <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
-            </div>
             <div class="gd_btm">
-               <span class="zb" v-if="item.state==0"></span>
-               <span class="huifang" v-if="item.state==1"></span>
-               <span class="num">{{item.realcount}}观看</span>
+               <span class="num">{{item.realCount}}观看</span>
+            </div>
+            <div class="stateflag">
+              <span class="zb" v-if="item.state===1"></span>
+              <span class="huifang" v-if="item.state===0"></span>
             </div>
           </div>
         </van-list>
-        <div class="changebigsize" v-if="change_big_small_flag_tj===1" @click="changeimgsize_tj()"></div>
-        <div class="changesmallsize" v-if="change_big_small_flag_tj===0" @click="changeimgsize_tj()"></div>
       </div>
-    </div> 
-    <!-- 直播列表数据展示 --> 
-    <div class="index_list_recommend lili" v-show="list_content_show_type===1">
-        <div class="nav_type">
+    </div>   
+    <!-- 直播(娱乐)列表数据展示 --> 
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===1">
+        <!-- 抓周列表改成与秀场列表接口一致type为1之后 下面二级分类废弃 -->
+        <!-- <div class="nav_type">
           <ul>
             <li v-for="(tit, index) in zhibotitletype" :class="{'active':tab_active==index}" :key="index" @click="tabtittypezhibo(tit,index)">{{tit.name}}</li>
           </ul>
-        </div>
+        </div> -->
         <!-- big_list 为切换到大图的class homelistzb -->
-        <div :class="{'list' : true,'big_list' : change_big_small_flag_zb===0}">
+        <div class="list xclist">
           <van-list
             class="goodslist"
             v-model="listloading_zb"
@@ -142,40 +152,151 @@
             @load="homelistzb"
           >
             <div
-              @click="gotolivingdetails(item)"
+              @click="gotoxiuchangdetails(item)"
               class="goodsli"
               v-for="(item,index) in homelistzbmsg"
               :key="index"
               :id="item.id"
             >
-              <div class="im">
-                <img :src="item.glp.smallImage?item.glp.smallImage:default_img_small" alt="珠宝商品" v-if="change_big_small_flag_zb===1" />
-                <img :src="item.glp.bigImage?item.glp.bigImage:default_img_big" alt="珠宝商品" v-if="change_big_small_flag_zb===0" />
+              <div class="im"> 
+                <img :src="item.cover?item.cover:default_img_small" alt="" />
               </div>
               <div class="goodsli_title clearfix">
                 <span class="img_w">
-                  <img :src="item.face_url?item.face_url:default_img_head" alt="抓周" />
+                  <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
                 </span>
-                <h2 class="_txtov2" :class="{indent:item.nickname}">{{item.nickname}}</h2>
+                <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
               </div>
               <span class="tit">{{item.name}}</span>
-              <div class="zan" @click.stop="clickPraisePoint(index)">
-                <piontPraise :livingUid="item.uid" :livingId="item.id" ref="piontPraise"></piontPraise>
-              </div>
               <div class="gd_btm">
-                <span class="zb" v-if="item.state==0"></span>
-                <span class="huifang" v-if="item.state==1"></span>
-                <span class="num">{{item.realcount}}观看</span>
+                <span class="num">{{item.realCount}}观看</span>
+              </div>
+              <div class="stateflag">
+                <span class="zb" v-if="item.state===1"></span>
+                <span class="huifang" v-if="item.state===0"></span>
               </div>
             </div>
           </van-list>
-          <div class="changebigsize" v-if="change_big_small_flag_zb===1" @click="changeimgsize_zb()"></div>
-          <div class="changesmallsize" v-if="change_big_small_flag_zb===0" @click="changeimgsize_zb()"></div>
+          <!-- <div class="changebigsize" v-if="change_big_small_flag_zb===1" @click="changeimgsize_zb()"></div>
+          <div class="changesmallsize" v-if="change_big_small_flag_zb===0" @click="changeimgsize_zb()"></div> -->
       </div>
       <div class="changesize"></div>
-    </div>  
+    </div>
+    
+    <!-- 秀场列表数据展示 -->
+    <div class="index_list_recommend xiuchang" v-show="list_content_show_type===2">
+       <!-- big_list 为切换到大图的class -->
+      <div class="list xclist">
+        <van-list
+          class="goodslist"
+          v-model="listloading_xc"
+          :finished="listfinished_xc"
+          :finished-text="finished_text_xc"
+          :error.sync="vanerror_xc"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelistxc"
+        >
+          <div
+            @click="gotoxiuchangdetails(item)"
+            class="goodsli"
+            v-for="(item,index) in homelistxcmsg"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="im"> 
+              <img :src="item.cover?item.cover:default_img_small" alt="" />
+            </div>
+            <div class="goodsli_title clearfix">
+              <span class="img_w">
+                <img :src="item.faceUrl?item.faceUrl:default_img_head" alt="抓周" />
+              </span>
+              <h2 class="_txtov2" :class="{'indent':item.nickName}">{{item.nickName}}</h2>
+            </div>
+            <span class="tit">{{item.name}}</span>
+            <div class="gd_btm">
+               <span class="num">{{item.realCount}}观看</span>
+            </div>
+            <div class="stateflag">
+              <span class="zb" v-if="item.state===1"></span>
+              <span class="huifang" v-if="item.state===0"></span>
+            </div>
+          </div>
+        </van-list>
+      </div>
+    </div>   
+    <!-- 电台列表数据展示 --> 
+    <div class="index_list_recommend radiolist" v-show="list_content_show_type===3">
+      <div class="radio-nav">
+        <ul>
+          <li v-for="(tit, index) in radiotitletype" :class="{'active':tab_radio_active==index}" :key="index" @click="radioSecNavTab(tit,index)">{{tit.name}}</li>
+        </ul>
+      </div>
+      <div class="list dtlist">
+
+        <van-list
+          class="radiolist"
+          v-model="listloading_dt"
+          :finished="listfinished_dt"
+          :finished-text="finished_text_dt"
+          :error.sync="vanerror"
+          error-text="请求失败，点击重新加载"
+          :offset="10"
+          @load="homelistxc"
+        >
+          <div
+            @click="goRadioDetails(item)"
+            :class="{'lis' : true,'radiobg_0' : item.liveCoverUrl == 'radiobg_0','radiobg_1' : item.liveCoverUrl == 'radiobg_1','radiobg_2' : item.liveCoverUrl == 'radiobg_2'}"
+            v-for="(item,index) in homeradiolistmsg"
+            :key="index"
+            :id="item.id"
+          >
+            <div class="livecover">
+              <img :src="item.liveCoverUrl?item.liveCoverUrl:''" alt="" />
+            </div>
+            <div class="livecon">
+              <div class="im"> 
+                <img :src="item.headPortrait?item.headPortrait:default_img_small" alt="" />
+              </div>
+              <div class="details">
+                  <span class="t">{{item.liveTitle}}</span>  
+                  <div class="data">
+                      <span class="ic" v-if="item.tagName == '情感'" ><img src="@/assets/imgs/living/radiodetails/qg.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '闲聊'" ><img src="@/assets/imgs/living/radiodetails/xl.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '音乐'" ><img src="@/assets/imgs/living/radiodetails/yy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '声音恋人'" ><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '旅行'" ><img src="@/assets/imgs/living/radiodetails/lx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '交友'" ><img src="@/assets/imgs/living/radiodetails/jy.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '脱口秀'" ><img src="@/assets/imgs/living/radiodetails/tkx.png" alt="抓周" /></span>
+                      <span class="ic" v-if="item.tagName == '私房话'" ><img src="@/assets/imgs/living/radiodetails/sfh.png" alt="抓周" /></span>
+                      <span class="num">{{item.realCount}}人在线</span> 
+                  </div>
+                </div>
+                <span class="hot" v-if="item.realCount > 10"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+              </div>
+            </div>
+        </van-list>
+
+         <!-- <ul>
+           <li class="fense">
+              <div class="im"> 
+                <!-- <img :src="item.cover?item.cover:default_img_small" alt="" /> 
+                <img src="@/assets/imgs/living/jj2.png" alt="抓周" />
+              </div>
+              <div class="details">
+                <span class="t">钟情于你</span>  
+                <div class="data">
+                    <span class="ic"><img src="@/assets/imgs/living/radiodetails/sylr.png" alt="抓周" /></span>
+                    <span class="num">9人在线</span> 
+                </div>
+              </div>
+              <span class="hot"><img src="@/assets/imgs/living/radiodetails/hm.png" alt="抓周" /></span>
+           </li>
+         </ul> -->
+      </div> 
+    </div>
     <!-- 新品列表数据展示 --> 
-     <div class="index_list_recommend wang" v-show="list_content_show_type===2">
+     <div class="index_list_recommend wang" v-show="list_content_show_type===4">
         <div class="nav_type">
           <!-- 分类tab -->
           <ul>
@@ -255,7 +376,7 @@
     </div>  
 
     <!-- 投资金列表start -->
-    <div class="rongtongjin-ad" v-if="list_content_show_type===3">
+    <div class="rongtongjin-ad" v-if="list_content_show_type===4">
         <span class="ad-tit">
           <img src="@/assets/imgs/shop/rongtongjin-tit.png" alt="">
         </span>
@@ -281,7 +402,7 @@
           <img src="@/assets/imgs/shop/rongtongjin-jin.png" alt="">
         </span>
     </div>
-    <div class="index_list_recommend tzj" v-show="list_content_show_type===3">
+    <div class="index_list_recommend tzj" v-show="list_content_show_type===4">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'tzj-list' : true,'tzj-big-list' : change_big_small_flag_tzj===0}">
@@ -404,7 +525,9 @@ export default {
       ercommend: [], //每日推荐
       everday:'',
       homelistmassage: [], //推荐列表
+      homeradiolistmsg : [],//电台列表
       homelistzbmsg: [], //直播列表
+      homelistxcmsg : [], //秀场列表
       homelistxpmsg: [], //新品列表
       homelisttzjmsg: [], //投资金列表
       titlistmassage: [
@@ -413,19 +536,34 @@ export default {
           tabindex: 0  //推荐
         },
         {
-          category_name:"直播",
+          category_name:"秀物",
           tabindex: 1  //直播
         },
         {
+          category_name:"娱乐",
+          tabindex: 2  //直播
+        },
+        {
+          category_name:"电台",
+          tabindex: 3  //直播
+        },
+        
+        {
           category_name:"商城",
-          tabindex: 2  //推荐
+          tabindex: 4  //推荐
         },
         {
           category_name:"投资金",
-          tabindex: 3  //推荐
+          tabindex: 5  //推荐
         }
       ], //头部导航数据
       zhibotitletype : [], //直播分类导航
+      radiotitletype : [ //电台分类导航
+        {
+          name:"热门",
+          id: ''  //推荐
+        }
+      ], 
       xinpintitletype : [],   //新品分类导航
       xinpintitsort : [ //新品三级导航排序
         {
@@ -447,6 +585,8 @@ export default {
       goldpricetimer : null,
       nextpage: "",
       nextPage_zb :"",
+      nextPage_dt : 0,
+      nextPage_xc : 1,
       nextPage_xp :"",
       nextpage_tzj : 1,
       number: 0,
@@ -454,16 +594,23 @@ export default {
       listfinished: false,
       listfinished_zb: false,
       listloading_zb: false,
+      listfinished_dt: false,
+      listloading_dt: false,
+      listfinished_xc: false,
+      listloading_xc: false,
       listfinished_xp: false,
       listloading_xp: false,
       listfinished_tzj: false,
       listloading_tzj: false,
       finished_text : '',
       finished_text_zb : '',
+      finished_text_dt : '亲，没有更多啦哟~',
+      finished_text_xc : '亲，没有更多啦哟~',
       finished_text_xp : '',
       finished_text_tzj : '',
       vanerror: false,
       vanerror_zb: false,
+      vanerror_xc: false,
       vanerror_xp: false,
       vanerror_tzj: false,
       gold_type: 101,
@@ -476,6 +623,7 @@ export default {
       list_content_show_type : 0,  // 1为推荐列表显示 2为直播列表显示 3为新品列表显示... (后台搞了好多个接口的原因)
       obj_option : {},   //点击导航“直播” 传入请求直播列表的类型参数
       tab_active : 0, //直播列表下的分类查询选种项  热播中 每日必看...
+      tab_radio_active : 0, //电台列表二级导航选中项
       tab_active_xp : 0, //新品下的分类查询选种项
       titesortactive : 0, //新品三级导选中项
       price_area_step : [
@@ -503,11 +651,13 @@ export default {
       price_area_step_active : '', //价格区间选定当前
       price_up : false,
       price_down : false,
+      /*点击导航“新品” 传入请求直播列表的类型参数 */
       obj_option_xp :{
         priceSort: 0,
         price_area : '1000以下'
-      }, //点击导航“新品” 传入请求直播列表的类型参数
-      filtershow_flag : false,
+      }, 
+      radio_secnav_active_id : 0, //电台二级搜索卖盘ID
+      filtershow_flag : false, //筛选展示价格区间弹层条件
       change_big_small_flag_tj : 1, //推荐切换大小图外层class条件
       change_big_small_flag_zb : 1, //直播切换大小图外层class条件
       change_big_small_flag_xp : 1, //新品切换大小图外层class条件
@@ -532,7 +682,6 @@ export default {
     //刷新列表
     if(this.$route.query.tab != undefined){
       let tab = Number(this.$route.query.tab);
-      console.log('1997');
       that.titleclick(tab,false);
     }
     //新人专区推广弹层-游客模式直接弹，登录后新人弹 否则不弹
@@ -607,19 +756,65 @@ export default {
         }
       });
     },
+    /*跳转到秀场直播详情*/
+    gotoxiuchangdetails(paramsdata) {
+      let that = this;
+      if(!that.iflogin()){return;}
+      // setsessionStorage("livinglidata-xiu", paramsdata);
+      if(paramsdata.state==1){
+        this.$router.push({
+          path: "/living/xiuchangdetails",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
+          }
+        });
+      }else if(paramsdata.state==0){
+        this.$router.push({
+          path: "/living/livingxiureplay",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.id
+          }
+        });
+      }  
+    },
+     /*跳转到电台直播详情*/
+    goRadioDetails(paramsdata) {
+      let that = this;
+      if(!that.iflogin()){return;}
+      // setsessionStorage("livinglidata-xiu", paramsdata);
+      // if(paramsdata.state==1){
+        this.$router.push({
+          path: "/living/radiodetails",
+          query : {
+            tab : that.list_content_show_type,
+            liveId : paramsdata.liveId
+          }
+        });
+      // }else if(paramsdata.state==0){
+      //   this.$router.push({
+      //     path: "/living/livingxiureplay",
+      //     query : {
+      //       tab : that.list_content_show_type,
+      //       liveId : paramsdata.id
+      //     }
+      //   });
+      // }  
+    },
     // 跳转到直播详情页
     gotolivingdetails(paramsdata) {
       let that = this;
       if(!that.iflogin()){return;}
       setsessionStorage("livinglidata", paramsdata);
-      if(paramsdata.state==0){
+      if(paramsdata.state==1){
         this.$router.push({
           path: "/living/livingdetails",
           query : {
             tab : that.list_content_show_type
           }
         });
-      }else if(paramsdata.state==1){
+      }else if(paramsdata.state==0){
         this.$router.push({
           path: "/living/livingreplay",
           query : {
@@ -635,7 +830,6 @@ export default {
        //存一个到时返回首页用的flag
       let returnflag = 1;
       setsessionStorage("returnflag",returnflag);
-
       that.$router.push({
         name: "productdetails",
         params: {
@@ -748,22 +942,38 @@ export default {
           that.vanerror = true;
         });
     },
+    /*清除各列表缓存 */
     clearsessionStoragelist(index){
       let that = this;
       switch(index){
         case 0:
-          window.sessionStorage.removeItem('homelisttjstorerange');
+          window.sessionStorage.removeItem('homelistxcstorerange');
           break;
         case 1:
           window.sessionStorage.removeItem('homelistzbstorerange');
           break;
         case 2:
+          window.sessionStorage.removeItem('homelistxcstorerange');
+          break;    
+        case 3:
+          // window.sessionStorage.removeItem('homelistxcstorerange');
+          break;   
+        case 4:
           window.sessionStorage.removeItem('homelistxpstorerange');
           break;
-        case 3:
+        case 5:
           window.sessionStorage.removeItem('homelisttzjstorerange');  
           break;
       }  
+    },
+    /*电台列表二级导航点击*/
+    radioSecNavTab(item,index){
+      let that = this;
+      that.tab_radio_active = index;
+      that.radio_secnav_active_id = item.id;
+      that.nextPage_dt = 0;
+      that.homeradiolistmsg = [];
+      that.homelistradio();
     },
     // 头部导航点击事件
     titleclick(tabindex,status) {
@@ -780,14 +990,20 @@ export default {
       
       this.nextpage= '';
       that.nextPage_zb = '';
+      that.nextPage_xc = 1;
       that.nextPage_xp = '';
       that.nextpage_tzj = '1';
+      that.nextPage_dt = 0;
       that.homelistmassage = []; //推荐列表
       that.homelistzbmsg = []; //直播列表
+      that.homelistxcmsg = []; //秀场列表
       that.homelistxpmsg =[]; //新品列表
       that.homelisttzjmsg =[]; //投资金列表
+      that.homeradiolistmsg = []; //电台列表
       that.finished_text = '';
       that.finished_text_zb = '';
+      that.finished_text_dt = '';
+      that.finished_text_xc = '';
       that.finished_text_xp = '';
       that.finished_text_tzj = '';
       that.hasmorepage = 1;
@@ -808,40 +1024,61 @@ export default {
       switch(tabindex){
         case 0 :
           //推荐列表
-           console.log(1999);
-          if(getsessionStorage('homelisttjstorerange')){
-            that.homelistmassage = getsessionStorage('homelisttjstorerange');
-            this.nextpage = getsessionStorage('homelisttjstorerange_page');
-            // that.listfinished = false;
+          if(getsessionStorage('homelistxcstorerange')){
+            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
+            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
           }else{
-             console.log(2000);
-            that.homelisttj();
+            that.homelistxc();
           }
           break
         case 1 :
         //直播列表 
-        if(getsessionStorage('homelistzbstorerange')){
-          that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
-          that.nextPage_zb = getsessionStorage('homelistzbstorerange_page');
-        }else{
+          if(getsessionStorage('homelistzbstorerange')){
+            that.homelistzbmsg = getsessionStorage('homelistzbstorerange');
+            console.log('that.homelistzbmsg');
+            console.log(that.homelistzbmsg);
+            that.nextPage_zb = getsessionStorage('homelistzbstorerange_page');
+          }else{
+            that.homelistzb();
+            /*抓周列表修改成秀场列表接口type=1之后 下面的分类函数弃用*/
+            // that.api.homedetails
+            // .homelistfenleizb({})
+            // .then(res => {
+            //   if(!res.data.code)return;
+            //   if(res.data.code == 1){
+            //     if(res.data.data.length > 0){
+            //       that.zhibotitletype = res.data.data;
+            //       that.obj_option.id = that.zhibotitletype[0].id;
+            //       that.obj_option.categoryName = that.zhibotitletype[0].name;
+            //     }else{
+            //       this.$toast("直播分类暂无数据");
+            //     }   
+            //   }
+            // })
+          }
+        break 
+        case 2 :
+          //秀场列表
+          if(getsessionStorage('homelistxcstorerange')){
+            that.homelistxcmsg = getsessionStorage('homelistxcstorerange');
+            that.nextPage_xc = getsessionStorage('homelistxcstorerange_page');
+          }else{
+            that.homelistxc();
+          }
+          break 
+        case 3 :
           that.api.homedetails
-          .homelistfenleizb({})
-          .then(res => {
-            if(!res.data.code)return;
-            if(res.data.code == 1){
-              if(res.data.data.length > 0){
-                that.zhibotitletype = res.data.data;
-                that.obj_option.id = that.zhibotitletype[0].id;
-                that.obj_option.categoryName = that.zhibotitletype[0].name;
-                that.homelistzb();
-              }else{
-                this.$toast("直播分类暂无数据");
-              }   
-            }
-          })
-        }
-        break  
-        case 2 :  
+            .radioLabelList({
+              uid : that.$store.state.user.userid
+            })
+            .then(res => {
+              that.radiotitletype = [{name:"热门",id: ''}];
+              that.radiotitletype = that.radiotitletype.concat(res.data.data);
+              that.radio_secnav_active_id = that.radiotitletype[0].id;
+              that.homelistradio();
+            })
+        break   
+        case 4 :  
         //新品列表
         if(getsessionStorage('homelistxpstorerange')){
           that.homelistxpmsg = getsessionStorage('homelistxpstorerange');
@@ -865,7 +1102,7 @@ export default {
           })
         }
         break
-        case 3 :
+        case 5 :
         //投资金列表 
         clearInterval(that.goldpricetimer);  
         that.goldpricetimer = setInterval(that.goldmass,5000);
@@ -954,56 +1191,185 @@ export default {
         })
     },
     //直播列表
-    homelistzb(){
+    homelistzb() {
       let that = this;
+      // that.listloading = true;
       that.$toast.loading({
-          message: "加载中...",
-          forbidClick: true,
-          duration: 200000
-        });  
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
       that.api.homedetails
-      .homelistzbpost({
-        id : that.obj_option.id,
-        categoryName : that.obj_option.categoryName,
-        nextpage : that.nextPage_zb
-      })
-      .then(res => {
-        that.$toast.clear();
-        that.listloading_zb = false;
-        if(res.data.code == 1){
-          if (res.data.data.list && res.data.data.list.length > 0) {
-            that.nodatashow = false;
-            that.hasmorepage = 2;
-            res.data.data.list.forEach(e => {
-              that.homelistzbmsg.push(e);
-            });
-            //缓存数据处理
-            let homelistzbstorerange = that.homelistzbmsg;
-            setsessionStorage('homelistzbstorerange',homelistzbstorerange);
-          } 
-
-          that.nextPage_zb = res.data.data.nextpage;
-          setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
-          if (that.nextPage_zb != "" && that.nextPage_zb !== undefined) {
-            that.listfinished_zb = false;
-            that.listloading_zb = false;
-          } else {
-            if(that.hasmorepage === 1){
-              that.nodatashow = true;
-            }else{
-              that.listloading_zb = false;
-              that.finished_text_zb = '亲~已经到底了';
-            }
-            that.listfinished_zb = true;
-          }
-          that.$forceUpdate();
+        .homelistxcpost({
+          type : 1,
+          page : that.nextPage_zb,
+          pageSize : 10
+        })
+        .then(res => {
+          console.log('res');
+          console.log(res);
           that.$toast.clear();
-        }
-        else{
-          that.$toast(res.data.info);
-          that.listfinished_zb = true;
-        }
-      })
+          that.listloading_zb = false;
+          if(res.data.code == 1){
+            that.nextPage_zb = res.data.data.page;
+             if(that.nextPage_zb  == res.data.data.totalPage && that.homelistxcmsg != '') {
+                that.listfinished_zb  = true;
+                that.listloading_zb  = false;
+                that.finished_text_zb  = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistzbstorerange_page',that.nextPage_zb);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homelistzbmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistzbstorerange = that.homelistzbmsg;
+              setsessionStorage('homelistzbstorerange',homelistzbstorerange);
+            } 
+
+            if(that.nextPage_zb   != res.data.data.totalPage && res.data.data.totalPage != 0) {
+              that.listfinished_zb  = false;
+              that.listloading_zb  = false;
+              that.nextPage_zb  ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_zb  = false;
+                that.finished_text_zb  = '亲~已经到底了';
+              }
+              that.listfinished_zb  = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_zb  = true;
+          }
+        })
+    },
+    /*电台列表homeradiolistmsg */
+    homelistradio() {
+      let that = this;
+      // that.listloading = true;
+      that.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
+      that.api.homedetails
+        .radioliveList({
+          tag :  that.radio_secnav_active_id,
+          page : that.nextPage_dt,
+          pageSize : 10
+        })
+        .then(res => {
+          that.$toast.clear();
+          that.listloading_dt = false;
+          if(res.data.code == 1){
+            that.nextPage_dt = res.data.data.page;
+             if(that.nextPage_dt  == res.data.data.totalPage && that.homeradiolistmsg != '') {
+                that.listfinished_dt = true;
+                that.listloading_dt = false;
+                that.finished_text_dt = '亲~已经到底了';
+                alert(1)
+                return;
+             }
+            setsessionStorage('homelistdtstorerange_page',that.nextPage_dt);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homeradiolistmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistdtstorerange = that.homeradiolistmsg;
+              setsessionStorage('homelistdtstorerange',homelistdtstorerange);
+            } 
+
+            if(that.nextPage_dt  != res.data.data.totalPage && res.data.data.totalPage != 0) {
+              that.listfinished_dt = false;
+              that.listloading_dt = false;
+              that.nextPage_dt ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_dt = false;
+                that.listfinished_dt = true;
+                that.finished_text_dt = '亲~已经到底了';
+              }
+              that.listfinished_dt = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_dt = true;
+          }
+        })
+    },
+    //秀场列表
+    homelistxc() {
+      let that = this;
+      // that.listloading = true;
+      that.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        duration: 200000
+      }); 
+      that.api.homedetails
+        .homelistxcpost({
+          type : 2,
+          page : that.nextPage_xc,
+          pageSize : 10
+        })
+        .then(res => {
+          that.$toast.clear();
+          that.listloading_xc = false;
+          if(res.data.code == 1){
+            that.nextPage_xc = res.data.data.page;
+             if(that.nextPage_xc  == res.data.data.totalPage && that.homelistxcmsg != '') {
+                that.listfinished_xc = true;
+                that.listloading_xc = false;
+                that.finished_text_xc = '亲~已经到底了';
+                return;
+             }
+            setsessionStorage('homelistxcstorerange_page',that.nextPage_xc);
+            if (res.data.data.list && res.data.data.list.length > 0) {
+              that.nodatashow = false;
+              that.hasmorepage = 2;
+              res.data.data.list.forEach(e => {
+                that.homelistxcmsg.push(e);
+              });
+              //缓存数据处理
+              let homelistxcstorerange = that.homelistxcmsg;
+              setsessionStorage('homelistxcstorerange',homelistxcstorerange);
+            } 
+
+            if(that.nextPage_xc  != res.data.data.totalPage && res.data.data.totalPage != 0) {
+              that.listfinished_xc = false;
+              that.listloading_xc = false;
+              that.nextPage_xc ++
+            }else {
+              if(that.hasmorepage === 1){
+                that.nodatashow = true;
+              }else{
+                that.listloading_xc = false;
+                that.finished_text_xc = '亲~已经到底了';
+              }
+              that.listfinished_xc = true;
+            }
+            that.$forceUpdate();
+            that.$toast.clear();
+          }else{
+            that.$toast(res.data.info);
+            that.listfinished_xc = true;
+          }
+        })
     },
     //首页新品列表
     homelistxp(){
@@ -1155,7 +1521,7 @@ export default {
       }
 
     },
-    //首页新品--点击晒选展示价格区间
+    //首页新品--点击筛选展示价格区间
     filtershow(){
       let that = this;
       that.filtershow_flag = true;
@@ -1338,7 +1704,7 @@ export default {
 }
 
 #shopwrap .van-tab {
-  font-size: .34rem;
+  font-size: .26rem;
   font-family:PingFang SC;
   font-weight:500;
   color:rgba(31,31,31,1);
@@ -1355,7 +1721,7 @@ export default {
 }
 #shopwrap .van-tab--active.van-tab {
   color: rgba(51, 51, 51, 1);
-  font-size: .48rem;
+  font-size: .36rem;
   font-weight: bold;
 }
 
@@ -1377,6 +1743,12 @@ export default {
   margin: 0 auto;
   line-height: 3em;
   width: 100%;
+}
+#shopwrap .nodata .discountshopnodata{
+  padding-bottom : 1rem;
+}  
+#shopwrap .nodata .discountshopnodata .nodataimg{
+  padding-top: 0;
 }
 
 </style>

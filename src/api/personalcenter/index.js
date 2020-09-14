@@ -1,7 +1,7 @@
 import base from '../base'; // 导入接口域名列表
-import axios from './../../../node_modules/zlapi/http.js'; // 导入http中创建的axios实例
-// import axios2 from './../../../node_modules/zlapi/http.js_postform'; // 导入http中创建的axios实例
-import axios2 from "./../../../node_modules/zlapi/http_postform.js";
+import axios from '@/request/http.js'; // 导入http中创建的axios实例
+// import axios2 from '@/request/http.js_postform'; // 导入http中创建的axios实例
+import axios2 from "@/request/http_postform.js";
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const personalcenter = {
@@ -41,9 +41,21 @@ const personalcenter = {
     getinfouser(params) {
         return axios.post(`${base.yxf}/wapi/v1/member/getInfo`, qs.stringify(params));
     },
+    // 根据id获取用户信息新接口
+    getinfouser_new(params) {
+        return axios.get(`${base.yxf2}/v1/user/info?userId=${params.userId}`);
+    },
     //更新用户信息
-    updateinfouser(params) {
-        return axios.post(`${base.yxf}/wapi/v1/user/update`, qs.stringify(params));
+    // updateinfouser(params) {
+    //     return axios.post(`${base.yxf}/wapi/v1/user/update`, qs.stringify(params));
+    // },
+    //更新用户信息新接口
+    updateinfouser_new(params) {
+        return axios.put(`${base.yxf2}/v1/user/update/info`, qs.stringify(params));
+    },
+    //更新用户头像
+    updateHeadPortrait(params) {
+        return axios.put(`${base.yxf2}/v1/user/update/headPortrait`, qs.stringify(params));
     },
     //确认收货
     affirmGoods(params) {
@@ -114,6 +126,38 @@ const personalcenter = {
     getaftersale(params) {
         return axios.post(`${base.yxf}/wapi/v1/order/pageReturnOrders`, qs.stringify(params));
     },
+    //获取充值列表-秀场
+    toUpWallet(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/topUp/list?operatingOsType=${params.operatingOsType}&appType=${params.appType}&userId=${params.userId}`);
+    },
+    //获取用户余额-秀场
+    toUpWwalletBalanceallet(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/balance?userId=${params.userId}`);
+    },
+    //获取账户信息及收益信息-金豆/秀豆
+    userWalletInfo(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/info?userId=${params.userId}`);
+    },
+    //获取等级配置信息
+    userLevelConfig(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/config?level=${params.level}`);
+    },
+    //用户等级权益
+    userLevelEquities(params) {
+        return axios.get(`${base.yxf2}/v1/user/level/equities?userId=${params.userId}`);
+    },
+    //账单类型
+    walletBillType(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/bill/type`);
+    },
+    //秀场账单列表
+    userWalletBill(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
+    },
+    //秀场账单列表提现及豆转币
+    userWalletExchangeOrWithdrawalBill(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/exchange/or/withdrawal/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
+    }
 }
 
 export default personalcenter;

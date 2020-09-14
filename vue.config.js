@@ -40,14 +40,24 @@ module.exports = {
             //     }
             // },
             '/devapi': {
-                // target: 'http://192.168.1.75:8080', //刘哥测试地址
-                // target: 'http://47.103.198.168', //测试服
-                target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222
-                // target: 'https://shop.zhulihr.com', //生产222
+                // target: 'http://47.103.198.168', //抓周 测试服-A
+                target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222 -A
+                // target: 'https://shop.zhulihr.com', //生产222 -A
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
                     '^/devapi': ''
+                }
+            },
+            '/xiuchangdevapi2': {
+                // target: 'http://47.100.12.152:8100', //新架构 测试服
+                // target: 'http://xc.testmapi.zhulihr.cn', //新架构 测试服-A
+                target: 'https://xc.premapi.zhulihr.cn', //新架构 灰度-A
+                // target: 'https://xc.mobile.zhulihr.cn', //生产222-A
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/xiuchangdevapi2': ''
                 }
             }
         }
@@ -59,5 +69,5 @@ module.exports = {
             // new BundleAnalyzerPlugin(), //webpack-bundle-analyzer 分析打包体积
         ]
     },
-    productionSourceMap: process.env.VUE_APP_ENV != 'production'
+    productionSourceMap: process.env.VUE_APP_ENV != 'production' || process.env.VUE_APP_ENV != 'gray'
 }

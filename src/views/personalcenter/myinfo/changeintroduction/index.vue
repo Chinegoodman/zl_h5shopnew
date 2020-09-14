@@ -3,7 +3,7 @@
     <div class="header">
       <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
       <span>我的介绍</span>
-      <div class="save" @click="changeintroduction">保存</div>  
+      <div :class="{'save' : true,'saved': btnstates}" @click="changeintroduction">保存</div>  
     </div>
     <div class="w-introduction">
         <textarea v-model="introduction" maxlength="200"></textarea>
@@ -20,13 +20,22 @@ import {
 export default {
     data(){
         return{
-            introduction : ''
+            introduction : '',
+            btnstates : false
         }
     },
     mounted(){
         var that = this;
         that.introduction = localStorage.getItem("introduction");
-        console.log(that.introduction);
+    },
+    watch : {
+        introduction(newName){
+            if(newName != '' && newName != undefined){
+                this.btnstates = true;
+            }else{
+                this.btnstates = false;
+            }
+        }
     },
     methods:{
         //返回我的资料首页
@@ -37,8 +46,8 @@ export default {
         changeintroduction(){
             let that = this;
             that.api.personalcenter
-            .updateinfouser({
-                id : that.$store.state.user.userid,
+            .updateinfouser_new({
+                userId : that.$store.state.user.userid,
                 introduction :  that.introduction
             }).then(res => {
                 if(res.data.code === 1){
@@ -94,6 +103,10 @@ export default {
             top: 50%;
             right : .2rem;
             transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .saved{
+            color:rgba(255,189,4,1);
         }
     }
     .w-introduction{

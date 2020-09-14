@@ -3,7 +3,7 @@
  */
 
 import base from '../base'; // 导入接口域名列表
-import axios from './../../../node_modules/zlapi/http.js'; // 导入http中创建的axios实例
+import axios from '@/request/http.js'; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const living = {
@@ -26,7 +26,7 @@ const living = {
         return axios.post(`${base.yxf}/wapi/v1/attention/user/delete`, qs.stringify(params));
     },
 
-    // 直播间商品列表
+    // 直播间商品列表-抓周直播
     goodsList(params) {
         return axios.post(`${base.yxf}/wapi/v1/goods/living/goodsList`, qs.stringify(params));
     },
@@ -63,7 +63,6 @@ const living = {
     getLivingPraisePoint(params) {
         return axios.post(`${base.yxf}/wapi/v1/shop/praisePoint`, qs.stringify(params));
     }
-
 }
 
 export default living;

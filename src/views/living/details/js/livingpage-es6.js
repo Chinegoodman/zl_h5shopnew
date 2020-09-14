@@ -55,6 +55,72 @@ export default {
             conversationID: "", //会话ID
             messageInfo: "收到的消息", //接受消息文本
             messageList: [], //群聊内容    ({isvip,name,msgtxt});
+            giftmsgone: {
+                chatType: "",
+                conversationId: "",
+                giftContent: {
+                    giftCount: "",
+                    giftIcon: "",
+                    giftId: "",
+                    giftName: "",
+                    giftType: "",
+                    giftUrl: "",
+                    receiveId: "",
+                    receiveName: "",
+                    msgType: "",
+                },
+                sendUserInfo: {
+                    face_url: "",
+                    id: "",
+                    name: ""
+                }
+            }, //礼物通道1内容
+            giftmsgtwo: {
+                chatType: "",
+                conversationId: "",
+                giftContent: {
+                    giftCount: "",
+                    giftIcon: "",
+                    giftId: "",
+                    giftName: "",
+                    giftType: "",
+                    giftUrl: "",
+                    receiveId: "",
+                    receiveName: "",
+                    msgType: "",
+                },
+                sendUserInfo: {
+                    face_url: "",
+                    id: "",
+                    name: ""
+                }
+            }, //礼物通道2内容
+            time_state: true, //是否完成数据全程走完的标致 控制礼物滑出占用轨道
+            time_state_ii: true, //滑到2是否完成标致 控制礼物滑出占用轨道
+            liStyleGift_active_one: false, //礼物通道1开始动画class条件
+            liStyleNoneone: false, //礼物通道1停止动画class条件
+            liStyleGift_active_tow: false, //礼物通道2开始动画class条件
+            liStyleNonetow: false, //礼物通道2停止动画class条件
+            userid_old: '', //会话ID
+            userid_old_ii: '', //会话ID
+            giftId_old: '', //存礼物ID01
+            giftId_old_ii: '', //存礼物ID02
+            gift_timer_one: null, //礼物定时器通道01
+            gift_timer_two: null, //礼物定时器通道02
+            samegiftflag: 0, //同一用户同一礼物 1为同一用户 0反之
+            dataStore: [], //队列里的数组
+            giftcountall_one: 0,
+            giftcountall_two: 0,
+            giftNumFlag01: false, //礼物数字flag 01
+            giftNumFlag02: false, //礼物数字flag 02
+            manygift_timer_one: null,
+            manygift_timer_two: null,
+            num_weishu: 1, //最小为一位数
+            idCount: 1000,
+            idGiftCount: 1000,
+            anim_box_id: '',
+            gift_icon_id: '',
+
             nextReqMessageID: "", //用于续拉，分页续拉时需传入该字段。
             conversationList: [], // 会话列表，用该列表覆盖原有的会话列表,
             isActive: 0, //默认选中第一个,
@@ -78,6 +144,7 @@ export default {
             anima_timer: null, //点赞定时器    
             isFirst: 1
                 //点赞====================end
+
         };
     },
     computed: {
@@ -141,7 +208,7 @@ export default {
     },
     mounted() {
         this.livinglidata = getsessionStorage("livinglidata");
-        console.log('this.livinglidata');
+        console.log('this.livinglidata7');
         console.log(this.livinglidata);
 
 
@@ -163,6 +230,9 @@ export default {
         let that = this;
         // console.log(that.livinglidata.streamAddrHls);
         // console.log(checkdevice());
+        // that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
+        console.log('that.livinglidata.streamAddrHls888');
+        console.log(that.livinglidata.streamAddrHls);
 
         //轮询直播观看人数与点赞数
         that.getLivingPersonAndpraisePoint();
@@ -236,7 +306,7 @@ export default {
                 closeVideoClick: true,
                 closeVideoDblclick: true,
                 closeVideoTouch: true,
-
+                preloadTime: 5, //预加载时长(秒)	30
                 autoplay: true,
                 // autoplayMuted: true,
                 isLive: true,
@@ -301,10 +371,14 @@ export default {
         // 注册 COS SDK 插件
         this.tim.registerPlugin({ "cos-js-sdk": COS });
         this.loginfn();
+
         // TIM相关=================================结束
 
+        //点赞
         that.obj_canvas = document.getElementById("bubble");
         that.obj_ctx = that.obj_canvas.getContext("2d");
+
+
 
     },
     methods: {
@@ -599,7 +673,7 @@ export default {
                 return;
             }
             let promiselogin = this.tim.login({
-                userID: that.$store.state.user.userid,
+                userID: that.$store.state.user.userid.toString(),
                 userSig: that.$store.state.user.sig
                     // "eJxFkF1PgzAUhv8LtzPS0pbBkl2wreoM82sa2RUp0LmTASWloNP434fNiJfneXJy3vf8OK-x9lo0DRSpMCnRhTNzkHNlsfxqQMtU7I3UA8aMMQ*h0fZSt6DqQXgIM*wRhP4lFLI2sAe7SOiFtvAxjBv*vFzfZA*h*333BhGfLuikFEmmJiEXu-jUdisXynaZHMKsY7GKYFFy6G9fnhR5rz29eXT1Z5ms3VUeVXTrHo6Bj-t7jnd51Ufz*XisOKa22F90OkTzA*SP*QxU0laaMsoYCfCFizxXXW1Sc2qk-cTvGbkGVU0_"
             });
@@ -742,7 +816,8 @@ export default {
                     return;
                 }
                 that.IMtanchuang_currentdata = msgdata;
-                // console.log(event);
+                console.log('msgdata');
+                console.log(msgdata);
                 // 获取当前群消息
                 if (msgdata.conversationId == that.livinglidata.gid) {
                     // console.log(msgdata.msgContent);
@@ -754,18 +829,23 @@ export default {
                     if (msgdata.msgType == "text") {
                         // 收到用户发送的消息
                         let msgtxt = msgdata.msgContent.text;
-                        let name = msgdata.sendUserInfo.name;
+                        let comename = msgdata.sendUserInfo.name;
                         let isvip = msgdata.sendUserInfo.isVip;
                         // console.log(msgdata.sendUserInfo);
                         talkinguid = msgdata.sendUserInfo.id;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        if (that.livinglidata.uid == msgdata.sendUserInfo.id) {
+                            //主播isvip为-2
+                            let isvip = -2;
+                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        } else {
+                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                        }
                     } else if (msgdata.msgType == "hello") {
                         // 收到用户进入群聊时的 系统消息
                         let comename = msgdata.sendUserInfo.name;
-                        let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let name = "系统公告";
+                        let msgtxt = `来了`;
                         let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "endLive") {
                         // 收到 直播间结束 关闭的消息
                         that.livingendstatus = false;
@@ -786,72 +866,73 @@ export default {
                         // let msgtxt = `踢人了`;
                         let msgtxt = '你被踢出了直播间！';
                         if (that.receivemsgdata.msgContent.text == that.$store.state.user.userid) {
-                            let name = "系统公告";
-                            // let isvip = msgdata.sendUserInfo.isVip;
+                            let comename = "系统公告";
                             let isvip = -1;
-                            that.messageList.push({ isvip: isvip, name, msgtxt, talkinguid });
+                            that.messageList.push({ comename, isvip: isvip, msgtxt, talkinguid });
                             that.$router.go(-1);
                         }
                     } else if (msgdata.msgType == "like") {
                         // 收到 点赞消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `点赞消息`;
-                        let name = "系统公告";
+                        let msgtxt = `给主播点了赞`;
+                        let comename = msgdata.sendUserInfo.name;
+                        // let name = "系统公告";
                         let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "announcement") {
                         // 收到 公告消息 的消息
-                        // let comename= msgdata.sendUserInfo.name;
-                        // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `公告消息`;
-                        let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        let msgtxt = that.receivemsgdata.msgContent.text;
+                        let name = '系统公告';
+                        let comename = `${name}：${msgdata.sendUserInfo.name}`;
+                        let isvip = -1;
+                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "shopCat") {
                         // 收到 用户把商品加入购物车消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `用户把商品加入购物车消息`;
-                        let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        let name = '系统公告';
+                        let comename = `${name}：${msgdata.sendUserInfo.name}`;
+                        let msgtxt = `把商品加入购物车`;
+                        let isvip = -1;
+                        that.messageList.push({ comename, isvip, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_buySuccess") {
                         // 收到 用户成功购买商品消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `用户成功购买商品消息`;
-                        let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        let name = '系统公告';
+                        let comename = `${name}：${msgdata.sendUserInfo.name}`;
+                        let msgtxt = `成功购买商品`;
+                        let isvip = -1;
+                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_seeGoods") {
                         // 收到 用户查看了商品详情消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `用户查看了商品详情消息`;
-                        let name = "系统公告";
-                        let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        let name = '系统公告';
+                        let comename = `${name}：${msgdata.sendUserInfo.name}`;
+                        let msgtxt = `查看了商品详情`;
+                        let isvip = -1;
+                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_userFollow") {
                         // 收到 用户关注了主播消息 的消息
-                        // let comename= msgdata.sendUserInfo.name;
+                        let name = '系统公告';
+                        let comename = `${name}：${msgdata.sendUserInfo.name}`;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        let msgtxt = `用户关注了主播消息`;
-                        let name = "系统公告";
-                        let isvip = 0;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        let msgtxt = `关注了主播`;
+                        let isvip = -1;
+                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
                     } else if (msgdata.msgType == "system_sendPayOrder") {
                         // 收到 主播给用户发送创建订单成功的消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-
                         if (msgcontent.receiveId == that.$store.state.user.userid) {
                             return;
                         } else {
                             let msgtxt = that.receivemsgdata.msgContent.text;
-                            let name = "系统公告sendPayOrder";
+                            let comename = "系统公告sendPayOrder";
                             let isvip = msgdata.sendUserInfo.isVip;
-                            that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                            that.messageList.push({ isvip, comename, msgtxt, talkinguid });
                         }
                     } else if (msgdata.msgType == "system_sendPayUrl") {
                         // 收到 主播给用户发送支付信息消息 的消息 //主播端生成商品后发送给用户时发送
@@ -879,18 +960,35 @@ export default {
                             })
                         } else {
                             let msgtxt = that.receivemsgdata.msgContent.text;
-                            let name = "系统公告sendPayUrl";
+                            let comename = "系统公告sendPayUrl";
                             let isvip = msgdata.sendUserInfo.isVip;
-                            that.messageList.push({ isvip, name, msgtxt, skuIDString, talkinguid });
+                            that.messageList.push({ isvip, comename, msgtxt, skuIDString, talkinguid });
                         }
                     } else if (msgdata.msgType == "system_buyGoods") {
                         // 收到 用户请求购买消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         let msgtxt = `用户请求购买消息`;
-                        let name = "系统公告";
+                        let comename = "系统公告";
                         let isvip = msgdata.sendUserInfo.isVip;
-                        that.messageList.push({ isvip, name, msgtxt, talkinguid });
+                        that.messageList.push({ isvip, comename, msgtxt, talkinguid });
+                    } else if (msgdata.msgType == "gift") {
+                        // console.log(11111111);
+                        // 收到 用户请求购买消息 的消息
+                        // let comename= msgdata.sendUserInfo.name;
+                        // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
+                        // let msgtxt = `用户请求购买消息`;
+                        let comename = msgdata.sendUserInfo.name;
+                        let giftdetail = `${msgdata.giftContent.giftName}x${msgdata.giftContent.giftCount}`;
+                        let msgtxt = `向主播送上礼物`;
+                        // let name = "系统公告";
+                        let isvip = msgdata.sendUserInfo.isVip;
+                        that.messageList.push({ isvip, comename, msgtxt, talkinguid, giftdetail });
+                        // that.giftmsgList.push(msgdata);
+                        // console.log('that.messageList');
+                        // console.log(that.messageList);
+                        console.log(msgdata);
+                        that.getgiftdata(msgdata);
                     }
                 }
                 setTimeout(() => {
@@ -952,6 +1050,189 @@ export default {
 
             // that.joinOrLeaveRoom(0); //加入群聊  后台的接口
         },
+        //礼物相关 start
+        getgiftdata(data) {
+            let that = this;
+            that.enqueue(data);
+            that.firtGo(0);
+        },
+        //队列数据中转
+        firtGo(l) {
+            let that = this;
+            var allgiftData = that.toArrayData();
+            if (!allgiftData.length) return;
+            for (var k = l, lens2 = allgiftData.length; k < lens2; k++) {
+                if (that.time_state || that.time_state_ii) {
+                    if (that.time_state) {
+                        that.createElegift(allgiftData[k]);
+                    } else {
+                        that.createElegift(allgiftData[k]);
+                    }
+                    //delete dui blie firt
+                    that.dequeue();
+                    // go second time
+                    var timer_inner = setInterval(function() {
+                        if (that.time_state || that.time_state_ii) {
+                            clearInterval(timer_inner);
+                            that.firtGo(k);
+                        }
+                    }, 300); //这个时间设置最好与 后面数字跳面的时间一致
+                    break;
+                }
+            }
+        },
+        createElegift: function(received_msg) {
+            let that = this;
+            let giftelmentone = that.$refs.giftelmentone;
+            let giftelmenttow = that.$refs.giftelmenttow;
+            // that.giftcountall = received_msg.giftContent.giftCount;
+
+            if (that.userid_old == received_msg.sendUserInfo.id && that.giftId_old == received_msg.giftContent.giftId) {
+                if (!that.time_state) {
+                    console.log(999);
+                    that.liStyleNoneone = false;
+                    clearTimeout(that.gift_timer_one);
+                    setTimeout(function() {
+                        that.giftNumFlag01 = true;
+                        that.giftcountall_one += received_msg.giftContent.giftCount;
+                        that.turntimer();
+                        setTimeout(function() {
+                            that.giftNumFlag01 = false;
+                        }, 400);
+                    }, 1000);
+                }
+                return;
+            }
+
+            if (that.userid_old_ii == received_msg.sendUserInfo.id && that.giftId_old_ii == received_msg.giftContent.giftId) {
+                if (!that.time_state_ii) {
+                    console.log(10001);
+                    that.liStyleNonetow = false;
+                    clearTimeout(that.gift_timer_two);
+                    setTimeout(function() {
+                        that.giftNumFlag02 = true;
+                        that.giftcountall_two += received_msg.giftContent.giftCount;
+                        that.turntimer_ii();
+                        setTimeout(function() {
+                            that.giftNumFlag02 = false;
+                        }, 400);
+                    }, 1000);
+                }
+                return;
+            }
+
+            //礼物展示通道 1
+            if (that.time_state) {
+                console.log(888888888);
+                that.giftcountall_one = received_msg.giftContent.giftCount;
+                that.time_state = false;
+                that.giftmsgone = received_msg;
+                that.liStyleGift_active_one = true;
+                that.userid_old = received_msg.sendUserInfo.id;
+                that.giftId_old = received_msg.giftContent.giftId;
+                that.gift_timer_one = setTimeout(function() {
+                    that.liStyleGift_active_one = false;
+                    that.liStyleNoneone = true;
+                    giftelmentone.addEventListener('webkitAnimationEnd', that.resetgiftcondition_i, false);
+
+                }, 3000);
+                // return;
+            }
+            //礼物展示通道 2
+            else if (that.time_state_ii) {
+                console.log(99999999);
+                that.giftcountall_two = received_msg.giftContent.giftCount;
+                that.time_state_ii = false;
+                that.giftmsgtwo = received_msg;
+                that.liStyleGift_active_tow = true;
+                that.userid_old_ii = received_msg.sendUserInfo.id;
+                that.giftId_old_ii = received_msg.giftContent.giftId;
+                that.gift_timer_two = setTimeout(function() {
+                    that.liStyleGift_active_tow = false;
+                    that.liStyleNonetow = true;
+                    giftelmenttow.addEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
+                }, 4000);
+                // return;
+            }
+
+        },
+        turntimer() {
+            let that = this;
+            clearTimeout(that.manygift_timer_one);
+            that.manygift_timer_one = setTimeout(function() {
+                // that.giftNumFlag01 = false;
+                that.liStyleNoneone = true;
+                //通道一返回的动画结束 移除class条件 resetgiftcondition_i
+                that.$refs.giftelmentone.addEventListener('webkitAnimationEnd', that.resetgiftcondition_i, false);
+            }, 3000);
+        },
+        turntimer_ii() {
+            let that = this;
+            clearTimeout(that.manygift_timer_two);
+            that.manygift_timer_two = setTimeout(function() {
+                // that.giftNumFlag01 = false;
+                that.liStyleNonetow = true;
+                //通道一返回的动画结束 移除class条件 resetgiftcondition_i
+                that.$refs.giftelmenttow.addEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
+            }, 3000);
+        },
+        resetgiftcondition_i() {
+            let that = this;
+            that.liStyleGift_active_one = false;
+            that.liStyleNoneone = false;
+            that.time_state = true;
+            that.giftcountall_one = '';
+            that.userid_old = '';
+            that.giftId_old = '';
+            clearTimeout(that.gift_timer_one);
+            that.$refs.giftelmentone.removeEventListener('webkitAnimationEnd', that.resetgiftcondition_i, false);
+        },
+        resetgiftcondition_ii() {
+            let that = this;
+            that.liStyleGift_active_tow = false;
+            that.liStyleNonetow = false;
+            that.time_state_ii = true;
+            that.gift_timer_two = '';
+            that.userid_old_ii = '';
+            that.giftId_old_ii = '';
+            clearTimeout(that.gift_timer_two);
+            that.$refs.giftelmenttow.removeEventListener('webkitAnimationEnd', that.resetgiftcondition_ii, false);
+        },
+        //向队尾添加一个元素
+        enqueue(element) {
+            this.dataStore.push(element);
+        },
+        /*
+        删除队首的元素
+        */
+        dequeue() {
+            return this.dataStore.shift();
+        },
+        //  读取队首元素
+        front() {
+            return this.dataStore[0]
+        },
+        //  读取队尾元素
+        back() {
+            return this.dataStore[this.dataStore.length - 1];
+        },
+        //  显示队列内所有的元素
+        toArrayData() {
+            var result = [];
+            for (var i = 0; i < this.dataStore.length; i++) {
+                result.push(this.dataStore[i]);
+            }
+            return result;
+        },
+        //  判断队列是否为空
+        empty() {
+            if (this.dataStore.length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        //礼物相关 end
         // IM相关==============结束=========================================================
         //投诉建议=========================== 开始
         openComplaintsShell() {
@@ -1021,7 +1302,6 @@ export default {
                 that.queue[anmationData.id] = anmationData;
             } else {
                 that.queue[anmationData.id] = anmationData;
-                console.log(1986);
                 that.bubbleAnimate();
             }
 

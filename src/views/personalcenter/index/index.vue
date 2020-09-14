@@ -6,23 +6,16 @@
       <div class="backgd">
         <div class="header_tou">
           <div class="logined-box" v-if="$store.state.user.isLogin">
-              <img v-if="$store.state.user.userdata.userInfo.face_url" :src="$store.state.user.userdata.userInfo.face_url" class="hd-face" />
+              <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" class="hd-face" />
               <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
               <div class="use_top">
-                <span class="logined">{{$store.state.user.userdata.userInfo.nickname}}</span>
-                <span class="level_use" @click="go_levelinstruct">
-                  <img class="vip-pic" src="./../../../assets/imgs/personal/vipLevel1.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==1"  />
-                  <img src="./../../../assets/imgs/personal/vipLevel2.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==2" />
-                  <img src="./../../../assets/imgs/personal/vipLevel3.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==3" />
-                  <img src="./../../../assets/imgs/personal/vipLevel4.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==4" />
-                  <img src="./../../../assets/imgs/personal/vipLevel5.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==5" />
-                  <img src="./../../../assets/imgs/personal/vipLevel6.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==6" />
-                  <img src="./../../../assets/imgs/personal/vipLevel7.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==7" />
-                  <img src="./../../../assets/imgs/personal/vipLevel8.png" alt="等级" v-if="$store.state.user.userdata.vipLevel==8" />
+                <span class="logined">{{$store.state.user.userdata.nickName}}</span>
+                <span class="level_use" @click="goToVipLevelPage">
+                  <span class="levelbox"><viplevel :lv_num="$store.state.user.userdata.level?$store.state.user.userdata.level:1"></viplevel></span>
                 </span>
               </div>
-              <progress class="mypro" :value="$store.state.user.userdata.integral" :max="$store.state.user.userdata.level"></progress>
-              <div class="info_use">爪爪值<span>{{$store.state.user.userdata.integral}}</span>/<span>{{$store.state.user.userdata.level}}</span>  <span class="edit_info" @click="gomyinfo"><span class="edit"></span>完善资料</span></div>
+              <div class="info_use">抓周ID：<span>{{$store.state.user.userdata.integral}}</span><span>{{$store.state.user.userdata.virtualId}}</span><span class="ic-fz" @click="copy_kuaidi_msg($store.state.user.userdata.virtualId)"><img src="../../../assets/imgs/personal/orderfz.png" alt /></span></div>
+              <div class="guild-info"  @click="gomyinfo"></div>
           </div>
           <div v-else @click="gotologin" style="cursor:pointer;">
               <img  src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
@@ -30,8 +23,8 @@
           </div>
         </div>
         <div class="login-banner">
-           <img src="./../../../assets/imgs/personal/huang-guan.png" alt="皇冠" class="huang-guan">
-           <span class="zhua_vip">爪爪会员</span>
+           <img src="./../../../assets/imgs/personal/vipicon.png" alt="皇冠" class="huang-guan">
+           <span class="zhua_vip">尊享会员</span>
            <span class="txt">7大超值权益，省钱又省心</span>
            <router-link class="look_guild" to="member" tag="a"></router-link>
         </div>
@@ -109,8 +102,12 @@
 </template>
 
 <script>
+import { copy } from "@/utils/copy.js";
+import viplevel from '@/components/viplevel.vue';
 export default {
-  components: {},
+  components: {
+    viplevel
+  },
   data() {
     return {
       imgsrc: "",
@@ -157,29 +154,34 @@ export default {
       ],
       myServeList : [
         {
+          name : "我的钱包",
+          img : require("@/assets/imgs/personal/my-money.png"),
+          list_id : 0
+        },
+        {
           name : "金银财宝",
           img : require("@/assets/imgs/personal/my-serve01.png"),
-          list_id : 0
+          list_id : 1
         },
         {
           name : "优惠中心",
           img : require("@/assets/imgs/personal/my-serve02.png"),
-          list_id : 1
+          list_id : 2
         },
         {
           name : "我的收藏",
           img : require("@/assets/imgs/personal/my-serve03.png"),
-          list_id : 2
+          list_id : 3
         },
         {
           name : "我的浏览",
           img : require("@/assets/imgs/personal/my-serve04.png"),
-          list_id : 3
+          list_id : 4
         },
         {
           name : "我的消息",
           img : require("@/assets/imgs/personal/my-serve05.png"),
-          list_id : 4
+          list_id : 5
         }
       ],
       aboutZhuaZhouList : [
@@ -200,13 +202,23 @@ export default {
   },
   computed: {},
   methods: {
-    //用户等级
-    go_levelinstruct(){
-      this.$router.push({ name: "levelinstruct" });
-    },
     // 会员福利跳转
-    gotovip() {
+    gotovip() {// /personalcenter/viplevledetails/:levelid/:webtype
       this.$toast("敬请期待");
+    },
+    goToVipLevelPage(){
+      let that = this;
+      that.$router.push({
+        name: "viplevledetails",
+        query: {
+         userId : that.$store.state.user.userid
+        }
+      });
+    },
+    //复制ID：
+    copy_kuaidi_msg(item){
+      copy(item);
+      this.$toast("已复制");
     },
     // 关注商品跳转
     gotofollow() {
@@ -300,23 +312,25 @@ export default {
     serveGuild(index){
       var that = this;
       switch(index){
-        case 0:
+         case 0:
+            //钱包页面
+            this.$router.push({ path: "/personalcenter/mypurse/livingpurse",query:{
+              userid:this.$store.state.user.userid,
+              webtype:1,//H5
+            }});
+            break;
+        case 1:
             //钱包页面
             this.$router.push({ path: "/personalcenter/mypurse",query:{
               userid:this.$store.state.user.userid,
               webtype:1,//H5
             }});
             break;
-        case 1:
+        case 2:
             that.$router.push({ path: "/personalcenter/discount",query:{
               userid:this.$store.state.user.userid,
               tabid:1 //H5
             }}); 
-            break;
-        case 2:
-            that.$router.push({path : "/mybrowse",query:{
-              tab_id : index
-            }});
             break;
         case 3:
             that.$router.push({path : "/mybrowse",query:{
@@ -324,6 +338,11 @@ export default {
             }});
             break;
         case 4:
+            that.$router.push({path : "/mybrowse",query:{
+              tab_id : index
+            }});
+            break;
+        case 5:
             that.gomyinfo();
             break;    
         default:
@@ -381,19 +400,21 @@ export default {
     getinfousermass() {
       let that = this;
       that.api.personalcenter
-        .getinfouser({
+        .getinfouser_new({
           userId : that.$store.state.user.userid
         })
         .then(res => {
           if(res.data.code==1){
             let resdata = res.data.data;
+            console.log('resdata')
+            console.log(resdata)
             let user = {
               isLogin: true,
-              username: resdata.userInfo.nickname,
-              token: resdata.userInfo.accessToken,
-              userid: resdata.userInfo.id,
+              username: resdata.nickName,
+              token: that.$store.state.user.token,
+              userid: resdata.userId,
               sig: that.$store.state.user.sig,
-              phone: resdata.userInfo.phone,
+              phone: that.$store.state.user.mobile,
               userdata: resdata
             };
             that.$store.commit("saveuserdata", user);

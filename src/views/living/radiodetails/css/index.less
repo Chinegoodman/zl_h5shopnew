@@ -1,0 +1,841 @@
+.radiodetailswrap{
+    .wrap-page {
+    width: 7.5rem;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    .page-content {
+        width: 7.5rem;
+        position: absolute;
+        overflow-y: auto;
+        margin: 0 auto;
+        left: 50%;
+        margin-left: -3.75rem;
+        top: 0;
+        z-index: 2;
+    }
+    
+        
+    .video-content {
+        width: 7.5rem;
+        max-width: 7.5rem;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .content-top {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        z-index: 110;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.3rem 0.2rem 0;
+    }
+    
+    .content-top .complaints {
+        float: left;
+        width: 0.86rem;
+        height: 0.86rem;
+        margin-left: 0.2rem;
+        cursor: pointer;
+    }
+    
+    .content-top .complaints img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-top .fens-list {
+        float: right;
+        margin-right: .12rem;
+    }
+    
+    .content-top .fens-list ul {
+        zoom: 1;
+        height: .74rem;
+        position: relative;
+    }
+    
+    .content-top .fens-list ul li {
+        flex: 1;
+        display: inline-block;
+        width: .6rem;
+        height: .74rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        cursor: pointer;
+    }
+    
+    .content-top .fens-list ul li span {
+        display: inline-block;
+        width: .52rem;
+        height: .52rem;
+        padding: 0 .04rem;
+        margin-top: .18rem;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .content-top .fens-list ul li span img {
+        width: 100%;
+        border-radius: 50%;
+    }
+    
+    .content-top .fens-list ul li:nth-child(1) {
+        right: 1rem;
+        z-index: 3;
+        background-image: url(./../../../../assets/imgs/living/radiodetails/huangguang.png);
+    }
+    
+    .content-top .fens-list ul li:nth-child(2) {
+        right: .5rem;
+        z-index: 2;
+        background-image: url(./../../../../assets/imgs/living/radiodetails/silver.png);
+    }
+    
+    .content-top .fens-list ul li:nth-child(3) {
+        right: 0;
+        z-index: 1;
+        background-image: url(./../../../../assets/imgs/living/radiodetails/qingtong.png);
+    }
+    
+    .content-top .dznameid {
+        float: right;
+        min-width: .8rem;
+        height: 0.6rem;
+        line-height: .6rem;
+        margin-right: .2rem;
+        background: rgba(0, 0, 0, .4);
+        border-radius: .3rem;
+        margin-top: .12rem;
+        cursor: pointer;
+    }
+    
+    .content-top span {
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        font-size: 0.24rem;
+        display: block;
+        width: 100%;
+    }
+    
+    .content-top .dzname {
+        float: left;
+        min-width: 3.55rem;
+        height: 0.84rem;
+        background-color: rgba(31, 31, 31, 0.35);
+        border-radius: 0.5rem;
+        font-family: PingFang SC;
+        position: relative;
+    }
+    
+    .content-top .dznamepic,
+    .content-top .dznamemass {
+        float: left;
+    }
+    
+    .content-top .guanzhu {
+        line-height: .44rem;
+        text-align: center;
+        border-radius: .28rem;
+        background: rgba(255, 189, 4, 1);
+        font-size: .24rem;
+    }
+    
+    .content-top .dznamepic {
+        width: 0.72rem;
+        height: 0.72rem;
+        border-radius: 50%;
+        margin: 0.06rem;
+        background-color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+    }
+    
+    .content-top .dznamepic img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+    
+    .content-top .dzguankan {
+        width: 0.34rem;
+        height: 0.34rem;
+        float: left;
+        position: absolute;
+        left: 0.5rem;
+        top: 0.46rem;
+    }
+    
+    .content-top .dzguankan img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-top .dznamemass {
+        margin-top: 0.08rem;
+        padding-left: 0.15rem;
+    }
+    
+    .content-top .nametit {
+        color: #fff;
+        font-size: 0.3rem;
+        font-weight: bold;
+        max-width: 1.5rem;
+        padding-right: 1.4rem;
+        line-height: 0.36rem;
+        height: .36rem;
+        cursor: pointer;
+    }
+    
+    .content-top .looknum {
+        color: rgba(255, 254, 254, 1);
+        font-size: 0.24rem;
+        font-weight: 500;
+        max-width: 1.9rem;
+        padding-right: 1.4rem;
+        margin-top: 0.02rem;
+    }
+    
+    .content-top .looknum .anchorid {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+        margin-top: -.05rem;
+    }
+    
+    .content-top .looknum span {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .content-top .dznamegz {
+        width: 1.17rem;
+        height: 0.56rem;
+        text-align: center;
+        line-height: 0.56rem;
+        border-radius: .42rem;
+        font-size: 0.24rem;
+        font-weight: 500;
+        color: rgba(31, 31, 31, 1);
+        background: #ebebe9;
+        position: absolute;
+        right: .14rem;
+        top: .14rem;
+        cursor: pointer;
+    }
+    
+    .content-top .dznamegz img {
+        width: auto;
+        height: 100%;
+    }
+    
+    .content-top .dznamegzed {
+        background: rgba(255, 189, 4, 1);
+    }
+    
+    .content-bottom {
+        padding: 0.35rem 0.3rem;
+        width: 7.5rem;
+        box-sizing: border-box;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10050;
+    }
+    
+    .content-bottom .chatlbts {
+        padding: 0rem 0.2rem;
+        background-image: linear-gradient(right, #FF2013 100%, rgba(255, 255, 255, 0) 40%);
+        border-radius: 2px;
+    }
+    
+    .content-bottom .chattzpic,
+    .content-bottom .chattxt,
+    .content-bottom .chatlh {
+        float: left;
+    }
+    
+    .content-bottom .chattzpic {
+        width: 0.24rem;
+        height: 0.24rem;
+        margin-top: 0.15rem;
+    }
+    
+    .content-bottom .chattzpic img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chattxt {
+        font-size: 0.32rem;
+        color: #fff;
+        line-height: 0.54rem;
+        padding: 0rem 0.08rem;
+    }
+    
+    .content-bottom .chatlh {
+        width: 0.5rem;
+        height: 0.54rem;
+    }
+    
+    .content-bottom .chatlh img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chatxr {
+        padding: 0rem 0.2rem;
+        background-color: #F4C008;
+        width: 3.5rem;
+        margin-top: 0.15rem;
+        border-radius: 2px;
+    }
+    
+    .content-bottom .chatxrpic,
+    .content-bottom .chatxrtxt {
+        float: left;
+    }
+    
+    .content-bottom .chatxrpic {
+        width: 0.21rem;
+        height: 0.26rem;
+        margin-top: 0.15rem;
+    }
+    
+    .content-bottom img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chatxrtxt {
+        font-size: 0.32rem;
+        color: #fff;
+        padding-left: 0.08rem;
+        line-height: 0.54rem;
+    }
+    
+    .content-bottom .chatby4 {
+        margin-top: 0.12rem;
+        overflow: hidden;
+    }
+    
+    .content-bottom .chatby4icon,
+    .content-bottom .chatby4txt {
+        float: left;
+    }
+    
+    .content-bottom .chatby4icon {
+        font-size: 0.2rem;
+        color: #fff;
+        line-height: 0.38rem;
+        padding: 0rem 0.13rem;
+        background-color: #FF6600;
+        border-radius: 15px;
+        margin-right: 0.1rem;
+    }
+    
+    .content-bottom .chatby4txt {
+        font-size: 0.32rem;
+    }
+    
+    .content-bottom .span {
+        color: #FF6600
+    }
+    
+    .content-bottom .chatby7 {
+        margin-top: 0.12rem;
+        overflow: hidden;
+    }
+    
+    .content-bottom .chatby7icon,
+    .content-bottom .chatby7txt {
+        float: left;
+    }
+    
+    .content-bottom .chatby7icon {
+        font-size: 0.2rem;
+        color: #fff;
+        line-height: 0.38rem;
+        padding: 0rem 0.13rem;
+        background-color: #FF2314;
+        border-radius: 15px;
+        margin-right: 0.1rem;
+    }
+    
+    .content-bottom .chatby7txt {
+        font-size: 0.32rem;
+    }
+    
+    .content-bottom .chatby7txt span {
+        color: #FF2314
+    }
+    
+    .content-bottom .chatby {
+        margin-top: 0.12rem;
+    }
+    
+    .content-bottom .chatbytxt {
+        font-size: 0.32rem;
+    }
+    
+    .content-bottom .chatbytxt span {
+        color: #ffffff
+    }
+    
+    .content-bottom .chatby1 {
+        margin-top: 0.12rem;
+        overflow: hidden;
+    }
+    
+    .content-bottom .chatby1icon,
+    .content-bottom .chatby1txt {
+        float: left;
+    }
+    
+    .content-bottom .chatby1icon {
+        font-size: 0.2rem;
+        color: #fff;
+        line-height: 0.38rem;
+        padding: 0rem 0.13rem;
+        background-color: #F4C008;
+        border-radius: 15px;
+        margin-right: 0.1rem;
+    }
+    
+    .content-bottom .chatby1txt {
+        font-size: 0.32rem;
+    }
+    
+    .content-bottom .chatby1txt span {
+        color: #F4C008
+    }
+    
+    .content-bottom .chattalk .chatsp,
+    .content-bottom .chattalk .chatgd,
+    .content-bottom .chattalk .service,
+    .content-bottom .chattalk .chatxin {
+        float: right;
+        cursor: pointer;
+    }
+    
+    .content-bottom .chattalk .chatinp {
+        float: left;
+        width: 1.5rem;
+        height: 0.8rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: #FFFFFF;
+        font-size: 0.28rem;
+        font-weight: 500;
+        text-align: center;
+        line-height: 0.8rem;
+        border-radius: 0.4rem;
+        cursor: pointer;
+    }
+    
+    .content-bottom .chattalk .chatgd {
+        width: 0.8rem;
+        height: 0.8rem;
+        margin-left: 0.2rem;
+        position: relative;
+    }
+    
+    .content-bottom .chattalk .chatgd img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chattalk .chatxin {
+        margin-left: 0.2rem;
+        position: relative;
+    }
+    
+    .content-bottom .chattalk .chatxin .chatxinicon {
+        width: 0.8rem;
+        height: 0.8rem;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .content-bottom .chattalk .chatxin .chatxinicon img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chattalk .chatxin .praise-num {
+        width: .82rem;
+        height: .32rem;
+        line-height: .32rem;
+        text-align: center;
+        color: #fff;
+        border-radius: .16rem;
+        font-size: .22rem;
+        background: #ff5b4fff;
+        position: absolute;
+        border: 0.02rem solid rgba(255, 255, 255, 1);
+        left: 50%;
+        top: -.25rem;
+        transform: translateX(-50%);
+    }
+    
+    .content-bottom .chattalk .chatxi .licknum {
+        position: absolute;
+        top: -0.25rem;
+        left: -0.02rem;
+        width: 0.45rem;
+        background-color: #FF5B4F;
+        color: #FFFFFF;
+        border: 2px solid #FFFFFF;
+        font-size: 0.22rem;
+        text-align: center;
+        line-heihgt: 0.82rem;
+        padding: 0rem 0.16rem;
+        border-radius: 0.16rem;
+    }
+    
+    .content-bottom .chattalk .chatxi .service {
+        position: relative;
+        margin-left: 0.14rem;
+    }
+    
+    .content-bottom .chattalk .chatxi .service .servicepic {
+        width: 0.8rem;
+        height: 0.75rem;
+        border: 1px solid #FFBD04;
+        border-radius: 50%;
+    }
+    
+    .content-bottom .chattalk .chatxi .service .servicepic img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+    
+    .content-bottom .chattalk .chatxi .service .servicebtn {
+        position: absolute;
+        bottom: -0.08rem;
+        width: 0.91rem;
+        height: 0.24rem;
+        left: -0.03rem;
+    }
+    
+    .content-bottom .chattalk .chatxi .service .servicebtn img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .content-bottom .chattalk .chatsp {
+        background-image: url(./../../../../assets/imgs/living/details/product.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 0.8rem;
+        height: 0.8rem;
+        margin-left: 0.2rem;
+    }
+    
+    .content-bottom .chattalk .chatsp .chatsptxt {
+        color: #fff;
+        padding-top: 0.63rem;
+        text-align: center;
+        font-size: 0.26rem;
+    }
+    
+    .content-bottom .chattalk .chatxi .imiptbox {
+        position: absolute;
+        left: 10000px;
+        top: -10000px;
+    }
+    
+    .content-bottom .chattalk .close {
+        float: right;
+        width: 0.8rem;
+        height: 0.8rem;
+        margin-left: 0.2rem;
+        cursor: pointer;
+    }
+    
+    .content-bottom .chattalk .close img {
+        width: 100%;
+        height: 100%
+    }
+    
+    .fensList {
+        padding: .5rem .4rem .4rem;
+    }
+    
+    .fensList ul {
+        width: 6.7rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .fensList ul li {
+        display: inline-block;
+        margin-bottom: .27rem;
+        width: 25%;
+        text-align: center;
+    }
+    
+    .fensList ul li:nth-child(4n) {
+        padding-right: 0;
+    }
+    
+    .fensList ul li span {
+        display: inline-block;
+    }
+    
+    .fensList ul li .im {
+        display: block;
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, .4);
+        border-radius: 50%;
+        border: none;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: .36rem .34rem;
+    }
+    
+    .fensList ul li:nth-child(1) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat1.png);
+    }
+    
+    .fensList ul li:nth-child(2) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat2.png);
+    }
+    
+    .fensList ul li:nth-child(3) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat3.png);
+    }
+    
+    .fensList ul li:nth-child(4) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat4.png);
+    }
+    
+    .fensList ul li:nth-child(5) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat5.png);
+    }
+    
+    .fensList ul li:nth-child(6) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat6.png);
+    }
+    
+    .fensList ul li:nth-child(7) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat7.png);
+    }
+    
+    .fensList ul li:nth-child(8) .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/seat8.png);
+    }
+    
+    .fensList ul li.locked .im {
+        background-image: url(./../../../../assets/imgs/living/radiodetails/locked.png);
+    }
+    
+    .fensList ul li .im img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        outline: none;
+        border: none;
+    }
+    
+    .fensList ul li .t {
+        width: 100%;
+        font-size: .24rem;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: rgba(191, 191, 191, 1);
+        display: flex;
+        margin: .15rem auto 0;
+        justify-content: center;
+    }
+    
+    .fensList ul li span {
+        display: inline-block;
+    }
+    
+    .fensList ul li span.nm {
+        margin-left: 0.02rem;
+        text-overflow: ellipsis;
+        max-width: 1.2rem;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .fensList ul li .t .ic {
+        width: .24rem;
+        text-align: center;
+        height: 0.24rem;
+        line-height: .24rem;
+        background: rgba(215, 215, 215, 1);
+        border-radius: 50%;
+        font-size: .2rem;
+        font-weight: 500;
+        color: rgba(31, 31, 31, 1);
+        margin-top: 0.05rem;
+    }
+    
+    .fensList ul li.active .t .ic {
+        background: rgba(255, 189, 4, 1);
+    }
+    
+    .internet {
+        padding: 1.4rem .35rem .35rem .2rem;
+        display: flex;
+        position: relative;
+        
+    }
+    
+    .internet span {
+        display: inline-block;
+    }
+    
+    .internet .nts .ic {
+        width: .22rem;
+        height: .16rem;
+        margin-right: .1rem;
+    }
+    
+    .internet .nts,
+    .internet .su {
+        background: rgba(0, 0, 0, .35);
+        border-radius: .18rem;
+        padding: .06rem .15rem;
+    }
+    
+    .internet .su {
+        margin-left: .5rem;
+    }
+    
+    .internet .su .ic {
+        width: .24rem;
+        height: .12rem;
+        margin-right: .1rem;
+        padding-bottom: .05rem;
+    }
+    
+    .internet .bd {
+        position: absolute;
+        right: .3rem;
+        bottom: .45rem;
+        cursor: pointer;
+    }
+    
+    .internet .bd .ic {
+        width: .28rem;
+        height: .22rem;
+        margin-right: .1rem;
+    }
+    
+    .internet .bd .ic2 {
+        width: .10rem;
+        height: .20rem;
+        margin-left: .05rem;
+    }
+    
+    .internet .nts .ic img,
+    .internet .su .ic img,
+    .internet .bd .ic img,
+    .internet .bd .ic2 img {
+        width: 100%;
+    }
+    
+    .internet .t {
+        font-size: .24rem;
+        color: rgba(255, 255, 255, 1);
+    }
+    
+    .msgboxwrap {
+        margin: 0 0.3rem .35rem;
+        max-width: 99%;
+    }
+    
+    .msgboxwrap .msgbox {
+        min-height: 0.48rem;
+        border-radius: 0.24rem;
+        display: inline-block;
+        padding: 0.11rem 0.17rem 0.14rem 0.13rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        box-sizing: border-box;
+        width: 5.36rem;
+    }
+    
+    .msgboxwrap .msgbox p {
+        display: inline;
+        color: #fff;
+        font-size: 0.26rem;
+        line-height: 0.48rem;
+    }
+    
+    .msgboxwrap .msgbox p.name {
+        color: #ffbd04;
+    }
+    
+    .msgboxwrap .msgbox p.xitong {
+        color: #ffbd04;
+    }
+    
+    .righttopclose {
+        float: right;
+        width: 0.56rem;
+        height: 0.56rem;
+        margin: .11rem 0 0 0;
+        cursor: pointer;
+    }
+    
+    .righttopclose img {
+        width: 100%;
+        height: 100%;
+    }
+}  
+    .rtc_bg_0{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_0.jpg);
+    }
+    .rtc_bg_1{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_1.jpg);
+    }
+    .rtc_bg_2{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_2.jpg);
+    }
+    .rtc_bg_3{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_3.jpg);
+    }
+    .rtc_bg_4{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_4.jpg);
+    }
+    .rtc_bg_5{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_5.jpg);
+    }
+    .rtc_bg_6{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_6.jpg);
+    }
+    .rtc_bg_7{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_7.jpg);
+    }
+    .rtc_bg_8{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_8.jpg);
+    }
+    .rtc_bg_9{
+        background-image: url(./../../../../assets/imgs/living/radiodetails/rtc_bg_9.jpg);
+    }
+}
