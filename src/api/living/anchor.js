@@ -7,7 +7,7 @@ import axios from '@/request/http.js'; // 导入http中创建的axios实例
 // import axios_json from "@/request/http_postform.js"; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
-const apidemo = {
+const anchor = {
     // ========================↓↓↓↓↓↓↓demo参考接口格式↓↓↓↓↓↓↓↓↓↓======================================
     // 【get请求】
     //获取所有成员接口
@@ -26,7 +26,10 @@ const apidemo = {
     },
     // ========================↓↓↓↓↓↓↓当前页面的接口↓↓↓↓↓↓↓↓↓↓======================================
 
-
+    // 创建直播间
+    createlive(params) {
+        return axios.post(`${base.yxf2}/v1/show/live/createLive`, qs.stringify(params));
+    },
 
 
 
@@ -35,4 +38,4 @@ const apidemo = {
 
 }
 
-export default apidemo;
+export default anchor;

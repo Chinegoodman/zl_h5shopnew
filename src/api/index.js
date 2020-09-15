@@ -6,6 +6,7 @@
 import productdetails from '@/api/productdetails';
 import login from '@/api/login'
 import living from '@/api/living/index.js'
+import anchor from '@/api/living/anchor.js'
 // import living from '@/api/living/index.min.js'
 import xiuchangliving from '@/api/living/xiuchangindex.js'
 import test from '@/api/test/test.js'
@@ -46,6 +47,7 @@ export default {
     shopcart,
     shopmassages,
     living,
+    anchor,
     xiuchangliving,
     test,
     returngoods,

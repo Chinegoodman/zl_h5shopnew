@@ -12,24 +12,19 @@
         @_upfileslistchange="upfileslistchange"
     ></uploadfile>
 
-    <div class="levelwarp">
-        <div class="herder_line"></div>
-        <div class="centerdom">
-            <p>level 12</p>
+    <div id="video" v-if="stream_video_status">
+      <div :id="'remote_video_panel_'+streamid" class="video-view">
+        <div :id="'remote_video_'+streamid" class="video-placeholder">
         </div>
-        <div class="centerdom">
-            <p>level 13</p>
+        <div :id="'remote_video_info_'+streamid" class="video-profile" :class="{show:streamvideoprofilestatus,hide:!streamvideoprofilestatus}">
         </div>
-        <div class="centerdom">
-            <p>level 14</p>
+        <div :id="'video_autoplay_'+streamid" class="autoplay-fallback" :class="{hide:autoplaybuttonifhide}">
         </div>
-        <div class="centerdom">
-            <p>level 15</p>90
-        </div>
-        <div class="footer_line"></div>
+      </div>
     </div>
 
-    <button @click="agorartcleaveCall">离开频道</button>
+    <button @click="agora_start('抓周')">开播一下</button>
+    <!-- <button @click="agorartcleaveCall">离开频道</button> -->
   </div>
 </template>
 
@@ -83,18 +78,101 @@ export default {
         // 这里需要替换成你自己项目的 APP ID
         appId: "a85084bad559490da05eb0bd7fd0addc",
         // 目标频道名
-        channel: "demo_channel_name",
+        channel: this.$store.state.user.userid.toString(),
         // 如果你的项目开启了 Token 鉴权，这里填写生成的 Token 值
         token: null,
+        uid:Number(this.$store.state.user.userid)
       },
 
       agorauid: "", //频道内每个用户的UID是唯一的。 Agora 自动分配一个 UID 并在 join 的结果中返回
       //   agoraRTC结束
+
+      rtc:{
+        client:{},
+        params:{
+          id:''
+        }
+      },
+
+      stream_video_status:false,
+      streamid:'',
+      streamvideoprofilestatus:false,
+      autoplaybuttonifhide:true,
+
+      livingroomdata:'',
     };
   },
   computed: {},
   methods: {
+    agora_start(typename){
+      let zs = this;
+      if(!zs.ifanchor(typename)){
+        zs.$toast(`登陆用户非${typename}的认证主播`);
+        return
+      }
+      zs.createlive();
+    },
+    // 创建直播间
+    createlive(typename){
+      let zs = this;
+      this.api.anchor.createlive({
+        uid:zs.$store.state.user.userid,
+        type:typename=='秀场'?2:typename=='电台'?3:1,
+        cover:'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1600159219864.png',
+        name:'psf测试',//直播名称
+        notice:'psf测试公告',
+        password:'',
+        skuIds:'',
+      }).then(res=>{
+        if(res.data.code==1){
+          zs.livingroomdata=res.data.data;
+
+          zs.agoraoptions.token =res.data.data.swToken;
+          zs.agoraRTCinit();
+        }else{
+          zs.$toast(res.data.info);
+        }
+      })
+    },
+    // 是否是主播身份？
+    ifanchor(name){
+      let zs = this;
+      switch (name) {
+        case '抓周':
+          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(1)>-1){
+            return true;
+          }else{
+            return false;
+          }
+          // break;
+        case '秀场':
+          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(2)>-1){
+            return true;
+          }else{
+            return false
+          }
+          // break;
+        case '电台':
+          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(1)>-1){
+            return true;
+          }else{
+            return false
+          }
+          // break;
+        default:
+          break;
+      }
+    },
+    // 文件上传
     upfileslistchange(listdata) {
+      switch (key) {
+        case value:
+          
+          break;
+      
+        default:
+          break;
+      }
       console.log(listdata);
       this.defaultfileslist = listdata;
     },
@@ -115,136 +193,15 @@ export default {
           }
         });
     },
-    // // 1 创建本地客户端  agoraRTC初始化
-    // agoraRTCinit() {
-    //   this.agorartc.client = AgoraRTC.createClient({
-    //     mode: "rtc",
-    //     codec: "h264",
-    //   });
-    //   this.agorartcjoin(); //加入目标频道
-    //   this.agorartcpublish(); //创建并发布本地音视频轨道
-    // },
-    // // 2 加入目标频道
-    // agorartcjoin() {
-    //   console.log("2加入目标频道");
-    //   let zs = this;
-
-    //   this.agorauid = async () => {
-    //     // await playerContainer.remove();
-    //     this.agorauid = await this.agorartc.client.join(
-    //       zs.agoraoptions.appId,
-    //       zs.agoraoptions.channel,
-    //       zs.agoraoptions.token,
-    //       null
-    //     );
-    //   };
-    //   //   this.agorauid = await this.agorartc.client.join(
-    //   //     zs.agoraoptions.appId,
-    //   //     zs.agoraoptions.channel,
-    //   //     zs.agoraoptions.token,
-    //   //     null
-    //   //   );
-    // },
-    // // 3 创建并发布本地音视频轨道
-    // agorartcpublish() {
-    //   console.log("3创建并发布本地音视频轨道");
-    //   // 通过采集麦克风创建本地音频轨道对象
-    //   //   this.agorartc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-    //   this.agorartc.localAudioTrack = async () => {
-    //     await AgoraRTC.createMicrophoneAudioTrack();
-    //   };
-    //   // 通过采集摄像头创建本地视频轨道对象
-    //   //   this.agorartc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-    //   this.agorartc.localVideoTrack = async () => {
-    //     await AgoraRTC.createCameraVideoTrack();
-    //   };
-    //   // 将这些音视频轨道对象发布到频道中
-    //   //   await this.agorartc.client.publish([
-    //   //     this.agorartc.localAudioTrack,
-    //   //     this.agorartc.localVideoTrack,
-    //   //   ]);
-    //   //   console.log("publish success!");
-    //   async () => {
-    //     await this.agorartc.client.publish([
-    //       this.agorartc.localAudioTrack,
-    //       this.agorartc.localVideoTrack,
-    //     ]);
-    //     console.log("publish success!");
-    //   };
-    // //   console.log(this.agorartc.localAudioTrack);
-    // //   console.log(this.agorartc.localVideoTrack);
-
-    //   this.agorartcclientonpublished(); //订阅远端用户
-    //   this.agorartcclientonunpublished(); //监听 远端用户取消发布/远端用户离开了频道 的事件
-    // },
-    // //4 订阅远端用户
-    // agorartcclientonpublished() {
-    //   console.log("4订阅远端用户");
-    //   this.agorartc.client.on("user-published", async (user, mediaType) => {
-    //     // 开始订阅远端用户
-    //     // await this.agorartc.client.subscribe(user);
-    //     async () => {
-    //       await this.agorartc.client.subscribe(user);
-    //     };
-    //     console.log("订阅远端用户subscribe success");
-    //     if (mediaType === "video" || mediaType === "all") {
-    //       // 当订阅完成后，就可以从 `user` 中获取远端视频轨道对象了
-    //       const remoteVideoTrack = user.videoTrack;
-    //       // 动态插入一个 DIV 节点作为播放远端视频轨道的容器
-    //       const playerContainer = document.createElement("div");
-    //       // 给这个 DIV 节点指定一个 ID，这里指定的是远端用户的 UID
-    //       playerContainer.id = user.uid;
-    //       playerContainer.style.width = "640px";
-    //       playerContainer.style.height = "480px";
-    //       document.body.append(playerContainer);
-    //       // 订阅完成，播放远端音视频
-    //       // 让 SDK 在这个节点下创建相应的播放器播放远端视频
-    //       remoteVideoTrack.play(playerContainer);
-    //     }
-    //     if (mediaType === "audio" || mediaType === "all") {
-    //       // 当订阅完成后，就可以从 `user` 中获取远端音视频轨道对象了
-    //       const remoteAudioTrack = user.audioTrack;
-    //       // 播放音频因为不会有画面，不需要提供 DOM 元素的信息
-    //       remoteAudioTrack.play();
-    //     }
-    //   });
-    // },
-    // //4.4 监听 远端用户取消发布/远端用户离开了频道 的事件
-    // agorartcclientonunpublished() {
-    //   console.log("4.4监听远端用户取消发布/远端用户离开了频道 的事件");
-    //   this.agorartc.client.on("user-unpublished", user => {
-    //     // 获取刚刚动态创建的 DIV 节点
-    //     const playerContainer = document.getElementById(user.uid);
-    //     // 销毁这个节点
-    //     async () => {
-    //       await playerContainer.remove();
-    //     };
-    //   });
-    // },
-    // //5 离开频道
-    // agorartcleaveCall() {
-    //   console.log("5离开频道");
-    //   // 销毁本地音视频轨道
-    //   this.agorartc.localAudioTrack.close();
-    //   this.agorartc.localVideoTrack.close();
-
-    //   // 遍历远端用户
-    //   this.agorartc.client.remoteUsers.forEach(user => {
-    //     // 销毁动态创建的 DIV 节点
-    //     const playerContainer = document.getElementById(user.uid);
-    //     playerContainer && playerContainer.remove();
-    //   });
-
-    //   // 离开频道
-    //   this.agorartc.client.leave();
-    // },
     // 1.初始化客户端
     agoraRTCinit() {
+      let zs = this;
       this.rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "h264" });
       this.rtc.client.init(
         this.agoraoptions.appId,
         function() {
           console.log("init success");
+          zs.setClientRole();
         },
         err => {
           console.error(err);
@@ -256,6 +213,8 @@ export default {
       // The value of role can be "host" or "audience".
       let role = "host";
       this.rtc.client.setClientRole(role); 
+      this.createlocalStream();
+      this.streaminit();
     },
     // 3.1观众
     // 3.1.1观众加入频道
@@ -263,6 +222,7 @@ export default {
       // Join a channel
       let zs = this;
       this.rtc.client.join(this.agoraoptions.token ? this.agoraoptions.token : null, this.agoraoptions.channel, this.agoraoptions.uid ? +this.agoraoptions.uid : null, function (uid) {
+      // this.rtc.client.join(this.agoraoptions.token ? this.agoraoptions.token : null, this.agoraoptions.channel, this.agoraoptions.uid ? +this.agoraoptions.uid : null, function (uid) {
           console.log("join channel: " + this.agoraoptions.channel + " success, uid: " + uid);
           zs.rtc.params.uid = uid;
         }, function(err) {
@@ -287,8 +247,11 @@ export default {
         console.log("init local stream success");
         // play stream with html element id "local_stream"
         zs.rtc.localStream.play("local_stream");
+
+        zs.clientpublish();
       }, function (err) {
         console.error("init local stream failed ", err);
+        zs.$toast(err.info);
       });
     },
     // 3.2.2主播 发布本地流
@@ -299,9 +262,92 @@ export default {
         console.error(err);
       })
     },
+    // 4.1订阅远端流
+    streamadded(){
+      let zs = this;
+      zs.rtc.client.on("stream-added", function (evt) {  
+        var remoteStream = evt.stream;
+        var id = remoteStream.getId();
+        if (id !== zs.rtc.params.uid) {
+          zs.rtc.client.subscribe(remoteStream, function (err) {
+            console.log("stream subscribe failed", err);
+          })
+        }
+        console.log('stream-added remote-uid: ', id);
+      });
+    },
+    // 4.2订阅成功后播放远端流
+    remotestreamplay(){
+      let zs = this;
+      zs.rtc.client.on("stream-subscribed", function (evt) {
+        var remoteStream = evt.stream;
+        var id = remoteStream.getId();
+        // Add a view for the remote stream.
+        zs.addView(id);
+        // Play the remote stream.
+        remoteStream.play("remote_video_" + id);
+        console.log('stream-subscribed remote-uid: ', id);
+      })
+    },
+    // 5.监听远端流被移除时（例如远端用户调用了 Stream.unpublish）， 停止播放该流并移除它的画面
+    streamremoved(){
+      let zs = this;
+      zs.rtc.client.on("stream-removed", function (evt) {
+        var remoteStream = evt.stream;
+        var id = remoteStream.getId();
+        // Stop playing the remote stream.
+        remoteStream.stop("remote_video_" + id);
+        // Remove the view of the remote stream. 
+        zs.removeView(id);
+        console.log('stream-removed remote-uid: ', id);
+      })
+    },
+
+    // 6.离开频道 （用户？）
+    selfleave(){
+      let zs = this;
+      zs.rtc.client.leave(function () {
+        // Stop playing the local stream
+        zs.rtc.localStream.stop();
+        // Close the local stream
+        zs.rtc.localStream.close();
+        // Stop playing the remote streams and remove the views
+        while (zs.rtc.remoteStreams.length > 0) {
+          var stream = zs.rtc.remoteStreams.shift();
+          var id = stream.getId();
+          stream.stop();
+          zs.removeView(id);
+        }
+        console.log("client leaves channel success");
+      }, function (err) {
+        console.log("channel leave failed");
+        console.error(err);
+      })
+    },
+
+
+    // 开始直播
+    addView(id,show){
+      console.log(`开始直播${id}`);
+      let zs = this;
+      zs.streamid= id;
+      if(show){
+        zs.streamvideoprofilestatus=true;
+      }
+
+    },
+    // 结束直播
+    removeView(id){
+      console.log(`结束直播${id}`);
+      let zs = this;
+      zs.streamid= id;
+    },
+
+    
+
   },
   mounted() {
-    this.agoraRTCinit();
+    // this.agoraRTCinit();
     // this.getuserlevelquities();
   },
   beforeCreate() {}, //生命周期 - 创建之前
