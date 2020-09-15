@@ -23,7 +23,8 @@
       </div>
     </div>
 
-    <button @click="agora_start('抓周')">开播一下</button>
+    <button @click="agora_start('抓周')">开播</button>
+    <button @click="agora_close('抓周')">关播</button>
     <!-- <button @click="agorartcleaveCall">离开频道</button> -->
   </div>
 </template>
@@ -104,6 +105,11 @@ export default {
   },
   computed: {},
   methods: {
+    // 关播操作
+    agora_close(){
+      this.$toast('关播操作。。。')
+    },
+    // 开播操作
     agora_start(typename){
       let zs = this;
       if(!zs.ifanchor(typename)){
@@ -128,7 +134,25 @@ export default {
           zs.livingroomdata=res.data.data;
 
           zs.agoraoptions.token =res.data.data.swToken;
+          let liveId='';
+          liveId =res.data.data.id;
           zs.agoraRTCinit();
+          let state = 1;//直播状态 0:停播，1:开播, 2: 创建未开播
+          zs.changeLiveState(liveId,state);
+        }else{
+          zs.$toast(res.data.info);
+        }
+      })
+    },
+    // 修改直播间状态
+    changeLiveState(liveId,state){
+      let zs = this;
+      this.api.anchor.changeLiveState({
+        liveId,
+        state
+      }).then(res=>{
+        if(res.data.code==1){
+          zs.$toast(res.data.info);
         }else{
           zs.$toast(res.data.info);
         }

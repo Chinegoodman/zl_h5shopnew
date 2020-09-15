@@ -30,7 +30,10 @@ const anchor = {
     createlive(params) {
         return axios.post(`${base.yxf2}/v1/show/live/createLive`, qs.stringify(params));
     },
-
+    // 更改直播间状态
+    changeLiveState(params) {
+        return axios.put(`${base.yxf2}/v1/show/live/changeLiveState`, qs.stringify(params));
+    },
 
 
 
