@@ -151,6 +151,26 @@ const router = new Router({
                 ]
             }
         },
+        //姻缘会员等级 vip-levle
+        {
+            path: '/personalcenter/marriageviplevle',
+            name: 'viplevledetails',
+            component: resolve => require(['./views/personalcenter/marriageviplevle/index.vue'], resolve),
+            meta: {
+                name: 'marriageviplevle',
+                navstatus: false,
+                //面包屑需要的参数
+                breadnav: [{
+                        name: '个人中心首页',
+                        url: '/personalcenter/index',
+                    },
+                    {
+                        name: '个人中心-会员等级页',
+                        url: '/personalcenter/marriageviplevle',
+                    },
+                ]
+            }
+        },
         {
             //登录首页
             path: '/login',

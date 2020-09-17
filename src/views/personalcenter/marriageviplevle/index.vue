@@ -39,11 +39,11 @@
             </div>
         </div>
         <div class="section-quanyi">
-            <div class="title"><img src="../../../assets/imgs/personal/my-rights.png" alt /></div>
+            <div class="title">我的权益</div>
             <div class="tip">敬请期待，即将解锁</div>
         </div>
         <div class="section-change">
-            <div class="title">
+            <div class="title" v-if="false">
                 <img src="../../../assets/imgs/personal/chengzhang.png" alt />
             </div>
             <div class="txt">
@@ -54,7 +54,7 @@
                 <span class="t">二、成长值组成</span>
                 <ul>
                     <li>
-                        <span class="im"><img src="../../../assets/imgs/personal/viplevel-ic-xf.png" alt /></span>
+                        <span class="im"><img src="../../../assets/imgs/personal/marriage/viplevel-ic-xf.png" alt /></span>
                         <div class="rt">
                             <span class="t">消费</span>
                             <p>
@@ -63,7 +63,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="im"><img src="../../../assets/imgs/personal/viplevel-ic-hy.png" alt /></span>
+                        <span class="im"><img src="../../../assets/imgs/personal/marriage/viplevel-ic-hy.png" alt /></span>
                         <div class="rt">
                             <span class="t">活跃</span>
                             <p>
@@ -72,7 +72,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="im"><img src="../../../assets/imgs/personal/viplevel-ic-zh.png" alt /></span>
+                        <span class="im"><img src="../../../assets/imgs/personal/marriage/viplevel-ic-zh.png" alt /></span>
                         <div class="rt">
                             <span class="t">
                                 账户
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="level-detail">
-            <img src="../../../assets/imgs/personal/viplevel.png" alt />
+            <img src="../../../assets/imgs/personal/marriage/viplevel.png" alt />
         </div>
     </div>
   </div>
@@ -181,7 +181,7 @@ export default {
 
 <style lang="less" scope>
 .viplevelwrap{
-    background: url("../../../assets/imgs/personal/viplevel-tnbj.png") no-repeat 0 0;
+    background: #101118 url("../../../assets/imgs/personal/viplevel-tnbj.png") no-repeat 0 0;
     background-size: 7.5rem 3.59rem;
     .header {
         width: 7.5rem;
@@ -204,14 +204,14 @@ export default {
         }
     }
     .viplevlebox{
-        padding: .3rem .2rem;
+        padding: .3rem .2rem 3.15rem;
         color:rgba(31, 31, 31, 1);
         text-align: center;
         font-size : .58rem;
         font-family:PingFang SC;
         font-weight:500;
         .section-top{
-            background: url("../../../assets/imgs/personal/viplevel-ic-kpbj.png") no-repeat 0 0;
+            background: url("../../../assets/imgs/personal/marriage/viplevel-ic-kpbj.png") no-repeat 0 0;
             background-size: 7.1rem 3.87rem;
             min-height: 3.87rem;
             .top{
@@ -232,6 +232,7 @@ export default {
                     display: block;
                     width: 1.12rem;
                     height: 1.12rem;
+                    // padding: .05rem;
                     border-radius:50%;
                     background: url("../../../assets/imgs/personal/level-hd.png") no-repeat 0 0;
                     background-size: 1.12rem 1.12rem;
@@ -254,7 +255,7 @@ export default {
                     padding-top: .1rem;
                     .tit{
                         font-size: .28rem;
-                        color:rgba(31,31,31,1);
+                        color:#fff;
                         display: inline-block;
                         .levelbox{
                             display: inline-block;
@@ -266,7 +267,7 @@ export default {
                     .ids{
                         display: inline-block;
                         font-size: .24rem;
-                        color:rgba(117,117,117,1);
+                        color: #AFAFBD;
                         margin-top: .12rem;
                     }
                 }
@@ -377,34 +378,33 @@ export default {
             
         }
         .section-quanyi{
-            margin-top: .2rem;
+            margin: .2rem auto;
             min-height: 2.1rem;
             font-family:PingFang-SC-Bold;
             font-size: .4rem;
-            background: url("../../../assets/imgs/personal/viplevelcom01.png") no-repeat 0 0;
+            background: url("../../../assets/imgs/personal/marriage/viplevelcom01.png") no-repeat 0 0;
             background-size: 7.1rem 2.1rem;
             position: relative;
             .title{
                width: 2.21rem;
                height: .52rem;
                padding : .3rem 0 0 .3rem;
-               img{
-                   width : 100%;
-                   height: 100%;
-               }
+               color: #fff;
+               font-size: .34rem;
+               text-align: left;
             }
             .tip{
                 font-size: .28rem;
                 font-weight:500;
-                color:rgba(117,117,117,1);
-                margin : .45rem auto;
+                color: #6A6A86;
+                margin : .35rem auto;
                 text-align: center;
             }
              
         }
         .section-change{
             width: 7.1rem;
-            background: url("../../../assets/imgs/personal/viplevelcom02.png") no-repeat left top;
+            background: url("../../../assets/imgs/personal/marriage/viplevelcom02.png") no-repeat left top;
             background-size: 7.1rem 10.45rem;
             font-family:PingFang SC;
             font-weight:500;
@@ -423,12 +423,12 @@ export default {
                 .t{
                     font-size: .28rem;
                     font-weight:500;
-                    color:rgba(31,31,31,1);
+                    color:#fff;
                 }
                 p{
                     padding-left: .55rem;
                     font-size: .24rem;
-                    color:rgba(31,31,31,1);
+                    color:#fff;
                     line-height: .38rem;
                     
                 }
@@ -456,13 +456,13 @@ export default {
                             .t{
                                 display : block;
                                 font-size: .24rem;
-                                color: #1F1F1F;
+                                color: #fff;
                             }
                             p{
                                 line-height: .38rem;
                                 padding-left: 0;
                                 margin-top: .1rem; 
-                                color: #757575;
+                                color: #B0B0BD;
                             }
                         }
                     }
