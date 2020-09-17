@@ -181,7 +181,7 @@ export default {
 
 <style lang="less" scope>
 .viplevelwrap{
-    background: #101118 url("../../../assets/imgs/personal/viplevel-tnbj.png") no-repeat 0 0;
+    background: #101118 url("../../../assets/imgs/personal/marriage/viplevel-tnbj.png") no-repeat 0 0;
     background-size: 7.5rem 3.59rem;
     .header {
         width: 7.5rem;
