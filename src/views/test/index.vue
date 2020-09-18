@@ -13,7 +13,7 @@
     ></uploadfile>
 
     <div id="local_stream" style="height:300px;"></div>
-    <div id="video" v-if="stream_video_status">
+    <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="stream_video_status">
       <div :id="'remote_video_panel_'+streamid" class="video-view">
         <div :id="'remote_video_'+streamid" class="video-placeholder">
         </div>
@@ -36,6 +36,7 @@
 // Agora Web SDK NG
 // https://agoraio-community.github.io/AgoraWebSDK-NG/docs/zh-CN/setup
 import AgoraRTC from "agora-rtc-sdk";
+import { setTimeout } from 'timers';
 // import AgoraRTC from "agora-rtc-sdk-ng";
 // const client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
 
@@ -78,12 +79,14 @@ export default {
       },
       agoraoptions: {
         // 这里需要替换成你自己项目的 APP ID
-        appId: "a85084bad559490da05eb0bd7fd0addc",
+        // appId: "a85084bad559490da05eb0bd7fd0addc",
+        appId: "9b27bbc9b5624075809bfd4f98f3ab10",
         // 目标频道名
         channel: this.$store.state.user.userid.toString(),
         // 如果你的项目开启了 Token 鉴权，这里填写生成的 Token 值
         token: null,
-        uid:Number(this.$store.state.user.userid)
+        // uid:Number(this.$store.state.user.userid)
+        uid:this.$store.state.user.userid.toString(),
       },
 
       agorauid: "", //频道内每个用户的UID是唯一的。 Agora 自动分配一个 UID 并在 join 的结果中返回
@@ -230,10 +233,13 @@ export default {
          codec: "vp8"//codec 用于设置浏览器使用的编解码格式。如果你需要使用 Safari 12.1 及之前版本，将该参数设为 "h264"；其他情况我们推荐使用 "vp8"。
       });
       this.rtc.client.init(
-        this.agoraoptions.appId,
+        zs.agoraoptions.appId,
         function() {
           console.log("init success");
           zs.setClientRole();
+
+          zs.createlocalStream();
+          zs.streaminit();
         },
         err => {
           console.error(err);
@@ -242,13 +248,19 @@ export default {
     },
     // 2.设置用户角色
     setClientRole(){
+      let zs = this;
       console.log('2.设置用户角色');
       // The value of role can be "host" or "audience".
       let role = "host";
       this.rtc.client.setClientRole(role); 
-      this.audiencejoin();
-      this.createlocalStream();
-      this.streaminit();
+      zs.$toast({
+        duration:0,
+        message:'开播中..'
+      })
+      zs.audiencejoin();
+      // setTimeout(()=>{
+      //   zs.clientpublish();
+      // },5000)
     },
     // 3.1观众
     // 3.1.1观众加入频道
@@ -257,14 +269,11 @@ export default {
       // Join a channel
       let zs = this;
       // this.rtc.client.join(this.agoraoptions.token ? this.agoraoptions.token : null, this.agoraoptions.channel, this.agoraoptions.uid ? +this.agoraoptions.uid : null, function (uid) {
-      this.rtc.client.join(this.agoraoptions.token ? this.agoraoptions.token : null, this.agoraoptions.channel, this.agoraoptions.uid ? this.agoraoptions.uid : null, function (uid) {
-          console.log("join channel: " + this.agoraoptions.channel + " success, uid: " + uid);
-          zs.rtc.params.uid = uid;
+      this.rtc.client.join(zs.agoraoptions.token ? zs.agoraoptions.token : null, zs.agoraoptions.channel, zs.agoraoptions.uid ? zs.agoraoptions.uid : null, function (uid) {
+          console.log("join channel: " + zs.agoraoptions.channel + " success, uid: " + uid);
         }, function(err) {
           console.error("client join failed", err)
       })
-      // const uid = await rtc.client.join(zs.agoraoptions.appId, zs.agoraoptions.channel, zs.agoraoptions.token, null);
-      // zs.rtc.params.uid = uid;
     },
     // 3.2主播
     // 3.2.1主播 创建本地流
@@ -272,7 +281,8 @@ export default {
       console.log('3.2.1主播 创建本地流');
       let zs = this;
       zs.rtc.localStream = AgoraRTC.createStream({
-        streamID: zs.rtc.params.uid,
+        // streamID: zs.rtc.params.uid,
+        streamID: zs.agoraoptions.uid,
         audio: true,
         video: true,
         screen: false,
@@ -287,7 +297,10 @@ export default {
         // play stream with html element id "local_stream"
         zs.rtc.localStream.play("local_stream");
 
-        zs.clientpublish();
+        // zs.clientpublish();
+        setTimeout(()=>{
+          zs.clientpublish();
+        },5000)
       }, function (err) {
         console.error("init local stream failed ", err);
         zs.$toast(err.info);
@@ -295,13 +308,15 @@ export default {
     },
     // 3.2.3主播 发布本地流
     clientpublish(){
+      debugger;
       console.log('3.2.3主播 发布本地流');
-      this.streamadded();
       let zs = this;
+      zs.$toast.clear();
       zs.rtc.client.publish(zs.rtc.localStream, function (err) {
         console.log("publish failed");
         console.error(err);
       })
+      // this.streamadded();
     },
     // 4.1订阅远端流
     streamadded(){
@@ -310,7 +325,8 @@ export default {
       zs.rtc.client.on("stream-added", function (evt) {  
         var remoteStream = evt.stream;
         var id = remoteStream.getId();
-        if (id !== zs.rtc.params.uid) {
+        // if (id !== zs.rtc.params.uid) {
+        if (id !== zs.agoraoptions.uid) {
           zs.rtc.client.subscribe(remoteStream, function (err) {
             console.log("stream subscribe failed", err);
           })
