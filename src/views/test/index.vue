@@ -123,7 +123,7 @@ export default {
         zs.$toast(`登陆用户非${typename}的认证主播`);
         return
       }
-      zs.createlive();
+      zs.createlive('秀场');
     },
     // 创建直播间
     createlive(typename){
@@ -230,7 +230,8 @@ export default {
       let zs = this;
       this.rtc.client = AgoraRTC.createClient({
          mode: "live", //"live": 直播场景，有主播和观众两种用户角色主播可以收发语音/视频流 观众只能接收语音/视频，无法发送   "rtc": 通信场景，用于常见的一对一通话或群聊，频道中的任何用户可以自由说话
-         codec: "vp8"//codec 用于设置浏览器使用的编解码格式。如果你需要使用 Safari 12.1 及之前版本，将该参数设为 "h264"；其他情况我们推荐使用 "vp8"。
+         codec: "h264"//codec 用于设置浏览器使用的编解码格式。如果你需要使用 Safari 12.1 及之前版本，将该参数设为 "h264"；其他情况我们推荐使用 "vp8"。
+        //  不转码情况下，需要使用 AgoraRTC.createClient({mode: "live", codec: "h264"}) 模式。
       });
       this.rtc.client.init(
         zs.agoraoptions.appId,
@@ -253,6 +254,7 @@ export default {
       // The value of role can be "host" or "audience".
       let role = "host";
       this.rtc.client.setClientRole(role); 
+      zs.rtc.client.startLiveStreaming(zs.livingroomdata.liveStreamUrl, false);
       zs.$toast({
         duration:0,
         message:'开播中..'
@@ -308,7 +310,6 @@ export default {
     },
     // 3.2.3主播 发布本地流
     clientpublish(){
-      debugger;
       console.log('3.2.3主播 发布本地流');
       let zs = this;
       zs.$toast.clear();
