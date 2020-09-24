@@ -376,7 +376,7 @@
     </div>  
 
     <!-- 投资金列表start -->
-    <div class="rongtongjin-ad" v-if="list_content_show_type===4">
+    <div class="rongtongjin-ad" v-if="list_content_show_type===5">
         <span class="ad-tit">
           <img src="@/assets/imgs/shop/rongtongjin-tit.png" alt="">
         </span>
@@ -402,7 +402,7 @@
           <img src="@/assets/imgs/shop/rongtongjin-jin.png" alt="">
         </span>
     </div>
-    <div class="index_list_recommend tzj" v-show="list_content_show_type===4">
+    <div class="index_list_recommend tzj" v-show="list_content_show_type===5">
       <div class="title"><span class="ic"></span>为你推荐</div>
        <!-- big_list 为切换到大图的class -->
       <div :class="{'tzj-list' : true,'tzj-big-list' : change_big_small_flag_tzj===0}">
