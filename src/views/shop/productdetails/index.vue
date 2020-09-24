@@ -26,7 +26,8 @@
                              @click="topswiperclick" @ended="videoended" class="videodom" :class="{show:videodomstatus}" ref="videodom" preload :src="goodsBannerdata.video"></video>
                         </van-swipe-item>
                         <van-swipe-item class="swiper-slide" v-for="(item,index) in goodsBannerdata.imgarr" :key="index">
-                            <img @click="topswiperclick" class="swiperimg" :src="item.url"/>
+                            <img @click="topswiperclick" class="swiperimg" :src="item.url" v-if="item.url"/>
+                            <span style="display:block;width:100%;text-align:center;" v-else>loading...</span>
                             <!-- <img @click="topswiperclick" class="swiperimg" v-lazy="item.url"/> -->
                         </van-swipe-item>
                         <van-swipe-item class="swiper-slide tips">
@@ -411,77 +412,25 @@
             nodata
         },
         data () {
-            let that = this;
             return {
                 nodatapagetypedata:"prodetails_nodata",//nodata组件参数
                 product_skuid:'',
                 topbtnstatus:false,
-                // // swiper默认配置
-                // tpswiperOption:{
-                //     //显示分页
-                //     pagination: {
-                //       el: '.swiper-pagination'
-                //     },
-                //     //设置点击箭头
-                //     // navigation: {
-                //     //   nextEl: '.swiper-button-next', 
-                //     //   prevEl: '.swiper-button-prev'
-                //     // },
-                //     //自动轮播
-                //     // autoplay: {
-                //     //   delay: 4000,
-                //     //   //当用户滑动图片后继续自动轮播
-                //     //   disableOnInteraction: false,
-                //     // },
-                //     autoplay:false,
-                //     //开启循环模式
-                //     loop: false,
-
-                //     //小手掌抓取滑动
-                //     grabCursor: true,
-                    
-                //     on: {
-                //         //滑动开始时回调函数
-                //         slideChangeTransitionStart: function() {
-                //         //滑动之后回调函数
-                //         // slideChangeTransitionEnd: function() {
-                //             // that.currentimgIndex = this.realIndex;  //获取轮播图片下标索引；这里有一个坑，之前网上找到的是用activeIndex，但后来网上说的是这个realIndex，原来activeIndex是swiper2.0的；而realIndex是swiper3.0的，（使用realIndex才实现了下标索引）
-                //             that.currentimgIndex = this.activeIndex;  
-                //             that.currentimgIndex_jmjp = this.activeIndex;
-                //             if(that.currentimgIndex_jmjp >= that.swiperlength-1){
-                //                 that.currentimgIndex_jmjp = that.swiperlength-2;
-                //             }
-                //             // console.log(that.currentimgIndex);
-                //             if(that.goodsBannerdata.video){
-                //                 // 如果有视频
-                //                 if(that.currentimgIndex==that.swiperlength-1){
-                //                         // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                //                         that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                //                         that.tpswiperboxfather = false;
-                //                         that.goAnchor('product_detailsbox');
-                //                 }else if(that.currentimgIndex != 0){ 
-                //                     that.videodomstatus = false;
-                //                     let video = that.$refs.videodom;
-                //                     video.pause();
-                //                 }
-                //             }else{
-                //                 // 没有视频内容
-                //                 if(that.currentimgIndex==that.swiperlength-1){
-                //                         // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                //                         that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                //                         that.tpswiperboxfather = false;
-                //                         that.goAnchor('product_detailsbox');
-                //                 }else if(that.currentimgIndex != 0){ 
-                //                     that.videodomstatus = false;
-                //                 }
-                //             }
-                //         }
-                //     },
-                // },
                 goodsBannerdata:{
                     video:'',
                     gif:'',
-                    imgarr:[],
+                    imgarr:[
+                        {
+                            create_time:"",
+                            goods_id:"",
+                            id:"",
+                            is_default:"",
+                            is_effective:"",
+                            thumbnail:"",
+                            update_time:"",
+                            url:"",
+                        }
+                    ],
                 },//轮播图数据
                 videodomstatus:false,//视频节点默认隐藏不显示等待点击触发
                 tpswiperboxfather:false,
@@ -514,7 +463,7 @@
                     selectshow:{
                         img:'',
                         price:'',
-                        optionstxt:'请选择商品规格尺码\(≧▽≦)/',
+                        optionstxt:"请选择商品规格尺码 \(≧▽≦)/",
                     }
                 },
 
@@ -630,41 +579,36 @@
             topswiperonChange(activeIndex){
                 //滑动开始时回调函数
                 let that = this;
-                that.activeIndex = activeIndex
-                // slideChangeTransitionStart: function() {
-                //滑动之后回调函数
-                // slideChangeTransitionEnd: function() {
-                    // that.currentimgIndex = this.realIndex;  //获取轮播图片下标索引；这里有一个坑，之前网上找到的是用activeIndex，但后来网上说的是这个realIndex，原来activeIndex是swiper2.0的；而realIndex是swiper3.0的，（使用realIndex才实现了下标索引）
-                    that.currentimgIndex = this.activeIndex;  
-                    that.currentimgIndex_jmjp = this.activeIndex;
-                    if(that.currentimgIndex_jmjp >= that.swiperlength-1){
-                        that.currentimgIndex_jmjp = that.swiperlength-2;
+                that.activeIndex = activeIndex; 
+                that.currentimgIndex = this.activeIndex;
+                that.currentimgIndex_jmjp = this.activeIndex;
+                if(that.currentimgIndex_jmjp >= that.swiperlength-1){
+                    that.currentimgIndex_jmjp = that.swiperlength-2;
+                }
+                // console.log(that.currentimgIndex);
+                if(that.goodsBannerdata.video){
+                    // 如果有视频
+                    if(that.currentimgIndex==that.swiperlength-1){
+                        // that.swiper.slideTo(that.swiperlength-2, 1000, false);
+                        that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
+                        that.tpswiperboxfather = false;
+                        that.goAnchor('product_detailsbox');
+                    }else if(that.currentimgIndex != 0){ 
+                        that.videodomstatus = false;
+                        let video = that.$refs.videodom;
+                        video.pause();
                     }
-                    // console.log(that.currentimgIndex);
-                    if(that.goodsBannerdata.video){
-                        // 如果有视频
-                        if(that.currentimgIndex==that.swiperlength-1){
-                            // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                            that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                            that.tpswiperboxfather = false;
-                            that.goAnchor('product_detailsbox');
-                        }else if(that.currentimgIndex != 0){ 
-                            that.videodomstatus = false;
-                            let video = that.$refs.videodom;
-                            video.pause();
-                        }
-                    }else{
-                        // 没有视频内容
-                        if(that.currentimgIndex==that.swiperlength-1){
-                            // that.swiper.slideTo(that.swiperlength-2, 1000, false);
-                            that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
-                            that.tpswiperboxfather = false;
-                            that.goAnchor('product_detailsbox');
-                        }else if(that.currentimgIndex != 0){ 
-                            that.videodomstatus = false;
-                        }
+                }else{
+                    // 没有视频内容
+                    if(that.currentimgIndex==that.swiperlength-1){
+                        // that.swiper.slideTo(that.swiperlength-2, 1000, false);
+                        that.$refs.swiperdom.swipeTo(that.swiperlength-2, true);//是否跳过动画 true：是跳过动画 false：不跳过动画
+                        that.tpswiperboxfather = false;
+                        that.goAnchor('product_detailsbox');
+                    }else if(that.currentimgIndex != 0){ 
+                        that.videodomstatus = false;
                     }
-                // }
+                }
             },
             defImg(){
                 let img = event.srcElement;
@@ -750,18 +694,11 @@
             },
             // 跳转到锚链位置
             goAnchor(selectorid) {
-                // alert(selectorid);
-                let docFontSizeNum = document.documentElement.clientWidth / (750 / 100);
-                // let anchor = this.$el.querySelector('#'+selectorid);
+                // let docFontSizeNum = document.documentElement.clientWidth / (750 / 100);
                 let anchor = document.querySelector('#'+selectorid);
-
-                // document.body.scrollTop = anchor.offsetTop
-                // document.documentElement.scrollTop = anchor.offsetTop - 1.32*docFontSizeNum;
-                // document.body.scrollTop = anchor.offsetTop - 1.32*docFontSizeNum;
                 if(anchor.clientHeight >= window.innerHeight){
                     smoothgoto(anchor.offsetTop);
                 }else{
-                    // smoothgoto(anchor.offsetTop-window.innerHeight + anchor.clientHeight);
                     smoothgoto(anchor.offsetTop-window.innerHeight + anchor.clientHeight + 0.98*document.documentElement.clientWidth / (750 / 100) - 0.2*document.documentElement.clientWidth / (750 / 100));
                 }
             },
@@ -773,7 +710,7 @@
             // 商品关注接口
             followgoodsadd(){
                 let that = this;
-                if(!that.iflogin()){return;};
+                if(!that.iflogin()){return;}
                 this.api.productdetails.goodsadd({
                     // goodsid:that.pagebaseInfo.goodsId,
                     goodsid:that.product_skuid,
@@ -822,7 +759,7 @@
             // 店铺 关注接口
             followstoreadd(){
                 let that = this;
-                if(!that.iflogin()){return;};
+                if(!that.iflogin()){return;}
                 this.api.productdetails.storeadd({
                     storeId:that.shopdata.id,
                     uid:that.userID,
@@ -869,7 +806,7 @@
             // 获取商品基础信息
             getbaseInfo(){
                 let that = this;
-                let userid = '';
+                // let userid = '';
                 this.api.productdetails.baseInfo({
                     skuId:that.product_skuid,
                     uid:that.userID,
@@ -893,11 +830,9 @@
                     that.buyerselectdata.kezhong = pagebaseInfo.gram;
                     that.buyerselectdata.price = pagebaseInfo.price;
                     that.buyerselectdata.realGoldPrice = pagebaseInfo.realGoldPrice;
-                    // debugger;
                     if(pagebaseInfo.gBanner.length>0){
                         // that.goodsBannerdata.imgarr = pagebaseInfo.gBanner;
                         let gBannernew =JSON.parse(JSON.stringify(pagebaseInfo.gBanner));
-                        // debugger;
                         // that.goodsBannerdata.imgarr = gBannernew.splice(0,1);
                         // gBannernew.splice(0,1);
                         that.sharedata.cover=gBannernew.splice(0,1)[0].url;// APP分享需要的数据
@@ -947,6 +882,7 @@
                     // // 获取店铺信息及关注状态
                     that.getshopInfo(pagebaseInfo.brand_id);
                 }).catch(err=>{
+                    console.log(err);
                     that.nodatashow=true;
                 })
             },
@@ -990,6 +926,7 @@
                         }
                     }
                 }).catch(err=>{
+                    console.log(err);
                     that.nodatashow=true;
                 })
             },
@@ -999,8 +936,6 @@
             },
             // 商品规格选择事件  0当前规格层级 1规格id 2总规格层级树 3已选择好层级id数组  都是从0开始的
             specs_select(currentlevle,specs_id,specs_selectdata){
-                let that = this;
-                // console.log(currentlevle,specs_id,specs_selectdata);
                 let specs_selectdatanew = specs_selectdata;
                 specs_selectdatanew[currentlevle] = specs_id;
                 // console.log(specs_selectdatanew);
@@ -1078,7 +1013,7 @@
             // 商品购买点击事件
             buyit(){
                 let that = this;
-                if(!that.iflogin()){return;};
+                if(!that.iflogin()){return;}
                 if(that.$route.params.webtype==0){
                     if(that.appgive.addressdata.addressID==0){
                         // that.$toast('暂未设置收货地址');
@@ -1089,8 +1024,6 @@
                     }
                 }else if(that.$route.params.webtype==1){
                     let addressdata = getsessionStorage('checkaddressitem');
-                    // console.log(addressdata);
-                    // debugger
                     if(addressdata == null || addressdata.id == 0 || addressdata.id == null || addressdata.id == undefined){
                         // that.$toast('暂未设置收货地址');
                         // that.closeoptionsselect();
@@ -1136,8 +1069,7 @@
                     insured_price:that.pagebaseInfo.insured_price?that.pagebaseInfo.insured_price:0,//保价费
 
                     liveId:liveId,//直播间过来时的传参
-                }
-                // debugger;
+                };
                 if(that.$route.params.webtype==0){
                     that.closeoptionsselect();
                     that.buyitnowtoapp(OrderImmediatelydata);
@@ -1211,12 +1143,11 @@
             // 商品加入购物车点击事件
             addit(){
                 let that = this;
-                if(!that.iflogin()){return;};
+                if(!that.iflogin()){return;}
                 if(that.loadingstatus){
                     return;
                 }
                 that.loadingstatus = true;
-                // debugger;
                 if(that.$route.query.liveId==undefined||that.$route.query.liveId==''||that.$route.query.liveId==0){
                     that.api.productdetails.additem({
                         // skuid:that.pagebaseInfo.skuId,
@@ -1375,9 +1306,7 @@
         },
         mounted() {
             let that = this;
-            this.product_skuid = this.$route.params.product_id
-            // debugger;
-            // console.log(this.$route.query);
+            this.product_skuid = this.$route.params.product_id;
             // app默认地址设置
             // if (checkdevice() == 'ios' && that.$route.params.webtype==0) {//ios同时为app端
             if (checkdevice() == 'ios') {//ios同时为app端
@@ -1489,8 +1418,6 @@
                     }
                 }
             };
-            // debugger;
-            // let that = this;
             if(that.$route.params.webtype==0){
                 // app
                 that.userID = that.$route.query.userid
@@ -1499,7 +1426,6 @@
                 that.userID = that.$store.state.user.userid;
                 let addressdata = getsessionStorage('checkaddressitem');
                 // console.log(addressdata);
-                // debugger
                 if(addressdata == null || addressdata.id == 0 || addressdata.id == null || addressdata.id == undefined){
                     // that.$toast('暂无默认地址，点击收货地址栏，添加收货地址');
                     // that.closeoptionsselect();
@@ -1508,7 +1434,7 @@
                     that.appgive.addressdata.address = addressdata.province+' '+addressdata.city+' '+addressdata.area+' '+addressdata.address;
                     that.appgive.addressdata.addressID = addressdata.id;
                 }
-            };
+            }
             that.pagedatainit();
             // app调用锚点跳转事件
             window.appgoAnchor=(jsondata)=>{
@@ -1560,28 +1486,6 @@
     @import url('./css/productdetails.less');
 </style>
 <style lang='less'>
-    //@import url()
-    // .productdetails .swiper-button-next, .productdetails .swiper-button-prev{
-    //     display:none;
-    // }
-    // .productdetails .swiper-pagination-bullet{
-    //     background:rgba(255,255,255,0.32);
-    //     width:0.12rem;
-    //     height:0.12rem;
-    // }
-    // .productdetails .swiper-pagination-bullet-active{
-    //     background:#FFBD04;
-    //     width:0.2rem;
-    //     height:0.2rem;
-    // }
-    // .productdetails .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet{
-    //     margin:0 0.24rem;
-    // }
-    // .productdetails .swiper-container-horizontal > .swiper-pagination-bullets{
-    //     width:auto;
-    //     left:3.25rem;
-    //     bottom:0.415rem;
-    // }
     // 底部推荐模块加载更多提示框居中
     .productdetailswrap .van-list__error-text,.productdetailswrap .van-list__finished-text,.productdetailswrap .van-list__loading{
         margin:0 auto;
