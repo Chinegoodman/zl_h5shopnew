@@ -96,6 +96,7 @@
           // 退出登录
           logout() {
             this.$store.commit("resetuserdata");
+            this.$store.commit("resetNewUserDate");
             this.$router.push({ path: "/regist" });
           },
 

@@ -248,18 +248,18 @@ router.beforeEach((to, from, next) => {
     // let isLogin = global.isLogin; // 是否登录
 
     let isLogin = ''; // 是否登录
-    let userinfo = '';
+    let newUserInfo = '';
     // console.log('存储的用户信息：' + window.localStorage.getItem('user-info'))
-    if (window.localStorage.getItem('user-info')) {
-        userinfo = JSON.parse(window.localStorage.getItem('user-info'));
+    if (window.localStorage.getItem('new-user-info')) {
+        newUserInfo = JSON.parse(window.localStorage.getItem('new-user-info'));
     }
     // let userinfo = JSON.parse(window.localStorage.getItem('user-info')).user;
     // debugger;
     let useridstatus = false;
-    if (userinfo.userid != 0 && userinfo.userid != '' && userinfo.userid != undefined) {
+    if (newUserInfo.userid != 0 && newUserInfo.userid != '' && newUserInfo.userid != undefined) {
         useridstatus = true;
     }
-    isLogin = userinfo.isLogin && useridstatus;
+    isLogin = newUserInfo.isLogin && useridstatus;
     // console.log('是否登录：' + userinfo.isLogin);
     // console.log(userinfo.token);
     // console.log(userinfo.username);

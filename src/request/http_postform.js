@@ -45,10 +45,15 @@ const errorHandle = (status, other) => {
 var instance = axios.create({ timeout: 1000 * 20 });
 instance.defaults.withCredentials = false;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+
 instance.interceptors.request.use(
     config => {
         const token = store.state.user.token;
-        // token && (config.headers.Authorization = token);//TODO: 临时不需要token校验 暂时注释
+        // token && (config.headers.Authorization = token); //TODO: 临时不需要token校验 暂时注释
+        config.headers.appType = 1; //TODO: 应用类型
+        config.headers.marketChannel = ''; //TODO: 市场渠道号
+        config.headers.version = ''; //TODO: 版本号
+        config.headers.client = 4; //TODO: 临时不需要token校验 暂时注释
         return config;
     },
     error => Promise.error(error))

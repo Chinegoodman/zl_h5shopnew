@@ -370,33 +370,25 @@ export default {
               // 已注册用户
               let user = {
                 isLogin: true,
-                username: '',
                 token: userdata.zhouResultPojo.tokenSecret,
-                userid: userdata.id,
-                sig: userdata.imSign,
-                phone: that.phonenum,
-                userdata: ''
+                userid: userdata.zhouResultPojo.id,
+                timuserid: userdata.timPojo.userId,
+                sig: userdata.timPojo.timSign
               };
-              console.log('user');
-              console.log(user);
               that.$store.commit("saveuserdata", user);
-              that.getinfousermass(userdata.id,userdata.imSign,'shopindex',userdata.zhouResultPojo.accessToken);
+              that.getinfousermass(userdata.id,'shopindex');
               // that.$router.push({ name: "shopindex" });
             } else if (userdata.isSetPassword == 0) {
               // 未注册用户  即 新用户
               let user = {
                 isLogin: true,
-                username: '',
-                token: userdata.zhouResultPojo.tokenSecret,
-                userid: userdata.id,
-                sig: userdata.imSign,
-                phone: that.phonenum,
-                userdata: ''
+                token: userdata.zhouResultPojo?userdata.zhouResultPojo.tokenSecret:'',
+                userid: userdata.zhouResultPojo?userdata.zhouResultPojo.id:'',
+                timuserid: userdata.timPojo.userId,
+                sig: userdata.timPojo.timSign
               };
-              console.log('user');
-              console.log(user);
               that.$store.commit("saveuserdata", user);
-              that.getinfousermass(userdata.id,userdata.imSign,null,userdata.zhouResultPojo.accessToken);
+              that.getinfousermass(userdata.id,null);
               that.step = 2;
             }
             that.getsetaddressitem(userdata.id);
@@ -411,7 +403,7 @@ export default {
         .login({
           mobile: that.phonenum2,
           password: that.password,
-          client:'h5',
+          // client:'h5',
           loginType: 1
         })
         .then(data => {
@@ -422,23 +414,20 @@ export default {
             console.log(data.data.data);
             let userdata = data.data.data;
               let user = {
-                isLogin: true,
-                username: '',
-                token: userdata.zhouResultPojo.tokenSecret,
-                userid: userdata.id,
-                sig: userdata.imSign,
-                phone: that.phonenum2,
-                userdata: ''
+                token: userdata.zhouResultPojo?userdata.zhouResultPojo.tokenSecret:'',
+                userid: userdata.zhouResultPojo?userdata.zhouResultPojo.id:'1',
+                timuserid: userdata.timPojo.userId,
+                sig: userdata.timPojo.timSign
               };
               that.$store.commit("saveuserdata", user);
-              that.getinfousermass(userdata.id,userdata.imSign,'shopindex',userdata.zhouResultPojo.accessToken);
+              that.getinfousermass(userdata.id,'shopindex');
               that.getsetaddressitem(userdata.id);
           }
         });
     },
     
     //根据id获取用户信息
-    getinfousermass(userId,sig,routername,token) {
+    getinfousermass(userId,routername) {
       let that = this;
       that.api.personalcenter
         .getinfouser_new({
@@ -447,16 +436,14 @@ export default {
         .then(res => {
           if(res.data.code==1){
             let resdata = res.data.data;
-            let user = {
-              isLogin: true,
-              username: resdata.nickName,
-              token: token,
-              userid: resdata.userId,
-              sig: sig,
-              phone: resdata.mobile,
-              userdata: resdata
-            };
-            that.$store.commit("saveuserdata", user);
+            let nerUser = {
+                isLogin: true,
+                username: resdata.nickName,
+                userid: resdata.userId,
+                phone: resdata.mobile,
+                userdata : resdata
+            }
+            that.$store.commit("setNewUserDate", nerUser);
             //跳转到商城首页或不传routername让step等于2跳转密码设置页
             if(routername){
               that.$router.push({ name: routername });

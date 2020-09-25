@@ -286,7 +286,7 @@ export default {
         lunchupappurlfn() {
             let that = this;
             /// 秀场
-            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.user.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.nerUser.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
         },
         //打开下载启动弹层
         opendownload() {
@@ -353,7 +353,7 @@ export default {
                 // 当前 为 非关住状态
                 that.api.xiuchangliving
                     .relationOpration({
-                        currentUserId: that.$store.state.user.userid,
+                        currentUserId: that.$store.state.nerUser.userid,
                         transferUserId: that.livinglidata.uid,
                         relation: 1
                     })
@@ -367,7 +367,7 @@ export default {
                 // 当前 为 关住状态
                 that.api.xiuchangliving
                     .relationOpration({
-                        currentUserId: that.$store.state.user.userid,
+                        currentUserId: that.$store.state.nerUser.userid,
                         transferUserId: that.livinglidata.uid,
                         relation: 0
                     })
@@ -630,7 +630,7 @@ export default {
             that.api.productdetails
                 .additem4Live({
                     skuId: sku_id,
-                    userId: that.$store.state.user.userid,
+                    userId: that.$store.state.nerUser.userid,
                     roomId: that.livinglidata.id, //直播间ID
                     shopId: shopid,
                     quantity: 1
@@ -690,8 +690,8 @@ export default {
         iflogin() {
             let that = this;
             // H5端
-            if (!that.$store.state.user.userid ||
-                that.$store.state.user.userid == 0
+            if (!that.$store.state.nerUser.userid ||
+                that.$store.state.nerUser.userid == 0
             ) {
                 that.$toast({
                     message: "暂未登录，请先登录",

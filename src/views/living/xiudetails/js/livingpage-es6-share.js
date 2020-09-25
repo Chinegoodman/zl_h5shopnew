@@ -531,7 +531,7 @@ export default {
         lunchupappurlfn() {
             let that = this;
             /// 秀场
-            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.user.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.nerUser.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
         },
         //直播间加密
         open_openappbtnsbox_zbjm() {
@@ -636,7 +636,7 @@ export default {
             let that = this;
             that.api.xiuchangliving
                 .userRelationship({
-                    currentUserId: that.$store.state.user.userid,
+                    currentUserId: that.$store.state.nerUser.userid,
                     transferUserId: that.livinglidata.uid
                 })
                 .then(res => {
@@ -657,7 +657,7 @@ export default {
                 // 当前 为 非关住状态
                 that.api.xiuchangliving
                     .relationOpration({
-                        currentUserId: that.$store.state.user.userid,
+                        currentUserId: that.$store.state.nerUser.userid,
                         transferUserId: that.livinglidata.uid,
                         relation: 1
                     })
@@ -671,7 +671,7 @@ export default {
                 // 当前 为 关住状态
                 that.api.xiuchangliving
                     .relationOpration({
-                        currentUserId: that.$store.state.user.userid,
+                        currentUserId: that.$store.state.nerUser.userid,
                         transferUserId: that.livinglidata.uid,
                         relation: 0
                     })
@@ -860,7 +860,7 @@ export default {
                 .userRole({
                     liveId: liveId,
                     userId: userId,
-                    opUserId: that.$store.state.user.userid
+                    opUserId: that.$store.state.nerUser.userid
                 })
                 .then(res => {
                     if (res.data.code == 1) {
@@ -970,7 +970,7 @@ export default {
             that.api.productdetails
                 .additem4Live({
                     skuId: sku_id,
-                    userId: that.$store.state.user.userid,
+                    userId: that.$store.state.nerUser.userid,
                     roomId: that.livinglidata.id, //直播间ID
                     shopId: shopid,
                     quantity: 1
@@ -1030,8 +1030,8 @@ export default {
         iflogin() {
             let that = this;
             // H5端
-            if (!that.$store.state.user.userid ||
-                that.$store.state.user.userid == 0
+            if (!that.$store.state.nerUser.userid ||
+                that.$store.state.nerUser.userid == 0
             ) {
                 that.$toast({
                     message: "暂未登录，请先登录",
@@ -1064,7 +1064,7 @@ export default {
         //   let that = this;
         //   this.api.living.getLiveInfo({
         //     liveId:that.livinglidata.id,
-        //     operterId:that.$store.state.user.userid,
+        //     operterId:that.$store.state.nerUser.userid,
         //     userId:talkinguid,
         //   }).then(res=>{
         //     if(res.data.code==1){
@@ -1107,7 +1107,7 @@ export default {
         joinOrLeaveRoomXC(inorout) {
             let that = this;
             this.api.xiuchangliving.joinXiuChangOrLeaveRoom({
-                userId: that.$store.state.user.userid,
+                userId: that.$store.state.nerUser.userid,
                 liveId: that.liveId,
                 // touid: that.livinglidata.uid,
                 type: inorout, //0离开 1 加入
@@ -1124,7 +1124,7 @@ export default {
                 return;
             }
             let promiselogin = this.tim.login({
-                userID: that.$store.state.user.userid,
+                userID: that.$store.state.user.timuserid.toString(),
                 userSig: that.$store.state.user.sig
                     // "eJxFkF1PgzAUhv8LtzPS0pbBkl2wreoM82sa2RUp0LmTASWloNP434fNiJfneXJy3vf8OK-x9lo0DRSpMCnRhTNzkHNlsfxqQMtU7I3UA8aMMQ*h0fZSt6DqQXgIM*wRhP4lFLI2sAe7SOiFtvAxjBv*vFzfZA*h*333BhGfLuikFEmmJiEXu-jUdisXynaZHMKsY7GKYFFy6G9fnhR5rz29eXT1Z5ms3VUeVXTrHo6Bj-t7jnd51Ufz*XisOKa22F90OkTzA*SP*QxU0laaMsoYCfCFizxXXW1Sc2qk-cTvGbkGVU0_"
             });
@@ -1171,9 +1171,9 @@ export default {
                         chatType: "group",
                         msgType: "text",
                         sendUserInfo: {
-                            id: that.$store.state.user.userid,
-                            name: that.$store.state.user.userdata.userInfo.nickname,
-                            isVip: that.$store.state.user.userdata.userInfo.is_vip
+                            id: that.$store.state.nerUser.userid,
+                            name: that.$store.state.nerUser.userdata.userInfo.nickname,
+                            isVip: that.$store.state.nerUser.userdata.userInfo.is_vip
                         },
                         msgContent: {
                             text: that.timtxt,
@@ -1200,8 +1200,8 @@ export default {
                     // console.log(imResponse + "发送成功了");
 
                     let msgtxt = that.timtxt;
-                    let name = that.$store.state.user.userdata.userInfo.nickname;
-                    let isvip = that.$store.state.user.userdata.userInfo.is_vip;
+                    let name = that.$store.state.nerUser.userdata.userInfo.nickname;
+                    let isvip = that.$store.state.nerUser.userdata.userInfo.is_vip;
                     let talkinguid = 'noid';
                     that.messageList.push({ isvip, name, msgtxt, talkinguid });
                     setTimeout(() => {
@@ -1316,7 +1316,7 @@ export default {
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         // let msgtxt = `踢人了`;
                         let msgtxt = '你被踢出了直播间！';
-                        if (that.receivemsgdata.msgContent.text == that.$store.state.user.userid) {
+                        if (that.receivemsgdata.msgContent.text == that.$store.state.nerUser.userid) {
                             let comename = "系统公告";
                             let isvip = -1;
                             that.messageList.push({ comename, isvip: isvip, msgtxt, talkinguid });
@@ -1377,7 +1377,7 @@ export default {
                         // 收到 主播给用户发送创建订单成功的消息 的消息
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
-                        if (msgcontent.receiveId == that.$store.state.user.userid) {
+                        if (msgcontent.receiveId == that.$store.state.nerUser.userid) {
                             return;
                         } else {
                             let msgtxt = that.receivemsgdata.msgContent.text;
@@ -1390,7 +1390,7 @@ export default {
                         // let comename= msgdata.sendUserInfo.name;
                         // let msgtxt = `欢迎用户 ${comename} 进入直播间`;
                         let skuIDString = that.receivemsgdata.msgContent.skuIDString;
-                        if (msgcontent.receiveId == that.$store.state.user.userid) {
+                        if (msgcontent.receiveId == that.$store.state.nerUser.userid) {
                             // alert(msgcontent.skuIDString);
                             that.confirmordermbstatus = true;
                             // console.log(that.receivemsgdata);
@@ -1889,7 +1889,7 @@ export default {
         //主播个人资料展示
         openanchormsgshell() {
             let that = this;
-            that.getBasicUserInfo(that.liveId, that.livinglidata.uid, that.$store.state.user.userid);
+            that.getBasicUserInfo(that.liveId, that.livinglidata.uid, that.$store.state.nerUser.userid);
         },
         //主播个人资料关闭
         closeAnchormsgshell() {

@@ -173,7 +173,7 @@ export default {
             }
             this.api.login
             .savephone_new({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 mobile: that.newphone,
                 verificationCode : that.code
             }).then(res => {
