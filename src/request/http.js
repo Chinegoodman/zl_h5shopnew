@@ -56,7 +56,7 @@ instance.interceptors.request.use(
         config.headers.appType = 1; //TODO: 应用类型
         config.headers.marketChannel = ''; //TODO: 市场渠道号
         config.headers.version = ''; //TODO: 版本号
-        config.headers.client = 4; //TODO: 临时不需要token校验 暂时注释
+        config.headers.clientType = 4; //TODO: 临时不需要token校验 暂时注释
         return config;
     },
     error => Promise.error(error))
