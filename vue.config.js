@@ -40,7 +40,7 @@ module.exports = {
             //     }
             // },
             '/devapi': {
-                // target: 'http://47.103.198.168', //抓周 测试服-A
+                // target: 'http://test.test.zhulihr.com', //抓周 测试服-A
                 target: 'https://hd.test.zhulihr.com', //灰度测试服务器22222222 -A
                 // target: 'https://shop.zhulihr.com', //生产222 -A
                 changeOrigin: true,
