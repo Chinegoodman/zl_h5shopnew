@@ -316,6 +316,9 @@ export default {
             }
         }
 
+        //分享
+        that.lunchupappurlfn();
+
         //直播正文-从获取详情资料开始
         that.getLiveDetailInfo(that.liveId, function() {
             // this.quitGroup();
@@ -495,8 +498,6 @@ export default {
                 that.canplaythroughstatus = true;
             });
 
-            //分享
-            that.lunchupappurlfn();
             //获取关注状态
             // that.getRelationOpration();
 
@@ -531,9 +532,10 @@ export default {
             let that = this;
             /// 秀场
             if (that.livinglidata.state == 1) {
-                this.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+                that.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
             } else {
-                this.lunchupappurl = `zhuazhouH5://`;
+                console.log('监听直播结束拉起')
+                that.lunchupappurl = `zhuazhouH5://`;
             }
         },
         //直播间加密
@@ -703,7 +705,7 @@ export default {
                             that.livinglidata = res.data.data;
                             if (res.data.data.state === 0) {
                                 that.livingendstatus = false;
-                                that.player.destroy(true);
+                                // that.player.destroy(true);
                             } else {
                                 setTimeout(fn, 0);
                             }
