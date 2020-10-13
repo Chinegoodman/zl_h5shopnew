@@ -316,8 +316,7 @@ export default {
             }
         }
 
-        //分享
-        that.lunchupappurlfn();
+
 
         //直播正文-从获取详情资料开始
         that.getLiveDetailInfo(that.liveId, function() {
@@ -333,6 +332,8 @@ export default {
             //加入群聊  后台的接口
             // that.joinOrLeaveRoomXC(1);
             // 直播相关
+            //分享
+            that.lunchupappurlfn();
 
             that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
             // console.log('that.livinglidata.streamAddrHls');
