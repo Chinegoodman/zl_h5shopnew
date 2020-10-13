@@ -315,9 +315,6 @@ export default {
                 that.wxtipsstatus = true;
             }
         }
-
-
-
         //直播正文-从获取详情资料开始
         that.getLiveDetailInfo(that.liveId, function() {
             // this.quitGroup();
@@ -326,15 +323,15 @@ export default {
             // 2 告警级别，SDK 只输出告警和错误级别的日志
             // 3 错误级别，SDK 只输出错误级别的日志
             // 4 无日志级别，SDK 将不打印任何日志
-            that.tim.setLogLevel(3); //IM日志级别
+            //分享
+            that.lunchupappurlfn();
+            //IM日志级别
+            that.tim.setLogLevel(3);
             that.logoutfn();
             // this.player.destroy(true);
             //加入群聊  后台的接口
             // that.joinOrLeaveRoomXC(1);
             // 直播相关
-            //分享
-            that.lunchupappurlfn();
-
             that.livinglidata.streamAddrHls = that.livinglidata.streamAddrHls.replace('http://', 'https://');
             // console.log('that.livinglidata.streamAddrHls');
             // console.log(that.livinglidata.streamAddrHls);
@@ -533,9 +530,10 @@ export default {
             let that = this;
             /// 秀场
             if (that.livinglidata.state == 1) {
+                console.log('监听直播结束拉起01')
                 that.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
             } else {
-                console.log('监听直播结束拉起')
+                console.log('监听直播结束拉起02')
                 that.lunchupappurl = `zhuazhouH5://`;
             }
         },
