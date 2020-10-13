@@ -530,7 +530,11 @@ export default {
         lunchupappurlfn() {
             let that = this;
             /// 秀场
-            this.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+            if (that.livinglidata.state == 1) {
+                this.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+            } else {
+                this.lunchupappurl = `zhuazhouH5://`;
+            }
         },
         //直播间加密
         open_openappbtnsbox_zbjm() {
