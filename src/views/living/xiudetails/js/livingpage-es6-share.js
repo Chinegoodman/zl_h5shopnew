@@ -303,6 +303,7 @@ export default {
         //获取直播间详情
         let that = this;
         that.liveId = that.$route.query.liveId;
+        that.userId = that.$route.query.userId;
         //分享相关
         if (checkdevice() == "anzhuo") {
             that.downloadappurl = 'https://apk.izhuazhou.cn/zsapk/zz_zs.apk';
@@ -440,8 +441,6 @@ export default {
                         liveId: that.liveId,
                     })
                     .then(res => {
-                        console.log('res.data08-that.livinglidata秀场777');
-                        console.log(res.data);
                         if (res.data.code == 1) {
                             if (
                                 res.data.data != null ||
@@ -531,7 +530,7 @@ export default {
         lunchupappurlfn() {
             let that = this;
             /// 秀场
-            this.lunchupappurl = `zhuazhouH5://show?uid=${that.$store.state.nerUser.userid}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
+            this.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
         },
         //直播间加密
         open_openappbtnsbox_zbjm() {
