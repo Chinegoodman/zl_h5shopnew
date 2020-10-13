@@ -530,10 +530,8 @@ export default {
             let that = this;
             /// 秀场
             if (that.livinglidata.state == 1) {
-                console.log('监听直播结束拉起01')
                 that.lunchupappurl = `zhuazhouH5://show?uid=${that.userId}&liveId=${that.livinglidata.id}&anchorId=${that.livinglidata.uid}`;
             } else {
-                console.log('监听直播结束拉起02')
                 that.lunchupappurl = `zhuazhouH5://`;
             }
         },
@@ -704,6 +702,7 @@ export default {
                             that.livinglidata = res.data.data;
                             if (res.data.data.state === 0) {
                                 that.livingendstatus = false;
+                                that.lunchupappurlfn();
                                 // that.player.destroy(true);
                             } else {
                                 setTimeout(fn, 0);
