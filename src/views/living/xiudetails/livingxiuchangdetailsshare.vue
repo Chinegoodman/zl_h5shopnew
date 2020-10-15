@@ -22,7 +22,7 @@
               <div class="dznamemass">
                 <div class="nametit _txtov1">{{livinglidata.nickName}}</div>
                 <div class="looknum">
-                  <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.id}}</span>
+                  <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.virtualId}}</span>
                 </div>
               </div>
               <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0"  @click.stop="openappfn">

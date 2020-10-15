@@ -611,7 +611,7 @@ export default {
             let that = this;
             that.api.xiuchangliving
                 .userRelationship({
-                    currentUserId: that.$store.state.nerUser.timuserid,
+                    currentUserId: that.$store.state.nerUser.userid,
                     transferUserId: that.livinglidata.uid
                 })
                 .then(res => {
