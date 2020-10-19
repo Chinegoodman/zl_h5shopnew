@@ -233,14 +233,13 @@ export default {
                     height: 1.12rem;
                     // padding: .05rem;
                     border-radius:50%;
-                    background: url("../../../assets/imgs/personal/level-hd.png") no-repeat 0 0;
-                    background-size: 1.12rem 1.12rem;
+                    border : 3px solid #ffbf00;
                     overflow : hidden;
                     img{
                         display: block;
                         width: 100%;
                         height: 100%;
-                        margin: 0.05rem 0 0 0;
+                        overflow : hidden;
                         border-radius:50%;
                     }
                 }
