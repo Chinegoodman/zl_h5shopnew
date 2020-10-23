@@ -43,6 +43,22 @@ import {
     // SwipeItem
 } from 'vant'
 
+let SDKAppID = '';
+if (process.env.VUE_APP_ENV == 'uat') {
+    // 测试环境
+    SDKAppID = 1400440185;
+} else if (process.env.VUE_APP_ENV == 'production') {
+    // 生产环境
+    SDKAppID = 1400068060;
+} else if (process.env.VUE_APP_ENV == 'gray') {
+    // 灰度环境
+    SDKAppID = 1400438732;
+} else if (process.env.VUE_APP_ENV == 'development') {
+    // 开发环境
+    SDKAppID = 1400440185 //测试
+        // SDKAppID=1400068060//生产环境
+        // SDKAppID=1400438732//灰度环境
+}
 export default {
     name: "livingxiudetails",
     components: {
@@ -146,7 +162,7 @@ export default {
 
             // IM TIM 相关参数====================开始
             options: {
-                SDKAppID: 1400068060 // 接入时需要将0替换为您的即时通信应用的 SDKAppIDw
+                SDKAppID: SDKAppID // 接入时需要将0替换为您的即时通信应用的 SDKAppIDw
             },
             timresdata: "", //登录成功  或 退出登录 返回的信息
             timtxt: "", //输入框输入的文本内容
