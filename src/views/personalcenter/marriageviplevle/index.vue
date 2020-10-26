@@ -13,7 +13,7 @@
                 <span class="sunshine"></span>
                 <div class="msg">
                     <div class="tit">{{levelMsg.nikeName}}<span class="levelbox"><viplevel :lv_num="levelMsg.level?levelMsg.level:1"></viplevel></span></div>
-                    <span class="ids">抓周号：{{levelMsg.virtualId}}</span>
+                    <span class="ids">ID：{{levelMsg.virtualId}}</span>
                 </div>
             </div>
             <div class="centers-sec">当前尊享值：<span>{{levelMsg.experience}}</span></div>
