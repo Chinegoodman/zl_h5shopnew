@@ -21,10 +21,12 @@
                     <img src="@/views/shop/productdetails/imgs/spxqdp.png" alt="抓周">
                     <!-- <p>店铺</p> -->
                 </div>
-                <div class="li" @click="gotokefu" v-if="$route.query.appname != 'jmjp' && serviceshow">
+
+                <!-- TODO: 安卓过审不通过 隐藏此入口 -->
+                <!-- <p>客服</p> -->
+                <!-- <div class="li" @click="gotokefu" v-if="$route.query.appname != 'jmjp' && serviceshow">
                     <img src="@/views/shop/productdetails/imgs/spxqkf.png" alt="抓周">
-                    <!-- <p>客服</p> -->
-                </div>
+                </div> -->
                 <div class="li" v-if="!isAttention_status && $route.query.appname != 'jmjp'" @click="gotoshoucang(true)">
                     <img src="@/views/shop/productdetails/imgs/spxqsc.png" alt="抓周">
                     <!-- <p>收藏</p> -->
