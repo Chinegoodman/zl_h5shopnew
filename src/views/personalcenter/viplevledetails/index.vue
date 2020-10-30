@@ -13,7 +13,7 @@
                 <span class="sunshine"></span>
                 <div class="msg">
                     <div class="tit">{{levelMsg.nikeName}}<span class="levelbox"><viplevel :lv_num="levelMsg.level?levelMsg.level:1"></viplevel></span></div>
-                    <span class="ids">抓周号：{{levelMsg.virtualId}}</span>
+                    <span class="ids">ID：{{levelMsg.virtualId}}</span>
                 </div>
             </div>
             <div class="centers-sec">当前尊享值：<span>{{levelMsg.experience}}</span></div>
@@ -48,7 +48,7 @@
             </div>
             <div class="txt">
                 <span class="t">一、什么是成长值</span>
-                <p>成长值是根据用户在抓周APP上的账户信息、消费金额、活跃互动等方面的行为，综合算出的分值，分值每天更新。</p>
+                <p>成长值是根据用户在APP上的账户信息、消费金额、活跃互动等方面的行为，综合算出的分值，分值每天更新。</p>
             </div>
             <div class="txt">
                 <span class="t">二、成长值组成</span>
@@ -58,7 +58,7 @@
                         <div class="rt">
                             <span class="t">消费</span>
                             <p>
-                                您在抓周APP的消费行为，包括金额（实际支付     金额）、频次（天数）、充值、购买会员等，消费越多提升越多。 
+                                您在APP的消费行为，包括金额（实际支付     金额）、频次（天数）、充值、购买会员等，消费越多提升越多。 
                             </p>
                         </div>
                     </li>
@@ -67,7 +67,7 @@
                         <div class="rt">
                             <span class="t">活跃</span>
                             <p>
-                                您在抓周APP的登录、观看直播、转发分享以及使用抓周在线支付系统等行为，活跃越高分数值越高。 
+                                您在APP的登录、观看直播、转发分享以及使用APP在线支付系统等行为，活跃越高分数值越高。 
                             </p>
                         </div>
                     </li>
