@@ -51,7 +51,7 @@ module.exports = {
             },
             '/xiuchangdevapi2': {
                 // target: 'http://xc.testmapi.zhulihr.cn', //新架构 测试服-A
-                target: 'https://xc.premapi.zhulihr.cn', //新架构 灰度-A
+                target: 'https://xc.premapi.zhulihr.cn', //新架构 灰度-A 
                 // target: 'https://xc.mobile.zhulihr.cn', //生产222-A
                 changeOrigin: true,
                 ws: true,

@@ -5,16 +5,16 @@
     <div class="header">
       <div class="backgd">
         <div class="header_tou">
-          <div class="logined-box" v-if="$store.state.user.isLogin">
-              <img v-if="$store.state.user.userdata.headPortrait" :src="$store.state.user.userdata.headPortrait" class="hd-face" />
+          <div class="logined-box" v-if="$store.state.nerUser.isLogin">
+              <img v-if="$store.state.nerUser.userdata.headPortrait" :src="$store.state.nerUser.userdata.headPortrait" class="hd-face" />
               <img v-else src="./../../../assets/imgs/personal/mine_default.png" alt="抓周" class="hd-face"/>
               <div class="use_top">
-                <span class="logined">{{$store.state.user.userdata.nickName}}</span>
+                <span class="logined">{{$store.state.nerUser.userdata.nickName}}</span>
                 <span class="level_use" @click="goToVipLevelPage">
-                  <span class="levelbox"><viplevel :lv_num="$store.state.user.userdata.level?$store.state.user.userdata.level:1"></viplevel></span>
+                  <span class="levelbox"><viplevel :lv_num="$store.state.nerUser.userdata.level?$store.state.nerUser.userdata.level:1"></viplevel></span>
                 </span>
               </div>
-              <div class="info_use">抓周ID：<span>{{$store.state.user.userdata.integral}}</span><span>{{$store.state.user.userdata.virtualId}}</span><span class="ic-fz" @click="copy_kuaidi_msg($store.state.user.userdata.virtualId)"><img src="../../../assets/imgs/personal/orderfz.png" alt /></span></div>
+              <div class="info_use">抓周ID：<span>{{$store.state.nerUser.userdata.integral}}</span><span>{{$store.state.nerUser.userdata.virtualId}}</span><span class="ic-fz" @click="copy_kuaidi_msg($store.state.nerUser.userdata.virtualId)"><img src="../../../assets/imgs/personal/orderfz.png" alt /></span></div>
               <div class="guild-info"  @click="gomyinfo"></div>
           </div>
           <div v-else @click="gotologin" style="cursor:pointer;">
@@ -211,7 +211,7 @@ export default {
       that.$router.push({
         name: "viplevledetails",
         query: {
-         userId : that.$store.state.user.userid
+         userId : that.$store.state.nerUser.userid
         }
       });
     },
@@ -401,23 +401,21 @@ export default {
       let that = this;
       that.api.personalcenter
         .getinfouser_new({
-          userId : that.$store.state.user.userid
+          userId : that.$store.state.nerUser.userid
         })
         .then(res => {
           if(res.data.code==1){
             let resdata = res.data.data;
             console.log('resdata')
             console.log(resdata)
-            let user = {
-              isLogin: true,
-              username: resdata.nickName,
-              token: that.$store.state.user.token,
-              userid: resdata.userId,
-              sig: that.$store.state.user.sig,
-              phone: that.$store.state.user.mobile,
-              userdata: resdata
-            };
-            that.$store.commit("saveuserdata", user);
+            let nerUser = {
+                isLogin: true,
+                username: resdata.nickName,
+                userid: resdata.userId,
+                phone: that.$store.state.nerUser.phone,
+                userdata : resdata
+            }
+            that.$store.commit("setNewUserDate", nerUser);
           }
           // console.log(res);
           // if ( res.data.data.face_url == "" || res.data.data.face_url == undefined) {
@@ -455,6 +453,7 @@ export default {
         window.sessionStorage.clear();
         window.localStorage.clear();
         this.$store.commit("resetuserdata");
+        this.$store.commit("resetNewUserDate");
         this.$router.push({ name: "shopindex" });
       }
     },
@@ -463,6 +462,7 @@ export default {
       window.sessionStorage.clear();
       window.localStorage.clear();
       this.$store.commit("resetuserdata");
+      this.$store.commit("resetNewUserDate");
       this.$router.push({ name: "login" });
     }
   },

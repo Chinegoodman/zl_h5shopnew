@@ -225,7 +225,7 @@ export default {
             let that = this;
             that.api.personalcenter
             .getinfouser_new({
-                userId : that.$store.state.user.userid
+                userId : that.$store.state.nerUser.userid
             })
             .then(res => {
                 if(res.data.code === 1){
@@ -260,7 +260,7 @@ export default {
             let that = this;
             that.api.personalcenter
             .updateHeadPortrait({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 headPortraitUrl :  that.upimglist[0]
             }).then(res => {
                 that.getuseinfo();
@@ -297,7 +297,7 @@ export default {
             that.post_time = this.timeValue;
             that.api.personalcenter
             .updateinfouser_new({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 birthday :  that.post_time
             }).then(res => {
                 if(res.data.code === 1){
@@ -327,7 +327,7 @@ export default {
             }
             that.api.personalcenter
             .updateinfouser_new({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 gender :  that.post_sex
             }).then(res => {
                 if(res.data.code === 1){

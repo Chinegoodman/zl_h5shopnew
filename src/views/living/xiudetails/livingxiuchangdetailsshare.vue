@@ -22,7 +22,7 @@
               <div class="dznamemass">
                 <div class="nametit _txtov1">{{livinglidata.nickName}}</div>
                 <div class="looknum">
-                  <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.id}}</span>
+                  <span class="_txtov1" v-if="livinglidata.realCount!=''">ID:{{livinglidata.virtualId}}</span>
                 </div>
               </div>
               <div :class="{'dznamegz':true,'dznamegzed' : attention_flag===0}" v-if="attention_flag===0"  @click.stop="openappfn">
@@ -294,7 +294,7 @@
      <!-- 直播结束、、 -->
     <div v-else class="livingendwrap" :style="{backgroundImage:'url('+livinglidata.cover+')'}">
        <div class="livingendinner"> </div>
-        <div class="close" @click.stop="$router.go(-1)">
+        <div class="close" @click.stop="$router.go(-1)" v-if="false">
           <img src="./../../../assets/imgs/living/details/cuohao.png" alt />
         </div>
         <div class="innercom">
@@ -306,7 +306,7 @@
             <span class="title">总观看人数</span>
           </div>
         </div>
-        <p class="followbtn" @click.stop="follow(false)">关注主播</p>
+        <p class="followbtn" @click.stop="openappfn">关注主播</p>
     </div>
     <!-- 确认支付弹窗界面 -->
     <div v-if="confirmordermbstatus" class="confirmordermb" @click.stop="returnfn">

@@ -47,7 +47,7 @@ export default {
             let that = this;
             that.api.personalcenter
             .updateinfouser_new({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 introduction :  that.introduction
             }).then(res => {
                 if(res.data.code === 1){

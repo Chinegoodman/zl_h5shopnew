@@ -146,7 +146,7 @@ export default {
             }
             this.api.login
             .savepassword_new({
-                userId : that.$store.state.user.userid,
+                userId : that.$store.state.nerUser.userid,
                 verificationCode: that.code,
                 password : that.password,
                 token : that.return_token
