@@ -12,7 +12,8 @@
         @_upfileslistchange="upfileslistchange"
     ></uploadfile>
 
-    <div id="local_stream" style="height:300px;"></div>
+    <div id="local_stream" style="height:400px;"></div>
+    <!-- <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="false"> -->
     <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="stream_video_status">
       <div :id="'remote_video_panel_'+streamid" class="video-view">
         <div :id="'remote_video_'+streamid" class="video-placeholder">
@@ -23,7 +24,22 @@
         </div>
       </div>
     </div>
-
+    <!-- 电脑设备信息 -->
+    <div class="dev_list" v-show="dev_list_status">
+      <div class="voicedom">
+        <strong>音频音频</strong>
+        <ul>
+          <li @click="selectedMicrophone_index=index" :class="{select:selectedMicrophone_index==index}" v-for="(item,index) in selectedMicrophoneArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
+        </ul>
+      </div>
+      <div class="voicedom">
+        <strong>视频设备</strong>
+        <ul>
+          <li @click="selectedCamera_index=index" :class="{select:selectedCamera_index==index}" v-for="(item,index) in selectedCameraArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
+        </ul>
+      </div>
+    </div>
+    <button @click="agora_devsearch();dev_list_status=true;">设备检测</button>
     <button @click="agora_start('抓周')">开播</button>
     <button @click="agora_close('抓周')">关播</button>
     <!-- <button @click="agorartcleaveCall">离开频道</button> -->
@@ -82,11 +98,13 @@ export default {
         // appId: "a85084bad559490da05eb0bd7fd0addc",
         appId: "9b27bbc9b5624075809bfd4f98f3ab10",
         // 目标频道名
-        channel: this.$store.state.user.userid.toString(),
+        channel: '',
         // 如果你的项目开启了 Token 鉴权，这里填写生成的 Token 值
         token: null,
-        // uid:Number(this.$store.state.user.userid)
-        uid:this.$store.state.user.userid.toString(),
+        // uid:Number(this.$store.state.nerUser.userid)
+        uid:'',
+
+        liveStreamUrl:'',//直播推流到 网速 的流地址
       },
 
       agorauid: "", //频道内每个用户的UID是唯一的。 Agora 自动分配一个 UID 并在 join 的结果中返回
@@ -105,6 +123,12 @@ export default {
       autoplaybuttonifhide:true,
 
       livingroomdata:'',
+
+      dev_list_status:false,//默认隐藏设备列表
+      selectedMicrophoneArr:[],//麦克风==设备数组 
+      selectedCameraArr:[],//摄像头==设备数组 
+      selectedMicrophone_index:0,//麦克风 下标
+      selectedCamera_index:0,//摄像头 下标
     };
   },
   computed: {},
@@ -119,21 +143,60 @@ export default {
     // 开播操作
     agora_start(typename){
       let zs = this;
+      if(!zs.dev_list_status){
+        // 表示没有选择过设备
+        zs.agora_devsearch();
+      }
       if(!zs.ifanchor(typename)){
         zs.$toast(`登陆用户非${typename}的认证主播`);
         return
       }
       zs.createlive('秀场');
     },
+    // 开播设备检测
+    agora_devsearch(){
+      let zs = this;
+      AgoraRTC.getDevices(function(devices){
+          var audioDevices = devices.filter(function(device){
+              return device.kind === "audioinput";
+          });
+          var videoDevices = devices.filter(function(device){
+              return device.kind === "videoinput";
+          });
+          zs.selectedMicrophoneArr=audioDevices;
+          zs.selectedCameraArr=videoDevices;
+          // var uid = Math.floor(Math.random()*10000);
+          // var stream = AgoraRTC.createStream({
+          //     streamID: uid,
+          //     // Set audio to true if testing microphone
+          //     audio: true,
+          //     microphoneId: selectedMicrophoneId,
+          //     // Set video to true if testing camera
+          //     video: true,
+          //     cameraId: selectedCameraId,
+          //     screen: false
+          // });
+
+          // // Initialize the stream
+          // stream.init(function(){
+          //     stream.play("mic-test");
+          //     // Print the audio level every 1000 ms
+          //     setInterval(function(){
+          //         console.log(`Local Stream Audio Level ${stream.getAudioLevel()}`);
+          //     }, 1000);
+          // })
+      });
+    },
     // 创建直播间
     createlive(typename){
       let zs = this;
       this.api.anchor.createlive({
-        uid:zs.$store.state.user.userid,
+        uid:zs.$store.state.nerUser.userid,
         type:typename=='秀场'?2:typename=='电台'?3:1,
-        cover:'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1600159219864.png',
+        // cover:'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1600159219864.png',
+        cover:'https://www.hxfycg.com/files/default/2019/08-14/172459b289b3153510.jpg',
         name:'psf测试',//直播名称
-        notice:'psf测试公告',
+        notice:'psf测试de公告',
         password:'',
         skuIds:'',
       }).then(res=>{
@@ -141,6 +204,8 @@ export default {
           zs.livingroomdata=res.data.data;
 
           zs.agoraoptions.token =res.data.data.swToken;
+          zs.agoraoptions.channel =res.data.data.id.toString();
+          zs.agoraoptions.uid =Number(res.data.data.id);
           let liveId='';
           liveId =res.data.data.id;
           zs.agoraRTCinit();
@@ -170,21 +235,21 @@ export default {
       let zs = this;
       switch (name) {
         case '抓周':
-          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(1)>-1){
+          if(zs.$store.state.nerUser.userdata.anchorPermissions.indexOf(1)>-1){
             return true;
           }else{
             return false;
           }
           // break;
         case '秀场':
-          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(2)>-1){
+          if(zs.$store.state.nerUser.userdata.anchorPermissions.indexOf(2)>-1){
             return true;
           }else{
             return false
           }
           // break;
         case '电台':
-          if(zs.$store.state.user.userdata.anchorPermissions.indexOf(1)>-1){
+          if(zs.$store.state.nerUser.userdata.anchorPermissions.indexOf(1)>-1){
             return true;
           }else{
             return false
@@ -209,8 +274,8 @@ export default {
     },
     getuserlevelquities() {
       let zs = this;
-      let userId = zs.$store.state.user.userid
-        ? zs.$store.state.user.userid
+      let userId = zs.$store.state.nerUser.userid
+        ? zs.$store.state.nerUser.userid
         : "";
       this.api.test
         .userlevelequities({
@@ -237,10 +302,12 @@ export default {
         zs.agoraoptions.appId,
         function() {
           console.log("init success");
-          zs.setClientRole();
 
-          zs.createlocalStream();
-          zs.streaminit();
+          zs.setClientRole();//主播创建本地流
+          zs.audiencejoin();//加入当前 声网 直播 组？吧
+
+          zs.createlocalStream();//用户（主播）创建本地流
+          zs.streaminit();//用户（主播）初始化本地流
         },
         err => {
           console.error(err);
@@ -254,12 +321,6 @@ export default {
       // The value of role can be "host" or "audience".
       let role = "host";
       this.rtc.client.setClientRole(role); 
-      zs.rtc.client.startLiveStreaming(zs.livingroomdata.liveStreamUrl, false);
-      zs.$toast({
-        duration:0,
-        message:'开播中..'
-      })
-      zs.audiencejoin();
       // setTimeout(()=>{
       //   zs.clientpublish();
       // },5000)
@@ -271,7 +332,7 @@ export default {
       // Join a channel
       let zs = this;
       // this.rtc.client.join(this.agoraoptions.token ? this.agoraoptions.token : null, this.agoraoptions.channel, this.agoraoptions.uid ? +this.agoraoptions.uid : null, function (uid) {
-      this.rtc.client.join(zs.agoraoptions.token ? zs.agoraoptions.token : null, zs.agoraoptions.channel, zs.agoraoptions.uid ? zs.agoraoptions.uid : null, function (uid) {
+      this.rtc.client.join(zs.agoraoptions.token ? zs.agoraoptions.token : null, zs.agoraoptions.channel, zs.agoraoptions.uid ? Number(zs.agoraoptions.uid) : null, function (uid) {
           console.log("join channel: " + zs.agoraoptions.channel + " success, uid: " + uid);
         }, function(err) {
           console.error("client join failed", err)
@@ -282,13 +343,28 @@ export default {
     createlocalStream(){
       console.log('3.2.1主播 创建本地流');
       let zs = this;
-      zs.rtc.localStream = AgoraRTC.createStream({
-        // streamID: zs.rtc.params.uid,
-        streamID: zs.agoraoptions.uid,
-        audio: true,
-        video: true,
-        screen: false,
-      })
+      if(!zs.dev_list_status){
+        // 表示没有选择过设备
+        zs.rtc.localStream = AgoraRTC.createStream({
+          // streamID: zs.rtc.params.uid,
+          streamID: zs.agoraoptions.uid,
+          audio: true,
+          video: true,
+          screen: false,
+          // microphoneId: zs.selectedMicrophoneArr[zs.selectedMicrophone_index].deviceId,
+          // cameraId: zs.selectedCameraArr[zs.selectedCamera_index].deviceId,
+        })
+      }else{
+        zs.rtc.localStream = AgoraRTC.createStream({
+          // streamID: zs.rtc.params.uid,
+          streamID: zs.agoraoptions.uid,
+          audio: true,
+          video: true,
+          screen: false,
+          microphoneId: zs.selectedMicrophoneArr[zs.selectedMicrophone_index].deviceId,
+          cameraId: zs.selectedCameraArr[zs.selectedCamera_index].deviceId,
+        })
+      }
     },
     // 3.2.2主播 初始化本地流
     streaminit(){
@@ -299,10 +375,15 @@ export default {
         // play stream with html element id "local_stream"
         zs.rtc.localStream.play("local_stream");
 
-        // zs.clientpublish();
+        // 推流到 CDN
+        zs.rtc.client.startLiveStreaming(zs.livingroomdata.liveStreamUrl, false);
+        zs.$toast({
+          message:'正在推送直播流..'
+        })
+
         setTimeout(()=>{
-          zs.clientpublish();
-        },5000)
+          zs.clientpublish(); // 这个不执行 流就不往外推送了 TODO:得看看
+        },0)
       }, function (err) {
         console.error("init local stream failed ", err);
         zs.$toast(err.info);
@@ -376,12 +457,13 @@ export default {
         // Close the local stream
         zs.rtc.localStream.close();
         // Stop playing the remote streams and remove the views
-        while (zs.rtc.remoteStreams.length > 0) {
-          var stream = zs.rtc.remoteStreams.shift();
-          var id = stream.getId();
-          stream.stop();
-          zs.removeView(id);
-        }
+        
+        // while (zs.rtc.remoteStreams.length > 0) {
+        //   var stream = zs.rtc.remoteStreams.shift();
+        //   var id = stream.getId();
+        //   stream.stop();
+        //   zs.removeView(id);
+        // }
         console.log("client leaves channel success");
       }, function (err) {
         console.log("channel leave failed");
@@ -430,6 +512,39 @@ export default {
 
 <style lang="less" scoped>
 //@import url()
+.testwrap{
+  padding-bottom: 2rem;
+}
+.dev_list{
+  width: 100%;
+  max-height: 300px;
+  margin: 0 auto 15px;
+  overflow: scroll;
+  background-color: #ccc;
+  color: rgb(245, 1, 1);
+  .voicedom{
+    strong{
+      font-weight: bold;
+      padding: 24px 0 0 24px;
+      display: block;
+    }
+    ul{
+      li{
+        padding: 0 5px;
+        margin: 5px auto;
+        width: calc( 90% - 10px);
+        box-sizing: border-box;
+        border: 1px solid rgb(59, 7, 7);
+        word-wrap: break-word;
+
+        &.select{
+          background-color: rgb(245, 1, 1);
+          color: #fff;
+        }
+      }
+    }
+  }
+}
 </style>
 
 <style lang="less">
