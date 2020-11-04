@@ -11,37 +11,50 @@
         :defaultfileslist="defaultfileslist"
         @_upfileslistchange="upfileslistchange"
     ></uploadfile>
-
-    <div id="local_stream" style="height:400px;"></div>
-    <!-- <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="false"> -->
-    <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="stream_video_status">
-      <div :id="'remote_video_panel_'+streamid" class="video-view">
-        <div :id="'remote_video_'+streamid" class="video-placeholder">
-        </div>
-        <div :id="'remote_video_info_'+streamid" class="video-profile" :class="{show:streamvideoprofilestatus,hide:!streamvideoprofilestatus}">
-        </div>
-        <div :id="'video_autoplay_'+streamid" class="autoplay-fallback" :class="{hide:autoplaybuttonifhide}">
+    <div class="living_wrap">
+      <div id="local_stream" style="height:400px;"></div>
+      <div class="voicestatus">
+        {{havevoice_status?'正常开播':'静音开播'}}<br/>
+        {{my_status?'美颜开启':'美颜关闭'}}
+      </div>
+      <!-- <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="false"> -->
+      <div id="video" style="height:100px;background:#ccc;margin:5px auto;" v-if="stream_video_status">
+        <div :id="'remote_video_panel_'+streamid" class="video-view">
+          <div :id="'remote_video_'+streamid" class="video-placeholder">
+          </div>
+          <div :id="'remote_video_info_'+streamid" class="video-profile" :class="{show:streamvideoprofilestatus,hide:!streamvideoprofilestatus}">
+          </div>
+          <div :id="'video_autoplay_'+streamid" class="autoplay-fallback" :class="{hide:autoplaybuttonifhide}">
+          </div>
         </div>
       </div>
+      <!-- 电脑设备信息 -->
+      <div class="dev_list" v-show="dev_list_status">
+        <div class="voicedom">
+          <strong>音频音频</strong>
+          <ul>
+            <li @click="selectedMicrophone_index=index" :class="{select:selectedMicrophone_index==index}" v-for="(item,index) in selectedMicrophoneArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
+          </ul>
+        </div>
+        <div class="voicedom">
+          <strong>视频设备</strong>
+          <ul>
+            <li @click="selectedCamera_index=index" :class="{select:selectedCamera_index==index}" v-for="(item,index) in selectedCameraArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
+          </ul>
+        </div>
+      </div>
+      <button @click="agora_devsearch();dev_list_status=true;">设备检测</button><br>
+      <button @click="agora_start('抓周')">开播</button>
+      <button @click="agora_close('抓周')">关播</button><br>
+      <button @click="muteAudio" v-show="havevoice_status">禁用音频</button>
+      <button @click="unmuteAudio" v-show="!havevoice_status">启用音频</button><br>
+      <button @click="my_close" v-show="my_status">禁用美颜</button>
+      <button @click="my_open" v-show="!my_status">启用美颜</button><br>
+      <button @click="volicecontrols_status=true">调整音量</button>
+      <ul v-show="volicecontrols_status" class="volicecontrols_wrap">
+        <li :style="{background:volicecontrols_bgcolor,opacity:i/100}"  @click="setEffectsVolume(index)" v-for="(i,index) in 100" :key="index"></li>
+      </ul>
     </div>
-    <!-- 电脑设备信息 -->
-    <div class="dev_list" v-show="dev_list_status">
-      <div class="voicedom">
-        <strong>音频音频</strong>
-        <ul>
-          <li @click="selectedMicrophone_index=index" :class="{select:selectedMicrophone_index==index}" v-for="(item,index) in selectedMicrophoneArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
-        </ul>
-      </div>
-      <div class="voicedom">
-        <strong>视频设备</strong>
-        <ul>
-          <li @click="selectedCamera_index=index" :class="{select:selectedCamera_index==index}" v-for="(item,index) in selectedCameraArr" :key="index">设备名：{{item.label}}<br/>设备ID：{{item.deviceId}}<br/>设备组ID：{{item.groupId}}</li>
-        </ul>
-      </div>
-    </div>
-    <button @click="agora_devsearch();dev_list_status=true;">设备检测</button>
-    <button @click="agora_start('抓周')">开播</button>
-    <button @click="agora_close('抓周')">关播</button>
     <!-- <button @click="agorartcleaveCall">离开频道</button> -->
   </div>
 </template>
@@ -117,7 +130,7 @@ export default {
         }
       },
 
-      stream_video_status:true,
+      stream_video_status:false,
       streamid:'',
       streamvideoprofilestatus:false,
       autoplaybuttonifhide:true,
@@ -129,10 +142,49 @@ export default {
       selectedCameraArr:[],//摄像头==设备数组 
       selectedMicrophone_index:0,//麦克风 下标
       selectedCamera_index:0,//摄像头 下标
+      havevoice_status:true,//有声音的状态：
+      my_status:false,//美颜开启状态 默认为 关闭
+
+      volicecontrols_status:false,//调整音量模块状态 默认隐藏
+      volicecontrols_bgcolor:`rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`,
     };
   },
   computed: {},
   methods: {
+    // 美颜 开启
+    my_open(){
+      let zs = this;
+      zs.my_status=true;
+      zs.rtc.localStream.setBeautyEffectOptions(true, {
+        lighteningContrastLevel: 1,
+        lighteningLevel: 0.7,
+        smoothnessLevel: 0.5,
+        rednessLevel: 0.1
+      });
+    },
+    // 美颜 关闭
+    my_close(){
+      let zs = this;
+      zs.my_status=false;
+      zs.rtc.localStream.setBeautyEffectOptions(false, {
+        lighteningContrastLevel: 1,
+        lighteningLevel: 0.0,
+        smoothnessLevel: 0.0,
+        rednessLevel: 0.0
+      });
+    },
+    // 禁用音频
+    muteAudio(val){
+      let zs = this;
+      zs.havevoice_status=false;
+      zs.rtc.localStream.muteAudio();
+    },
+    // 启用音频
+    unmuteAudio(val){
+      let zs = this;
+      zs.havevoice_status=true;
+      zs.rtc.localStream.unmuteAudio();
+    },
     // 关播操作
     agora_close(){
       let zs = this;
@@ -165,26 +217,6 @@ export default {
           });
           zs.selectedMicrophoneArr=audioDevices;
           zs.selectedCameraArr=videoDevices;
-          // var uid = Math.floor(Math.random()*10000);
-          // var stream = AgoraRTC.createStream({
-          //     streamID: uid,
-          //     // Set audio to true if testing microphone
-          //     audio: true,
-          //     microphoneId: selectedMicrophoneId,
-          //     // Set video to true if testing camera
-          //     video: true,
-          //     cameraId: selectedCameraId,
-          //     screen: false
-          // });
-
-          // // Initialize the stream
-          // stream.init(function(){
-          //     stream.play("mic-test");
-          //     // Print the audio level every 1000 ms
-          //     setInterval(function(){
-          //         console.log(`Local Stream Audio Level ${stream.getAudioLevel()}`);
-          //     }, 1000);
-          // })
       });
     },
     // 创建直播间
@@ -365,6 +397,8 @@ export default {
           cameraId: zs.selectedCameraArr[zs.selectedCamera_index].deviceId,
         })
       }
+
+      // zs.volicecontrols_status=true;
     },
     // 3.2.2主播 初始化本地流
     streaminit(){
@@ -505,7 +539,9 @@ export default {
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
   beforeDestroy() {}, //生命周期 - 销毁之前
-  destroyed() {}, //生命周期 - 销毁完成
+  destroyed() {
+    this.agora_close();
+  }, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
@@ -543,6 +579,26 @@ export default {
         }
       }
     }
+  }
+}
+.volicecontrols_wrap{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  li{
+    width: 0.8%;
+    height: 40px;
+    cursor: pointer;
+  }
+}
+.living_wrap{
+  position: relative;
+  .voicestatus{
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    font-weight: bold;
+    color: red;
   }
 }
 </style>
