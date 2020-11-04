@@ -339,6 +339,8 @@ export default {
           zs.audiencejoin();//加入当前 声网 直播 组？吧
 
           zs.createlocalStream();//用户（主播）创建本地流
+
+          zs.setVideoEncoderConfiguration();//设置直播流的 视频码率
           zs.streaminit();//用户（主播）初始化本地流
         },
         err => {
@@ -399,6 +401,31 @@ export default {
       }
 
       // zs.volicecontrols_status=true;
+    },
+    // 3.2.2。000000主播 初始化本地流 之前 设置 视频参数
+    setVideoEncoderConfiguration(){
+      let zs = this;
+      zs.rtc.localStream.setVideoEncoderConfiguration({
+          // 视频分辨率
+          resolution: {
+              // width: 640,
+              // height: 480,
+              width: 1080,
+              height: 1920,
+          },
+          // 视频编码帧率。通常建议是 15 帧，不超过 30 帧
+          frameRate: {
+              min: 15,
+              max: 30
+          },
+          // 码率。一般情况下推荐使用标准码率
+          bitrate: {
+              // min: 1000,
+              // max: 5000,
+              min: 4780,
+              max: 5000,
+          }
+      });
     },
     // 3.2.2主播 初始化本地流
     streaminit(){
