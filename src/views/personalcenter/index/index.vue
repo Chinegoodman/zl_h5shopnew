@@ -182,6 +182,11 @@ export default {
           name : "我的消息",
           img : require("@/assets/imgs/personal/my-serve05.png"),
           list_id : 5
+        },
+        {
+          name : "转发有礼",
+          img : require("@/assets/imgs/personal/my-serve05.png"),
+          list_id : 6
         }
       ],
       aboutZhuaZhouList : [
@@ -344,6 +349,11 @@ export default {
             break;
         case 5:
             that.gomyinfo();
+            break;
+        case 6:
+            that.$router.push({path : "/personalcenter/sharedetail/index",query:{
+              tab_id : index
+            }});
             break;    
         default:
             that.$router.push({path :"/returngoods/index"});

@@ -518,6 +518,58 @@ export default [{
             }
         ]
     },
+    //分享转发
+    {
+        path: 'sharerewards',
+        name: 'sharerewards',
+        component: () =>
+            import ('./../../views/personalcenter/sharerewards/index.vue'),
+        meta: {
+            name: 'sharerewards',
+            navstatus: false,
+            //面包屑需要的参数
+            breadnav: [{
+                name: '分享转发',
+                url: '/sharerewards/index',
+            }]
+        },
+        children: [{
+                path: '/',
+                redirect: '/personalcenter/sharerewards/index'
+            },
+            //分享奖励-首页
+            {
+                path: '/personalcenter/sharerewards/index',
+                name: 'sharerewardsindex',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/index/index.vue'),
+                meta: {
+                    name: 'sharerewardsindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-首页',
+                        url: '/personalcenter/sharerewards/index'
+                    }]
+                }
+            },
+            //分享奖励-邀请明细
+            {
+                path: '/personalcenter/sharedetail/index',
+                name: 'sharedetailsindex',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/sharedetail/index.vue'),
+                meta: {
+                    name: 'sharedetailsindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/sharedetail/index'
+                    }]
+                }
+            }
+
+        ]
+    },
     //个人中心--优惠中心 discount
     {
         path: 'discount',
