@@ -1,0 +1,108 @@
+.sharemodulewrap {
+    font-family: PingFang SC;
+    font-weight: 500;
+    .header {
+        width: 7.5rem;
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        img {
+            transform: rotate(180deg);
+            width: 0.2rem;
+            height: 0.35rem;
+            display: block;
+            position: absolute;
+            top: .35rem;
+            left: .2rem;
+        }
+    
+        .tit {
+            font-size: 0.34rem;
+            color: #fff;
+            width: 100%; 
+            display: block;
+            text-align: center;
+            padding: .35rem 0;
+        }
+        .roles{
+            display: block;
+            color: #fff;
+            text-align: center;
+            position: absolute;
+            top: .35rem;
+            right: .35rem;
+        }
+    }
+        
+    .top-pub {
+        width: 7.5rem;
+        height: 4.46rem;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        z-index: 1;
+    }
+
+    .pub-tips{
+        .tips{
+            margin-top: .3rem;
+            padding: 0 .2rem;
+            span{
+                display: inline-block;
+                color: red;
+                vertical-align: middle;
+                font-size: .28rem;
+                margin-right: .08em;
+            }
+            font-size: .24rem;
+            color: #bfbfbf;
+        }
+    }
+    .pub-btn-area{
+        margin: .5rem auto;
+        span{
+            display: block;
+            width: 3.2rem;
+            height: .7rem;
+            line-height: .7rem;
+            font-size: .32rem;
+            color: #fff;
+            text-align: center;
+            background: #ffbd04;
+            border-radius: .35rem;
+            margin: 0 auto;
+        }
+    }
+    .pub-from-area{
+        background: #fff;
+        padding:.2rem;
+        ul{
+            li{
+                padding: .37rem 0;
+                border-bottom: 0.01rem solid #d7d7d7;
+                span{
+                    display: inline-block;
+                    min-width: 1.48rem;
+                    font-size: .24rem;
+                    color: #1f1f1f;
+                }
+                input::placeholder {
+                    font-size: .28rem;
+                    color: #bfbfbf;
+                }
+                input{
+                    height: .4rem;
+                    line-height: .4rem;
+                    font-size: .28rem;
+                    min-width: 5.25rem;
+                    border: none;
+                    margin-left: .05rem;
+                }
+            }
+            li:last-child{
+                border-bottom: none;
+            }
+        }
+    }
+
+}

@@ -6,41 +6,9 @@
     height: 100%;
     position: absolute;
     box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
-    .header {
-        width: 7.5rem;
-        text-align: center;
-        position: fixed;
-        z-index: 100;
-        cursor: pointer;
-        img {
-            transform: rotate(180deg);
-            width: 0.2rem;
-            height: 0.35rem;
-            display: block;
-            padding: 0.4rem 0;
-            margin-left: 0.46rem;
-        }
-    
-        .tit {
-            position: absolute;
-            top: 0.4rem;
-            left: 50%;
-            margin-left: -0.55rem;
-            font-size: 0.34rem;
-            color: #fff;
-        }
-        .roles{
-            position: absolute;
-            top: 0.5rem;
-            right: .24rem;
-            color: #fff;
-        }
-    }
-        
+    background: url("./../../../../../assets/imgs/personal/share/bg-top.png") no-repeat 0 0;
+    background-size: 7.5rem 4.46rem;
     .sec-first {
-        width: 7.5rem;
-        height: 4.46rem;
-        background: url("./../../../../../assets/imgs/personal/share/bg-top.png") no-repeat;
         display: flex;
         flex-direction: row;
         position: relative;
@@ -48,7 +16,7 @@
         .pub {
             width: 50%;
             height: 2.3rem;
-            padding: 1.66rem 0 .50rem;
+            padding: 0.46rem 0 .50rem;
             color: #fff;
             text-align: center;
             cursor: pointer;
@@ -90,6 +58,20 @@
         top: 50%;
         transform: translateX(-50%, -50%);
     }
+    .widthdraw-ios{
+        .pub{
+            position: relative;
+            .btn{
+                position: absolute;
+                bottom: .63rem;
+                left: -.8rem;
+            }
+        }
+    }
+    .widthdraw-ios::after {
+        top: 22%;
+        transform: translateX(-50%);
+    }
 
     .sec-two {
         width: 100%;
@@ -121,6 +103,17 @@
                         font-size: .26rem;
                         color: #1f1f1f;
                         margin-top: .3rem;
+                        cursor: pointer;
+                        .gd{
+                            display: inline-block;
+                            width: .1rem;
+                            height: .18rem;
+                            margin-left: .1rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
                     }
                     border-bottom: 1px solid #d7d7d7;
                 }
@@ -181,6 +174,7 @@
             background: #fff;
             margin-top: .3rem;
             position: relative;
+            cursor: pointer;
             span{
                 display: inline-block;
             }
@@ -202,15 +196,27 @@
                 }
             }
         }
-        .tips{
-            margin-top: .3rem;
-            padding: 0 .2rem;
-            span{
-                color: red;
-                vertical-align: middle;
-            }
-            font-size: .24rem;
-            color: #bfbfbf;
+    }
+    .btn-area{
+        width: 3.2rem;
+        height: .7rem;
+        line-height: .7rem;
+        background: #ffbd04;
+        border-radius:  .35rem;
+        font-size: .32rem;
+        color: #fff;
+        text-align: center;
+        margin: 1rem auto 0;
+    }
+}
+.shareindexwrapapp{
+    background-size: 7.5rem 4.66rem;
+    .header{
+        img{
+            top: .75rem;
+        }
+        .roles{
+            top: .78rem;
         }
     }
 }

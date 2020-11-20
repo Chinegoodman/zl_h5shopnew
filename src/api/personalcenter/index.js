@@ -157,6 +157,38 @@ const personalcenter = {
     //秀场账单列表提现及豆转币
     userWalletExchangeOrWithdrawalBill(params) {
         return axios.get(`${base.yxf2}/v1/user/wallet/exchange/or/withdrawal/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
+    },
+    //根据时间获得分享奖励统计信息
+    shareStatistics(params) {
+        return axios.get(`${base.yxf2}/v1/marketing/share/statistics?type=${params.type}&userId=${params.userId}`);
+    },
+    //获得累计奖励、可兑换奖励
+    cumulativeReward(params) {
+        return axios.get(`${base.yxf2}/v1/marketing/share/cumulative/reward?userId=${params.userId}`);
+    },
+    //获得个人、主播邀请明细
+    shareInviteDetail(params) {
+        return axios.get(`${base.yxf2}/v1/marketing/share/invite/detail?userId=${params.userId}&type=${params.type}&statisticsType=${params.statisticsType}&pageNumber=${params.pageNumber}&pageSize=${params.pageSize}&appType=${params.appType}`);
+    },
+    //提现及兑换
+    redenvelopeWithdrawal(params) {
+        return axios.post(`${base.yxf2}/v1/user/wallet/exchange/redenvelope/withdrawal`, qs.stringify(params));
+    },
+    //添加提现账户信息
+    addressAddMsg(params) {
+        return axios.post(`${base.yxf2}/v1/address/add`, qs.stringify(params));
+    },
+    //修改账户信息
+    changeAdressAddMsg(params) {
+        return axios.put(`${base.yxf2}/v1/address/update`, qs.stringify(params));
+    },
+    //获取账户信息是添加还是修改标致
+    accountMsgFlag(params) {
+        return axios.get(`${base.yxf2}/v1/address/getone?userId=${params.userId}&accountType =${params.accountType }&account=${params.account}&mobile=${params.mobile}`);
+    },
+    //获取提现记录和兑换记录页总金额
+    walletStatisticalWithdrawlCount(params) {
+        return axios.get(`${base.yxf2}/v1/user/wallet/statistical/withdrawal/count?userId=${params.userId}&type=${params.type}`);
     }
 }
 

@@ -1,21 +1,21 @@
 <!-- 组件说明 -->
 <template>
-  <div class="shareindexwrap">
-      <div class="header">
+  <div :class="{'shareindexwrap': true,'shareindexwrapapp' : bodypaddingtop}">
+      <div class="header"  :style="{paddingTop:bodypaddingtop+'px'}">
           <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
           <div class="tit">转发有礼</div>
-          <span class="roles">规则</span>
+          <span class="roles" @click="goshareroles">规则</span>
       </div>
-      <div class="sec-first">
+      <div :class="{'sec-first' : true,'widthdraw-ios':system=='ios'}">
           <div class="pub lt">
               <span class="tit">累计奖励</span>
-              <span class="num">16000.00红包</span>
-              <span class="btn">提现</span>
+              <span class="num">{{topAllData.cumulativeReward}}红包</span>
+              <span class="btn"  @click="gowithdrawpage" v-if="system!='ios'" >提现</span>
           </div>
           <div class="pub rt">
-              <span class="tit">可提现奖励</span>
-              <span class="num">4000.00红包</span>
-              <span class="btn">充值金币</span>
+              <span class="tit">可兑换奖励</span>
+              <span class="num">{{topAllData.exchangeAward}}红包</span>
+              <span class="btn" @click="goexchangepage">兑换金币</span>
           </div>
       </div>
       <div class="sec-two">
@@ -27,32 +27,31 @@
           </van-tabs>  
         </div>
         <div class="area-data">
-          <!-- 当月 -->
           <div class="section" v-if="timesection===0">
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">152人</span>
+               <span class="t2" @click="goGuildDetail(0)" >{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
-               <span class="t2">115人</span>
+               <span class="t2">{{(tongjidata.consumeQuota?tongjidata.consumeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">消费奖励</span>
-               <span class="t2">114人</span>
+               <span class="t2">{{tongjidata.consumeReward?tongjidata.consumeReward:0}}红包</span>
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">515人</span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
-               <span class="t2">185人</span>
+               <span class="t2">{{(tongjidata.incomeQuota?tongjidata.incomeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">收益奖励</span>
-               <span class="t2">715人</span>
+               <span class="t2">{{tongjidata.incomeReward?tongjidata.incomeReward:0}}红包</span>
              </li>
            </ul>
           </div> 
@@ -61,73 +60,71 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">8852人</span>
+               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
              </li>
              <li>
                <span class="t1">消费</span>
-               <span class="t2">1125人</span>
+               <span class="t2">{{(tongjidata.consumeQuota?tongjidata.consumeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">消费奖励</span>
-               <span class="t2">1124人</span>
+               <span class="t2">{{tongjidata.consumeReward?tongjidata.consumeReward:0}}红包</span>
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">5152人</span>
+               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
              </li>
              <li>
                <span class="t1">收益</span>
-               <span class="t2">1852人</span>
+               <span class="t2">{{(tongjidata.incomeQuota?tongjidata.incomeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">收益奖励</span>
-               <span class="t2">7152人</span>
+               <span class="t2">{{tongjidata.incomeReward?tongjidata.incomeReward:0}}红包</span>
              </li>
            </ul>
           </div> 
           <!-- 累积 -->
-          <div class="section" v-if="timesection===2">
+          <div class="section" v-if="timesection===-1">
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">15200人</span>
+               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
              </li>
              <li>
                <span class="t1">消费</span>
-               <span class="t2">1150人</span>
+               <span class="t2">{{(tongjidata.consumeQuota?tongjidata.consumeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">消费奖励</span>
-               <span class="t2">1140人</span>
+               <span class="t2">{{tongjidata.consumeReward?tongjidata.consumeReward:0}}红包</span>
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">5150人</span>
+               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
              </li>
              <li>
                <span class="t1">收益</span>
-               <span class="t2">1850人</span>
+               <span class="t2">{{(tongjidata.incomeQuota?tongjidata.incomeQuota:0).toFixed(2)}}</span>
              </li>
              <li>
                <span class="t1">收益奖励</span>
-               <span class="t2">7150人</span>
+               <span class="t2">{{tongjidata.incomeReward?tongjidata.incomeReward:0}}红包</span>
              </li>
            </ul>
           </div> 
         </div>
       </div>
-      <div class="sec-III">
-        <div class="guild">
-          <span class="lt">邀请明细</span>
-          <span class="rt"><img src="./../../../../assets/imgs/icons/dd-gengd@2x.png" alt /></span>
-        </div>
-        <p class="tips"><span>*</span>每个红包可充值金币100个，提现￥1.00</p>
+      <div class="pub-tips sec-III">
+        <p class="tips"><span>*</span>每个红包可兑换金币100个</p>
+        <p class="tips"><span>*</span>消费数据，是指您邀请的用户在平台产生的消费之和；收益数据，是指您邀请的用户在平台产生的收益之和</p>
       </div>
+      <div class="btn-area" @click="lijishare">立即分享</div>
   </div>
 </template>
 
 <script>
-
+import {jsCallImmediatelySharefn,jsCallgoback} from './../../../../utils/appjh.js'
 import {
     Tab,
     Tabs,
@@ -139,10 +136,13 @@ export default {
     vanTab : Tab,
     vanTabs : Tabs,
     vanList : List,
-    vanToast : Toast  
+    vanToast : Toast
   },
   data() {
     return {
+      system : '',//判断是IOS
+      bodypaddingtop : 0, //客户端传来的top值 
+      shareUserId : '', //用户ID
       active : 0,
       timesection : 0,//根据时间显示数据部分
       timelist : [
@@ -158,20 +158,147 @@ export default {
           name: "累积",
           tabid: 2
         }
-      ]
+      ],
+      yaoqingtype : 0, //1为用户 2为主播
+      topAllData : {
+        cumulativeReward : 0 , //累计奖励
+        exchangeAward : 0 //可兑换奖励
+      },
+      tongjidata : {
+        inviteAnchorCount : 0, //邀请主播个数
+        inviteUserCount : 0, //邀请用户个数
+        incomeReward : 0, //收益奖励
+        incomeQuota : 0, //收益额度
+        consumeReward : 0 , //消费奖励
+        consumeQuota : 0  //消费币额度
+      }
     };
   },
   computed: {},
+  mounted() {
+    let that = this;
+    that.shareUserId = that.$route.query.shareUserId;
+    that.bodypaddingtop = that.$route.query.paddingtop;
+    that.system = that.$route.query.system;
+    that.getCumulativeReward();
+    that.getShareStatistics();
+  },
   methods: {
     // 返回上一页
     goback() {
       let that = this;
-      that.$router.go(-1);
+      if(that.$route.query.webtype==='0'){
+        jsCallgoback();
+      }else{
+        that.$router.go(-1);
+      } 
+    },
+    //跳转规则页
+    goshareroles(){
+      let that = this;
+      if(that.$route.query.webtype==='0'){
+        that.$router.push({
+          name: "shareroles",
+          query: {
+            webtype : 0,
+            shareUserId : that.shareUserId,
+            paddingtop : that.bodypaddingtop
+          }
+        });
+      }else{
+        that.$router.push({
+          name: "shareroles"
+        });
+      } 
+    },
+    //跳转详情 persontype 1为邀请人数 0为邀请主播
+    goGuildDetail(persontype){
+      let that =this;
+      that.$router.push({
+        name: "sharedetailsindex",
+        query: {
+         timetype : that.timesection,
+         persontype : persontype,
+         paddingtop : that.bodypaddingtop
+        }
+      });
     },
     tabitems(index){
       console.log(index);
       let that = this;
-      that.timesection = index;
+      if(index == 2){
+        that.timesection = -1;
+      }else{
+        that.timesection = index;
+      }
+      that.getShareStatistics();
+    },
+    //获得累计奖励，可兑换奖励
+    getCumulativeReward(){
+      let that = this;
+      that.$toast.loading({
+            message: "加载中...",
+            duration: 200000
+          }); 
+          that.api.personalcenter.cumulativeReward({
+            userId : that.shareUserId
+            // userId : 9512
+          }).then(res => {
+            that.$toast.clear();
+            if(res.data.code === 1){
+              that.topAllData = res.data.data; 
+            }
+          });
+    },
+    //获取相关余额
+    getShareStatistics(){
+      let that = this;
+      that.$toast.loading({
+            message: "加载中...",
+            duration: 200000
+          }); 
+          that.api.personalcenter.shareStatistics({
+            type : that.timesection,
+            userId : that.shareUserId
+            // userId : 123456
+          }).then(res => {
+            that.$toast.clear();
+            if(res.data.code === 1){
+              that.tongjidata = res.data.data; 
+            }
+          });
+    },
+    //跳转提现页
+    gowithdrawpage(){
+      let that =this;
+      that.$router.push({
+        name: "sharewithdrawindex",
+        query: {
+         paddingtop : that.bodypaddingtop
+        }
+      });
+    },
+    //跳转兑换页
+    goexchangepage(){
+      let that =this;
+      that.$router.push({
+        name: "shareexchangeindex",
+        query : {
+          paddingtop : that.bodypaddingtop
+        }
+      });
+    },
+    //立即分享
+    lijishare(){
+      let that = this;
+      if(that.$route.query.webtype==='0'){
+          jsCallImmediatelySharefn();
+          return;
+      }else{
+          setTimeout(() => {
+            window.location.href = "http://test.testh5.zhulihr.com/share/shareregist.html?shareUserId=" + that.$store.state.nerUser.userid + '&platform=1&sharetype=2';
+          }, 800);
+      }
     }
   },
   // created() {
@@ -179,9 +306,6 @@ export default {
   //   that.userId = that.$store.state.user.userid;
   //   console.log(that.userId);
   // },
-  mounted() {
-    let that = this;
-  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
@@ -193,6 +317,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
+@import url("./css/sharecommon.less");
 @import url("./css/index.less");
 </style>
 

@@ -566,8 +566,67 @@ export default [{
                         url: '/personalcenter/sharedetail/index'
                     }]
                 }
+            },
+            //分享奖励-提现-首页
+            {
+                path: '/personalcenter/sharewithdraw/index',
+                name: 'sharewithdrawindex',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/sharewithdraw/index.vue'),
+                meta: {
+                    name: 'sharewithdrawindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/sharewithdraw/index'
+                    }]
+                }
+            },
+            //分享奖励-提现-记录
+            {
+                path: '/personalcenter/sharewithdrawrecode/index',
+                name: 'sharewithdrawrecode',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/sharewithdrawrecode/index.vue'),
+                meta: {
+                    name: 'sharewithdrawrecode',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/sharewithdrawrecode/index'
+                    }]
+                }
+            },
+            //分享奖励-金币兑换
+            {
+                path: '/personalcenter/shareexchange/index',
+                name: 'shareexchangeindex',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/shareexchange/index.vue'),
+                meta: {
+                    name: 'shareexchangeindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/shareexchange/index'
+                    }]
+                }
+            },
+            //分享奖励-规则说明
+            {
+                path: '/personalcenter/shareroles/index',
+                name: 'shareroles',
+                component: () =>
+                    import ('./../../views/personalcenter/sharerewards/shareroles/index.vue'),
+                meta: {
+                    name: 'shareroles',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-规则说明',
+                        url: '/personalcenter/shareroles/index'
+                    }]
+                }
             }
-
         ]
     },
     //个人中心--优惠中心 discount

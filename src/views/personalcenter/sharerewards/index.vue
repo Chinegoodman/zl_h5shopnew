@@ -1,6 +1,6 @@
 <!-- 组件说明 -->
 <template>
-    <div class='shopindexwrap'>
+    <div class='sharemodulewrap'>
         <router-view></router-view>
     </div>
 </template>

@@ -351,8 +351,9 @@ export default {
             that.gomyinfo();
             break;
         case 6:
-            that.$router.push({path : "/personalcenter/sharedetail/index",query:{
-              tab_id : index
+            that.$router.push({path : "/personalcenter/sharerewards/index",query:{
+              tab_id : index,
+              shareUserId : that.$store.state.nerUser.userid
             }});
             break;    
         default:

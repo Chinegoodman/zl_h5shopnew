@@ -31,6 +31,26 @@ export function jsCallShoppingCartfn() {
         window.android.jsCallShoppingCart();
     }
 }
+// APP点击分享有礼-立即分享
+export function jsCallImmediatelySharefn() {
+    if (checkdevice() == 'ios') {
+        // alert('ios');
+        window.webkit.messageHandlers.jsCallImmediatelyShare.postMessage('jsCallImmediatelyShare');
+    } else if (checkdevice() == 'anzhuo') {
+        // alert('anzhuo');
+        window.android.jsCallImmediatelyShare();
+    }
+}
+// APP点击分享有礼-规则说明分享
+export function jsCallShareRolesfn() {
+    if (checkdevice() == 'ios') {
+        // alert('ios');
+        window.webkit.messageHandlers.jsCallShareRoles.postMessage('jsCallShareRoles');
+    } else if (checkdevice() == 'anzhuo') {
+        // alert('anzhuo');
+        window.android.jsCallShareRoles();
+    }
+}
 // APP打开登录页面
 export function jsCallLogin() {
     if (checkdevice() == 'ios') {
@@ -54,7 +74,7 @@ export function jsCallStore(data) {
 // APP返回上一页
 export function jsCallgoback() {
     if (checkdevice() == 'ios') {
-        window.webkit.messageHandlers.jsCallgoback.postMessage();
+        window.webkit.messageHandlers.jsCallgoback.postMessage('jsCallgoback');
     } else if (checkdevice() == 'anzhuo') {
         window.android.jsCallgoback();
     }
