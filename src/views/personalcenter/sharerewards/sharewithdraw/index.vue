@@ -77,6 +77,7 @@ export default {
   },
   data() {
     return {
+      shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       topAllData : { 
         cumulativeReward : 0 , //累计奖励
@@ -98,6 +99,7 @@ export default {
     let that = this;
     that.allowCount = that.$route.query.leiJiCount;
     that.bodypaddingtop = that.$route.query.paddingtop;
+    that.shareUserId = that.$route.query.shareUserId;
     //获取可提现余额
     that.getCumulativeReward();
     //获取账户信息并以此炎标识判断是添加还是修改账户信息
@@ -116,6 +118,7 @@ export default {
         this.$router.push({
           name: "sharewithdrawrecode",
           query : {
+            shareUserId : that.shareUserId,
             paddingtop : that.bodypaddingtop,
             guildPageType : 4  //4为跳向提现记录页 3为兑换
           }
@@ -124,6 +127,7 @@ export default {
         this.$router.push({
           name: "sharewithdrawrecode",
           query : {
+            shareUserId : that.shareUserId,
             guildPageType : 4  //4为跳向提现记录页 3为兑换
           }
         });
@@ -137,7 +141,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.cumulativeReward({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512
           }).then(res => {
             that.$toast.clear();
@@ -155,7 +159,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.accountMsgFlag({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             accountType : 1,
             account : '',
@@ -187,7 +191,7 @@ export default {
           }); 
           that.api.personalcenter.addressAddMsg({
             accountType : 1,
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             realName : that.accountName,
             // userId : 9512,
             account : that.accountMsg,
@@ -212,7 +216,7 @@ export default {
           }); 
           that.api.personalcenter.changeAdressAddMsg({
             accountType : 1,
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             id : that.currentAccountId,
             account : that.accountMsg,
@@ -252,7 +256,7 @@ export default {
           }); 
           that.api.personalcenter.redenvelopeWithdrawal({
             configKey : 'cashbackWithdrawal',
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             type : 4,
             operatingOsType : -1,

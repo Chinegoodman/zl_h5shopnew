@@ -219,7 +219,8 @@ export default {
         query: {
          timetype : that.timesection,
          persontype : persontype,
-         paddingtop : that.bodypaddingtop
+         paddingtop : that.bodypaddingtop,
+         shareUserId : that.shareUserId
         }
       });
     },
@@ -274,6 +275,7 @@ export default {
       that.$router.push({
         name: "sharewithdrawindex",
         query: {
+         shareUserId : that.shareUserId, 
          paddingtop : that.bodypaddingtop
         }
       });
@@ -284,6 +286,7 @@ export default {
       that.$router.push({
         name: "shareexchangeindex",
         query : {
+          shareUserId : that.shareUserId,
           paddingtop : that.bodypaddingtop
         }
       });

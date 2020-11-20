@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+      shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       guildPageType : '', //从哪个页跳来的标识
       allTakeNum : 0,
@@ -73,6 +74,7 @@ export default {
     let that = this;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.guildPageType = that.$route.query.guildPageType;
+    that.shareUserId = that.$route.query.shareUserId;
     that.getWalletStatisticalWithdrawlCount();
     // that.getShareStatistics();
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
@@ -117,7 +119,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.walletStatisticalWithdrawlCount({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             type : that.guildPageType,//4为提现 3为兑换
           }).then(res => {
@@ -136,7 +138,7 @@ export default {
           }); 
           that.api.personalcenter.shareStatistics({
             type : that.timesection,
-            userId : that.$store.state.nerUser.userid
+            userId : that.shareUserId
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
@@ -184,7 +186,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.userWalletExchangeOrWithdrawalBill({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             type : that.guildPageType,
             page : pageNum,

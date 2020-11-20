@@ -48,6 +48,7 @@ export default {
   },
   data() {
     return {
+      shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       topAllData : {
         cumulativeReward : 0 , //累计奖励
@@ -62,6 +63,7 @@ export default {
   mounted() {
     let that = this;
     that.bodypaddingtop = that.$route.query.paddingtop;
+    that.shareUserId = that.$route.query.shareUserId;
     //可兑换奖励
     that.getCumulativeReward();
   },
@@ -78,6 +80,7 @@ export default {
         that.$router.push({
           name: "sharewithdrawrecode",
           query : {
+            shareUserId : that.shareUserId,
             paddingtop : that.bodypaddingtop,
             guildPageType : 3  //4为跳向提现记录页 3为兑换
           }
@@ -86,6 +89,7 @@ export default {
         that.$router.push({
           name: "sharewithdrawrecode",
           query : {
+            shareUserId : that.shareUserId,
             guildPageType : 3  //4为跳向提现记录页 3为兑换
           }
         });
@@ -99,7 +103,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.cumulativeReward({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId
             // userId : 9512
           }).then(res => {
             that.$toast.clear();
@@ -128,7 +132,7 @@ export default {
           }); 
           that.api.personalcenter.redenvelopeWithdrawal({
             configKey : 'redEnvelopeToGoldCoin',
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             // userId : 9512,
             type : 3,
             operatingOsType : -1,
