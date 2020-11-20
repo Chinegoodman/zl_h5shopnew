@@ -196,7 +196,8 @@ export default {
             that.$toast.clear();
             if(res.data.code === 1){
               that.$toast("添加成功");
-              window.location.reload();
+              that.getAccountMsgFlag();
+              // window.location.reload();
             }else{
               that.$toast("添加失败");
             }
@@ -221,7 +222,8 @@ export default {
             that.$toast.clear();
             if(res.data.code === 1){
               that.$toast("修改成功");
-              window.location.reload();
+              that.getAccountMsgFlag();
+              // window.location.reload();
             }else{
               that.$toast("修改失败");
             }
