@@ -203,7 +203,7 @@ export default {
         }
     }
     .viplevlebox{
-        padding: .3rem .2rem 3.15rem;
+        padding: .3rem .2rem;
         color:rgba(31, 31, 31, 1);
         text-align: center;
         font-size : .58rem;

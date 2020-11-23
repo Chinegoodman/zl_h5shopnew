@@ -629,6 +629,117 @@ export default [{
             }
         ]
     },
+    //音娱-分享转发
+    {
+        path: 'yinyusharerewards',
+        name: 'yinyusharerewards',
+        component: () =>
+            import ('./../../views/personalcenter/yinyusharerewards/index.vue'),
+        meta: {
+            name: 'yinyusharerewards',
+            navstatus: false,
+            //面包屑需要的参数
+            breadnav: [{
+                name: '分享转发',
+                url: '/yinyusharerewards/index',
+            }]
+        },
+        children: [{
+                path: '/',
+                redirect: '/personalcenter/yinyusharerewards/index'
+            },
+            //音娱-分享奖励-首页
+            {
+                path: '/personalcenter/yinyusharerewards/index',
+                name: 'yinyusharerewardsindex',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/index/index.vue'),
+                meta: {
+                    name: 'yinyusharerewardsindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-首页',
+                        url: '/personalcenter/yinyusharerewards/index'
+                    }]
+                }
+            },
+            //音娱-分享奖励-邀请明细
+            {
+                path: '/personalcenter/yinyusharedetail/index',
+                name: 'yinyusharedetailsindex',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/sharedetail/index.vue'),
+                meta: {
+                    name: 'yinyusharedetailsindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/yinyusharedetail/index'
+                    }]
+                }
+            },
+            //音娱-分享奖励-提现-首页
+            {
+                path: '/personalcenter/yinyusharewithdraw/index',
+                name: 'yinyusharewithdrawindex',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/sharewithdraw/index.vue'),
+                meta: {
+                    name: 'yinyusharewithdrawindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/yinyusharewithdraw/index'
+                    }]
+                }
+            },
+            //音娱-分享奖励-提现-记录
+            {
+                path: '/personalcenter/yinyusharewithdrawrecode/index',
+                name: 'yinyusharewithdrawrecode',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/sharewithdrawrecode/index.vue'),
+                meta: {
+                    name: 'yinyusharewithdrawrecode',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/yinyusharewithdrawrecode/index'
+                    }]
+                }
+            },
+            //音娱-分享奖励-金币兑换
+            {
+                path: '/personalcenter/yinyushareexchange/index',
+                name: 'yinyushareexchangeindex',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/shareexchange/index.vue'),
+                meta: {
+                    name: 'yinyushareexchangeindex',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-明细',
+                        url: '/personalcenter/yinyushareexchange/index'
+                    }]
+                }
+            },
+            //音娱-分享奖励-规则说明
+            {
+                path: '/personalcenter/yinyushareroles/index',
+                name: 'yinyushareroles',
+                component: () =>
+                    import ('./../../views/personalcenter/yinyusharerewards/shareroles/index.vue'),
+                meta: {
+                    name: 'yinyushareroles',
+                    navstatus: false,
+                    breadnav: [{
+                        name: '分享奖励-规则说明',
+                        url: '/personalcenter/yinyushareroles/index'
+                    }]
+                }
+            }
+        ]
+    },
     //个人中心--优惠中心 discount
     {
         path: 'discount',

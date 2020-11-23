@@ -1,0 +1,102 @@
+<!-- 组件说明 -->
+<template>
+  <div :class="{'shareroleswrap':true,'shareroleswrapapp' : bodypaddingtop}">
+      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
+          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+          <div class="tit">活动说明</div>
+      </div>
+      <div class="topbanner">
+        <img src="./../../../../assets/imgs/personal/share/sharerolesbanner.png" alt="">
+      </div>
+      <div class="roleswrap-con">
+        <div class="sharebigtext">
+            <img src="./../../../../assets/imgs/personal/share/sharebigtext.png" alt="">
+        </div>
+        <div class="txt-sec">
+          <span class="tit">
+            <img src="./../../../../assets/imgs/personal/share/sharetit01.png" alt="">
+          </span>
+          <p>您邀请的用户在抓周平台通过赠送礼物、购买会员、坐骑、饰品等消费，您将获得<span>20%</span>的消费提成！</p>
+        </div>
+        <div class="txt-sec">
+          <span class="tit">
+            <img src="./../../../../assets/imgs/personal/share/sharetit02.png" alt="">
+          </span>
+          <p>您邀请的主播在抓周平台获得收益，您将获得<span>10%</span>的收入提成！</p>
+        </div>
+        <div class="txt-sec">
+          <span class="tit">
+            <img src="./../../../../assets/imgs/personal/share/sharetit03.png" alt="">
+          </span>
+          <p>奖励上不封顶，后续还会有更多转发福利，敬请期待！</p>
+        </div>
+        <div class="tips">ps：本活动最终解释权归抓周直播所有。</div>
+      </div>
+      <div class="btn-area" @click="lijishare">分享抓周</div>
+  </div>
+</template>
+
+<script>
+import {jsCallShareRolesfn} from './../../../../utils/appjh.js'
+export default {
+  components: {
+
+  },
+  data() {
+    return {
+      bodypaddingtop : 0, //客户端传来的top值 
+      guildPageType : '', //从哪个页跳来的标识
+      allTakeNum : 0,
+      recodesList : [],
+      webtype : 0 //识别是否客户端
+    };
+  },
+  computed: {},
+  mounted() {
+    let that = this;
+    that.bodypaddingtop = that.$route.query.paddingtop;
+    that.shareUserId = that.$route.query.shareUserId;
+    that.webtype = that.$route.query.webtype;
+  },
+  methods: {
+    // 返回上一页
+    goback() {
+      let that = this;
+      that.$router.go(-1);
+    },
+    //立即分享
+    lijishare(){
+      let that = this;
+      if(that.webtype===0){
+          jsCallShareRolesfn();
+          return;
+      }else{
+          setTimeout(() => {
+            window.location.href = "http://test.testh5.zhulihr.com/share/shareregist.html?shareUserId=" + that.shareUserId + '&platform=1&sharetype=2';
+          }, 800);
+      }
+    }
+  },
+  // created() {
+  //   let that = this;
+  //   that.userId = that.$store.state.user.userid;
+  //   console.log(that.userId);
+  // },
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
+  beforeDestroy() {}, //生命周期 - 销毁之前
+  destroyed() {}, //生命周期 - 销毁完成
+  activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
+};
+</script>
+
+<style lang='less' scoped>
+@import url("../index/css/sharecommon.less");
+@import url("./css/index.less");
+</style>
+
+<style scoped>
+
+</style>
