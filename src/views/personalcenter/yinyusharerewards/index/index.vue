@@ -344,14 +344,17 @@ body{
     font-size : .32rem;
     font-family:PingFang SC;
     font-weight:500;
-    color:rgba(117,117,117,1);
+    color: #6A6A86;
+  }
+  .shareindexwrap .van-tabs__nav{
+    background: transparent;
   }
   .shareindexwrap .van-tab--active{
     font-weight: bold;
-    color: #1F1F1F;
+    color: #fff;
   }
   .shareindexwrap .van-tabs__line{
     width: .3rem !important;
-    background:rgba(255,189,4,1);
+    background:#580eff;
   }
 </style>
