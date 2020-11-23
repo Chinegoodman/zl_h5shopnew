@@ -178,8 +178,6 @@ export default {
   mounted() {
     let that = this;
     that.shareUserId = that.$route.query.shareUserId;
-    console.log('that.shareUserId01');
-    console.log(that.shareUserId);
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.system = that.$route.query.system;
     that.getCumulativeReward();
@@ -215,8 +213,6 @@ export default {
     },
     //跳转详情 persontype 1为邀请人数 0为邀请主播
     goGuildDetail(persontype){
-      console.log('that.shareUserId02');
-      console.log(that.shareUserId);
       let that =this;
       that.$router.push({
         name: "sharedetailsindex",

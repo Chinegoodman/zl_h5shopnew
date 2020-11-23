@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      shareUserId : '', //用户ID
       mescroll: null,
       persontype : 1 , //标题类型0为主播 ，1为用户
       timetype : 0,
@@ -99,7 +100,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.shareInviteDetail({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             type : that.persontype,
             statisticsType : that.timetype,
             pageNumber : 1,
@@ -129,6 +130,7 @@ export default {
     let that = this;
     that.timetype = that.$route.query.timetype;
     that.persontype = that.$route.query.persontype;
+    that.shareUserId = that.$route.query.shareUserId;
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
       down: {
@@ -189,7 +191,6 @@ export default {
 </style>
 
 <style>
-
   /*以fixed的方式固定mescroll的高度*/
   .list-content .mescroll {
     position: fixed;
