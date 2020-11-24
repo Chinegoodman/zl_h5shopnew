@@ -225,7 +225,8 @@ export default {
           timetype : that.timesection,
           persontype : persontype,
           paddingtop : that.bodypaddingtop,
-          shareUserId : that.shareUserId
+          shareUserId : that.shareUserId,
+          webtype : that.webtype
           }
         });
       }else{
