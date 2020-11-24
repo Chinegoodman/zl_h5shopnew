@@ -3,11 +3,14 @@
     margin: 0 auto;
     font-family: PingFang SC;
     font-weight: 500;
-    height: 100%;
     position: absolute;
     box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
-    background: url("./../../../../../assets/imgs/personal/share/bg-top.png") no-repeat 0 0;
-    background-size: 7.5rem 4.46rem;
+    padding-bottom: 1rem;
+    .bgcover-section{
+        padding-bottom: .5rem;
+        background: url("./../../../../../assets/imgs/personal/share/bg-top.png") no-repeat 0 0;
+        background-size: cover;
+    }
     .sec-first {
         display: flex;
         flex-direction: row;
@@ -16,7 +19,7 @@
         .pub {
             width: 50%;
             height: 2.3rem;
-            padding: 0.46rem 0 .50rem;
+            padding: 0.46rem 0 0;
             color: #fff;
             text-align: center;
             cursor: pointer;
@@ -210,7 +213,6 @@
     }
 }
 .shareindexwrapapp{
-    background-size: 7.5rem 4.66rem;
     .header{
         img{
             top: .75rem;

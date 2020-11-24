@@ -1,22 +1,24 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'shareindexwrap': true,'shareindexwrapapp' : bodypaddingtop}">
-      <div class="header"  :style="{paddingTop:bodypaddingtop+'px'}">
-          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
-          <div class="tit">转发有礼</div>
-          <span class="roles" @click="goshareroles">规则</span>
-      </div>
-      <div :class="{'sec-first' : true,'widthdraw-ios':system=='ios'}">
-          <div class="pub lt">
-              <span class="tit">累计奖励</span>
-              <span class="num">{{topAllData.cumulativeReward}}红包</span>
-              <span class="btn"  @click="gowithdrawpage" v-if="system!='ios'" >提现</span>
-          </div>
-          <div class="pub rt">
-              <span class="tit">可兑换奖励</span>
-              <span class="num">{{topAllData.exchangeAward}}红包</span>
-              <span class="btn" @click="goexchangepage">兑换金币</span>
-          </div>
+      <div class="bgcover-section">
+        <div class="header"  :style="{paddingTop:bodypaddingtop+'px'}">
+            <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+            <div class="tit">转发有礼</div>
+            <span class="roles" @click="goshareroles">规则</span>
+        </div>
+        <div :class="{'sec-first' : true,'widthdraw-ios':system=='ios'}">
+            <div class="pub lt">
+                <span class="tit">累计奖励</span>
+                <span class="num">{{topAllData.cumulativeReward}}红包</span>
+                <span class="btn"  @click="gowithdrawpage" v-if="system!='ios'" >提现</span>
+            </div>
+            <div class="pub rt">
+                <span class="tit">可兑换奖励</span>
+                <span class="num">{{topAllData.exchangeAward}}红包</span>
+                <span class="btn" @click="goexchangepage">兑换金币</span>
+            </div>
+        </div>
       </div>
       <div class="sec-two">
         <div class="nav">

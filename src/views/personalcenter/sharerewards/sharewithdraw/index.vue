@@ -1,17 +1,19 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawwrap':true,'widthdrawwrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
+      <div class="bgcover-section">
+        <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
           <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
           <div class="tit">提现</div>
           <span class="roles" @click="gosharewithdrawrecode" >提现记录</span>
-      </div>
-      <div class="top-pub top-wallet">
-          <div class="wallet-in">
-            <span class="t1">可提现余额</span>
-            <div class="num"><span>{{allowCount}}</span></div>
-            <span  class="drap" @click="ctrlWithdrapShow">提现</span>
-          </div>
+        </div>
+        <div class="top-pub top-wallet">
+            <div class="wallet-in">
+              <span class="t1">可提现余额</span>
+              <div class="num"><span>{{allowCount}}</span></div>
+              <span  class="drap" @click="ctrlWithdrapShow">提现</span>
+            </div>
+        </div>
       </div>
       <div class="pub-from-area center-area">
         <ul>

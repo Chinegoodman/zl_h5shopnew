@@ -1,17 +1,19 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawwrap':true,'widthdrawwrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
-          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
-          <div class="tit">兑换金币</div>
-          <span class="roles" @click="goShareWithdrawRecode">兑换记录</span>
-      </div>
-      <div class="top-pub top-wallet">
-          <div class="wallet-in">
-            <span class="t1">可兑换金币</span>
-            <div class="num"><span>{{allowExchange}}</span>个</div>
-            <span  class="drap" @click="ctrlExchangeShow">兑换</span>
-          </div>
+      <div class="bgcover-section">
+        <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
+            <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+            <div class="tit">兑换金币</div>
+            <span class="roles" @click="goShareWithdrawRecode">兑换记录</span>
+        </div>
+        <div class="top-pub top-wallet">
+            <div class="wallet-in">
+              <span class="t1">可兑换金币</span>
+              <div class="num"><span>{{allowExchange}}</span>个</div>
+              <span  class="drap" @click="ctrlExchangeShow">兑换</span>
+            </div>
+        </div>
       </div>
       <div class="pub-tips">
         <p class="tips"><span>*</span>兑换金币将会到账当前账户金币余额，请注意查收</p>
