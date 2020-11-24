@@ -25,7 +25,7 @@
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <h3>{{items.payType && items.payType==1?'支付宝':'微信'}}</h3>
                   <span class="tm">{{items.createTime}}</span>
-                  <span class="apply" v-if="items.state && items.state==1">待结算</span>
+                  <span class="apply" v-if="items.state && items.state==1">提现中</span>
                   <span class="apply yet" v-if="items.state && items.state==2">已提现</span>
                   <span class="apply bo" v-if="items.state && items.state==4">驳回</span>
                   <span class="price">{{items.expense}}</span>

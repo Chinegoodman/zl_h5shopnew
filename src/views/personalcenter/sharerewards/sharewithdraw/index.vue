@@ -55,7 +55,7 @@
           <p>提现方式：支付宝（<span>{{accountMsg}}</span>）</p>
           <div class="t">提现金额<span>（提现需100元以上金额）</span>：</div>
           <div class="text"><span>￥</span><input type="text" placeholder="请输入提现金额" v-model="currentWithdrawNum"></div>
-          <div class="tip">可提现余额：￥{{allowCount}}<span>全部提现</span></div>
+          <div class="tip">可提现余额：￥{{allowCount}}<span @click="allTakeOver">全部提现</span></div>
           <span class="pub-shell-btn withdraw-btn" @click="ctrldrap">提现</span>
         </div>
       </div>
@@ -241,6 +241,15 @@ export default {
         this.withdrapshellstate = true;
       }else{
         this.hasnoAccountMsgTipShell = true;
+      }
+    },
+    //全部提现
+    allTakeOver(){
+      let that = this;
+      if(that.allowCount < 100){
+        return that.$toast("提现需100元以上金额");
+      }else{
+        that.currentWithdrawNum = Math.floor(that.allowCount / 100) * 100;
       }
     },
     //操作提现
