@@ -143,6 +143,7 @@ export default {
   data() {
     return {
       system : '',//判断是IOS
+      webtype : '', //判断来源0为客户端来的参数
       bodypaddingtop : 0, //客户端传来的top值 
       shareUserId : '', //用户ID
       active : 0,
@@ -182,6 +183,7 @@ export default {
     that.shareUserId = that.$route.query.shareUserId;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.system = that.$route.query.system;
+    that.webtype = that.$route.query.webtype;
     that.getCumulativeReward();
     that.getShareStatistics();
   },
@@ -189,7 +191,7 @@ export default {
     // 返回上一页
     goback() {
       let that = this;
-      if(that.$route.query.webtype==='0'){
+      if(that.webtype==='0'){
         jsCallgoback();
       }else{
         that.$router.go(-1);
@@ -198,7 +200,7 @@ export default {
     //跳转规则页
     goshareroles(){
       let that = this;
-      if(that.$route.query.webtype==='0'){
+      if(that.webtype==='0'){
         that.$router.push({
           name: "shareroles",
           query: {
@@ -216,15 +218,27 @@ export default {
     //跳转详情 persontype 1为邀请人数 0为邀请主播
     goGuildDetail(persontype){
       let that =this;
-      that.$router.push({
+      if(that.webtype==='0'){
+        that.$router.push({
+          name: "sharedetailsindex",
+          query: {
+          timetype : that.timesection,
+          persontype : persontype,
+          paddingtop : that.bodypaddingtop,
+          shareUserId : that.shareUserId
+          }
+        });
+      }else{
+        that.$router.push({
         name: "sharedetailsindex",
         query: {
          timetype : that.timesection,
          persontype : persontype,
-         paddingtop : that.bodypaddingtop,
          shareUserId : that.shareUserId
         }
       });
+      }
+      
     },
     tabitems(index){
       console.log(index);
