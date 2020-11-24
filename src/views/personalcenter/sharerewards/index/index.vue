@@ -118,7 +118,7 @@
         </div>
       </div>
       <div class="pub-tips sec-III">
-        <p class="tips"><span>*</span>每个红包可兑换金币100个</p>
+        <p class="tips"><span>*</span>每个红包可兑换金币100个<span v-if="system!='ios'">，提现￥1.00</span></p>
         <p class="tips"><span>*</span>消费数据，是指您邀请的用户在平台产生的消费之和；收益数据，是指您邀请的用户在平台产生的收益之和</p>
       </div>
       <div class="btn-area" @click="lijishare">立即分享</div>

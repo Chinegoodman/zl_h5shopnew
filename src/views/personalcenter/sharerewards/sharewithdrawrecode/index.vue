@@ -253,9 +253,6 @@ export default {
 </style>
 
 <style>
-body{
-  background: #F7F7F7;;
-}
 .box-listareabox .mescroll {
   position: fixed;
   top: 3.8rem;
