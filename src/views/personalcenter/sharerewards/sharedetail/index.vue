@@ -41,6 +41,7 @@
 <script>
 import MeScroll from 'mescroll.js'
 import 'mescroll.js/mescroll.min.css'
+import {jsCallImmediatelySharefn,jsCallgoback} from './../../../../utils/appjh.js'
 export default {
   components: {
   },
@@ -133,6 +134,7 @@ export default {
     that.persontype = that.$route.query.persontype;
     that.shareUserId = that.$route.query.shareUserId;
     that.bodypaddingtop = that.$route.query.paddingtop;
+    that.webtype = that.$route.query.webtype;
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
       down: {
@@ -156,7 +158,14 @@ export default {
           tip: '您还没有邀请用户，去邀请吧！', // 提示
           btntext: '去邀请', // 按钮,默认""
           btnClick: function () { // 点击按钮的回调,默认null
-            alert('点击了按钮,具体逻辑自行实现')
+            if(that.webtype==='0'){
+                jsCallImmediatelySharefn();
+                return;
+            }else{
+                setTimeout(() => {
+                  window.location.href = "http://test.testh5.zhulihr.com/share/shareregist.html?shareUserId=" + that.$store.state.nerUser.userid + '&platform=1&sharetype=2';
+                }, 800);
+            }
           }
         },
       }
@@ -196,8 +205,9 @@ export default {
 <style>
   /*以fixed的方式固定mescroll的高度*/
   .sharedetails_box .list-content .mescroll {
+    width : 7.5rem;
     position: fixed;
-    top:146px;
+    top:156px;
     bottom: 0;
     height: auto;
   }
@@ -220,6 +230,8 @@ export default {
   .sharedetails_box .list-content .mescroll-empty{
     background: none;
     padding: 3.6rem 0;
+    position: fixed;
+    z-index: 10600;
   }
   .sharedetails_box .list-content .mescroll-empty .empty-btn{
     width: 2.3rem;
@@ -239,7 +251,7 @@ export default {
   }
 
   .sharedetails_boxapp .list-content .mescroll {
-    top:166px;
+    top:176px;
   }
 
 </style>
