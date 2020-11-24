@@ -257,7 +257,7 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.redenvelopeWithdrawal({
-            configKey : 'cashbackWithdrawal',
+            configKey : 'redEnvelopeWithdrawal',
             userId : that.shareUserId,
             // userId : 9512,
             type : 4,

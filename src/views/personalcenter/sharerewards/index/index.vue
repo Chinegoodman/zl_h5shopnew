@@ -62,7 +62,7 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -74,7 +74,7 @@
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -91,7 +91,7 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -103,7 +103,7 @@
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
