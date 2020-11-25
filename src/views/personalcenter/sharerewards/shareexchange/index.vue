@@ -10,7 +10,7 @@
         <div class="top-pub top-wallet">
             <div class="wallet-in">
               <span class="t1">可兑换金币</span>
-              <div class="num"><span>{{allowExchange*100}}</span>个</div>
+              <div class="num"><span>{{(allowExchange*100).toFixed(0)}}</span>个</div>
               <span  class="drap" @click="ctrlExchangeShow">兑换</span>
             </div>
         </div>
