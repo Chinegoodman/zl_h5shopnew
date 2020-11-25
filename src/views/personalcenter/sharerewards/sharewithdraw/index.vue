@@ -187,6 +187,18 @@ export default {
     //添加账户信息
     addAcount(){
       let that = this;
+      if(that.accountMsg == '' || that.accountMsg == undefined){
+        that.$toast("账号不能为空");
+        return;
+      }
+      if(that.accountName == '' || that.accountName == undefined){
+        that.$toast("姓名不能为空");
+        return;
+      }
+      if(that.accountMobile == '' || that.accountMobile == undefined){
+        that.$toast("手机号不能为空");
+        return;
+      }
       that.$toast.loading({
             message: "加载中...",
             duration: 200000
@@ -212,6 +224,18 @@ export default {
     //修改账户信息
     changeAcount(){
       let that = this;
+      if(that.accountMsg == '' || that.accountMsg == undefined){
+        that.$toast("账号不能为空");
+        return;
+      }
+      if(that.accountName == '' || that.accountName == undefined){
+        that.$toast("姓名不能为空");
+        return;
+      }
+      if(that.accountMobile == '' || that.accountMobile == undefined){
+        that.$toast("手机号不能为空");
+        return;
+      }
       that.$toast.loading({
             message: "加载中...",
             duration: 200000

@@ -30,7 +30,7 @@
                   <span class="apply" v-if="items.state && items.state==1">提现中</span>
                   <span class="apply yet" v-if="items.state && items.state==2">已提现</span>
                   <span class="apply bo" v-if="items.state && items.state==4">驳回</span>
-                  <span class="price">{{items.expense}}</span>
+                  <span class="price"><mark>&yen;</mark>{{items.expense}}</span>
                 </li>
               </ol>
             </li>
