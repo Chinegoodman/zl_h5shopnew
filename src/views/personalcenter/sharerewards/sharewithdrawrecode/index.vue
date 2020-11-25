@@ -6,11 +6,13 @@
         <span>{{guildPageType&&guildPageType==4?'提现记录':'兑换记录'}}</span>
       </div>
       <div class="top-all-wallet">
-        <span class="t">{{guildPageType&&guildPageType==4?'累计提现金额':'累计通过奖励兑换金币'}}</span>
-        <div class="num">
-          <span>￥</span>
-          <span class="t">{{allTakeNum}}</span>
-        </div>
+        <div class="wallet-inner">
+          <span class="t">{{guildPageType&&guildPageType==4?'累计提现金额':'累计通过奖励兑换金币'}}</span>
+          <div class="num">
+            <span>￥</span>
+            <span class="t">{{allTakeNum}}</span>
+          </div>
+        </div>  
       </div>
       <div class="pub-tips recodepage-tip">
         <p class="tips" v-if="guildPageType&&guildPageType==4"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
@@ -36,7 +38,7 @@
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <span class="im">
-                    <img src="items.iconUrl" alt="">
+                    <img :src="items.iconUrl?items.iconUrl:default_img_head" alt="">
                   </span>
                   <div class="con">
                     <h3>{{items.nickName}}</h3>
@@ -61,6 +63,7 @@ export default {
   },
   data() {
     return {
+      default_img_head : require('../../../../assets/imgs/icons/default-head.png'),
       shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       guildPageType : '', //从哪个页跳来的标识
@@ -254,12 +257,12 @@ export default {
 <style>
 .box-listareabox .mescroll {
   position: fixed;
-  top: 190px;
+  top: 180px;
   bottom: 0;
   height: auto;
 }
 .box-listareabox .mescroll-exchange{
-  top: 130px;
+  top: 135px;
 }
 .box-listareabox .mescroll .notice {
   font-size: 14px;
@@ -287,6 +290,14 @@ export default {
 .box-listareabox .mescroll-empty .empty-tip{
   font-size: .28rem;
   color: #757575;
+}
+
+.widthdrawrecodewrapapp .box-listareabox .mescroll {
+  position: fixed;
+  top: 200px;
+}
+.widthdrawrecodewrapapp .box-listareabox .mescroll-exchange{
+  top: 155px;
 }
 
 </style>

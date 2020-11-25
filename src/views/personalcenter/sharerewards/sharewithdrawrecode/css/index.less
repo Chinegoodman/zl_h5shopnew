@@ -9,7 +9,7 @@
     background: #f7f7f7;
     .header {
         width: 7.5rem;
-        height: 1rem;
+        height: 50px;
         background: white;
         text-align: center;
         position: fixed;
@@ -21,13 +21,13 @@
             display: block;
             position: absolute;
             left: .2rem;
-            top: .35rem;
+            bottom: 22px;
         }
 
         span {
             display: block;
             text-align: center;
-            line-height: 1rem;
+            line-height: 50px;
             font-size: 0.34rem;
             color: #333333;
         }
@@ -36,12 +36,15 @@
     .top-all-wallet{
         margin: 1rem auto 0;
         width: 7.5rem;
-        min-height: .83rem;
-        padding: .3rem;
+        height: 80px;
         background: url("./../../../../../assets/imgs/personal/share/topallwallet.png") no-repeat;
-        background-size: 7.5rem 1.63rem;
+        background-size: 7.5rem 80px;
         color: #fff;
         font-size: .24rem;
+        overflow: hidden;
+        .wallet-inner{
+            padding: .3rem;
+        }
         .num{
             margin-top: .1rem;
             .t{
@@ -108,6 +111,23 @@
                     }
                 }
             }
+            .lis-ex{
+                ol{
+                    li{
+                        display: flex;
+                        width: 100%;
+                        .im{
+                            width: .68rem;
+                            height: .68rem;
+                            padding: .3rem .3rem 0 0.2rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -115,7 +135,8 @@
 .widthdrawrecodewrapapp{
     .header {
         img {
-            top: .7rem;
+            bottom: 16px;
+            top: auto;
         }
         span{
             top: .6rem;
