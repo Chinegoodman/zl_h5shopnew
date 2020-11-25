@@ -138,7 +138,7 @@ export default {
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
       down: {
-        use : false,
+        // use : false,
         auto: false, // 是否在初始化完毕之后自动执行下拉回调callback; 默认true
         callback: that.downCallback // 下拉刷新的回调
       },
