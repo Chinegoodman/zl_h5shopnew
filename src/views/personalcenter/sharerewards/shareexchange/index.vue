@@ -26,7 +26,7 @@
           <p>平台账号:（<span>{{accountMobile}}</span>）</p>
           <div class="t">兑换金币<span>（仅可兑换100的整数倍）</span>：</div>
           <div class="text"><span>个</span><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"></div>
-          <div class="tip">当前可兑换金币：{{allowExchange}}个<span>全部兑换</span></div>
+          <div class="tip">当前可兑换金币：{{allowExchange}}个<span @click="allTakeOver">全部兑换</span></div>
           <span class="pub-shell-btn withdraw-btn"  @click="ctrlExchange">兑换</span>
         </div>
       </div>
@@ -135,6 +135,15 @@ export default {
     //显示提现金额填写弹层
     ctrlExchangeShow(){
       this.exchangeShellState = true;
+    },
+    //全部兑换
+    allTakeOver(){
+      let that = this;
+      if(that.allowExchange < 100){
+        return that.$toast("仅可兑换100的整数倍");
+      }else{
+        that.currentExchangeNum = Math.floor(that.allowExchange / 100) * 100;
+      }
     },
     //兑换
     ctrlExchange(){
