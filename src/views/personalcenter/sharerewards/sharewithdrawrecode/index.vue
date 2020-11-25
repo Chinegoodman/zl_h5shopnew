@@ -39,13 +39,13 @@
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <span class="im">
-                    <img :src="items.iconUrl?items.iconUrl:default_img_head" alt="">
+                    <img src="../../../../assets/imgs/personal/chongzhi.png" alt="">
                   </span>
                   <div class="con">
-                    <h3>{{items.nickName}}</h3>
+                    <h3>兑换{{(items.expense).toFixed(2)}}金币</h3>
                     <span class="tm">{{items.createTime}}</span>
                   </div>
-                  <span class="price">{{items.expense}}</span>
+                  <span class="price">分享奖励兑换</span>
                 </li>
               </ol>
             </li>
