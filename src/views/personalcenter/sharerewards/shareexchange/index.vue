@@ -23,7 +23,7 @@
       <div class="withdrap-pub-shell withdrap-shell" v-if="exchangeShellState">
         <div class="pub-shell-cover shell-cover" @click="exchangeShellState=false"></div>
         <div class="pub-shell-con shell-con">
-          <p>平台账号:（<span>{{$store.state.nerUser.phone}}</span>）</p>
+          <p>平台账号:（<span>{{accountMobile}}</span>）</p>
           <div class="t">兑换金币<span>（仅可兑换100的整数倍）</span>：</div>
           <div class="text"><span>个</span><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"></div>
           <div class="tip">当前可兑换金币：{{allowExchange}}个<span>全部兑换</span></div>
@@ -52,6 +52,7 @@ export default {
     return {
       shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
+      accountMobile : '', //平台账号-手机号
       topAllData : {
         cumulativeReward : 0 , //累计奖励
         exchangeAward : 0 //可兑换奖励
@@ -68,12 +69,28 @@ export default {
     that.shareUserId = that.$route.query.shareUserId;
     //可兑换奖励
     that.getCumulativeReward();
+    //平台账号获取
+    that.getinfousermass();
   },
   methods: {
     // 返回上一页
     goback() {
       let that = this;
       that.$router.go(-1);
+    },
+    //获取账户信息-平台账号
+    getinfousermass() {
+      let that = this;
+      that.api.personalcenter
+        .getinfouser_new({
+          userId : that.$store.state.nerUser.userid
+        })
+        .then(res => {
+          if(res.data.code==1){
+            let resdata = res.data.data;
+            that.accountMobile = res.data.data.mobile;
+          }
+      });
     },
     //右上角跳转兑换记录
     goShareWithdrawRecode(){

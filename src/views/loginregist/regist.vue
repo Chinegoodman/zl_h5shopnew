@@ -493,7 +493,7 @@ export default {
       }
       this.api.login
         .userSetPassword({
-          userId: that.$store.state.user.userid,
+          userId: that.$store.state.nerUser.userid,
           password: that.setpassword,
         })
         .then(data => {
