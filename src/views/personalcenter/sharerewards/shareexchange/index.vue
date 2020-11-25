@@ -25,8 +25,8 @@
         <div class="pub-shell-con shell-con">
           <p>平台账号:（<span>{{accountMobile}}</span>）</p>
           <div class="t">兑换金币<span>（仅可兑换100的整数倍）</span>：</div>
-          <div class="text"><span>个</span><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"></div>
-          <div class="tip">当前可兑换金币：{{allowExchange}}个<span @click="allTakeOver">全部兑换</span></div>
+          <div class="text"><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"><span class="danwei">个</span></div>
+          <div class="tip">当前可兑换金币：{{allowExchange * 100}}个<span @click="allTakeOver">全部兑换</span></div>
           <span class="pub-shell-btn withdraw-btn"  @click="ctrlExchange">兑换</span>
         </div>
       </div>

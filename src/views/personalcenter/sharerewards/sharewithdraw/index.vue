@@ -35,7 +35,7 @@
         <span @click="changeAcount" v-if="accountMsgData && accountMsgData.id">修改账号信息</span>
         <span @click="addAcount" v-else>添加账号信息</span>
       </div>
-      <div class="pub-tips ">
+      <div class="pub-tips">
         <p class="tips"><span>*</span>请您认真填写您的支付宝账号信息</p>
         <p class="tips"><span>*</span>收入满100元，即可随时提现，提现需提现100元以上金额，提现 需扣除服务费6%</p>
       </div>
@@ -54,8 +54,8 @@
         <div class="pub-shell-con shell-con">
           <p>提现方式：支付宝（<span>{{accountMsg}}</span>）</p>
           <div class="t">提现金额<span>（提现需100元以上金额）</span>：</div>
-          <div class="text"><span>&yen;</span><input type="text" placeholder="请输入提现金额" v-model="currentWithdrawNum"></div>
-          <div class="tip">可提现余额：&yen;{{allowCount}}<span @click="allTakeOver">全部提现</span></div>
+          <div class="text"><span>￥</span><input type="text" placeholder="请输入提现金额" v-model="currentWithdrawNum"></div>
+          <div class="tip">可提现余额：￥{{allowCount}}<span @click="allTakeOver">全部提现</span></div>
           <span class="pub-shell-btn withdraw-btn" @click="ctrldrap">提现</span>
         </div>
       </div>
