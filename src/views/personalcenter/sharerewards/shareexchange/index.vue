@@ -10,7 +10,7 @@
         <div class="top-pub top-wallet">
             <div class="wallet-in">
               <span class="t1">可兑换金币</span>
-              <div class="num"><span>{{allowExchange}}</span>个</div>
+              <div class="num"><span>{{allowExchange*100}}</span>个</div>
               <span  class="drap" @click="ctrlExchangeShow">兑换</span>
             </div>
         </div>
@@ -167,7 +167,7 @@ export default {
             moduleType : -1,
             appType : 1,
             payType : '1',
-            givenVirtualCurrency : that.currentExchangeNum
+            givenVirtualCurrency : that.currentExchangeNum / 100
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
