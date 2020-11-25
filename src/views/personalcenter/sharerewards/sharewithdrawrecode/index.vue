@@ -12,12 +12,11 @@
           <span class="t">{{allTakeNum}}</span>
         </div>
       </div>
-      <div class="pub-tips">
+      <div class="pub-tips recodepage-tip">
         <p class="tips" v-if="guildPageType&&guildPageType==4"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
-        <p class="tips" v-if="guildPageType&&guildPageType==3"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
       </div>
       <div class="box-listareabox" id="boxListAreaBox">
-        <div ref="mescroll" class="mescroll">
+        <div ref="mescroll" :class="{'mescroll' : true,'mescroll-exchange' : guildPageType==3}">
           <ul class="uls">
             <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==4">
               <span class="tit">{{item.date}}</span>
@@ -255,9 +254,12 @@ export default {
 <style>
 .box-listareabox .mescroll {
   position: fixed;
-  top: 3.8rem;
+  top: 190px;
   bottom: 0;
   height: auto;
+}
+.box-listareabox .mescroll-exchange{
+  top: 130px;
 }
 .box-listareabox .mescroll .notice {
   font-size: 14px;
