@@ -142,7 +142,7 @@ export default {
       if(that.allowExchange < 100){
         return that.$toast("仅可兑换100的整数倍");
       }else{
-        that.currentExchangeNum = Math.floor(that.allowExchange / 100) * 100;
+        that.currentExchangeNum = (Math.floor(that.allowExchange / 100) * 100) * 100;
       }
     },
     //兑换

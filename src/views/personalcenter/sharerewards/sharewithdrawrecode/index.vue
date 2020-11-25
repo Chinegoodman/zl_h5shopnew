@@ -1,24 +1,25 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawrecodewrap' : true,'widthdrawrecodewrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
-        <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
-        <span>{{guildPageType&&guildPageType==4?'提现记录':'兑换记录'}}</span>
-      </div>
-      <div class="top-all-wallet">
+      <div class="top-all-wallet"  ref="topAllWallet" :style="{paddingTop:bodypaddingtop+'px'}">
+        <div class="header">
+          <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
+          <span>{{guildPageType&&guildPageType==4?'提现记录':'兑换记录'}}</span>
+        </div>
         <div class="wallet-inner">
           <span class="t">{{guildPageType&&guildPageType==4?'累计提现金额':'累计通过奖励兑换金币'}}</span>
           <div class="num">
-            <span>￥</span>
+            <span v-if="guildPageType==4">￥</span>
             <span class="t">{{allTakeNum}}</span>
+            <span v-if="guildPageType==3">个</span>
           </div>
         </div>  
-      </div>
-      <div class="pub-tips recodepage-tip">
-        <p class="tips" v-if="guildPageType&&guildPageType==4"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
+        <div class="pub-tips recodepage-tip" v-if="guildPageType&&guildPageType==4">
+          <p class="tips"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
+        </div>
       </div>
       <div class="box-listareabox" id="boxListAreaBox">
-        <div ref="mescroll" :class="{'mescroll' : true,'mescroll-exchange' : guildPageType==3}">
+        <div ref="mescroll" :class="{'mescroll' : true}"  :style="{top : topAllWalletset +'px'}" >
           <ul class="uls">
             <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
               <span class="tit">{{item.date}}</span>
@@ -68,16 +69,24 @@ export default {
       bodypaddingtop : 0, //客户端传来的top值 
       guildPageType : '', //从哪个页跳来的标识
       allTakeNum : 0,
-      recodesList : []
+      recodesList : [],
+      topAllWalletset : 0 //获取顶部部分高度
     };
   },
-  computed: {},
+  computed: {
+
+  },
   mounted() {
     let that = this;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.guildPageType = that.$route.query.guildPageType;
     that.shareUserId = that.$route.query.shareUserId;
     that.getWalletStatisticalWithdrawlCount();
+    this.$nextTick(() => {
+        that.topAllWalletset = that.$refs.topAllWallet.offsetHeight;
+        console.log(that.topAllWalletset);
+    });
+    
     // that.getShareStatistics();
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
