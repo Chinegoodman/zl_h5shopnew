@@ -20,7 +20,7 @@
       <div class="box-listareabox" id="boxListAreaBox">
         <div ref="mescroll" :class="{'mescroll' : true,'mescroll-exchange' : guildPageType==3}">
           <ul class="uls">
-            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==4">
+            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
               <span class="tit">{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
@@ -33,7 +33,7 @@
                 </li>
               </ol>
             </li>
-            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==3">
+            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==3">
               <span class="tit">{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
@@ -154,7 +154,7 @@ export default {
       // 联网加载数据
       this.getUserWalletExchangeOrWithdrawalBill(0, 1, (data) => {
         // 添加新数据到列表顶部
-        this.recodesList.unshift(data)
+        this.recodesList.unshift(data);
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           this.mescroll.endSuccess()// 结束下拉刷新,无参
