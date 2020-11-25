@@ -35,7 +35,7 @@
         <span @click="changeAcount" v-if="accountMsgData && accountMsgData.id">修改账号信息</span>
         <span @click="addAcount" v-else>添加账号信息</span>
       </div>
-      <div class="pub-tips">
+      <div class="pub-tips ">
         <p class="tips"><span>*</span>请您认真填写您的支付宝账号信息</p>
         <p class="tips"><span>*</span>收入满100元，即可随时提现，提现需提现100元以上金额，提现 需扣除服务费6%</p>
       </div>

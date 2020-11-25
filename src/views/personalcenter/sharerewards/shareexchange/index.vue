@@ -15,7 +15,7 @@
             </div>
         </div>
       </div>
-      <div class="pub-tips">
+      <div class="pub-tips exchange-tips">
         <p class="tips"><span>*</span>兑换金币将会到账当前账户金币余额，请注意查收</p>
         <p class="tips"><span>*</span>分享奖励的兑换记录，将不会与您其他的充值记录合并</p>
       </div>
@@ -83,7 +83,7 @@ export default {
       let that = this;
       that.api.personalcenter
         .getinfouser_new({
-          userId : that.$store.state.nerUser.userid
+          userId : that.shareUserId,
         })
         .then(res => {
           if(res.data.code==1){
