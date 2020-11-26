@@ -259,7 +259,8 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.cumulativeReward({
-            userId : that.shareUserId
+            userId : that.shareUserId,
+            appType : 3
             // userId : 9512
           }).then(res => {
             that.$toast.clear();
