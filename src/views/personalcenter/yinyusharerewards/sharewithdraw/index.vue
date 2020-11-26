@@ -1,17 +1,18 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawwrap':true,'widthdrawwrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
+      <div class="bgcover-section">
+        <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
           <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
           <div class="tit">提现</div>
-          <span class="roles" @click="gosharewithdrawrecode" >提现记录</span>
-      </div>
-      <div class="top-pub top-wallet">
-          <div class="wallet-in">
-            <span class="t1">可提现余额</span>
-            <div class="num"><span>{{allowCount}}</span></div>
-            <span  class="drap" @click="ctrlWithdrapShow">提现</span>
-          </div>
+        </div>
+        <div class="top-pub top-wallet">
+            <div class="wallet-in">
+              <span class="t1">可提现余额</span>
+              <div class="num"><span>{{allowCount}}</span></div>
+              <span  class="drap" @click="ctrlWithdrapShow">提现</span>
+            </div>
+        </div>
       </div>
       <div class="pub-from-area center-area">
         <ul>
@@ -28,6 +29,10 @@
             <input type="text" placeholder="请填写您的手机号" v-model="accountMobile">
           </li>
         </ul>
+      </div>
+      <div class="page-guild" @click="gosharewithdrawrecode">
+        <span class="t">提现记录</span>
+        <span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span>
       </div>
       <div class="pub-btn-area">
         <span @click="changeAcount" v-if="accountMsgData && accountMsgData.id">修改账号信息</span>
@@ -53,7 +58,7 @@
           <p>提现方式：支付宝（<span>{{accountMsg}}</span>）</p>
           <div class="t">提现金额<span>（提现需100元以上金额）</span>：</div>
           <div class="text"><span>￥</span><input type="text" placeholder="请输入提现金额" v-model="currentWithdrawNum"></div>
-          <div class="tip">可提现余额：￥{{allowCount}}<span>全部提现</span></div>
+          <div class="tip">可提现余额：￥{{allowCount}}<span @click="allTakeOver">全部提现</span></div>
           <span class="pub-shell-btn withdraw-btn" @click="ctrldrap">提现</span>
         </div>
       </div>
@@ -116,7 +121,7 @@ export default {
       let that = this;
       if(that.bodypaddingtop){
         this.$router.push({
-          name: "sharewithdrawrecode",
+          name: "yinyusharewithdrawrecode",
           query : {
             shareUserId : that.shareUserId,
             paddingtop : that.bodypaddingtop,
@@ -125,7 +130,7 @@ export default {
         });
       }else{
         this.$router.push({
-          name: "sharewithdrawrecode",
+          name: "yinyusharewithdrawrecode",
           query : {
             shareUserId : that.shareUserId,
             guildPageType : 4  //4为跳向提现记录页 3为兑换
@@ -185,6 +190,18 @@ export default {
     //添加账户信息
     addAcount(){
       let that = this;
+      if(that.accountMsg == '' || that.accountMsg == undefined){
+        that.$toast("账号不能为空");
+        return;
+      }
+      if(that.accountName == '' || that.accountName == undefined){
+        that.$toast("姓名不能为空");
+        return;
+      }
+      if(that.accountMobile == '' || that.accountMobile == undefined){
+        that.$toast("手机号不能为空");
+        return;
+      }
       that.$toast.loading({
             message: "加载中...",
             duration: 200000
@@ -210,6 +227,18 @@ export default {
     //修改账户信息
     changeAcount(){
       let that = this;
+      if(that.accountMsg == '' || that.accountMsg == undefined){
+        that.$toast("账号不能为空");
+        return;
+      }
+      if(that.accountName == '' || that.accountName == undefined){
+        that.$toast("姓名不能为空");
+        return;
+      }
+      if(that.accountMobile == '' || that.accountMobile == undefined){
+        that.$toast("手机号不能为空");
+        return;
+      }
       that.$toast.loading({
             message: "加载中...",
             duration: 200000
@@ -241,6 +270,15 @@ export default {
         this.hasnoAccountMsgTipShell = true;
       }
     },
+    //全部提现
+    allTakeOver(){
+      let that = this;
+      if(that.allowCount < 100){
+        return that.$toast("提现需100元以上金额");
+      }else{
+        that.currentWithdrawNum = Math.floor(that.allowCount / 100) * 100;
+      }
+    },
     //操作提现
     ctrldrap(){
       let that = this;
@@ -255,13 +293,13 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.redenvelopeWithdrawal({
-            configKey : 'cashbackWithdrawal',
+            configKey : 'redEnvelopeWithdrawal',
             userId : that.shareUserId,
             // userId : 9512,
             type : 4,
             operatingOsType : -1,
             moduleType : -1,
-            appType : 1,
+            appType : 3,
             realName : that.accountName,
             mobile : that.accountMobile,
             payType : '1',
@@ -287,7 +325,9 @@ export default {
   //   that.userId = that.$store.state.user.userid;
   //   console.log(that.userId);
   // },
-  beforeCreate() {}, //生命周期 - 创建之前
+  beforeCreate() {
+    document.querySelector('body').setAttribute('style', 'background-color:#101118')
+  }, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后

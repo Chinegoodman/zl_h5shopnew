@@ -1,19 +1,24 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawwrap':true,'widthdrawwrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
-          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
-          <div class="tit">兑换金币</div>
-          <span class="roles" @click="goShareWithdrawRecode">兑换记录</span>
+      <div class="bgcover-section">
+        <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
+            <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+            <div class="tit">兑换金币</div>
+        </div>
+        <div class="top-pub top-wallet">
+            <div class="wallet-in">
+              <span class="t1">可兑换金币</span>
+              <div class="num"><span>{{(allowExchange*100).toFixed(0)}}</span>个</div>
+              <span  class="drap" @click="ctrlExchangeShow">兑换</span>
+            </div>
+        </div>
       </div>
-      <div class="top-pub top-wallet">
-          <div class="wallet-in">
-            <span class="t1">可兑换金币</span>
-            <div class="num"><span>{{allowExchange}}</span>个</div>
-            <span  class="drap" @click="ctrlExchangeShow">兑换</span>
-          </div>
+      <div class="page-guild" @click="goShareWithdrawRecode">
+        <span class="t">兑换记录</span>
+        <span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span>
       </div>
-      <div class="pub-tips">
+      <div class="pub-tips exchange-tips">
         <p class="tips"><span>*</span>兑换金币将会到账当前账户金币余额，请注意查收</p>
         <p class="tips"><span>*</span>分享奖励的兑换记录，将不会与您其他的充值记录合并</p>
       </div>
@@ -21,10 +26,10 @@
       <div class="withdrap-pub-shell withdrap-shell" v-if="exchangeShellState">
         <div class="pub-shell-cover shell-cover" @click="exchangeShellState=false"></div>
         <div class="pub-shell-con shell-con">
-          <p>平台账号:（<span>{{$store.state.nerUser.phone}}</span>）</p>
+          <p>平台账号:（<span>{{accountMobile}}</span>）</p>
           <div class="t">兑换金币<span>（仅可兑换100的整数倍）</span>：</div>
-          <div class="text"><span>个</span><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"></div>
-          <div class="tip">当前可兑换金币：{{allowExchange}}个<span>全部兑换</span></div>
+          <div class="text"><input type="text" placeholder="请输入兑换数量" v-model="currentExchangeNum"><span class="danwei">个</span></div>
+          <div class="tip">当前可兑换金币：{{allowExchange * 100}}个<span @click="allTakeOver">全部兑换</span></div>
           <span class="pub-shell-btn withdraw-btn"  @click="ctrlExchange">兑换</span>
         </div>
       </div>
@@ -50,6 +55,7 @@ export default {
     return {
       shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
+      accountMobile : '', //平台账号-手机号
       topAllData : {
         cumulativeReward : 0 , //累计奖励
         exchangeAward : 0 //可兑换奖励
@@ -66,12 +72,28 @@ export default {
     that.shareUserId = that.$route.query.shareUserId;
     //可兑换奖励
     that.getCumulativeReward();
+    //平台账号获取
+    that.getinfousermass();
   },
   methods: {
     // 返回上一页
     goback() {
       let that = this;
       that.$router.go(-1);
+    },
+    //获取账户信息-平台账号
+    getinfousermass() {
+      let that = this;
+      that.api.personalcenter
+        .getinfouser_new({
+          userId : that.shareUserId,
+        })
+        .then(res => {
+          if(res.data.code==1){
+            let resdata = res.data.data;
+            that.accountMobile = res.data.data.mobile;
+          }
+      });
     },
     //右上角跳转兑换记录
     goShareWithdrawRecode(){
@@ -117,6 +139,15 @@ export default {
     ctrlExchangeShow(){
       this.exchangeShellState = true;
     },
+    //全部兑换
+    allTakeOver(){
+      let that = this;
+      if(that.allowExchange < 100){
+        return that.$toast("仅可兑换100的整数倍");
+      }else{
+        that.currentExchangeNum = (Math.floor((that.allowExchange * 100) / 100)) * 100;
+      }
+    },
     //兑换
     ctrlExchange(){
       let that = this;
@@ -137,9 +168,9 @@ export default {
             type : 3,
             operatingOsType : -1,
             moduleType : -1,
-            appType : 1,
+            appType : 3,
             payType : '1',
-            givenVirtualCurrency : that.currentExchangeNum
+            givenVirtualCurrency : that.currentExchangeNum / 100
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){

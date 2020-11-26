@@ -42,5 +42,4 @@
 
 <style lang='less'>
 //@import url()
-
 </style>

@@ -1,49 +1,51 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'widthdrawrecodewrap' : true,'widthdrawrecodewrapapp' : bodypaddingtop}">
-      <div class="header" :style="{paddingTop:bodypaddingtop+'px'}">
-        <img class="back" @click="goback" src="../../../../assets/imgs/follow/xiangqing@2x.png" alt />
-        <span>{{guildPageType&&guildPageType==4?'提现记录':'兑换记录'}}</span>
-      </div>
-      <div class="top-all-wallet">
-        <span class="t">{{guildPageType&&guildPageType==4?'累计提现金额':'累计通过奖励兑换金币'}}</span>
-        <div class="num">
-          <span>￥</span>
-          <span class="t">{{allTakeNum}}</span>
+      <div class="top-all-wallet"  ref="topAllWallet" :style="{paddingTop:bodypaddingtop+'px'}">
+        <div class="header">
+          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+          <span>{{guildPageType&&guildPageType==4?'提现记录':'兑换记录'}}</span>
         </div>
-      </div>
-      <div class="pub-tips">
-        <p class="tips" v-if="guildPageType&&guildPageType==4"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
-        <p class="tips" v-if="guildPageType&&guildPageType==3"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
+        <div class="wallet-inner">
+          <span class="t">{{guildPageType&&guildPageType==4?'累计提现金额':'累计通过奖励兑换金币'}}</span>
+          <div class="num">
+            <span v-if="guildPageType==4">￥</span>
+            <span class="t">{{allTakeNum}}</span>
+            <span v-if="guildPageType==3">个</span>
+          </div>
+        </div>  
       </div>
       <div class="box-listareabox" id="boxListAreaBox">
-        <div ref="mescroll" class="mescroll">
+        <div ref="mescroll" :class="{'mescroll' : true}"  :style="{top : topAllWalletset +'px'}" >
+          <div class="pub-tips recodepage-tip" v-if="guildPageType&&guildPageType==4">
+            <p class="tips"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
+          </div>
           <ul class="uls">
-            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==4">
+            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
               <span class="tit">{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <h3>{{items.payType && items.payType==1?'支付宝':'微信'}}</h3>
                   <span class="tm">{{items.createTime}}</span>
-                  <span class="apply" v-if="items.state && items.state==1">待结算</span>
+                  <span class="apply" v-if="items.state && items.state==1">提现中</span>
                   <span class="apply yet" v-if="items.state && items.state==2">已提现</span>
                   <span class="apply bo" v-if="items.state && items.state==4">驳回</span>
-                  <span class="price">{{items.expense}}</span>
+                  <span class="price"><mark>&yen;</mark>{{items.expense}}</span>
                 </li>
               </ol>
             </li>
-            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==3">
+            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==3">
               <span class="tit">{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <span class="im">
-                    <img src="items.iconUrl" alt="">
+                    <img src="../../../../assets/imgs/personal/chongzhi.png" alt="">
                   </span>
                   <div class="con">
-                    <h3>{{items.nickName}}</h3>
+                    <h3>兑换{{(items.expense).toFixed(2)}}金币</h3>
                     <span class="tm">{{items.createTime}}</span>
                   </div>
-                  <span class="price">{{items.expense}}</span>
+                  <span class="price">分享奖励兑换</span>
                 </li>
               </ol>
             </li>
@@ -62,20 +64,29 @@ export default {
   },
   data() {
     return {
+      default_img_head : require('../../../../assets/imgs/icons/default-head.png'),
       shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       guildPageType : '', //从哪个页跳来的标识
       allTakeNum : 0,
-      recodesList : []
+      recodesList : [],
+      topAllWalletset : 0 //获取顶部部分高度
     };
   },
-  computed: {},
+  computed: {
+
+  },
   mounted() {
     let that = this;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.guildPageType = that.$route.query.guildPageType;
     that.shareUserId = that.$route.query.shareUserId;
     that.getWalletStatisticalWithdrawlCount();
+    this.$nextTick(() => {
+        that.topAllWalletset = that.$refs.topAllWallet.offsetHeight - 40;
+        console.log(that.topAllWalletset);
+    });
+    
     // that.getShareStatistics();
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
@@ -152,7 +163,7 @@ export default {
       // 联网加载数据
       this.getUserWalletExchangeOrWithdrawalBill(0, 1, (data) => {
         // 添加新数据到列表顶部
-        this.recodesList.unshift(data)
+        this.recodesList.unshift(data);
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           this.mescroll.endSuccess()// 结束下拉刷新,无参
@@ -253,14 +264,16 @@ export default {
 </style>
 
 <style>
-body{
-  background: #F7F7F7;;
-}
 .box-listareabox .mescroll {
   position: fixed;
-  top: 3.8rem;
+  top: 180px;
   bottom: 0;
   height: auto;
+  border-radius: .6rem;
+  background: #101118;
+}
+.box-listareabox .mescroll-exchange{
+  top: 135px;
 }
 .box-listareabox .mescroll .notice {
   font-size: 14px;
@@ -288,6 +301,17 @@ body{
 .box-listareabox .mescroll-empty .empty-tip{
   font-size: .28rem;
   color: #757575;
+}
+
+.widthdrawrecodewrapapp .box-listareabox .mescroll {
+  position: fixed;
+  top: 200px;
+}
+.widthdrawrecodewrapapp .box-listareabox .mescroll-exchange{
+  top: 155px;
+}
+.mescroll-downwarp .downwarp-tip, .mescroll-upwarp .upwarp-tip{
+  color: #fff;
 }
 
 </style>

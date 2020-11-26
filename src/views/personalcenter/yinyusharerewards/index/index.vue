@@ -1,22 +1,24 @@
 <!-- 组件说明 -->
 <template>
   <div :class="{'shareindexwrap': true,'shareindexwrapapp' : bodypaddingtop}">
-      <div class="header"  :style="{paddingTop:bodypaddingtop+'px'}">
-          <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
-          <div class="tit">转发有礼</div>
-          <span class="roles" @click="goshareroles">规则</span>
-      </div>
-      <div :class="{'sec-first' : true,'widthdraw-ios':system=='ios'}">
-          <div class="pub lt">
-              <span class="tit">累计奖励</span>
-              <span class="num">{{topAllData.cumulativeReward}}红包</span>
-              <span class="btn"  @click="gowithdrawpage" v-if="system!='ios'" >提现</span>
-          </div>
-          <div class="pub rt">
-              <span class="tit">可兑换奖励</span>
-              <span class="num">{{topAllData.exchangeAward}}红包</span>
-              <span class="btn" @click="goexchangepage">兑换金币</span>
-          </div>
+      <div class="bgcover-section">
+        <div class="header"  :style="{paddingTop:bodypaddingtop+'px'}">
+            <img class="back" @click="goback" src="./../../../../assets/imgs/shop/white-gd.png" alt />
+            <div class="tit">转发有礼</div>
+            <span class="roles" @click="goshareroles">规则</span>
+        </div>
+        <div :class="{'sec-first' : true,'widthdraw-ios':system=='ios'}">
+            <div class="pub lt">
+                <span class="tit">累计奖励</span>
+                <span class="num">{{topAllData.cumulativeReward}}红包</span>
+                <span class="btn"  @click="gowithdrawpage" v-if="system!='ios'" >提现</span>
+            </div>
+            <div class="pub rt">
+                <span class="tit">可兑换奖励</span>
+                <span class="num">{{topAllData.exchangeAward}}红包</span>
+                <span class="btn" @click="goexchangepage">兑换金币</span>
+            </div>
+        </div>
       </div>
       <div class="sec-two">
         <div class="nav">
@@ -31,7 +33,7 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2" @click="goGuildDetail(0)" >{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
+               <span class="t2" @click="goGuildDetail(0)" >{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -43,7 +45,7 @@
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/icons/black-gd.png" alt /></span></span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -60,7 +62,7 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -72,7 +74,7 @@
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -89,7 +91,7 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -101,7 +103,7 @@
              </li>
              <li>
                <span class="t1">邀请主播</span>
-               <span class="t2">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人</span>
+               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -116,7 +118,7 @@
         </div>
       </div>
       <div class="pub-tips sec-III">
-        <p class="tips"><span>*</span>每个红包可兑换金币100个</p>
+        <p class="tips"><span>*</span>每个红包可兑换金币100个<mark class="iosmark" v-if="system!='ios'">，提现&yen;1.00</mark></p>
         <p class="tips"><span>*</span>消费数据，是指您邀请的用户在平台产生的消费之和；收益数据，是指您邀请的用户在平台产生的收益之和</p>
       </div>
       <div class="btn-area" @click="lijishare">立即分享</div>
@@ -141,6 +143,7 @@ export default {
   data() {
     return {
       system : '',//判断是IOS
+      webtype : '', //判断来源0为客户端来的参数
       bodypaddingtop : 0, //客户端传来的top值 
       shareUserId : '', //用户ID
       active : 0,
@@ -180,6 +183,7 @@ export default {
     that.shareUserId = that.$route.query.shareUserId;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.system = that.$route.query.system;
+    that.webtype = that.$route.query.webtype;
     that.getCumulativeReward();
     that.getShareStatistics();
   },
@@ -187,7 +191,7 @@ export default {
     // 返回上一页
     goback() {
       let that = this;
-      if(that.$route.query.webtype==='0'){
+      if(that.webtype==='0'){
         jsCallgoback();
       }else{
         that.$router.go(-1);
@@ -196,9 +200,9 @@ export default {
     //跳转规则页
     goshareroles(){
       let that = this;
-      if(that.$route.query.webtype==='0'){
+      if(that.webtype==='0'){
         that.$router.push({
-          name: "shareroles",
+          name: "yinyushareroles",
           query: {
             webtype : 0,
             shareUserId : that.shareUserId,
@@ -207,22 +211,35 @@ export default {
         });
       }else{
         that.$router.push({
-          name: "shareroles"
+          name: "yinyushareroles"
         });
       } 
     },
     //跳转详情 persontype 1为邀请人数 0为邀请主播
     goGuildDetail(persontype){
       let that =this;
-      that.$router.push({
-        name: "sharedetailsindex",
+      if(that.webtype==='0'){
+        that.$router.push({
+          name: "yinyusharedetailsindex",
+          query: {
+          timetype : that.timesection,
+          persontype : persontype,
+          paddingtop : that.bodypaddingtop,
+          shareUserId : that.shareUserId,
+          webtype : that.webtype
+          }
+        });
+      }else{
+        that.$router.push({
+        name: "yinyusharedetailsindex",
         query: {
          timetype : that.timesection,
          persontype : persontype,
-         paddingtop : that.bodypaddingtop,
          shareUserId : that.shareUserId
         }
       });
+      }
+      
     },
     tabitems(index){
       console.log(index);
@@ -273,7 +290,7 @@ export default {
     gowithdrawpage(){
       let that =this;
       that.$router.push({
-        name: "sharewithdrawindex",
+        name: "yinyusharewithdrawindex",
         query: {
          shareUserId : that.shareUserId, 
          paddingtop : that.bodypaddingtop
@@ -284,7 +301,7 @@ export default {
     goexchangepage(){
       let that =this;
       that.$router.push({
-        name: "shareexchangeindex",
+        name: "yinyushareexchangeindex",
         query : {
           shareUserId : that.shareUserId,
           paddingtop : that.bodypaddingtop

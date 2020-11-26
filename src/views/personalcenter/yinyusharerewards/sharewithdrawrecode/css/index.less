@@ -6,10 +6,10 @@
     height: 100%;
     position: absolute;
     box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
+    background: #101118;
     .header {
         width: 7.5rem;
-        height: 1rem;
-        background: white;
+        height: 50px;
         text-align: center;
         position: fixed;
         z-index: 100;
@@ -20,76 +20,100 @@
             display: block;
             position: absolute;
             left: .2rem;
-            top: .35rem;
+            bottom: 22px;
         }
 
         span {
             display: block;
             text-align: center;
-            line-height: 1rem;
+            line-height: 50px;
             font-size: 0.34rem;
-            color: #333333;
+            color: #fff;
         }
     }
 
     .top-all-wallet{
-        margin: 1rem auto 0;
+        margin: 0 auto 0;
         width: 7.5rem;
-        min-height: .83rem;
-        padding: .3rem;
-        background: url("./../../../../../assets/imgs/personal/share/topallwallet.png") no-repeat;
-        background-size: 7.5rem 1.53rem;
+        height: 3.88rem;
         color: #fff;
-        font-size: .24rem;
+        font-size: .28rem;
+        background: url("./../../../../../assets/imgs/personal/yinyu-share/recode-top.png") no-repeat 0 0;
+        background-size: 7.5rem 3.88rem;
+        overflow: hidden;
+        .wallet-inner{
+            height: 0.97rem;
+            margin-top: 1rem;
+            padding:  .28rem .2rem;
+            text-align: center;
+        }
         .num{
             margin-top: .1rem;
             .t{
                 font-size: .5rem;
+                font-weight: bold;
             }
+        }
+    }
+    .recodepage-tip{
+        padding: .5rem .1rem .25rem;
+        p{
+            display: flex;
+            line-height: 1.5;
+            span{
+                display: inline-block;
+            }
+        }
+        p.tips{
+            margin-bottom: 0;
         }
     }
     .box-listareabox{
         padding-bottom: .5rem;
+        border-radius: .6rem;
         .uls{
             width: 7.5rem;
             .lis{
                 font-size: .24rem;
-                color: #757575;
+                color: #b0b0bd;
                 margin-top: .3rem;
                 .tit{
-                    padding-left: .25rem;
+                    padding-left: .3rem;
                 }
                 ol{
-                    background: #fff;
+                    background: #101118;
                     border-radius: .3rem;
-                    padding: 0 .2rem;
+                    padding: 0.01rem .3rem;
+                    margin-top: 0.3rem;
                     li{
                         min-height: 1.28rem;
-                        border-bottom: 1px solid #d7d7d7;
-                        margin-top: .3rem;
+                        // border-bottom: 1px solid #d7d7d7;
+                        // margin-top: .3rem;
+                        padding-bottom: .25rem;
                         position: relative;
                         span{
                             display: block;
                         }
                         h3{
                             padding-top: .25rem;
+                            color: #fff;
                         }
                         .tm{
                             margin-top: .2rem;
                         }
                         .apply{
                             min-width: .6rem;
-                            color: #ffbd04;
+                            color:#580eff;
                             position: absolute;
                             right: 2.8rem;
                             top: 50%;
                             transform: translateY(-50%);
                         }
                         .yet{
-                            color: #1f1f1f;
+                            color: #fff;
                         }
                         .bo{
-                            color: #ff5b4f;
+                            color: #ff3c3c;
                         }
                         .price{
                             font-size: .28rem;
@@ -97,10 +121,49 @@
                             right: .2rem;
                             top: 50%;
                             transform: translateY(-50%);
+                            mark{
+                                display: inline-block;
+                                background: none;
+                                margin-right: .03rem;
+                                color: #b0b0bd;
+                                font-family: PingFang SC;
+                                font-weight: 500;
+                            }
                         }
                     }
                     li:last-child{
                         border: none;
+                    }
+                }
+            }
+            .lis-ex{
+                ol{
+                    padding: 0.01rem .2rem;
+                    margin-top: .3rem;
+                    li{
+                        display: flex;
+                        // width: 100%;
+                        min-height: 1.28rem;
+                        .im{
+                            width: .68rem;
+                            height: .68rem;
+                            position: absolute;
+                            left: .3rem;
+                            top: 0.3rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .con{
+                            padding: .25rem 0 0 1.2rem;
+                            h3{
+                                padding-top: 0;
+                            }
+                            .tm{
+                                margin-top: .08rem;
+                            }
+                        }
                     }
                 }
             }
@@ -111,13 +174,11 @@
 .widthdrawrecodewrapapp{
     .header {
         img {
-            top: .7rem;
+            bottom: 16px;
+            top: auto;
         }
         span{
             top: .6rem;
         }
-    }
-    .top-all-wallet{
-        margin: 1.4rem auto 0;
     }
 }

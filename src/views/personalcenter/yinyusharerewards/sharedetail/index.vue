@@ -1,11 +1,11 @@
 <!-- 组件说明 -->
 <template>
-  <div class="sharedetails_box">
-    <div class="header clearfix">
+  <div :class="{'sharedetails_box' : true,'sharedetails_boxapp' : bodypaddingtop}">
+    <div class="header clearfix" :style="{paddingTop:bodypaddingtop+'px'}">
       <img
         @click="$router.go(-1)"
         style="transform:rotate(180deg);"
-        src="./../../../../assets/imgs/icons/sp-gengduo@2x.png"
+        src="./../../../../assets/imgs/shop/white-gd.png"
         alt
       />
       <p>{{persontype===1?'邀请主播明细':'邀请用户明细'}}</p>
@@ -13,16 +13,16 @@
     <div class="section-con">
       <div class="yao-type-tit" v-if="detailsList.length > 0"> {{persontype===1?'时间为通过认证时间':'时间为注册时间'}}</div>
       <div class="list-content" id="listContent">
-        <div class="content-inner" v-if="detailsList.length > 0">
-          <div class="hd">
+        <div class="content-inner">
+          <div class="hd" v-if="detailsList.length > 0">
             <span class="lt">用户信息</span>
             <span  class="rt">ID账号</span>
           </div>
           <div ref="mescroll" class="mescroll">
-            <ul class="news-list">
+            <ul class="news-list" v-if="detailsList.length > 0">
               <li v-for="(item,index) in detailsList"
                         :key="index"
-                        :id="item.userId">
+                        :id="item.userId" v-if="item.userId">
                 <div class="lt">
                   <h3>{{item.nickname}}</h3>
                   <div class="btm" v-if="persontype === 1">{{item.certificationTime}}</div>
@@ -41,11 +41,14 @@
 <script>
 import MeScroll from 'mescroll.js'
 import 'mescroll.js/mescroll.min.css'
+import {jsCallImmediatelySharefn,jsCallgoback} from './../../../../utils/appjh.js'
 export default {
   components: {
   },
   data() {
     return {
+      bodypaddingtop : 0, //客户端传来的top值 
+      shareUserId : '', //用户ID
       mescroll: null,
       persontype : 1 , //标题类型0为主播 ，1为用户
       timetype : 0,
@@ -65,7 +68,7 @@ export default {
       // 联网加载数据
       this.getShareInviteDetail(0, 1, (data) => {
         // 添加新数据到列表顶部
-        this.detailsList.unshift(data)
+        this.detailsList.unshift(data);
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           this.mescroll.endSuccess()// 结束下拉刷新,无参
@@ -99,12 +102,12 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.shareInviteDetail({
-            userId : that.$store.state.nerUser.userid,
+            userId : that.shareUserId,
             type : that.persontype,
             statisticsType : that.timetype,
             pageNumber : 1,
             pageSize : 20,
-            appType : 1
+            appType : 3
           }).then(res => {
             that.$toast.clear();
             if (res.data.code == 1) {
@@ -129,9 +132,13 @@ export default {
     let that = this;
     that.timetype = that.$route.query.timetype;
     that.persontype = that.$route.query.persontype;
+    that.shareUserId = that.$route.query.shareUserId;
+    that.bodypaddingtop = that.$route.query.paddingtop;
+    that.webtype = that.$route.query.webtype;
     // 创建MeScroll对象:为避免配置的id和父组件id重复,这里使用ref的方式初始化mescroll
     that.mescroll = new MeScroll(that.$refs.mescroll, {// 在mounted生命周期初始化mescroll,以确保您配置的dom元素能够被找到.
       down: {
+        // use : false,
         auto: false, // 是否在初始化完毕之后自动执行下拉回调callback; 默认true
         callback: that.downCallback // 下拉刷新的回调
       },
@@ -151,7 +158,14 @@ export default {
           tip: '您还没有邀请用户，去邀请吧！', // 提示
           btntext: '去邀请', // 按钮,默认""
           btnClick: function () { // 点击按钮的回调,默认null
-            alert('点击了按钮,具体逻辑自行实现')
+            if(that.webtype==='0'){
+                jsCallImmediatelySharefn();
+                return;
+            }else{
+                setTimeout(() => {
+                  window.location.href = "http://test.testh5.zhulihr.com/share/shareregist.html?shareUserId=" + that.$store.state.nerUser.userid + '&platform=1&sharetype=2';
+                }, 800);
+            }
           }
         },
       }
@@ -189,55 +203,40 @@ export default {
 </style>
 
 <style>
-
   /*以fixed的方式固定mescroll的高度*/
-  .list-content .mescroll {
+  .sharedetails_box .list-content .mescroll {
+    width : 7.5rem;
     position: fixed;
-    top:140px;
+    top:121px;
     bottom: 0;
     height: auto;
   }
-
-  .header {
-    z-index: 9990;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 44px;
-    line-height: 44px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    background-color: white;
+  .sharedetails_box .list-content .mescroll::-webkit-scrollbar{
+    width: 4px;
+    height: 6px;
   }
-
-  .header .btn-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 12px;
-    line-height: 22px;
+  .sharedetails_box .list-content .mescroll::-webkit-scrollbar-thumb{
+    border-radius: 1em;
+    background-color: #101118;
   }
-
-  .header .btn-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 12px;
+  .sharedetails_box .list-content .mescroll::-webkit-scrollbar-track{
+    border-radius: 1em;
+    background-color: #101118;
   }
-
-  .list-content .mescroll .notice {
+  .sharedetails_box .list-content .mescroll .notice {
     font-size: 14px;
     padding: 20px 0;
     border-bottom: 1px solid #eee;
     text-align: center;
     color: #555;
   }
-  .list-content .mescroll-empty{
+  .sharedetails_box .list-content .mescroll-empty{
     background: none;
     padding: 3.6rem 0;
+    position: fixed;
+    z-index: 10600;
   }
-  .list-content .mescroll-empty .empty-btn{
+  .sharedetails_box .list-content .mescroll-empty .empty-btn{
     width: 2.3rem;
     height: .7rem;
     line-height : .7rem;
@@ -249,8 +248,13 @@ export default {
     padding: 0;
     margin-top : 2.56rem;
   }
-  .list-content .mescroll-empty .empty-tip{
+  .sharedetails_box .list-content .mescroll-empty .empty-tip{
     font-size: .28rem;
     color: #757575;
   }
+
+  .sharedetails_boxapp .list-content .mescroll {
+    top:141px;
+  }
+
 </style>

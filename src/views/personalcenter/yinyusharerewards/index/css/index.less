@@ -3,11 +3,15 @@
     margin: 0 auto;
     font-family: PingFang SC;
     font-weight: 500;
-    height: 100%;
     position: absolute;
-    box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
-    background: #101118 url("./../../../../../assets/imgs/personal/yinyu-share/bg-top.png") no-repeat 0 0;
-    background-size: 7.5rem 5.35rem;
+    // box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
+    padding-bottom: 1rem;
+    background: #101118;
+    .bgcover-section{
+        padding-bottom: 1.4rem;
+        background: url("./../../../../../assets/imgs/personal/yinyu-share/bg-top.png") no-repeat 0 0;
+        background-size: cover;
+    }
     .sec-first {
         display: flex;
         flex-direction: row;
@@ -16,7 +20,7 @@
         .pub {
             width: 50%;
             height: 2.3rem;
-            padding: 0.46rem 0 .50rem;
+            padding: 0.46rem 0 0;
             color: #fff;
             text-align: center;
             cursor: pointer;
@@ -42,7 +46,6 @@
                 font-size: .24rem;
                 border-radius: .26rem;
                 color: #580eff;
-                font-weight: bold;
             }
         }
     }
@@ -56,8 +59,8 @@
         border-radius: 1px;
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translateX(-50%, -50%);
+        top: 28%;
+        transform: translate(-50%);
     }
     .widthdraw-ios{
         .pub{
@@ -78,6 +81,7 @@
         width: 100%;
         background: #101118;
         border-radius: .6rem;
+        margin-top: -.6rem;
         .nav{
             height: .9rem;
         }
@@ -86,12 +90,14 @@
             min-height: 2.86rem;
             margin-top: .3rem;
             ul {
-                width: 7.1rem;
+                width: 6.9rem;
                 display: flex;
                 flex-wrap: wrap;
-                padding: .2rem;
+                margin: 0 .28rem;
+                border: 1px solid #2b2c43;
                 li{
                     width: 33.33%;
+                    padding: .2rem 0 0;
                     position: relative;
                     span{
                         display: block;
@@ -121,7 +127,10 @@
                 }
                 li:nth-child(1),
                 li:nth-child(2),
-                li:nth-child(3){
+                li:nth-child(3),
+                li:nth-child(6),
+                li:nth-child(4),
+                li:nth-child(5){
                     .t1{
                         padding-top: .1rem;
                     }
@@ -133,19 +142,12 @@
                 li:nth-child(4),
                 li:nth-child(5){
                     border-bottom: none;
-                    .t1{
-                        padding-top: .3rem;
-                    }
-                    .t2{
-                        padding-bottom: .1rem;
-                    }
                 }
                 li::after{
                     content: '';
                     width: 1px;
                     height: 100%;
                     background:#2b2c43;
-                   
                 }
                 li:nth-child(3n)::after{
                     content: '';
@@ -169,6 +171,7 @@
     }
 
     .sec-III{
+        padding-top: .3rem;
         .guild{
             width: 100%;
             height: 1rem;
@@ -212,7 +215,6 @@
     }
 }
 .shareindexwrapapp{
-    background-size: 7.5rem 4.66rem;
     .header{
         img{
             top: .75rem;
