@@ -16,13 +16,13 @@
           <span class="tit">
             <img src="./../../../../assets/imgs/personal/yinyu-share/sharetit01.png" alt="">
           </span>
-          <p>您邀请的用户在抓周平台通过赠送礼物、购买会员、坐骑、饰品等消费，您将获得<span class="num">{{userPercentage}}%</span>的消费提成！</p>
+          <p>您邀请的用户在音娱平台通过赠送礼物、购买会员、坐骑、饰品等消费，您将获得<span class="num">{{userPercentage}}%</span>的消费提成！</p>
         </div>
         <div class="txt-sec">
           <span class="tit">
             <img src="./../../../../assets/imgs/personal/yinyu-share/sharetit02.png" alt="">
           </span>
-          <p>您邀请的主播在抓周平台获得收益，您将获得<span class="num">{{anchorPercentage}}%</span>的收入提成！</p>
+          <p>您邀请的主播在音娱平台获得收益，您将获得<span class="num">{{anchorPercentage}}%</span>的收入提成！</p>
         </div>
         <div class="txt-sec">
           <span class="tit">
@@ -30,7 +30,7 @@
           </span>
           <p>奖励上不封顶，后续还会有更多转发福利，敬请期待！</p>
         </div>
-        <div class="tips">ps：本活动最终解释权归抓周直播所有。</div>
+        <div class="tips">ps：本活动最终解释权归音娱直播所有。</div>
       </div>
       <div class="btn-area" @click="lijishare"></div>
   </div>
