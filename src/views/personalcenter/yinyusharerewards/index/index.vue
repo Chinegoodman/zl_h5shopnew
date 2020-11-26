@@ -343,9 +343,6 @@ export default {
 </style>
 
 <style>
-body{
-  background: #F7F7F7;;
-}
   .shareindexwrap .van-hairline--top-bottom::after, 
   .shareindexwrap .van-hairline-unset--top-bottom::after{
       border-width:0 !important;

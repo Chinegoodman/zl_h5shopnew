@@ -338,36 +338,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<styl lang='less' scoped>
 @import url("../index/css/sharecommon.less");
 @import url("./css/index.less");
-</style>
-
-<style>
-  .shareindexwrap .van-hairline--top-bottom::after, 
-  .shareindexwrap .van-hairline-unset--top-bottom::after{
-      border-width:0 !important;
-  }
-  .shareindexwrap .van-list__error-text, 
-  .shareindexwrap .van-list__finished-text, 
-  .shareindexwrap .van-list__loading{
-    background:rgba(247,247,247,1);
-  }
-  .shareindexwrap .van-tabs--line .van-tabs__wrap{
-    height: .9rem;
-  }
-  .shareindexwrap .van-tab{
-    font-size : .32rem;
-    font-family:PingFang SC;
-    font-weight:500;
-    color:rgba(117,117,117,1);
-  }
-  .shareindexwrap .van-tab--active{
-    font-weight: bold;
-    color: #1F1F1F;
-  }
-  .shareindexwrap .van-tabs__line{
-    width: .3rem !important;
-    background:rgba(255,189,4,1);
-  }
-</style>
+</styl>
