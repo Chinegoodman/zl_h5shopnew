@@ -164,7 +164,7 @@ const personalcenter = {
     },
     //获得累计奖励、可兑换奖励
     cumulativeReward(params) {
-        return axios.get(`${base.yxf2}/v1/marketing/share/cumulative/reward?userId=${params.userId}`);
+        return axios.get(`${base.yxf2}/v1/marketing/share/cumulative/reward?userId=${params.userId}&appType=${params.appType}`);
     },
     //获得个人、主播邀请明细
     shareInviteDetail(params) {

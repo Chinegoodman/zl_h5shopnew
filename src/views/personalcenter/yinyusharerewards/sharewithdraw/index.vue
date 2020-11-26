@@ -147,6 +147,7 @@ export default {
           }); 
           that.api.personalcenter.cumulativeReward({
             userId : that.shareUserId,
+            appType : 3
             // userId : 9512
           }).then(res => {
             that.$toast.clear();
