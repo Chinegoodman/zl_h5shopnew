@@ -138,11 +138,31 @@
                         padding-bottom: .3rem;
                     }
                 }
+                li:nth-child(1),
                 li:nth-child(6),
                 li:nth-child(4),
                 li:nth-child(5){
                     border-bottom: none;
                 }
+
+                li:nth-child(1){
+                    .t1{
+                        position: absolute;
+                        bottom: .1rem;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+                li:nth-child(4){
+                    .t2{
+                        margin-top: 0;
+                        position: absolute;
+                        top: .1rem;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+
                 li::after{
                     content: '';
                     width: 1px;

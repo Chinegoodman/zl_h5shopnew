@@ -156,7 +156,7 @@ const personalcenter = {
     },
     //秀场账单列表提现及豆转币
     userWalletExchangeOrWithdrawalBill(params) {
-        return axios.get(`${base.yxf2}/v1/user/wallet/exchange/or/withdrawal/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}`);
+        return axios.get(`${base.yxf2}/v1/user/wallet/exchange/or/withdrawal/bill?page=${params.page}&type=${params.type}&userId=${params.userId}&item=${params.item}&appType=${params.appType}`);
     },
     //根据时间获得分享奖励统计信息
     shareStatistics(params) {

@@ -101,7 +101,7 @@ export default {
       let that = this;
       if(that.bodypaddingtop){
         that.$router.push({
-          name: "sharewithdrawrecode",
+          name: "yinyusharewithdrawrecode",
           query : {
             shareUserId : that.shareUserId,
             paddingtop : that.bodypaddingtop,
@@ -110,7 +110,7 @@ export default {
         });
       }else{
         that.$router.push({
-          name: "sharewithdrawrecode",
+          name: "yinyusharewithdrawrecode",
           query : {
             shareUserId : that.shareUserId,
             guildPageType : 3  //4为跳向提现记录页 3为兑换
@@ -126,7 +126,8 @@ export default {
             duration: 200000
           }); 
           that.api.personalcenter.cumulativeReward({
-            userId : that.shareUserId
+            userId : that.shareUserId,
+            appType : 3,
             // userId : 9512
           }).then(res => {
             that.$toast.clear();

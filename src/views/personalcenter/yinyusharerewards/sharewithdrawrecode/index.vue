@@ -201,6 +201,7 @@ export default {
             userId : that.shareUserId,
             // userId : 9512,
             type : that.guildPageType,
+            appType : 3,
             page : pageNum,
             item : 20
           }).then(res => {
