@@ -188,7 +188,7 @@ const personalcenter = {
     },
     //获取提现记录和兑换记录页总金额
     walletStatisticalWithdrawlCount(params) {
-        return axios.get(`${base.yxf2}/v1/user/wallet/statistical/withdrawal/count?userId=${params.userId}&type=${params.type}`);
+        return axios.get(`${base.yxf2}/v1/user/wallet/statistical/withdrawal/count?userId=${params.userId}&type=${params.type}&appType=${params.appType}`);
     },
     //获取规则收益分成百分比
     globalObtainProportion(params) {
