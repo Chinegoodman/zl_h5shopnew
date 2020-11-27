@@ -290,6 +290,8 @@ export default {
 .box-listareabox .mescroll-empty{
   background: none;
   padding: 3.6rem 0;
+  position: fixed;
+  z-index: 10500;
 }
 .box-listareabox .mescroll-empty .empty-btn{
   width: 2.3rem;
@@ -305,7 +307,7 @@ export default {
 }
 .box-listareabox .mescroll-empty .empty-tip{
   font-size: .28rem;
-  color: #757575;
+  color: #6a6a86;
 }
 
 .widthdrawrecodewrapapp .box-listareabox .mescroll {
