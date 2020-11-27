@@ -130,6 +130,7 @@ export default {
   // },
   mounted() {
     let that = this;
+    document.querySelector('body').setAttribute('style', 'background-color:#101118');
     that.timetype = that.$route.query.timetype;
     that.persontype = that.$route.query.persontype;
     that.shareUserId = that.$route.query.shareUserId;
@@ -194,7 +195,9 @@ export default {
       this.mescroll.hideTopBtn(0)// 隐藏回到顶部按钮,无渐隐动画
     }
     next()
-  }
+  },
+  beforeCreate() {}, 
+  beforeDestroy() {}
 };
 </script>
 

@@ -78,6 +78,7 @@ export default {
   },
   mounted() {
     let that = this;
+    document.querySelector('body').setAttribute('style', 'background-color:#101118');
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.guildPageType = that.$route.query.guildPageType;
     that.shareUserId = that.$route.query.shareUserId;
@@ -265,6 +266,7 @@ export default {
 
 <style>
 .box-listareabox .mescroll {
+  width : 7.5rem;
   position: fixed;
   top: 180px;
   bottom: 0;

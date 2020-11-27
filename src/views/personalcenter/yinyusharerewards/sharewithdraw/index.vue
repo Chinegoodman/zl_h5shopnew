@@ -102,6 +102,7 @@ export default {
   computed: {},
   mounted() {
     let that = this;
+    document.querySelector('body').setAttribute('style', 'background-color:#101118');
     that.allowCount = that.$route.query.leiJiCount;
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.shareUserId = that.$route.query.shareUserId;
@@ -326,9 +327,7 @@ export default {
   //   that.userId = that.$store.state.user.userid;
   //   console.log(that.userId);
   // },
-  beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background-color:#101118')
-  }, //生命周期 - 创建之前
+  beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
@@ -338,7 +337,7 @@ export default {
 };
 </script>
 
-<styl lang='less' scoped>
+<style lang='less' scoped>
 @import url("../index/css/sharecommon.less");
 @import url("./css/index.less");
-</styl>
+</style>

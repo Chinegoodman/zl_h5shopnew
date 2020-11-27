@@ -68,6 +68,7 @@ export default {
   computed: {},
   mounted() {
     let that = this;
+    document.querySelector('body').setAttribute('style', 'background-color:#101118');
     that.bodypaddingtop = that.$route.query.paddingtop;
     that.shareUserId = that.$route.query.shareUserId;
     //可兑换奖励
