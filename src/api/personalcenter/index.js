@@ -160,7 +160,7 @@ const personalcenter = {
     },
     //根据时间获得分享奖励统计信息
     shareStatistics(params) {
-        return axios.get(`${base.yxf2}/v1/marketing/share/statistics?type=${params.type}&userId=${params.userId}`);
+        return axios.get(`${base.yxf2}/v1/marketing/share/statistics?type=${params.type}&userId=${params.userId}&appType=${params.appType}`);
     },
     //获得累计奖励、可兑换奖励
     cumulativeReward(params) {

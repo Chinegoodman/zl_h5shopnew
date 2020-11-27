@@ -33,7 +33,6 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2" @click="goGuildDetail(0)" >{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -44,8 +43,7 @@
                <span class="t2">{{tongjidata.consumeReward?tongjidata.consumeReward:0}}红包</span>
              </li>
              <li>
-               <span class="t1">邀请主播</span>
-               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
+               <span class="t2" @click="goGuildDetail(0)" >{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -62,7 +60,6 @@
             <ul>
              <li>
                <span class="t1">邀请人数</span>
-               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">消费</span>
@@ -73,8 +70,7 @@
                <span class="t2">{{tongjidata.consumeReward?tongjidata.consumeReward:0}}红包</span>
              </li>
              <li>
-               <span class="t1">邀请主播</span>
-               <span class="t2" @click="goGuildDetail(1)">{{tongjidata.inviteAnchorCount?tongjidata.inviteAnchorCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
+               <span class="t2" @click="goGuildDetail(0)">{{tongjidata.inviteUserCount?tongjidata.inviteUserCount:0}}人<span class="gd"><img src="./../../../../assets/imgs/shop/white-gd.png" alt /></span></span>
              </li>
              <li>
                <span class="t1">收益</span>
@@ -278,7 +274,8 @@ export default {
           }); 
           that.api.personalcenter.shareStatistics({
             type : that.timesection,
-            userId : that.shareUserId
+            userId : that.shareUserId,
+            appType : 3
             // userId : 123456
           }).then(res => {
             that.$toast.clear();
