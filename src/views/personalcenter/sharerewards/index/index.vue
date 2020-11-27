@@ -278,7 +278,8 @@ export default {
           }); 
           that.api.personalcenter.shareStatistics({
             type : that.timesection,
-            userId : that.shareUserId
+            userId : that.shareUserId,
+            appType : 1
             // userId : 123456
           }).then(res => {
             that.$toast.clear();
