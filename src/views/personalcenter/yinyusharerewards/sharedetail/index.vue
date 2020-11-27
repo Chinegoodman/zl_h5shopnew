@@ -244,16 +244,17 @@ export default {
     height: .7rem;
     line-height : .7rem;
     text-align: center;
-    background: #ffbd04;
+    background: #580eff;
     border-radius: .35rem;
-    color : #fff;
+    color : #fffefe;
     border: none;
     padding: 0;
+    font-weight : bold;
     margin-top : 2.56rem;
   }
   .sharedetails_box .list-content .mescroll-empty .empty-tip{
     font-size: .28rem;
-    color: #757575;
+    color: #b0b0bd;
   }
 
   .sharedetails_boxapp .list-content .mescroll {

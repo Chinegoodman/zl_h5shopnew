@@ -133,6 +133,7 @@ export default {
             userId : that.shareUserId,
             // userId : 9512,
             type : that.guildPageType,//4为提现 3为兑换
+            appType : 1
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
@@ -149,7 +150,8 @@ export default {
           }); 
           that.api.personalcenter.shareStatistics({
             type : that.timesection,
-            userId : that.shareUserId
+            userId : that.shareUserId,
+            appType : 1
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
@@ -200,6 +202,7 @@ export default {
             userId : that.shareUserId,
             // userId : 9512,
             type : that.guildPageType,
+            appType : 1,
             page : pageNum,
             item : 20
           }).then(res => {
