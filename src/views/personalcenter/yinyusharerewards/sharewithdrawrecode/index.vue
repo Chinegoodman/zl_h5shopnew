@@ -170,23 +170,21 @@ export default {
       // 联网加载数据
       that.getUserWalletExchangeOrWithdrawalBill(0, 1, (data) => {
         // 添加新数据到列表顶部
-        console.log('data');
-        console.log(data);
-        this.recodesList.unshift(data);
-        // 数据渲染成功后,隐藏下拉刷新的状态
-        this.$nextTick(() => {
-          this.mescroll.endSuccess()// 结束下拉刷新,无参
-        })
-
+        // console.log('data');
+        // console.log(data);
+        // this.recodesList.unshift(data);
+        // // 数据渲染成功后,隐藏下拉刷新的状态
+        // this.$nextTick(() => {
+        //   this.mescroll.endSuccess()// 结束下拉刷新,无参
+        // })
         this.recodesList = [];
         that.recodesList.push(data);
         that.mescroll.resetUpScroll();
         // 数据渲染成功后,隐藏下拉刷新的状态
-        // that.$nextTick(() => {
-          
+        that.$nextTick(() => {
           // this.mescroll.resetUpScroll();
-          // this.mescroll.endSuccess()// 结束下拉刷新,无参
-        // });
+          this.mescroll.endSuccess()// 结束下拉刷新,无参
+        });
       }, () => {
         // 联网失败的回调,隐藏下拉刷新的状态
         that.mescroll.endErr()
