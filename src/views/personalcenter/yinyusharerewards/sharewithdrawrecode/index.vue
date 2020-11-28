@@ -223,8 +223,6 @@ export default {
             page : pageNum,
             item : pageSize
           }).then(res => {
-              console.log('res申请');
-              console.log(res);
               that.$toast.clear();
             if (res.data.code == 1) {
               let objData = res.data.data.list;

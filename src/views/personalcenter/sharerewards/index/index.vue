@@ -242,7 +242,7 @@ export default {
       
     },
     tabitems(index){
-      console.log(index);
+      // console.log(index);
       let that = this;
       if(index == 2){
         that.timesection = -1;

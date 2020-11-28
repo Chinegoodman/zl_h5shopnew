@@ -85,7 +85,7 @@ export default {
     that.getWalletStatisticalWithdrawlCount();
     this.$nextTick(() => {
         that.topAllWalletset = that.$refs.topAllWallet.offsetHeight;
-        console.log(that.topAllWalletset);
+        // console.log(that.topAllWalletset);
     });
     
     // that.getShareStatistics();
@@ -211,8 +211,8 @@ export default {
             page : pageNum,
             item : 20
           }).then(res => {
-              console.log('res申请');
-              console.log(res);
+              // console.log('res申请');
+              // console.log(res);
               that.$toast.clear();
             if (res.data.code == 1) {
               let objData = res.data.data.list;

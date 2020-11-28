@@ -22,7 +22,7 @@
           </div>
           <ul class="uls">
             <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
-              <span class="tit">{{item.date}}</span>
+              <span class="tit" >{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <h3>{{items.payType && items.payType==1?'支付宝':'微信'}}</h3>
@@ -74,6 +74,7 @@ export default {
       topAllWalletset : 0, //获取顶部部分高度
       allDataLength : 0, //提现记录列表的总条数
       oldDateTime : 0, //存下当月日期，用于处理相同的只显示一次
+      takeMouthTimeArr : []
     };
   },
   computed: {
@@ -229,15 +230,38 @@ export default {
             if (res.data.code == 1) {
               let objData = res.data.data.list;
               that.allDataLength = res.data.data.totalItem;
-                if(objData == null){
-                  objData = [];
+
+              objData.filter((s,index) => {
+                if(s.date == that.takeMouthTimeArr[index]){
+                  s.date = '';
+                  console.log('s');
+                  console.log(s);
                 }
-                successCallback && successCallback(objData);
-                that.$forceUpdate();
+              })
+
+              console.log('objData');
+              console.log(objData);
+
+              if(objData == null){
+                objData = [];
+              }
+              successCallback && successCallback(objData);
+              that.$forceUpdate();
+              that.takeMouthTimeArr = objData.map((itm) => {
+                return itm.date;
+              });
+              that.takeMouthTimeArr = that.unique(that.takeMouthTimeArr);
+
+              
             }else{
               errorCallback && errorCallback();
             }
           });
+    },
+    //月份数组去重
+    unique(arr) {
+        const res = new Map();
+        return arr.filter((a) => !res.has(a) && res.set(a, 1))
     }
   },
   beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写

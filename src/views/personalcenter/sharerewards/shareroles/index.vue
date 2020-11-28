@@ -92,8 +92,8 @@ export default {
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
-              console.log('res比例');
-              console.log(res);
+              // console.log('res比例');
+              // console.log(res);
               that.userPercentage = res.data.data * 100; 
             }
           });
@@ -113,8 +113,8 @@ export default {
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
-              console.log('res比例2');
-              console.log(res);
+              // console.log('res比例2');
+              // console.log(res);
               that.anchorPercentage = res.data.data * 100; 
             }
           });

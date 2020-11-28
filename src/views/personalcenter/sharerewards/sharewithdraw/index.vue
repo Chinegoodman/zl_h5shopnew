@@ -170,8 +170,8 @@ export default {
           }).then(res => {
             that.$toast.clear();
             if(res.data.code === 1){
-              console.log('获取账户信息是添加还是修改标致');
-              console.log(res);
+              // console.log('获取账户信息是添加还是修改标致');
+              // console.log(res);
               if(res.data.data === null){
                 that.accountMsgData = null;
               }else{
