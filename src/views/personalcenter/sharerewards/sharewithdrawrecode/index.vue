@@ -321,5 +321,10 @@ export default {
 .widthdrawrecodewrapapp .box-listareabox .mescroll-exchange{
   top: 155px;
 }
+.mescroll-totop{
+  width : .26rem;
+  height: .30rem;
+  z-index: 10600;
+}
 
 </style>

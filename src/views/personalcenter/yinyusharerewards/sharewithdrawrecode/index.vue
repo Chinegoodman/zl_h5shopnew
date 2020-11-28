@@ -342,6 +342,7 @@ export default {
 .mescroll-totop{
   width : .26rem;
   height: .30rem;
+  z-index: 10600;
 }
 
 </style>
