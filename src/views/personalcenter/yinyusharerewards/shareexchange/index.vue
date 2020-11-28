@@ -144,7 +144,7 @@ export default {
     //全部兑换
     allTakeOver(){
       let that = this;
-      if(that.allowExchange < 100){
+      if((that.allowExchange * 100) < 100){
         return that.$toast("仅可兑换100的整数倍");
       }else{
         that.currentExchangeNum = (Math.floor((that.allowExchange * 100) / 100)) * 100;
