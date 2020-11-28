@@ -64,13 +64,16 @@ export default {
   },
   data() {
     return {
+      mescroll: null,
       default_img_head : require('../../../../assets/imgs/icons/default-head.png'),
       shareUserId : '', //用户ID
       bodypaddingtop : 0, //客户端传来的top值 
       guildPageType : '', //从哪个页跳来的标识
       allTakeNum : 0,
       recodesList : [],
-      topAllWalletset : 0 //获取顶部部分高度
+      topAllWalletset : 0, //获取顶部部分高度
+      allDataLength : 0, //提现记录列表的总条数
+      oldDateTime : 0, //存下当月日期，用于处理相同的只显示一次
     };
   },
   computed: {
@@ -100,11 +103,11 @@ export default {
         callback: that.upCallback, // 上拉回调,此处可简写; 相当于 callback: function (page) { upCallback(page); }
         page: {
           num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-          size: 20 // 每页数据的数量
+          size:20 // 每页数据的数量
         },
         noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
         toTop: { // 配置回到顶部按钮
-          src: '../assets/imgs/icons/ddkby.png'
+          src: 'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1606475797931.png'
         },
         empty: {
           warpId: 'boxListAreaBox', // 父布局的id;
@@ -162,29 +165,44 @@ export default {
     },
     /* 下拉刷新的回调 */
     downCallback () {
+      let that = this;
       console.log('this.mescroll.version=' + this.mescroll.version);
       // 联网加载数据
-      this.getUserWalletExchangeOrWithdrawalBill(0, 1, (data) => {
+      that.getUserWalletExchangeOrWithdrawalBill(0, 1, (data) => {
         // 添加新数据到列表顶部
+        console.log('data');
+        console.log(data);
         this.recodesList.unshift(data);
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           this.mescroll.endSuccess()// 结束下拉刷新,无参
         })
+
+        this.recodesList = [];
+        that.recodesList.push(data);
+        that.mescroll.resetUpScroll();
+        // 数据渲染成功后,隐藏下拉刷新的状态
+        // that.$nextTick(() => {
+          
+          // this.mescroll.resetUpScroll();
+          // this.mescroll.endSuccess()// 结束下拉刷新,无参
+        // });
       }, () => {
         // 联网失败的回调,隐藏下拉刷新的状态
-        this.mescroll.endErr()
+        that.mescroll.endErr()
       })
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback (page) {
       // 联网加载数据
+      let that = this;
       this.getUserWalletExchangeOrWithdrawalBill(page.num, page.size, (curPageData) => {
         // 添加列表数据
-        this.recodesList = this.recodesList.concat(curPageData)
+        this.recodesList = this.recodesList.concat(curPageData);
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
-          this.mescroll.endSuccess(curPageData.length)
+          // this.mescroll.endSuccess(curPageData.length);
+          this.mescroll.endSuccess(that.allDataLength);
         })
       }, () => {
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
@@ -205,13 +223,14 @@ export default {
             type : that.guildPageType,
             appType : 3,
             page : pageNum,
-            item : 20
+            item : pageSize
           }).then(res => {
               console.log('res申请');
               console.log(res);
               that.$toast.clear();
             if (res.data.code == 1) {
               let objData = res.data.data.list;
+              that.allDataLength = res.data.data.totalItem;
                 if(objData == null){
                   objData = [];
                 }
@@ -221,7 +240,7 @@ export default {
               errorCallback && errorCallback();
             }
           });
-    },
+    }
   },
   beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
     next(vm => {
@@ -271,11 +290,12 @@ export default {
 .box-listareabox .mescroll {
   width : 7.5rem;
   position: fixed;
-  top: 180px;
+  top: 10px;
   bottom: 0;
   height: auto;
   border-radius: .6rem;
   background: #101118;
+  z-index: 10499;
 }
 .box-listareabox .mescroll-exchange{
   top: 135px;
@@ -292,6 +312,7 @@ export default {
   padding: 3.6rem 0;
   position: fixed;
   z-index: 10500;
+  bottom: 3rem;
 }
 .box-listareabox .mescroll-empty .empty-btn{
   width: 2.3rem;
@@ -319,6 +340,10 @@ export default {
 }
 .mescroll-downwarp .downwarp-tip, .mescroll-upwarp .upwarp-tip{
   color: #fff;
+}
+.mescroll-totop{
+  width : .26rem;
+  height: .30rem;
 }
 
 </style>

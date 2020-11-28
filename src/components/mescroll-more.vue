@@ -2,16 +2,8 @@
   <div class="listconpentsbox">
     <!--全部-->
     <mescroll-vue ref="mescroll0" v-show="tabType==0" :down="getMescrollDown(0)" :up="getMescrollUp(0)" @init="mescrollInit0">
-      <!-- <ul id="dataList0">
-        <li class="data-li" v-for="pd in tab0.list" :key="pd.id">
-          <img class="pd-img" :src="pd.pdImg"/>
-          <div class="pd-name">{{pd.pdName}}</div>
-          <p class="pd-price">{{pd.pdPrice}} 元</p>
-          <p class="pd-sold">已售{{pd.pdSold}}件</p>
-        </li>
-      </ul> -->
-      <ul class="list onlinelist" id="dataList0">
-          <li v-for="(item,index) in tab0.list"
+      <ul class="list onlinelist uls" id="dataList0">
+          <!-- <li v-for="(item,index) in tab0.list"
                     :key="index"
                     :id="item.liveId">
             <div class="lt">
@@ -19,7 +11,20 @@
               <div class="btm">2017-02-12  12:30:20</div>
             </div>
             <div class="rt">2351022</div>
-          </li>
+          </li> -->
+          <li class="lis" v-for="(item,index) in tab0.list" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
+              <span class="tit">{{item.date}}</span>
+              <ol>
+                <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
+                  <h3>{{items.payType && items.payType==1?'支付宝':'微信'}}</h3>
+                  <span class="tm">{{items.createTime}}</span>
+                  <span class="apply" v-if="items.state && items.state==1">提现中</span>
+                  <span class="apply yet" v-if="items.state && items.state==2">已提现</span>
+                  <span class="apply bo" v-if="items.state && items.state==4">驳回</span>
+                  <span class="price"><mark>&yen;</mark>{{items.expense}}</span>
+                </li>
+              </ol>
+            </li>
         </ul>
     </mescroll-vue>
   </div>
@@ -31,7 +36,7 @@ import MescrollVue from 'mescroll.js/mescroll.vue';
 
 export default {
   name: 'mescrollMore',
-  props:['persontype','timetype'],
+  props:['shareUserId','guildPageType'],
   components: {
     MescrollVue
   },
@@ -87,7 +92,7 @@ export default {
     upCallback (page, mescroll) {
       if (mescroll.tabType === 0) {
         this.tab0.isListInit = true;// 标记列表已初始化,保证列表只初始化一次
-        this.getShareInviteDetail(mescroll.tabType, page.num, page.size, (curPageData) => {
+        this.getUserWalletExchangeOrWithdrawalBill(mescroll.tabType, page.num, page.size, (curPageData) => {
           console.log('curPageData');
           console.log(curPageData.length);
           mescroll.endSuccess(curPageData.length);// 联网成功的回调,隐藏下拉刷新和上拉加载的状态;
@@ -99,23 +104,25 @@ export default {
         })
       }
     },
-    //获得个人、主播邀请明细
-    getShareInviteDetail(tabType, pageNum, pageSize, successCallback, errorCallback){
+    //申请提现记录列表
+    getUserWalletExchangeOrWithdrawalBill(tabType, pageNum, pageSize, successCallback, errorCallback){
       let that = this;
       that.$toast.loading({
             message: "加载中...",
+            forbidClick: true,
             duration: 200000
           }); 
-          that.api.personalcenter.shareInviteDetail({
-            userId : that.$store.state.nerUser.userid,
-            type : that.persontype,
-            statisticsType : that.timetype,
-            pageNumber : 1,
-            pageSize : 20
+          that.api.personalcenter.userWalletExchangeOrWithdrawalBill({
+            userId : that.shareUserId,
+            // userId : 9512,
+            type : that.guildPageType,
+            appType : 3,
+            page : pageNum,
+            item : 20
           }).then(res => {
-            that.$toast.clear();
-            console.log('res');
-            console.log(res);
+              console.log('res申请');
+              console.log(res);
+              that.$toast.clear();
             if (res.data.code == 1) {
               let objData = res.data.data.list;
                 if(objData == null){
@@ -127,7 +134,36 @@ export default {
               errorCallback && errorCallback();
             }
           });
-    }
+    },
+    // //获得个人、主播邀请明细
+    // getShareInviteDetail(tabType, pageNum, pageSize, successCallback, errorCallback){
+    //   let that = this;
+    //   that.$toast.loading({
+    //         message: "加载中...",
+    //         duration: 200000
+    //       }); 
+    //       that.api.personalcenter.shareInviteDetail({
+    //         userId : that.$store.state.nerUser.userid,
+    //         type : that.persontype,
+    //         statisticsType : that.timetype,
+    //         pageNumber : 1,
+    //         pageSize : 20
+    //       }).then(res => {
+    //         that.$toast.clear();
+    //         console.log('res');
+    //         console.log(res);
+    //         if (res.data.code == 1) {
+    //           let objData = res.data.data.list;
+    //             if(objData == null){
+    //               objData = [];
+    //             }
+    //             successCallback && successCallback(objData);
+    //             that.$forceUpdate();
+    //         }else{
+    //           errorCallback && errorCallback();
+    //         }
+    //       });
+    // }
   },
   beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写
     next(vm => {
@@ -143,11 +179,116 @@ export default {
 }
 </script>
 
+<style lang='less' scoped>
+    .listconpentsbox{
+        // padding-bottom: .5rem;
+        // border-radius: .6rem;
+        .uls{
+            width: 7.5rem;
+            .lis{
+                font-size: .24rem;
+                color: #b0b0bd;
+                margin-top: .3rem;
+                .tit{
+                    padding-left: .3rem;
+                }
+                ol{
+                    background: #101118;
+                    border-radius: .3rem;
+                    padding: 0.01rem .3rem;
+                    margin-top: 0.3rem;
+                    li{
+                        min-height: 1.28rem;
+                        // border-bottom: 1px solid #d7d7d7;
+                        // margin-top: .3rem;
+                        padding-bottom: .25rem;
+                        position: relative;
+                        span{
+                            display: block;
+                        }
+                        h3{
+                            padding-top: .25rem;
+                            color: #fff;
+                        }
+                        .tm{
+                            margin-top: .2rem;
+                        }
+                        .apply{
+                            min-width: .6rem;
+                            color:#580eff;
+                            position: absolute;
+                            right: 2.8rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                        .yet{
+                            color: #fff;
+                        }
+                        .bo{
+                            color: #ff3c3c;
+                        }
+                        .price{
+                            font-size: .28rem;
+                            position: absolute;
+                            right: .2rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            mark{
+                                display: inline-block;
+                                background: none;
+                                margin-right: .03rem;
+                                color: #b0b0bd;
+                                font-family: PingFang SC;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                    li:last-child{
+                        border: none;
+                    }
+                }
+            }
+            .lis-ex{
+                ol{
+                    padding: 0.01rem .2rem;
+                    margin-top: .3rem;
+                    li{
+                        display: flex;
+                        // width: 100%;
+                        min-height: 1.28rem;
+                        .im{
+                            width: .68rem;
+                            height: .68rem;
+                            position: absolute;
+                            left: .3rem;
+                            top: 0.3rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .con{
+                            padding: .25rem 0 0 1.2rem;
+                            h3{
+                                padding-top: 0;
+                            }
+                            .tm{
+                                margin-top: .08rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+</style>
+
 <style>
   /*以fixed的方式固定mescroll的高度*/
   .listconpentsbox .mescroll {
     position: absolute;
-    top: 140px;
+    top: 0px;
     bottom: 0;
     height: auto;
   }

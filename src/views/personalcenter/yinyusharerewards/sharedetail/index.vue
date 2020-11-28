@@ -213,6 +213,7 @@ export default {
     top:121px;
     bottom: 0;
     height: auto;
+    z-index: 10499;
   }
   .sharedetails_box .list-content .mescroll::-webkit-scrollbar{
     width: 4px;
@@ -234,10 +235,13 @@ export default {
     color: #555;
   }
   .sharedetails_box .list-content .mescroll-empty{
+    width : 7.5rem;
     background: none;
-    padding: 3.6rem 0;
+    padding: 0;
     position: fixed;
     z-index: 10600;
+    bottom : 4.5rem;
+    left: 0;
   }
   .sharedetails_box .list-content .mescroll-empty .empty-btn{
     width: 2.3rem;
