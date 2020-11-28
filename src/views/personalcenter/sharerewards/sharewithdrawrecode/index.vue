@@ -70,6 +70,7 @@ export default {
       guildPageType : '', //从哪个页跳来的标识
       allTakeNum : 0,
       recodesList : [],
+       allDataLength : 0, //提现记录列表的总条数
       topAllWalletset : 0 //获取顶部部分高度
     };
   },
@@ -103,7 +104,7 @@ export default {
         },
         noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
         toTop: { // 配置回到顶部按钮
-          src: '../assets/imgs/icons/ddkby.png'
+          src: 'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1606533092495.png'
         },
         empty: {
           warpId: 'boxListAreaBox', // 父布局的id;
@@ -177,13 +178,15 @@ export default {
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback (page) {
+      let that = this;
       // 联网加载数据
       this.getUserWalletExchangeOrWithdrawalBill(page.num, page.size, (curPageData) => {
         // 添加列表数据
         this.recodesList = this.recodesList.concat(curPageData)
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
-          this.mescroll.endSuccess(curPageData.length)
+          // this.mescroll.endSuccess(curPageData.length);
+          this.mescroll.endSuccess(that.allDataLength);
         })
       }, () => {
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
@@ -211,6 +214,7 @@ export default {
               that.$toast.clear();
             if (res.data.code == 1) {
               let objData = res.data.data.list;
+              that.allDataLength = res.data.data.totalItem;
                 if(objData == null){
                   objData = [];
                 }
@@ -272,6 +276,7 @@ export default {
   top: 180px;
   bottom: 0;
   height: auto;
+  z-index: 10499;
 }
 .box-listareabox .mescroll-exchange{
   top: 135px;
@@ -286,6 +291,9 @@ export default {
 .box-listareabox .mescroll-empty{
   background: none;
   padding: 3.6rem 0;
+  position: fixed;
+  z-index: 10500;
+  bottom: 2.5rem;
 }
 .box-listareabox .mescroll-empty .empty-btn{
   width: 2.3rem;

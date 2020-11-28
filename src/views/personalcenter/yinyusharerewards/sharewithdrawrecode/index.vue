@@ -107,7 +107,7 @@ export default {
         },
         noMoreSize: 5, // 如果列表已无数据,可设置列表的总数量要大于等于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
         toTop: { // 配置回到顶部按钮
-          src: 'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1606475797931.png'
+          src: 'https://xc.file.zhulihr.cn/pre/online-retailers/complaint/1606533092495.png'
         },
         empty: {
           warpId: 'boxListAreaBox', // 父布局的id;
@@ -312,7 +312,7 @@ export default {
   padding: 3.6rem 0;
   position: fixed;
   z-index: 10500;
-  bottom: 3rem;
+  bottom: 2.5rem;
 }
 .box-listareabox .mescroll-empty .empty-btn{
   width: 2.3rem;
