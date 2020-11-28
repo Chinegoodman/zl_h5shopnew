@@ -68,7 +68,9 @@ export default {
       // 联网加载数据
       this.getShareInviteDetail(0, 1, (data) => {
         // 添加新数据到列表顶部
-        this.detailsList.unshift(data);
+        this.detailsList = [];
+        this.detailsList.push(data);
+        this.mescroll.resetUpScroll();
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           this.mescroll.endSuccess()// 结束下拉刷新,无参
