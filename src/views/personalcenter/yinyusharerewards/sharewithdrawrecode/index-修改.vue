@@ -21,8 +21,8 @@
             <p class="tips"><span>*</span>如您的支付宝信息填写错误，财务人员打款失败，将驳回您的提现 申请，您可以修改支付宝信息后重新申请提现。</p>
           </div>
           <ul class="uls">
-            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==4">
-              <span class="tit">{{item.date}}</span>
+            <li class="lis" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==4">
+              <span class="tit" v-if="item.date" >{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
                   <h3>{{items.payType && items.payType==1?'支付宝':'微信'}}</h3>
@@ -34,7 +34,7 @@
                 </li>
               </ol>
             </li>
-            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="item.date&&guildPageType&&guildPageType==3">
+            <li class="lis lis-ex" v-for="(item,index) in recodesList" :key="index" :id="item.userId" v-if="guildPageType&&guildPageType==3">
               <span class="tit">{{item.date}}</span>
               <ol>
                 <li v-for="(items,childindex) in item.exchangeOrWithdrawalPojo" :key="childindex"> 
@@ -74,6 +74,10 @@ export default {
       topAllWalletset : 0, //获取顶部部分高度
       allDataLength : 0, //提现记录列表的总条数
       oldDateTime : 0, //存下当月日期，用于处理相同的只显示一次
+      takeMouthTimeArr : [], //存月数标题的数组
+      takeNewDataList : {
+      }, //存原始新数据
+      objDataPress : [] //数据中转整合
     };
   },
   computed: {
@@ -196,7 +200,12 @@ export default {
       let that = this;
       this.getUserWalletExchangeOrWithdrawalBill(page.num, page.size, (curPageData) => {
         // 添加列表数据
-        this.recodesList = this.recodesList.concat(curPageData);
+        console.log('curPageData');
+        console.log(curPageData);
+        that.recodesList = that.recodesList.concat(curPageData);
+        console.log('this.recodesList');
+        console.log(this.recodesList);
+        that.$forceUpdate();
         // 数据渲染成功后,隐藏下拉刷新的状态
         this.$nextTick(() => {
           // this.mescroll.endSuccess(curPageData.length);
@@ -223,19 +232,47 @@ export default {
             page : pageNum,
             item : pageSize
           }).then(res => {
+              console.log('res申请');
+              console.log(res);
               that.$toast.clear();
             if (res.data.code == 1) {
-              let objData = res.data.data.list;
+              that.takeNewDataList = JSON.stringify(res.data.data.list);
+              console.log('that.takeNewDataList');
+              console.log(that.takeNewDataList);
+              that.objDataPress = res.data.data.list;
               that.allDataLength = res.data.data.totalItem;
-                if(objData == null){
-                  objData = [];
-                }
-                successCallback && successCallback(objData);
-                that.$forceUpdate();
+              if(that.takeMouthTimeArr.length > 0){
+                that.objDataPress.filter((s,index) => {
+                  if(s.date == that.takeMouthTimeArr[index]){
+                    s.date = '';
+                    console.log('s');
+                    console.log(s);
+                  }
+                });
+              }
+              console.log('objData');
+              console.log(that.objDataPress);
+              if(that.objDataPress == null){
+                that.objDataPress = [];
+                return;
+              }
+              that.takeMouthTimeArr = JSON.parse(that.takeNewDataList).map((itm) => {
+                return itm.date;
+              });
+              that.takeMouthTimeArr = that.unique(that.takeMouthTimeArr);
+              console.log('takeMouthTimeArr1');
+              console.log(that.takeMouthTimeArr);
+              that.$forceUpdate();
+              successCallback && successCallback(that.objDataPress);
             }else{
               errorCallback && errorCallback();
             }
           });
+    },
+    //月份数组去重
+    unique(arr) {
+        const res = new Map();
+        return arr.filter((a) => !res.has(a) && res.set(a, 1))
     }
   },
   beforeRouteEnter (to, from, next) { // 如果没有配置回到顶部按钮或isBounce,则beforeRouteEnter不用写

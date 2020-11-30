@@ -22,7 +22,7 @@
           <span class="tit">
             <img src="./../../../../assets/imgs/personal/yinyu-share/sharetit02.png" alt="">
           </span>
-          <p>您邀请的主播在音娱平台获得收益，您将获得<span class="num">{{anchorPercentage}}%</span>的收入提成！</p>
+          <p>您邀请的用户在音娱语音平台通过音符提现的方式获得收益，您将获得<span class="num">{{anchorPercentage}}%</span>的收入提成！</p>
         </div>
         <div class="txt-sec">
           <span class="tit">
