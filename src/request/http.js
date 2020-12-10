@@ -54,7 +54,8 @@ instance.interceptors.request.use(
         const token = store.state.user.token;
         // token && (config.headers.Authorization = token); //TODO: 临时不需要token校验 暂时注释
         config.headers.appType = 1; //TODO: 应用类型
-        config.headers.marketChannel = ''; //TODO: 市场渠道号
+        // config.headers.marketChannel = 44; //TODO: 市场渠道号--生产 44 
+        config.headers.marketChannel = 39; //TODO: 市场渠道号--灰度 39
         config.headers.version = ''; //TODO: 版本号
         config.headers.clientType = 4; //TODO: 临时不需要token校验 暂时注释
         return config;
