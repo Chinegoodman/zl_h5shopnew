@@ -300,7 +300,7 @@ export default {
     //手机号验证-密码登录
     checkPhone_ii(){ 
       let that = this;
-      console.log('2999');
+      // console.log('2999');
       if(!that.phonenum2)return;
       if(!(/^1[3456789]\d{9}$/.test(that.phonenum2))){ 
         that.$toast("手机号码有误，请重填");
@@ -335,8 +335,8 @@ export default {
           that.gettingcodestatustime = 120;
         }
       }, 1000);
-      console.log('that.return_token1986');
-      console.log(that.return_token);
+      // console.log('that.return_token1986');
+      // console.log(that.return_token);
       //获取验证码
       this.api.login
       .captcha({

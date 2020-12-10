@@ -418,8 +418,8 @@ export default {
         .then(res => {
           if(res.data.code==1){
             let resdata = res.data.data;
-            console.log('resdata')
-            console.log(resdata)
+            // console.log('resdata')
+            // console.log(resdata)
             let nerUser = {
                 isLogin: true,
                 username: resdata.nickName,
