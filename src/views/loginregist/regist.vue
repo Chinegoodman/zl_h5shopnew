@@ -838,7 +838,13 @@ export default {
 </style>
 
 <style>  
+  .ding-xiang-code{
+    box-shadow: 0 0 .05rem .05rem rgba(0,0,0,.1);
+  }
   .ding-xiang-code .dx_captcha_basic_link{
     display: none;
+  }
+  .dx_captcha_loading_overlay{
+    position: static !important;
   }
 </style>
