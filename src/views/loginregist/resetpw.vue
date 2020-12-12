@@ -170,7 +170,7 @@ import { clearInterval } from 'timers';
                         },0);
                     }
                 })
-                myCaptcha.reload();
+                // myCaptcha.reload();
                 myCaptcha.show();
             },
             // 获取验证码事件
@@ -259,8 +259,8 @@ import { clearInterval } from 'timers';
   position: relative;
   width: 7.5rem;
   margin: 0 auto;
-  height: 100vh;
-  overflow-y: scroll;
+  // height: 100vh;
+  // overflow-y: scroll;
   .toprightbtn {
     height: 0.64rem;
     margin-top : .2rem;

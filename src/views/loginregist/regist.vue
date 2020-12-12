@@ -281,7 +281,7 @@ export default {
             },0);
           }
       })
-      myCaptcha.reload();
+      // myCaptcha.reload();
       myCaptcha.show();
     },
     //手机号验证
@@ -523,8 +523,8 @@ export default {
   position: relative;
   width: 7.5rem;
   margin: 0 auto;
-  height: 100vh;
-  overflow-y: scroll;
+  // height: 100vh;
+  // overflow-y: scroll;
   .toprightbtn {
     height: 0.64rem;
     margin-top : .2rem;
@@ -835,16 +835,4 @@ export default {
   margin-top: 0.25rem;
   cursor: pointer;
 }
-</style>
-
-<style>  
-  .ding-xiang-code{
-    box-shadow: 0 0 .05rem .05rem rgba(0,0,0,.1);
-  }
-  .ding-xiang-code .dx_captcha_basic_link{
-    display: none;
-  }
-  .dx_captcha_loading_overlay{
-    position: static !important;
-  }
 </style>

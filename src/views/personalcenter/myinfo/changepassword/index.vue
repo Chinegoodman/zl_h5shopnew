@@ -84,7 +84,7 @@ export default {
                     },200);
                 }
             })
-            myCaptcha.reload();
+            // myCaptcha.reload();
             myCaptcha.show();
         },  
         //获取验证码
@@ -196,8 +196,6 @@ export default {
         }
     }
     .w-password{
-        background-color: #f6f6f6;
-        min-height: 100vh;
         font-family:PingFang SC;
         font-weight:500;
         color:rgba(31,31,31,1);
