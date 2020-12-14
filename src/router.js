@@ -373,16 +373,16 @@ router.beforeEach((to, from, next) => {
 
     let isLogin = ''; // 是否登录
     let newUserInfo = '';
-    // console.log('存储的用户信息：' + window.localStorage.getItem('user-info'))
-    if (window.localStorage.getItem('new-user-info')) {
-        // newUserInfo = JSON.parse(window.localStorage.getItem('new-user-info'));
+    // console.log('存储的用户信息：' + window.localStorage.getItem('h5userdataold'))
+    if (window.localStorage.getItem('h5userdatanew')) {
+        // newUserInfo = JSON.parse(window.localStorage.getItem('h5userdatanew'));
 
-        // newUserInfo = JSON.parse(window.localStorage.getItem('new-user-info'));
-        let userdata_storage = window.localStorage.getItem('new-user-info');
+        // newUserInfo = JSON.parse(window.localStorage.getItem('h5userdatanew'));
+        let userdata_storage = window.localStorage.getItem('h5userdatanew');
         newUserInfo = JSON.parse(decryptByDES(userdata_storage, '9527')) || ''; //DES解密 密码：'9527'
 
     }
-    // let userinfo = JSON.parse(window.localStorage.getItem('user-info')).user;
+    // let userinfo = JSON.parse(window.localStorage.getItem('h5userdataold')).user;
     // debugger;
     let useridstatus = false;
     if (newUserInfo.userid != 0 && newUserInfo.userid != '' && newUserInfo.userid != undefined) {

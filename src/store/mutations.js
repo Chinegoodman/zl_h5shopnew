@@ -124,10 +124,10 @@ export default {
     //修改state的方法
     saveuserdata(state, userdata) {
         state.user = userdata;
-        // localStorage.setItem('user-info', JSON.stringify(userdata))
+        // localStorage.setItem('h5userdataold', JSON.stringify(userdata))
         let userdata_storage = JSON.stringify(userdata);
         // localStorage.setItem('pczlwh_shopuserdata', JSON.stringify(userdata))
-        localStorage.setItem('user-info', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
+        localStorage.setItem('h5userdataold', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
 
     },
     //修改state的方法
@@ -139,14 +139,14 @@ export default {
             sig: '',
         }
         state.user = user;
-        localStorage.removeItem('user-info');
+        localStorage.removeItem('h5userdataold');
     },
     //存新体系用户信息
     setNewUserDate(state, newuserdata) {
         //newuserdata来自 actions里.commit传入的nerUser对象
         state.nerUser = newuserdata;
         let userdata_storage = JSON.stringify(newuserdata);
-        localStorage.setItem('new-user-info', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
+        localStorage.setItem('h5userdatanew', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
 
 
     },
@@ -162,7 +162,7 @@ export default {
             token: '', //token数据
         }
         state.nerUser = nerUser;
-        localStorage.removeItem('new-user-info');
+        localStorage.removeItem('h5userdatanew');
     },
 
     // 重置 用户token信息
@@ -171,35 +171,35 @@ export default {
         // 老体系的用户数据
         state.user.token = token;
 
-        let userdata_storageorigin = window.localStorage.getItem('user-info');
+        let userdata_storageorigin = window.localStorage.getItem('h5userdataold');
         let localStorage_olddata = JSON.parse(decryptByDES(userdata_storageorigin, '9527')) || ''; //DES解密 密码：'9527'
-        // let localStorage_olddata = JSON.parse(localStorage.getItem('user-info'));
+        // let localStorage_olddata = JSON.parse(localStorage.getItem('h5userdataold'));
         if (localStorage_olddata) {
             localStorage_olddata.token = token;
-            // localStorage.setItem('user-info', JSON.stringify(localStorage_olddata));
+            // localStorage.setItem('h5userdataold', JSON.stringify(localStorage_olddata));
             let userdata_storage = JSON.stringify(localStorage_olddata);
-            localStorage.setItem('user-info', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
+            localStorage.setItem('h5userdataold', encryptByDES(userdata_storage, '9527')); //DES加密 密码：'9527'
         } else {
             let userdata_storagenull = JSON.stringify({
-                "user-info": {
+                "h5userdataold": {
                     "token": token,
                     "userid": '',
                     "timuserid": "",
                     "sig": ""
                 }
             });
-            localStorage.setItem('user-info', encryptByDES(userdata_storagenull, '9527'));
+            localStorage.setItem('h5userdataold', encryptByDES(userdata_storagenull, '9527'));
         }
 
         // // 新体系的用户数据
         // state.nerUser.token = token;
-        // let localStorage_olddata2 = JSON.parse(localStorage.getItem('new-user-info'));
+        // let localStorage_olddata2 = JSON.parse(localStorage.getItem('h5userdatanew'));
         // if (localStorage_olddata2) {
         //     localStorage_olddata2.token = token;
-        //     localStorage.setItem('new-user-info', JSON.stringify(localStorage_olddata2));
+        //     localStorage.setItem('h5userdatanew', JSON.stringify(localStorage_olddata2));
         // } else {
-        //     localStorage.setItem('new-user-info', JSON.stringify({
-        //         "user-info": {
+        //     localStorage.setItem('h5userdatanew', JSON.stringify({
+        //         "h5userdataold": {
         //             "isLogin": false,
         //             "username": "",
         //             "userid": '',
@@ -212,24 +212,24 @@ export default {
 
         state.nerUser.token = token;
 
-        let new_userdata_storageorigin = window.localStorage.getItem('new-user-info');
+        let new_userdata_storageorigin = window.localStorage.getItem('h5userdatanew');
         let new_localStorage_olddata = JSON.parse(decryptByDES(new_userdata_storageorigin, '9527')) || ''; //DES解密 密码：'9527'
-        // let localStorage_olddata = JSON.parse(localStorage.getItem('user-info'));
+        // let localStorage_olddata = JSON.parse(localStorage.getItem('h5userdataold'));
         if (new_localStorage_olddata) {
             new_localStorage_olddata.token = token;
-            // localStorage.setItem('user-info', JSON.stringify(localStorage_olddata));
+            // localStorage.setItem('h5userdataold', JSON.stringify(localStorage_olddata));
             let new_userdata_storage = JSON.stringify(new_localStorage_olddata);
-            localStorage.setItem('new-user-info', encryptByDES(new_userdata_storage, '9527')); //DES加密 密码：'9527'
+            localStorage.setItem('h5userdatanew', encryptByDES(new_userdata_storage, '9527')); //DES加密 密码：'9527'
         } else {
             let new_userdata_storagenull = JSON.stringify({
-                "user-info": {
+                "h5userdataold": {
                     "token": token,
                     "userid": '',
                     "timuserid": "",
                     "sig": ""
                 }
             });
-            localStorage.setItem('new-user-info', encryptByDES(new_userdata_storagenull, '9527'));
+            localStorage.setItem('h5userdatanew', encryptByDES(new_userdata_storagenull, '9527'));
         }
     }
 }

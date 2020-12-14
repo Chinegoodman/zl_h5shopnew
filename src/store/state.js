@@ -122,8 +122,8 @@ function decryptByDES(ciphertext, key) {
 };
 
 let userInfo = '';
-if (window.localStorage.getItem('user-info')) {
-    let userdata_storage = window.localStorage.getItem('user-info');
+if (window.localStorage.getItem('h5userdataold')) {
+    let userdata_storage = window.localStorage.getItem('h5userdataold');
     userInfo = JSON.parse(decryptByDES(userdata_storage, '9527')) || ''; //DES解密 密码：'9527'
 
 } else {
@@ -138,9 +138,9 @@ const user = {
 
 let newUserInfo = '';
 
-if (window.localStorage.getItem('new-user-info')) {
-    // newUserInfo = JSON.parse(window.localStorage.getItem('new-user-info')) || '';
-    let newuserdata_storage = window.localStorage.getItem('new-user-info');
+if (window.localStorage.getItem('h5userdatanew')) {
+    // newUserInfo = JSON.parse(window.localStorage.getItem('h5userdatanew')) || '';
+    let newuserdata_storage = window.localStorage.getItem('h5userdatanew');
     newUserInfo = JSON.parse(decryptByDES(newuserdata_storage, '9527')) || ''; //DES解密 密码：'9527'
 
 } else {
