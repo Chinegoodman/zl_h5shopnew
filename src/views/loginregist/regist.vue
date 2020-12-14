@@ -435,13 +435,16 @@ export default {
         })
         .then(res => {
           if(res.data.code==1){
+            debugger;
             let resdata = res.data.data;
             let nerUser = {
                 isLogin: true,
                 username: resdata.nickName,
                 userid: resdata.userId,
                 phone: resdata.mobile,
-                userdata : resdata
+                userdata : resdata,
+                // token:resdata.token?resdata.token:'',
+                token:that.$store.state.user.token?that.$store.state.user.token:'',
             }
             that.$store.commit("setNewUserDate", nerUser);
             //跳转到商城首页或不传routername让step等于2跳转密码设置页

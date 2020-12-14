@@ -186,30 +186,37 @@
       that.api.homedetails.bannerimg({
         flag: 1
       }).then(res => {
-        that.images = res.data.data;
+        if(res.data.code==1){
+          that.images = res.data.data;
+        }
       });
       that.api.productsearch
         .getshelves({
           oneCategoryId: that.shleid
         })
         .then(function (res) {
-          that.titlelist = res.data.data.oneCategoryList;
-          that.shleid = res.data.data.oneCategoryList[0].category_id;
-          // console.log(that.titlelist);
-          // let js = JSON.stringify(that.titlelist);
-          // sessionStorage.setItem("searchtitle", js);
-          // that.list = res.data.data.goodsCategoryPojo;//二级分类
-          that.api.productsearch
-            .getshelves({
-              oneCategoryId: that.shleid
-            })
-            .then(function (res) {
-              // that.titlelist = res.data.data.oneCategoryList;
-              // console.log(that.titlelist);
-              let js = JSON.stringify(that.titlelist);
-              sessionStorage.setItem("searchtitle", js);
-              that.list = res.data.data.goodsCategoryPojo; //二级分类
-            });
+          if(res.data.code==1){
+            that.titlelist = res.data.data.oneCategoryList;
+            that.shleid = res.data.data.oneCategoryList[0].category_id;
+            // console.log(that.titlelist);
+            // let js = JSON.stringify(that.titlelist);
+            // sessionStorage.setItem("searchtitle", js);
+            // that.list = res.data.data.goodsCategoryPojo;//二级分类
+            that.api.productsearch
+              .getshelves({
+                oneCategoryId: that.shleid
+              })
+              .then(function (res2) {
+                if(res2.data.code==1){
+                  // that.titlelist = res.data.data.oneCategoryList;
+                  // console.log(that.titlelist);
+                  let obj_titlelist = JSON.stringify(that.titlelist);
+                  sessionStorage.setItem("searchtitle", obj_titlelist);
+                  that.list = res2.data.data.goodsCategoryPojo; //二级分类
+                }
+                
+              });
+          }
         });
     },
     mounted() {

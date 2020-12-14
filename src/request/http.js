@@ -66,8 +66,8 @@ instance.interceptors.request.use(
     },
     error => Promise.error(error));
 let resfn = function(res) {
-    console.log(res.headers);
-    console.log(res.headers.token);
+    // console.log(res.headers);
+    // console.log(res.headers.token);
     if (res.headers.token) {
         store.commit("resettokenfn", res.headers.token);
     }
