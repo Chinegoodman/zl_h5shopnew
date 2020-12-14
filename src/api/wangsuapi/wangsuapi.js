@@ -4,7 +4,6 @@
 
 import base from '../base'; // 导入接口域名列表
 import axios from '@/request/http'; // 导入http中创建的axios实例
-// import axios_json from '@/request/http_json'; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const wangsuapi = {
@@ -22,7 +21,7 @@ const wangsuapi = {
     // 【json格式的post请求】
     // 客服消息更新
     complsug_complaintLogUpdate(params) {
-        return axios_json.post(`${base.yxf}/wapi/v1/complaint/complaintLogUpdate`, params);
+        return axios.post(`${base.yxf}/wapi/v1/complaint/complaintLogUpdate`, params);
     },
     // ========================↓↓↓↓↓↓↓当前页面的接口↓↓↓↓↓↓↓↓↓↓======================================
 

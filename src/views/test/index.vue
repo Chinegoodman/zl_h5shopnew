@@ -1,35 +1,18 @@
 <!-- 组件说明 -->
 <template>
-    <div class='testwrap'>
-        这是测试页面 自动打包
-        <hr>
-        query{{this.$route.query}} <br>
-        params{{this.$route.params}} <br>
-        <!-- <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile> -->
-        <uploadfile
-            :canedit="true"
-            :uploaddatainit="uploaddatainit"
-            :defaultfileslist="defaultfileslist"
-            @_upfileslistchange="upfileslistchange"
-        ></uploadfile>  
-
-        <div class="levelwarp">
-            <div class="herder_line"></div>
-            <div class="centerdom">
-                <p>level 12</p>
-            </div>
-            <div class="centerdom">
-                <p>level 13</p>
-            </div>
-            <div class="centerdom">
-                <p>level 14</p>
-            </div>
-            <div class="centerdom">
-                <p>level 15</p>90
-            </div>
-            <div class="footer_line"></div>
-        </div>
-    </div>
+  <div class="testwrap">
+    测试页面
+    <hr />
+    query{{ this.$route.query }} <br />
+    params{{ this.$route.params }} <br />
+    <!-- <uploadfile :defaultfileslist="defaultfileslist" :uploaddatainit="uploaddatainit" @_upfileslistchange="upfileslistchange"></uploadfile> -->
+    <uploadfile
+      :canedit="true"
+      :uploaddatainit="uploaddatainit"
+      :defaultfileslist="defaultfileslist"
+      @_upfileslistchange="upfileslistchange"
+    ></uploadfile>
+  </div>
 </template>
 
 <script>
@@ -70,22 +53,50 @@ export default {
       console.log(listdata);
       this.defaultfileslist = listdata;
     },
-    getuserlevelquities(){
-        let zs = this;
-        let userId = zs.$store.state.user.userid?zs.$store.state.user.userid:'';
-        this.api.test.userlevelequities({
-            userId
-        }).then(res=>{
-          if(res.data.code==1){
+    // 登录 用户 获取 等级信息
+    getuserlevelquities() {
+      let zs = this;
+      let userId = zs.$store.state.user.userid
+        ? zs.$store.state.user.userid
+        : "";
+      if (!userId) return;
+      this.api.test
+        .userlevelequities({
+          userId,
+        })
+        .then((res) => {
+          if (res.data.code == 1) {
             zs.$toast(res.data.info);
-          }else{
+          } else {
             zs.$toast(res.data.info);
           }
+        });
+    },
+    // token 权限验证体系 接口 本地express api 模拟测试 403  token过期
+    expressapi_tokenapifn() {
+      let zs = this;
+      this.api.test
+        .expressapi_tokenapi({
         })
-    }
+        .then((res) => {
+          console.log(res);
+        });
+    },
+    // token 权限验证体系 接口 本地express api 模拟测试  200  token正常
+    expressapi_tokenapifn2() {
+      let zs = this;
+      this.api.test
+        .expressapi_tokenapi2({
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   mounted() {
-      this.getuserlevelquities();
+    // this.getuserlevelquities();
+    // this.expressapi_tokenapifn();
+    this.expressapi_tokenapifn2();
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -97,10 +108,10 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 //@import url()
 </style>
 
-<style lang='less'>
+<style lang="less">
 //@import url()
 </style>

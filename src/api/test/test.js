@@ -4,7 +4,6 @@
 
 import base from '../base'; // 导入接口域名列表
 import axios from '@/request/http.js'; // 导入http中创建的axios实例
-import axios_json from "@/request/http_postform.js"; // 导入http中创建的axios实例
 import qs from 'qs'; // 根据需求是否导入qs模块
 
 const test = {
@@ -22,7 +21,7 @@ const test = {
     // 【json格式的post请求】
     // 客服消息更新
     complsug_complaintLogUpdate(params) {
-        return axios_json.post(`${base.yxf}/wapi/v1/complaint/complaintLogUpdate`, params);
+        return axios.post(`${base.yxf}/wapi/v1/complaint/complaintLogUpdate`, params);
     },
     // ========================↓↓↓↓↓↓↓当前页面的接口↓↓↓↓↓↓↓↓↓↓======================================
     //用户等级权益
@@ -31,6 +30,18 @@ const test = {
         // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
     },
 
+    //token 权限验证体系 接口 本地express api 模拟测试 403  token过期
+    expressapi_tokenapi(params) {
+        let expressapi_tokenapi_baseurl = "http://localhost:9527"
+        return axios.get(`${expressapi_tokenapi_baseurl}/tokenapi`, { params });
+        // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
+    },
+    //token 权限验证体系 接口 本地express api 模拟测试 200  token正常
+    expressapi_tokenapi2(params) {
+        let expressapi_tokenapi_baseurl = "http://localhost:9527"
+        return axios.get(`${expressapi_tokenapi_baseurl}/tokenapi2`, { params });
+        // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
+    },
 }
 
 export default test;

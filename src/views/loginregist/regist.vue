@@ -361,7 +361,6 @@ export default {
         })
         .then(data => {
           that.$toast(data.data.info);
-          // debugger;
           if (data.data.code == 1) {
             console.log('data.data.data登录开始');
             console.log(data.data.data);
@@ -409,7 +408,6 @@ export default {
         .then(data => {
           console.log(1986);
           that.$toast(data.data.info);
-          // debugger;
           if (data.data.code == 1) {
             console.log(data.data.data);
             let userdata = data.data.data;
@@ -441,7 +439,9 @@ export default {
                 username: resdata.nickName,
                 userid: resdata.userId,
                 phone: resdata.mobile,
-                userdata : resdata
+                userdata : resdata,
+                // token:resdata.token?resdata.token:'',
+                token:that.$store.state.user.token?that.$store.state.user.token:'',
             }
             that.$store.commit("setNewUserDate", nerUser);
             //跳转到商城首页或不传routername让step等于2跳转密码设置页
@@ -482,7 +482,6 @@ export default {
     //如果为新用户时的设置密码事件
     setpasswordfn() {
       let that = this;
-      // debugger;
       if(that.setpassword2 != that.setpassword){
          that.$toast("两次输入密码不一致，请重新输入!");
          return;
@@ -497,7 +496,6 @@ export default {
           password: that.setpassword,
         })
         .then(data => {
-          // debugger;
           that.$toast("提交密码成功");
           that.$router.push({ name: "shopindex" });
         });
