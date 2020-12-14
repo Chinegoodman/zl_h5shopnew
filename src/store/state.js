@@ -25,6 +25,7 @@ const nerUser = {
     userid: newUserInfo.userid ? newUserInfo.userid : '',
     phone: newUserInfo.phone ? newUserInfo.phone : '',
     userdata: newUserInfo.userdata ? newUserInfo.userdata : '',
+    token: newUserInfo.token ? newUserInfo.token : '',
 }
 
 

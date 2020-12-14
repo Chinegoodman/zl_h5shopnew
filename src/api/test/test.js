@@ -31,6 +31,18 @@ const test = {
         // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
     },
 
+    //token 权限验证体系 接口 本地express api 模拟测试 403  token过期
+    expressapi_tokenapi(params) {
+        let expressapi_tokenapi_baseurl = "http://localhost:9527"
+        return axios.get(`${expressapi_tokenapi_baseurl}/tokenapi`, { params });
+        // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
+    },
+    //token 权限验证体系 接口 本地express api 模拟测试 200  token正常
+    expressapi_tokenapi2(params) {
+        let expressapi_tokenapi_baseurl = "http://localhost:9527"
+        return axios.get(`${expressapi_tokenapi_baseurl}/tokenapi2`, { params });
+        // return axios.get(`${base.yxf}/v1/user/level/quities`, { params });
+    },
 }
 
 export default test;

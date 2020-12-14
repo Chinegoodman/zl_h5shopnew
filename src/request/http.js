@@ -1,7 +1,9 @@
 import axios from 'axios';
 import router from '../../src/router';
 import store from '../../src/store/index';
-import { Toast } from 'vant';
+import {
+    Toast
+} from 'vant';
 const tip = msg => {
     Toast({
         message: msg,
@@ -46,13 +48,15 @@ const errorHandle = (status, other) => {
             tip('状态码:' + status + '---' + (other != undefined ? other : ''));
     }
 }
-var instance = axios.create({ timeout: 1000 * 20 });
+var instance = axios.create({
+    timeout: 1000 * 20
+});
 instance.defaults.withCredentials = false;
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 instance.interceptors.request.use(
     config => {
         const token = store.state.user.token;
-        // token && (config.headers.Authorization = token); //TODO: 临时不需要token校验 暂时注释
+        token && (config.headers.Authorization = token); //TODO: 临时不需要token校验 暂时注释
         config.headers.appType = 1; //TODO: 应用类型
         config.headers.marketChannel = 44; //TODO: 市场渠道号--生产 44 
         // config.headers.marketChannel = 39; //TODO: 市场渠道号--灰度 39
@@ -60,11 +64,31 @@ instance.interceptors.request.use(
         config.headers.clientType = 4; //TODO: 临时不需要token校验 暂时注释
         return config;
     },
-    error => Promise.error(error))
+    error => Promise.error(error));
+let resfn = function(res) {
+    console.log(res.headers);
+    console.log(res.headers.token);
+    if (res.headers.token) {
+        store.commit("resettokenfn", res.headers.token);
+    }
+};
+
 instance.interceptors.response.use(
-    res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),
+    // res => res.status === 200 ? resfn(res) : Promise.reject(res),
+    // res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),
+    res => {
+        if (res.status === 200) {
+            // 处理成功回调里的 token
+            resfn(res);
+            return Promise.resolve(res);
+        } else {
+            return Promise.reject(res);
+        }
+    },
     error => {
-        const { response } = error;
+        const {
+            response
+        } = error;
         if (response) {
             errorHandle(response.status, response.data.message);
             return Promise.reject(response);
